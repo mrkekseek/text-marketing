@@ -24,20 +24,17 @@
             ':file'
         ];
 
-        setRoutes = function(route) {
+        setRoutes = function (route) {
             var url = '/' + route;
             var config = {
-                templateUrl: function(params) {
-                    if (params.folder && params.file && params.param)
-                    {
+                templateUrl: function (params) {
+                    if (params.folder && params.file && params.param) {
                         return '/view/' + params.folder + '/' + params.file + '/' + params.param;
                     }
-                    else if (params.folder && params.file)
-                    {
+                    else if (params.folder && params.file) {
                         return '/view/' + params.folder + '/' + params.file;
                     }
-                    else if(params.file)
-                    {
+                    else if(params.file) {
                         return '/view/' + params.file;
                     }
                 }
@@ -47,7 +44,7 @@
             return $routeProvider;
         };
 
-        routes.forEach(function(route) {
+        routes.forEach(function (route) {
             return setRoutes(route);
         });
 
@@ -106,10 +103,9 @@ angular.module('app').filter('capitalize', function() {
         $scope.new_inbox = {};
         $rootScope.constants = {'project': ''};
 
-        $scope.signout = function() {
-            request.send('/users/signout', {}, function(data) {
-                if (data)
-                {
+        $scope.signout = function () {
+            request.send('/auth/signout', {}, function (data) {
+                if (data) {
                     $timeout(function() {
                         $window.location.href = "/";
                     }, 2000);
@@ -121,6 +117,7 @@ angular.module('app').filter('capitalize', function() {
         $rootScope.user = {};
         $scope.open = {};
         $scope.init = function() {
+            $scope.menu();
             /*request.send('/users/info/', {}, function(data) {
                 if (data)
                 {
@@ -167,32 +164,36 @@ angular.module('app').filter('capitalize', function() {
             });*/
         };
 
-        $scope.change_project = function(data) {
-            request.send('/pub/project_change', {'project': data}, function(data) {
-                if (data)
-                {
-                    $window.location.href = "/";
+        $scope.menu = function () {
+            request.send('/pages/menu/', {}, function(data) {
+                $scope.pages = data;
+                for (var k in $scope.pages) {
+                    $scope.open[$scope.pages[k].code] = $scope.menuOpen($scope.pages[k]);
                 }
             });
         };
 
-        $scope.move = function(id) {
-            var link = angular.element(document.getElementById(id));
-            if (link.length)
-            {
-                $document.scrollToElementAnimated(link);
+        $scope.menuOpen = function (page) {
+            for (var k in $scope.pages) {
+                if ($scope.menuActive($scope.pages[k]) && $scope.pages[k].code == page.code) {
+                    return true;
+                }
+
+                for (var i in $scope.pages[k].pages) {
+                    if ($scope.menuActive($scope.pages[k].pages[i]) && $scope.pages[k].pages[i].parents_code == page.code) {
+                        return true;
+                    }
+                }
             }
+
+            return false;
         };
 
-        $scope.checkMenuActive = function(page) {
-            if ($scope.segment(1) == '')
-            {
-                return page.pages_main == '1';
-            }
-            else
-            {
-                if ($scope.segment(1) == page.pages_folder && $scope.segment(2) == page.pages_file)
-                {
+        $scope.menuActive = function (page) {
+            if ($scope.segment(1) == '') {
+                return page.main == '1';
+            } else {
+                if ($scope.segment(1) == page.folder && $scope.segment(2) == page.file) {
                     return true;
                 }
             }
@@ -200,48 +201,23 @@ angular.module('app').filter('capitalize', function() {
             return false;
         };
 
-        $scope.checkMenuOpen = function(page) {
-            for (var k in $scope.pages)
-            {
-                if ($scope.checkMenuActive($scope.pages[k]) && $scope.pages[k].pages_code == page.pages_code)
-                {
-                    return 1;
-                }
-
-                for (var i in $scope.pages[k].pages)
-                {
-                    if ($scope.checkMenuActive($scope.pages[k].pages[i]) && $scope.pages[k].pages[i].parents_code == page.pages_code)
-                    {
-                        return 1;
-                    }
-                }
-            }
-
-            return 0;
+        $scope.segment = function (number) {
+            var part = $window.location.pathname.split('/');
+            return part[number] ? part[number] : ''; 
         };
 
-        $scope.changePage = function(page) {
-            $scope.open[page.pages_code] = 1 - $scope.open[page.pages_code];
+        $scope.changePage = function (page) {
+            $scope.open[page.code] = 1 - $scope.open[page.code];
 
-            if ($scope.open[page.pages_code])
-            {
+            if ($scope.open[page.code]) {
                 for (var k in $scope.open)
                 {
-                    if (k != page.pages_code)
-                    {
+                    if (k != page.code) {
                         $scope.open[k] = 0;
                     }
                 }
             }
-            clearInterval($rootScope.get_to_messages);
         };
-
-		$scope.segment = function(number) {
-			var part = window.location.pathname.split('/');
-			return part[number] ? part[number] : ''; 
-		};
-
-        //$scope.init();
 
         $scope.loaded = '';
         $scope.$on('$viewContentLoaded', function() {

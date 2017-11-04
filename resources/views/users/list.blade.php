@@ -187,14 +187,14 @@
 
 			    	<div class="form-group">
 				    	<label>{{ __("Password") }}</label>
-						<input type="password" class="form-control" ng-model="user.password" required="required" />
+						<input type="password" class="form-control" ng-model="user.password" />
 			    	</div>
 
 			    	<div class="form-group">
 			    		<label>{{ __("Team") }}</label>
 			    		<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required">
 			    			<option value="0">{{ __('Select a Team...') }}</option>
-			    			<option ng-repeat="team in teams_list" value="@{{ team.id }}">@{{ team.name }}</option>
+			    			<option ng-repeat="team in teams" value="@{{ team.id }}">@{{ team.name }}</option>
 			    		</select>
 		    		</div>
 
@@ -202,7 +202,7 @@
 			    		<label>{{ __("Payment Plan") }}</label>
 			    		<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required">
 			    			<option value="0">{{ __('Select a Plan...') }}</option>
-			    			<option ng-repeat="plan in plans_list" value="@{{ plan.id }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
+			    			<option ng-repeat="plan in plans" value="@{{ plan.id }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
 			    		</select>
 		    		</div>
 

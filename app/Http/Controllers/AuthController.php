@@ -36,4 +36,10 @@ class AuthController extends Controller
         }
         return false;
     }
+
+    public function signout($post = [])
+    {
+        Auth::logout();
+        return $this->message(__("You are out"), 'success');
+    }
 }

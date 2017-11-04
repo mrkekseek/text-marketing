@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->string('phone');
             $table->tinyInteger('active')->unsigned()->default(0);
+            $table->string('remember_token');
             $table->timestamps();
         });
     }

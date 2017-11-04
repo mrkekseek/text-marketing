@@ -30,14 +30,6 @@
 						<th class="text-center">
 							{{ __('Company name in Text status') }}
 						</th>
-
-						<th class="text-center">
-							{{ __('Group') }}
-						</th>
-
-						<th class="text-center">
-							{{ __('Text Marketing') }}
-						</th>
 						
 						<th class="td-count">
 							{{ __('Number of Users') }}
@@ -59,15 +51,6 @@
 
 						<td class="text-center">
 							@{{ team.status }}
-						</td>
-						
-						<td class="text-center">
-							@{{ team.groups.name }}
-						</td>
-						
-						<td class="text-center">
-							<span ng-if="! team.teams_marketing_name">{{ _('Disabled') }}</span>
-							@{{ team.teams_marketing_name }}
 						</td>
 						
 						<td class="td-count">
@@ -101,25 +84,9 @@
 
 	    <div class="modal-body">
 	    	<div class="form-group">
-				<label>{{ __("Group") }}</label>
-	    		<select class="form-control" ng-model="team.groups_id">
-	    			<option value="0">{{ __('Select a Group...') }}</option>
-	    			<option ng-repeat="group in groups" value="@{{ group.id }}">@{{ group.name }}</option>
-	    		</select>
-	    	</div>
-
-	    	<div class="form-group">
 		    	<label>{{ __("Name") }}</label>
 				<input type="text" class="form-control" name="name" ng-model="team.name" required="required" />
 	    	</div>
-
-	    	<div class="form-group">
-	    		<label>{{ __("Text Marketing Level") }}</label>
-	    		<select class="form-control" ng-model="team.levels_id">
-	    			<option value="0">{{ __('Disabled') }}</option>
-	    			<option ng-repeat="level in levels" value="@{{ level.id }}">@{{ level.name }} (@{{ level.texts > 1000 ? "Unlimited" : level.texts }} {{ __("text/month") }})</option>
-	    		</select>
-    		</div>
 		</div>
 		
 	    <div class="modal-footer">

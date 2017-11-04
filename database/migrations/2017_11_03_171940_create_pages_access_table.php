@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLevelsTable extends Migration
+class CreatePagesAccessTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateLevelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('pages_access', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('texts')->unsigned()->default(0);
+            $table->string('code');
+            $table->tinyInteger('users_type')->unsigned()->nullable(false)->default(0);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateLevelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('pages_access');
     }
 }

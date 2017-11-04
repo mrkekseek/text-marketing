@@ -26,15 +26,15 @@ class Controller extends BaseController
     {
         $validator = $this->getValidationFactory()->make($request->all(), $rules, $messages, $customAttributes);
         foreach ($validator->errors()->all() as $error) {
-            self::$errors[] = ['type' => 'danger', 'text' => $error];
+            self::$errors[] = ['type' => 'error', 'text' => $error];
         }
 
         return $validator;
     }
 
-    public function message($text, $type = 'danger')
+    public function message($text, $type = 'error')
     {
         self::$errors[] = ['type' => $type, 'text' => $text];
-        return $type != 'danger';
+        return $type != 'error';
     }
 }

@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => env('MAILGUN_DOMAIN', 'mg.medicalreputation.com'),
+        'secret' => env('MAILGUN_SECRET', 'key-96eb8c6657297659bc818d15a579c251'),
     ],
 
     'ses' => [

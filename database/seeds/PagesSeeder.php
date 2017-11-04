@@ -1,0 +1,454 @@
+<?php
+
+use Illuminate\Database\Seeder;
+
+class PagesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('pages')->truncate();
+    	
+        DB::table('pages')->insert([
+            'code' => 'teams-list',
+            'folder' => 'teams',
+            'file' => 'list',
+            'name' => 'Teams',
+            'icon' => 'fa fa-users',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'users-list',
+            'folder' => 'users',
+            'file' => 'list',
+            'name' => 'Users',
+            'icon' => 'fa fa-user',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'users-profile',
+            'folder' => 'users',
+            'file' => 'profile',
+            'name' => 'Profile',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'users-activate',
+            'folder' => 'users',
+            'file' => 'activate',
+            'name' => 'Activate',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 1,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'plans-list',
+            'folder' => 'plans',
+            'file' => 'list',
+            'name' => 'Payment Plans',
+            'icon' => 'fa fa-credit-card',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'plans-user',
+            'folder' => 'plans',
+            'file' => 'user',
+            'name' => 'Payment Plans',
+            'icon' => 'fa fa-credit-card',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'ha-list',
+            'folder' => 'ha',
+            'file' => 'list',
+            'name' => 'HomeAdvisor',
+            'icon' => 'fa fa-home',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'ha-user',
+            'folder' => 'ha',
+            'file' => 'user',
+            'name' => 'HomeAdvisor',
+            'icon' => 'fa fa-home',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'surveys-surveys',
+            'folder' => '',
+            'file' => '',
+            'name' => 'Star Rating Question',
+            'icon' => 'fa fa-star-o',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'surveys-send',
+            'folder' => 'surveys',
+            'file' => 'send',
+            'name' => 'Send',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'analysis-main',
+            'folder' => 'analysis',
+            'file' => 'main',
+            'name' => 'Analysis',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'settings-alerts',
+            'folder' => 'settings',
+            'file' => 'alerts',
+            'name' => 'Alerts',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'online-reviews',
+            'folder' => '',
+            'file' => '',
+            'name' => 'Online Reviews',
+            'icon' => 'fa fa-users',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'settings-analysis',
+            'folder' => 'settings',
+            'file' => 'analysis',
+            'name' => 'Reviews Analysis',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'settings-reviews',
+            'folder' => 'settings',
+            'file' => 'reviews',
+            'name' => 'Settings',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'messages-messages',
+            'folder' => '',
+            'file' => '',
+            'name' => 'Text Marketing',
+            'icon' => 'fa fa-commenting-o',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'messages-add',
+            'folder' => 'messages',
+            'file' => 'add',
+            'name' => 'Send',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'dialogs-list',
+            'folder' => 'dialogs',
+            'file' => 'list',
+            'name' => 'Inbox',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'messages-list',
+            'folder' => 'messages',
+            'file' => 'list',
+            'name' => 'Outbox',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'lists-list',
+            'folder' => 'lists',
+            'file' => 'list',
+            'name' => 'Contacts',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'marketing-settings',
+            'folder' => 'marketing',
+            'file' => 'settings',
+            'name' => 'Settings',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+
+
+
+
+        DB::table('pages_access')->truncate();
+    	
+        DB::table('pages_access')->insert([
+            'code' => 'teams-list',
+            'users_type' => 2,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'users-list',
+            'users_type' => 2,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'plans-list',
+            'users_type' => 2,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'ha-list',
+            'users_type' => 2,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'surveys-surveys',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'surveys-send',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'analysis-main',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'settings-alerts',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'online-reviews',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'settings-analysis',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'settings-reviews',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'messages-messages',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'messages-add',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'dialogs-list',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'messages-list',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'lists-list',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'marketing-settings',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'ha-user',
+            'users_type' => 1,
+        ]);
+
+
+
+
+
+        DB::table('pages_menu')->truncate();
+    	
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'teams-list',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'users-list',
+            'parents_code' => '',
+            'main' => 1,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'plans-list',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'ha-list',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-surveys',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-send',
+            'parents_code' => 'surveys-surveys',
+            'main' => 1,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'analysis-main',
+            'parents_code' => 'surveys-surveys',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-alerts',
+            'parents_code' => 'surveys-surveys',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'online-reviews',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-analysis',
+            'parents_code' => 'online-reviews',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-reviews',
+            'parents_code' => 'online-reviews',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'messages-messages',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'messages-add',
+            'parents_code' => 'messages-messages',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'dialogs-list',
+            'parents_code' => 'messages-messages',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'messages-list',
+            'parents_code' => 'messages-messages',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'lists-list',
+            'parents_code' => 'messages-messages',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'marketing-settings',
+            'parents_code' => 'messages-messages',
+            'main' => 0,
+            'pos' => 5,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'ha-user',
+            'parents_code' => '',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+    }
+}

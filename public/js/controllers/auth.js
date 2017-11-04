@@ -19,15 +19,10 @@
 			if (error) {
 				$rootScope.request_sent = true;
 				request.send('/auth/signin', $scope.auth, function(data) {
-					console.log(data);
-					if (data.data) {
-						if (data.resend_letters) {
-							$scope.visible = true;
-						} else {
-							$timeout(function () {
-								$window.location.href = "/";
-							}, 2000);
-						}
+					if (data) {
+						$timeout(function () {
+							$window.location.href = "/";
+						}, 2000);
 					} else {
 						$rootScope.request_sent = false;
 					}
@@ -51,7 +46,7 @@
 				var temp = $location.path().split('/');
 				$scope.new_user.param = temp[3];
 				request.send('/users/signup', $scope.new_user, function(data) {
-					if (data.data) {
+					if (data) {
 						$timeout(function () {
 							$window.location.href = "/";
 						}, 3000);

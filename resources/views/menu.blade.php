@@ -1,17 +1,17 @@
 <aside id="nav-container" class="nav-container bg-dark nav-vertical nav-fixed sidebar">
     <div class="nav-wrapper">
         <ul id="nav" class="nav">
-            <li data-ng-repeat="page in pages" data-ng-class="{'active': checkMenuActive(page)}" ng-hide="(user.users_send_type == 0 && page.pages_code == 'messages-messages') || ((page.pages_code == 'surveys-surveys' || page.pages_code == 'new-online-review' || page.pages_code == 'messages-messages') && user.plans_id == 'home-advisor-contractortexter')">
-                <a href="@{{ page.pages_file == '' ? 'javascript:;' : ('/' + (page.pages_main == 0 ? (page.pages_folder + '/' + page.pages_file + '/') : '')) }}" ng-click="changePage(page);">
-                    <i class="@{{ page.pages_icon }}"></i>
-                    <span>@{{ page.pages_name }}</span>
+            <li data-ng-repeat="page in pages" data-ng-class="{'active': menuActive(page)}">
+                <a href="@{{ page.file == '' ? 'javascript:;' : ('/' + (page.main == 0 ? (page.folder + '/' + page.file + '/') : '')) }}" data-ng-click="changePage(page);">
+                    <i class="@{{ page.icon }}"></i>
+                    <span>@{{ page.name }}</span>
                 </a>
 
-                <ul class="sub-menu" data-ng-class="{'opened': open[page.pages_code] == 1}">
-                    <li data-ng-repeat="sub in page.pages" data-ng-class="{'active': checkMenuActive(sub)}" ng-hide="sub.pages_file == 'settings-teams' && user.teams_leader == '0'">
-                        <a href="@{{ '/' + sub.pages_folder + '/' + sub.pages_file + '/' }}">
+                <ul class="sub-menu" data-ng-class="{'opened': open[page.code]}">
+                    <li data-ng-repeat="sub in page.pages" data-ng-class="{'active': menuActive(sub)}">
+                        <a href="@{{ '/' + sub.folder + '/' + sub.file + '/' }}">
                             <i class="ti-angle-right"></i>
-                            <span>@{{ sub.pages_name }}</span>
+                            <span>@{{ sub.name }}</span>
                         </a>
                     </li>
                 </ul>

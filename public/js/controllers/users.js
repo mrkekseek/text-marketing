@@ -15,20 +15,20 @@
 
     	$scope.get = function() {
     		request.send('/users/get', $scope.auth, function(data) {
-    			$scope.list = data.data;
+    			$scope.list = data;
     			$scope.request_finish = true;
 			});
     	};
 
     	$scope.teams = function() {
     		request.send('/teams/get', $scope.auth, function(data) {
-    			$scope.teams_list = data.data;
+    			$scope.teams_list = data;
 			});
     	};
 
     	$scope.plans = function() {
             request.send('/plans/get', false, function(data) {
-                $scope.plans_list = data.data;
+                $scope.plans_list = data;
             });
         };
 
@@ -71,13 +71,13 @@
 		    });
 
 		    modalInstance.result.then(function(response) {
-				$scope.list = response.data;
+				$scope.get();
 		    }, function () {
 				
 		    });
 		};
 
-		$scope.settings = function(users_id) {
+		/*$scope.settings = function(users_id) {
             users_id = users_id || false;
 
 			var modalInstance = $uibModal.open({
@@ -97,25 +97,19 @@
 		    }, function () {
 				
 		    });
-		};
+		};*/
 
 		$scope.remove = function(users_id) {
-            if (confirm(langs.get('Do you realy want to remove this item? It will also remove all user account data')))
-            {
-                request.send('/users/remove', {'users_id': users_id}, function(data) {
-                    if (data.data)
-                    {
-                        $scope.list = data.data;
-                    }
+            if (confirm(langs.get('Do you realy want to remove this item? It will also remove all user account data'))) {
+                request.send('/users/remove', {'id': users_id}, function(data) {
+                    $scope.get();
                 });
             }
         };
 
 		$scope.by_id = function(users_id) {
-			for (var k in $scope.list)
-			{
-				if ($scope.list[k].id == users_id)
-				{
+			for (var k in $scope.list) {
+				if ($scope.list[k].id == users_id) {
 					return $scope.list[k];
 				}
 			}
@@ -124,25 +118,19 @@
 		};
 
 		$scope.sign_in = function(users_id) {
-			request.send('/users/magic', {'users_id': users_id}, function(data) {
-                if (data.data)
-                {
-					$window.location.href = "/";
-                }
+			request.send('/users/magic', {'id': users_id}, function(data) {
+				$window.location.href = "/";
             });
 		}
 
 		$scope.teams_leader = function(users_id, teams_leader) {
 			var leader = true;
-			if (teams_leader === '1')
-			{
+			if (teams_leader === '1') {
 				leader = false;
 			}
-			request.send('/users/teams_leader', {'users_id': users_id, 'teams_leader': leader}, function(data) {
-                if (data)
-                {
-                   $scope.list = data.data;
-                }
+
+			request.send('/users/teams_leader', {'id': users_id, 'teams_leader': leader}, function(data) {
+                $scope.get();
             });
 		}
 
