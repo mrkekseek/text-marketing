@@ -21,12 +21,14 @@
             var error = 1;
             error *= validate.check($scope.form.email, 'Email');
             error *= validate.check($scope.form.password, 'Password');
+            error *= validate.check($scope.form.firstname, 'Name');
+
             if ($scope.signUp.plans_code == 'home-advisor') {
                 error *= validate.check($scope.form.ha_rep, 'HomeAdvisor Rep');
             }
 
             if (error) {
-                request.send('/users/signup', $scope.signUp, function(data) {
+                request.send('/auth/signup', $scope.signUp, function(data) {
                     if (data) {
                         $timeout(function() {
                             $window.location.href = "/";
