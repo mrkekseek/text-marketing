@@ -7,6 +7,11 @@ hr {
 	opacity: 0.3;
 }
 
+.page-signin {
+	display: table;
+	width: 100%;
+}
+
 .wrap-logo {
 	width: 100%;
 }

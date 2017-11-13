@@ -14,7 +14,7 @@
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
 	if (empty($view)) {
-		$controller = app()->make('\App\Http\Controllers\PagesController');    
+		$controller = app()->make('\App\Http\Controllers\PagesController');
 		$view = $controller->callAction('defaultPage', []); 
 	}
 	return view($view);
@@ -24,6 +24,14 @@ Route::group(['prefix' => 'api/v1'], function() {
 	Route::any('{unit}/{method}', 'ApiController')->middleware('messages');
 });
 
+Route::get('signup/{type?}', function($type = false) {
+	return view('signup')->with('type');
+});
+
+Route::get('support', function() {
+	return view('support');
+});
+
 Route::any('{catchall}', function() {
-	return view('template');
+	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');
