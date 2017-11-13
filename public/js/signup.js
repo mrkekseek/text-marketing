@@ -14,7 +14,6 @@
 
         $scope.init = function(plansCode) {
            $scope.signUp.plans_code = plansCode;
-           
         };
 
         $scope.signup = function() {
