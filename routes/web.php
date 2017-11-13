@@ -25,7 +25,7 @@ Route::group(['prefix' => 'api/v1'], function() {
 });
 
 Route::get('signup/{type?}', function($type = false) {
-	return view('signup')->with('type');
+	return view('signup')->with(['type' => $type]);
 });
 
 Route::get('support', function() {
