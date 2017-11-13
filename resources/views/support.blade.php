@@ -26,7 +26,6 @@
 			</div>
 		</div>
 
-
 		<div class="signin-body">
 			<div class="container">
 				<div class="row">
