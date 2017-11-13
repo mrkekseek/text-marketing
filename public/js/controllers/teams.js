@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'langs', TeamsCtrl]);
+    angular.module('app').controller('TeamsCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', TeamsCtrl]);
 
-    function TeamsCtrl($rootScope, $scope, $uibModal, $filter, request, langs) {
+    function TeamsCtrl($rootScope, $scope, $uibModal, request, langs) {
     	$scope.request_finish = false;
 
     	$scope.list = [];

@@ -22,7 +22,7 @@ class AuthController extends Controller
             ];
 
             if (Auth::validate($auth)) {
-                $user = User::where('email', $auth['email'])->first();                
+                $user = User::where('email', $auth['email'])->first();
                 if ( ! empty($user->active)) {
                     Auth::attempt($auth);
                     $this->message(__('You are in'), 'success');

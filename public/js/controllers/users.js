@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('UsersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$window', '$location', 'request', 'langs', 'validate', UsersCtrl]);
+    angular.module('app').controller('UsersCtrl', ['$rootScope', '$scope', '$uibModal', '$window', 'request', 'langs', 'validate', UsersCtrl]);
 
-    function UsersCtrl($rootScope, $scope, $uibModal, $filter, $window, $location, request, langs, validate) {
+    function UsersCtrl($rootScope, $scope, $uibModal, $window, request, langs, validate) {
     	$rootScope.body_class = '';
     	$scope.request_finish = false;
 

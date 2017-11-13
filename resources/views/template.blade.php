@@ -70,5 +70,7 @@
         <script src="/js/controllers/auth.js"></script>
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/teams.js"></script>
+        <script src="/js/controllers/plans.js"></script>
+        <script src="/js/controllers/home_advisor.js"></script>
     </body>
 </html>

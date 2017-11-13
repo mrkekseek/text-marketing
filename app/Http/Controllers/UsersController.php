@@ -16,7 +16,7 @@ class UsersController extends Controller
 
     public function get($post = [])
 	{
-		return User::all();
+		return User::where('type', '!=', 1)->get();
 	}
 
 	public function save($post = [])
