@@ -26,9 +26,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('AuthCtrl', ['$rootScope', '$scope', '$window', '$timeout', 'request', 'validate', 'langs', AuthCtrl]);
+    angular.module('app').controller('SignInCtrl', ['$rootScope', '$scope', '$window', '$timeout', 'request', 'validate', 'langs', SignInCtrl]);
 
-    function AuthCtrl($rootScope, $scope, $window, $timeout, request, validate, langs) {
+    function SignInCtrl($rootScope, $scope, $window, $timeout, request, validate, langs) {
         $rootScope.body_class = 'body-wide body-auth';
         $scope.auth = {
             'email': '',
@@ -36,10 +36,6 @@
         };
 
         $scope.activate = false;
-
-        $scope.init = function() {
-            console.log('123');
-        };
 
         $scope.signin = function () {
             var error = 1;
