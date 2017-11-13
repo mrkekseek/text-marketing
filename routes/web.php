@@ -32,6 +32,10 @@ Route::get('support', function() {
 	return view('support');
 });
 
+Route::get('recovery', function() {
+	return view('recovery');
+});
+
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');
