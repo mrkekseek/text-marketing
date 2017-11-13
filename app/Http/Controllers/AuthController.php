@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -35,6 +36,45 @@ class AuthController extends Controller
             }
         }
         return false;
+    }
+
+    public function signup($post = [])
+    {
+        $validator = $this->validate(request(), [
+            'email' => 'required|email|unique:users,email',
+            'firstname' => 'required',
+            'password' => 'required',
+            'ha_rep' => 'required_if:plans_code,home-advisor'
+        ]);
+
+        if ( ! $validator->fails()) {
+            $team = new Team();
+            $team->name = $this->teams_name($post);
+            $team->save();
+
+            $user = new User();
+            $user->password = bcrypt($post['password']);
+            $user->plans_code = $post['plans_code'];
+            $user->teams_id = $team->id;
+            $user->teams_leader = 1;
+            $user->type = 2;
+            $user->email = strtolower($post['email']);
+            $user->firstname = $post['firstname'];
+            $user->lastname = ! empty($post['lastname']) ? $post['lastname'] : '';
+            $user->active = 1;
+            $user->save();
+            return $this->message(__("You were successfully registered."), 'success');
+        }
+    }
+
+    public function teams_name($post) {
+        $name = [$post['firstname']];
+
+        if ( ! empty($post['lastname'])) {
+           $name[] = $post['lastname'];
+        }
+        
+        return implode(' ', $name);
     }
 
     public function signout($post = [])
