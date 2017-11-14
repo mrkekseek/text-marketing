@@ -47,6 +47,17 @@
 											{{ __('Send New Password') }}</button>
 										</div>
 									</div>
+									<section class="additional-info">
+										<a href="/">
+											<i class="fa fa-user" aria-hidden="true"></i>
+											{{ __('Sign In') }}
+										</a>
+
+										<a href="/support" target="_self" class="pull-right">
+											<i class="fa fa-life-ring" aria-hidden="true"></i>
+											{{ __('Support') }}
+										</a>
+									</section>
 								</fieldset>
 							</form>
 						</div>
