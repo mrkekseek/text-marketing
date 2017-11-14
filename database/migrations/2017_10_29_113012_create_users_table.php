@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('plans_code')->default('');
             $table->integer('teams_id')->unsigned()->default(0);
             $table->tinyInteger('teams_leader')->unsigned()->default(0);
+            $table->tinyInteger('owner')->unsigned()->default(0);
             $table->tinyInteger('type')->unsigned()->default(2);
             $table->string('email')->default('');
             $table->string('password')->default('');

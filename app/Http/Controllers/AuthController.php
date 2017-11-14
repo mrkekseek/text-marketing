@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Team;
+use App\Events\SignUp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,8 +64,12 @@ class AuthController extends Controller
             $user->lastname = ! empty($post['lastname']) ? $post['lastname'] : '';
             $user->active = 1;
             $user->save();
+
+            event(new SignUp($user));
+
             return $this->message(__("You were successfully registered."), 'success');
         }
+        return false;
     }
 
     public function teams_name($post) {
