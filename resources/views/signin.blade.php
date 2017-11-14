@@ -60,7 +60,7 @@
                                 </form>
                                 
                                 <section class="additional-info">
-                                    <a href="/pages/recovery">
+                                    <a href="/recovery">
                                         <i class="fa fa-lock" aria-hidden="true"></i>
                                         {{ __('Forgot your password?') }}
                                     </a>
