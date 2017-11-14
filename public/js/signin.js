@@ -6,23 +6,6 @@
 
 ;
 
-/*(function () {
-    'use strict';
-
-    angular.module('app').config(['$routeProvider', '$locationProvider', '$compileProvider', function($routeProvider, $locationProvider, $compileProvider) {
-        var routes, setRoutes;
-        $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
-        });
-
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|javascript):/);
-        $routeProvider.when('/', {templateUrl: '/view/'});
-    }]); 
-})(); 
-
-;*/
-
 (function () {
     'use strict';
 
