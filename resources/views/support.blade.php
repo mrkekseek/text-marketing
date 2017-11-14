@@ -34,19 +34,28 @@
 							<form name="form" method="post" novalidate="novalidate">
 								<fieldset>
 									<div class="form-group">
-										<div class="support">
+										<div class="support input-group">
+											<span class="input-group-addon">
+												<span class="fa fa-user"></span>
+											</span>
 											<input type="text" name="name" class="form-control input-lg" ng-model="support.name" required="required" placeholder="{{ __('Your Name') }}" ng-model="supportArr.name"/>
 										</div>
 									</div>
 
 									<div class="form-group">
-										<div class="support">
+										<div class="support input-group">
+											<span class="input-group-addon">
+												<span class="fa fa-envelope-o"></span>
+											</span>
 											<input type="email" name="email" class="form-control input-lg" ng-model="support.email" required="required" 
 											placeholder="{{ __('Your Email') }}"/>
 										</div>
 									</div>
 									<div class="textarea">
 										<div class="form-group">
+											<span class="input-group-addon pull-left">
+												<span class=" fa fa-comments"></span>
+											</span>
 											<textarea name="message" class="form-control area-field input-lg" ng-model="support.message" required="required" placeholder="{{ __('Message') }}"></textarea>
 										</div>
 									</div>
@@ -56,6 +65,12 @@
 											{{ __('Send Message') }}</button>
 										</div>
 									</div>
+									<section class="additional-info text-center">
+										<a href="/">
+											<i class="fa fa-home" aria-hidden="true"></i>
+											{{ __('Back To Home Page') }}
+										</a>
+									</section>
 								</fieldset>
 							</form>
 						</div>

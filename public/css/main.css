@@ -540,12 +540,20 @@ li.toggle-provider {
 	padding: 6px 0;
 }
 
+.textarea .input-group-addon {
+	position: absolute;
+}
+
 .textarea {
 	padding-top: 20px;
 }
 
+.textarea textarea {
+	padding-left: 90px;
+} 
+
 .page-signin .form-group textarea {
-	border: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	resize: none;
 }
 
