@@ -1,3 +1,4 @@
+
 @component('mail::message')
 
 Hi {{ $user->firstname }}
