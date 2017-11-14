@@ -14,10 +14,7 @@
         <link rel="stylesheet" type="text/css" href="/css/{{ config('app.name') }}.css" media="screen" />
     </head>
 
-    <body id="app" class="app" data-ng-class="body_class">
-        <div class="init-loader" data-ng-class="loaded">
-            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-        </div>
+    <body id="app" class="app">
 
         @include('header')
 
