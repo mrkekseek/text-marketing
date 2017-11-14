@@ -111,26 +111,6 @@
             }
         };
 
-        $scope.support = function () {
-            var support_mas = {
-                'name': $scope.name,
-                'email': $scope.email,
-                'message': $scope.message
-            };
-
-            var error = 1;
-            error *= validate.check($scope.form.email, 'Email');
-            if (error) {
-                request.send('/emails/contacts', support_mas, function (data) {
-                    if (data.data) {
-                        $timeout(function () {
-                            $window.location.href = "/";
-                        }, 2000);
-                    }
-                });
-            }
-        };
-
         $scope.accept = function () {
             var post_mas = {users_name: $scope.users_name};
             var url = $location.url();
@@ -195,10 +175,6 @@
                     $scope.activate = data.data;
                 });
             }
-        };
-
-        $scope.skip = function() {
-            $window.location.href = "/";
         };
     };
 })();
