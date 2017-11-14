@@ -15,6 +15,7 @@ class UsersSeeder extends Seeder
     	
         DB::table('users')->insert([
             'type' => 1,
+            'owner' => 1,
             'firstname' => 'John',
             'lastname' => 'Smith',
             'email' => 'uri@medicalreputation.com',
