@@ -12,6 +12,7 @@
 
         $scope.init = function() {
             $scope.teams();
+            $scope.get();
         };
 
         $scope.teams = function() {
@@ -21,9 +22,11 @@
         };
 
         $scope.get = function() {
-
+            request.send('/homeadvisor/getLinks', $scope.auth, function(data) {
+                $scope.list = data;
+                $scope.request_finish = true;
+            });
         };
-
 
         $scope.create = function(teams_id) {
             teams_id = teams_id || false;
@@ -35,8 +38,8 @@
                 resolve: {
                     items: function () {
                         return { 'teams': $scope.teams_list};                    }
-                }
-            });
+                    }
+                });
 
             modalInstance.result.then(function(response) {
                 $scope.get();
@@ -64,14 +67,15 @@
             var error = 1;
             error *= validate.check($scope.form.firstname, 'Firstname');
             error *= validate.check($scope.form.team_id, 'Team');
+            error *= validate.check($scope.form.lastname, 'Lastname');
+            error *= validate.check($scope.form.phone, 'Phone');
 
             if (error) {
-                /*request.send('/teams/save', $scope.team, function (data) {
+                request.send('/homeadvisor/linksSave', $scope.user, function (data) {
                     if (data) {
-                        $uibModalInstance.close(data);
+                        console.log('OK');
                     }
-                });*/
-                console.log($scope.user);
+                });
             }
         };
 
