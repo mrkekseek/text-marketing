@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         if ( ! $validator->fails()) {
             $team = new Team();
-            $team->name = $this->teams_name($post);
+            $team->name = $this->teamsName($post);
             $team->save();
 
             $user = new User();
@@ -72,7 +72,7 @@ class AuthController extends Controller
         return false;
     }
 
-    public function teams_name($post) {
+    public function teamsName($post) {
         $name = [$post['firstname']];
 
         if ( ! empty($post['lastname'])) {
