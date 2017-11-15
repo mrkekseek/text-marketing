@@ -140,11 +140,11 @@
 						</div>
 						<div class="form-group">
 							<label>{{ __("Last Name") }}</label>
-							<input type="text" class="form-control" ng-model="user.lastname" />
+							<input name="lastname" type="text" class="form-control" ng-model="user.lastname" />
 						</div>
 						<div class="form-group">
 							<label>{{ __("Phone") }}</label>
-							<input type="text" class="form-control" ng-model="user.phone" />
+							<input name="phone" type="text" class="form-control" ng-model="user.phone" />
 						</div>	
 					</div>
 					<div class="col-sm-6 col-xs-12">
