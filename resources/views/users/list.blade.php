@@ -88,7 +88,7 @@
 						</td>
 
 						<td>
-							@{{ user.teams.name }}
+							@{{ getTeamById(user.teams_id) }}
 						</td>
 						
 						<td class="text-center">
@@ -98,11 +98,11 @@
 							</label>
 						</td>
 						
-						<td class="td-button text-center">
+						<!-- <td class="td-button text-center">
 							<a href="javascript:;" class="a-icon text-warning" ng-click="sign_in(user.id)">
 								<i class="fa fa-lock" aria-hidden="true"></i>
 							</a>
-						</td>
+						</td> -->
 
 						<td class="td-button text-center">
 							<a href="javascript:;" class="a-icon text-primary" ng-click="settings(user.id)">
@@ -180,7 +180,14 @@
 					<div class="form-group">
 						<label>{{ __("Phone") }}</label>
 						<input type="text" class="form-control" ng-model="user.phone" />
-					</div>		
+					</div>	
+					<div class="form-group">
+						<label>{{ __("Payment Plan") }}</label>
+						<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required">
+							<option value="0">{{ __('Select a Plan...') }}</option>
+							<option ng-repeat="plan in plans" value="@{{ plan.id }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
+						</select>
+					</div>	
 				</div>
 			</div>
 		</div>

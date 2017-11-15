@@ -26,6 +26,14 @@
 			});
     	};
 
+    	$scope.getTeamById = function(teamsId) {
+			for (var t in $scope.teams_list) {
+				if ($scope.teams_list[t].id == teamsId) {
+					return $scope.teams_list[t].name;
+				}
+			}
+		};
+
     	$scope.plans = function() {
             request.send('/plans/get', false, function(data) {
                 $scope.plans_list = data;
@@ -38,7 +46,7 @@
 			$scope.plans();
 		};
 
-        $scope.get_plan_info = function() {
+/*        $scope.get_plan_info = function() {
         	if ($rootScope.user.plans_code)
         	{
         		request.send('/users/get_plan_info/', {'plans_code': $rootScope.user.plans_code}, function(data) {
@@ -48,13 +56,13 @@
         			}
 	            });
         	}
-        };
+        };*/
 
-        $scope.cancel_plan = function() {
+/*        $scope.cancel_plan = function() {
         	request.send('/users/cancel_subscription/', {'users_sub_id': $rootScope.user.users_sub_id, 'users_id': $rootScope.user.users_id}, function(data) {
                 $window.location.href = "/";
             });
-        };
+        };*/
 
     	$scope.create = function(users_id) {
             users_id = users_id || false;
@@ -77,7 +85,7 @@
 		    });
 		};
 
-		/*$scope.settings = function(users_id) {
+		$scope.settings = function(users_id) {
             users_id = users_id || false;
 
 			var modalInstance = $uibModal.open({
@@ -97,7 +105,7 @@
 		    }, function () {
 				
 		    });
-		};*/
+		};
 
 		$scope.remove = function(users_id) {
             if (confirm(langs.get('Do you realy want to remove this item? It will also remove all user account data'))) {

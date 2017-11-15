@@ -1,8 +1,8 @@
-<div class="page page-table">
+<div class="page page-table" data-ng-controller="HomeAdvisorCtrl" data-ng-init="init()">
 	<h2>
 		<div class="pull-right">
-    		<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Link') }}</span></button>
-    	</div>
+			<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Link') }}</span></button>
+		</div>
 
 		{{ __('HomeAdvisor Links') }}
 	</h2>
@@ -57,16 +57,16 @@
 							</div>
 						</th>
 
-	                    <th class="th-button">
-						</th>
-
 						<th class="th-button">
 						</th>
 
 						<th class="th-button">
 						</th>
 
-	                </tr>
+						<th class="th-button">
+						</th>
+
+					</tr>
 				</thead>
 
 				<tbody>
@@ -116,3 +116,62 @@
 		</section>
 	</div>
 </div>
+
+<script type="text/ng-template" id="AdvisorCreate.html">
+		<form name="form" method="post" novalidate="novalidate">
+			<div class="modal-header">
+				<h4 class="modal-title" ng-show=" ! user.id">{{ __("Create New Link") }}</h4>
+				<h4 class="modal-title" ng-show="user.id">{{ __("Edit Link") }}</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-6 col-xs-12">
+						<div class="form-group">
+							<label>{{ __("Required Team") }}</label>
+							<select class="form-control" name="team_id" ng-model="user.team_id" required="required">
+								<option value="0" selected="selected">{{ __('Select Required Team') }}</option>
+								<option ng-repeat="team in teams" value="@{{ team.id }}">@{{ team.name }}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label>{{ __("First Name") }}</label>
+							<input type="text" name="firstname" class="form-control" ng-model="user.firstname" required="required" />
+						</div>
+						<div class="form-group">
+							<label>{{ __("Last Name") }}</label>
+							<input type="text" class="form-control" ng-model="user.lastname" />
+						</div>
+						<div class="form-group">
+							<label>{{ __("Phone") }}</label>
+							<input type="text" class="form-control" ng-model="user.phone" />
+						</div>	
+					</div>
+					<div class="col-sm-6 col-xs-12">
+						<div class="form-group">
+							<label>{{ __("Code") }}</label>
+							<input type="email" class="form-control" name="email" ng-model="user.code" required="required" disabled="disabled" />
+						</div>
+						<div class="form-group">
+							<label>{{ __("Link for HA") }}</label>
+							<input type="password" class="form-control" ng-model="user.linkHa" disabled="disabled"/>
+						</div>
+						<div class="form-group">
+							<label>{{ __("Success String") }}</label>
+							<input type="text" class="form-control" ng-model="user.success" disabled="disabled"/>
+						</div>	
+						<div class="form-group">
+							<label>{{ __("Sign Up Link") }}</label>
+							<input type="text" class="form-control" ng-model="user.payPlan" disabled="disabled"/>
+						</div>	
+
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Generate') }}</button>
+				<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
+			</div>
+		</form>
+</script> 
