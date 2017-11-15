@@ -22,7 +22,7 @@
         };
 
         $scope.get = function() {
-            request.send('/homeadvisor/getLinks', $scope.auth, function(data) {
+            request.send('/users/get', $scope.auth, function(data) { // /homeadvisor/getLinks'
                 $scope.list = data;
                 $scope.request_finish = true;
             });
@@ -63,7 +63,9 @@
         $scope.teams = angular.copy(items.teams);
         $scope.user.team_id = '0';
 
-        $scope.save = function () {
+        $scope.requestEnd = false;
+
+        $scope.getLinks = function () {
             var error = 1;
             error *= validate.check($scope.form.firstname, 'Firstname');
             error *= validate.check($scope.form.team_id, 'Team');
@@ -71,11 +73,32 @@
             error *= validate.check($scope.form.phone, 'Phone');
 
             if (error) {
-                request.send('/homeadvisor/linksSave', $scope.user, function (data) {
+                $scope.requestEnd = true;
+                $scope.user.code = '1231231';
+               /* request.send('/homeadvisor/linksSave', $scope.user, function (data) {
                     if (data) {
-                        console.log('OK');
+
                     }
-                });
+                });*/
+            }
+        };
+
+         $scope.save = function () {
+            var error = 1;
+            error *= validate.check($scope.form.firstname, 'Firstname');
+            error *= validate.check($scope.form.team_id, 'Team');
+            error *= validate.check($scope.form.lastname, 'Lastname');
+            error *= validate.check($scope.form.phone, 'Phone');
+
+            if (error) {
+
+   /*             request.send('/homeadvisor/linksSave', $scope.user, function (data) {
+                    if (data) {
+                        console.log(data);
+                    }
+                });*/
+                console.log("save");
+                $uibModalInstance.close();
             }
         };
 
