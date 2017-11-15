@@ -47,6 +47,12 @@
 
 						<th>
 							<div class="th">
+								{{ __('Link for HA') }}
+							</div>
+						</th>
+
+						<th>
+							<div class="th">
 								{{ __('Success String') }}
 							</div>
 						</th>
@@ -72,27 +78,31 @@
 				<tbody>
 					<tr ng-repeat="user in list">
 						<td>
-							@{{ "test" }}
+							@{{ "James Blagg" }}
 						</td>
 
 						<td>
-							@{{ "test" }}
+							@{{ "James" }}
 						</td>
 						
 						<td>
-							@{{ "test" }}
+							@{{ "Blagg" }}
 						</td>
 						
 						<td>
-							@{{ "test" }}
+							@{{ "4324234234" }}
 						</td>
 
 						<td>
-							@{{ "test" }}
+							@{{ "http://app.contractortexter.com/home-advisor/15xHDuIRrU_M2/" }}
 						</td>
 
 						<td>
-							@{{ "test" }}
+							@{{ "User 15xHDuIRrU_M2" }}
+						</td>
+
+						<td>
+							@{{ "http://app.contractortexter.com/pages/signup/15xHDuIRrU_M2/" }}
 						</td>
 
 						<td class="td-button text-center">
@@ -170,7 +180,8 @@
 			</div>
 
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Generate') }}</button>
+				<button ng-show="!requestEnd" type="submit" class="btn btn-primary" ng-click="getLinks()">{{ __('Generate') }}</button>
+				<button ng-show="requestEnd" type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
 				<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
 			</div>
 		</form>
