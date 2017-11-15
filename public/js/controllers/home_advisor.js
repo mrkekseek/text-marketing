@@ -4,9 +4,6 @@
     angular.module('app').controller('HomeAdvisorCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', HomeAdvisorCtrl]);
 
     function HomeAdvisorCtrl($rootScope, $scope, $uibModal, request, langs) {
-        $rootScope.body_class = '';
-        $scope.request_finish = false;
-
         $scope.list = [];
         $scope.teams_list = [];
 
@@ -16,13 +13,13 @@
         };
 
         $scope.teams = function() {
-            request.send('/teams/get', $scope.auth, function(data) {
+            request.send('/teams/get', false, function(data) {
                 $scope.teams_list = data;
             });
         };
 
         $scope.get = function() {
-            request.send('/users/get', $scope.auth, function(data) { // /homeadvisor/getLinks'
+            request.send('/homeadvisor/getLinks', false, function(data) {
                 $scope.list = data;
                 $scope.request_finish = true;
             });
@@ -37,9 +34,10 @@
                 controller: 'AdvisorCtrl',
                 resolve: {
                     items: function () {
-                        return { 'teams': $scope.teams_list};                    }
+                        return {'teams': $scope.teams_list};                    
                     }
-                });
+                }
+            });
 
             modalInstance.result.then(function(response) {
                 $scope.get();
@@ -73,13 +71,13 @@
             error *= validate.check($scope.form.phone, 'Phone');
 
             if (error) {
-                $scope.requestEnd = true;
-                $scope.user.code = '1231231';
-               /* request.send('/homeadvisor/linksSave', $scope.user, function (data) {
-                    if (data) {
 
+               request.send('/homeadvisor/linksSave', $scope.user, function (data) {
+                    if (data) {
+                        console.log('123');
+                        $scope.requestEnd = true;
                     }
-                });*/
+                });
             }
         };
 

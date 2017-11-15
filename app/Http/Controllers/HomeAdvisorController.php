@@ -9,7 +9,7 @@ class HomeAdvisorController extends Controller
 {
     public function linksSave($post = [])
 	{
-		
+		return true;
 	}
 
 	public function getLinks()
