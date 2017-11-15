@@ -39,9 +39,9 @@
 		};
 
         $scope.get_plan_info = function() {
-        	if ($rootScope.user.plans_id)
+        	if ($rootScope.user.plans_code)
         	{
-        		request.send('/users/get_plan_info/', {'plans_id': $rootScope.user.plans_id}, function(data) {
+        		request.send('/users/get_plan_info/', {'plans_code': $rootScope.user.plans_code}, function(data) {
         			if (data.data)
         			{
         				$scope.plan = data.data;
@@ -186,8 +186,8 @@
         	$scope.user.send = '1';
         }
 
-        if ( ! $scope.user.plans_id) {
-        	$scope.user.plans_id = '0';
+        if ( ! $scope.user.plans_code) {
+        	$scope.user.plans_code = '0';
         }
 
         $scope.teams = angular.copy(items.teams);
