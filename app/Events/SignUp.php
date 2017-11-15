@@ -15,14 +15,18 @@ class SignUp
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $user;
+    public $owner;
+    public $config;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user, User $owner)
     {
         $this->user = $user;
+        $this->owner = $owner;
+        $this->config = config('app');
     }
 
     /**

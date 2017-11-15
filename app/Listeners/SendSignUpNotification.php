@@ -6,6 +6,8 @@ use App\Events\SignUp;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Notifications\SignUpEmailForUser;
+use App\Notifications\SignUpEmailForUserHA;
+use App\Notifications\SignUpEmailForAdmin;
 use Illuminate\Support\Facades\Notification;
 
 class SendSignUpNotification
@@ -28,6 +30,12 @@ class SendSignUpNotification
      */
     public function handle(SignUp $event)
     {
-        Notification::send($event->user, new SignUpEmailForUser());
+        if ($event->user->plans_code == 'home-advisor') {
+            Notification::send($event->user, new SignUpEmailForUserHA($event->config));
+        }else {
+            Notification::send($event->user, new SignUpEmailForUser($event->config));
+        }
+
+        Notification::send($event->owner, new SignUpEmailForAdmin($event->config, $event->user));
     }
 }

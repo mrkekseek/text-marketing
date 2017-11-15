@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Team;
 use App\Events\SignUp;
+use App\Mail\Support;
+use App\Mail\Recovery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
+    public $salt = 'eEZue4JfUvJJKn9N';
+
     public function signin($post = [])
     {
         $validator = $this->validate(request(), [
@@ -65,7 +70,8 @@ class AuthController extends Controller
             $user->active = 1;
             $user->save();
 
-            event(new SignUp($user));
+            $owner = User::where('owner', 1)->first();
+            event(new SignUp($user, $owner));
 
             return $this->message(__("You were successfully registered."), 'success');
         }
@@ -73,6 +79,7 @@ class AuthController extends Controller
     }
 
     public function teamsName($post) {
+
         $name = [$post['firstname']];
 
         if ( ! empty($post['lastname'])) {
@@ -86,5 +93,26 @@ class AuthController extends Controller
     {
         Auth::logout();
         return $this->message(__("You are out"), 'success');
+    }
+
+    public function support($post = [])
+    {
+        $owner = User::where('owner', 1)->first();
+        Mail::to($owner)->send(new Support($post));
+        return $this->message(__("Your email successfully sent."), 'success');
+    }
+
+    public function recovery($post = [])
+    {
+        $user = User::where('email', strtolower($post['email']))->first();
+        if ( ! empty($user)) {
+            $password = crypt($user->password, time());
+            $user->password = bcrypt($password);
+            $user->save();
+
+            Mail::to($post['email'])->send(new Recovery(['pass' => $password, 'email' => $post['email']]));
+            return $this->message(__("New password was sent to your email address."), 'success');
+        }
+        return $this->message(__("Invalid email."));
     }
 }

@@ -7,20 +7,22 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class SignUpEmailForUser extends Notification
+class SignUpEmailForAdmin extends Notification
 {
     use Queueable;
 
     public $config;
+    public $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($config)
+    public function __construct($config, $user)
     {
-       $this->config = $config;
+        $this->config = $config;
+        $this->user = $user;
     }
 
     /**
@@ -42,13 +44,12 @@ class SignUpEmailForUser extends Notification
      */
     public function toMail($notifiable)
     {
-        $link = $this->config['url'].'/magic/'.md5($notifiable->id.$notifiable->email).'/send';
+        $link = $this->config['url'].'/magic/'.md5($notifiable->id.$notifiable->email).'/list';
         $project = $this->config['name'];
-
         return (new MailMessage)
-            ->subject('Thanks from '.config('name'))
-            ->markdown('emails.signup_for_user', [
-                'user' => $notifiable,
+            ->subject('New Sign Up at '.$project)
+            ->markdown('emails.signup_for_admin', [
+                'user' => $this->user,
                 'link' => $link,
                 'project' => $project
             ]
