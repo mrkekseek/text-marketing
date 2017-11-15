@@ -104,11 +104,11 @@
 							</a>
 						</td> -->
 
-						<td class="td-button text-center">
+						<!-- <td class="td-button text-center">
 							<a href="javascript:;" class="a-icon text-primary" ng-click="settings(user.id)">
 								<i class="fa fa-cog"></i>
 							</a>
-						</td>
+						</td> -->
 
 						<td class="td-button text-center">
 							<a href="javascript:;" class="a-icon text-success" ng-click="create(user.id)">

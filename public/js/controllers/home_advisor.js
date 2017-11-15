@@ -19,10 +19,18 @@
         };
 
         $scope.get = function() {
-            request.send('/homeadvisor/getLinks', false, function(data) {
+            request.send('/homeadvisor/getLinks', false, function(data) { 
                 $scope.list = data;
                 $scope.request_finish = true;
             });
+        };
+
+        $scope.getTeamById = function(teamsId) {
+            for (var t in $scope.teams_list) {
+                if ($scope.teams_list[t].id == teamsId) {
+                    return $scope.teams_list[t].name;
+                }
+            }
         };
 
         $scope.create = function(teams_id) {
@@ -59,9 +67,11 @@
 
     function AdvisorCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
         $scope.teams = angular.copy(items.teams);
-        $scope.user.team_id = '0';
-
         $scope.requestEnd = false;
+        
+        if (! $scope.user.id) {
+            $scope.user.team_id = '0';            
+        }
 
         $scope.getLinks = function () {
             var error = 1;
@@ -71,17 +81,19 @@
             error *= validate.check($scope.form.phone, 'Phone');
 
             if (error) {
-
-               request.send('/homeadvisor/linksSave', $scope.user, function (data) {
+                request.send('/homeadvisor/linksSave', $scope.user, function (data) {
                     if (data) {
-                        console.log('123');
+                        $scope.user.code = data;
+                        $scope.user.linkHa = data;
+                        $scope.user.success = data;
+                        $scope.user.payPlan = data;
                         $scope.requestEnd = true;
                     }
                 });
             }
         };
 
-         $scope.save = function () {
+        $scope.save = function () {
             var error = 1;
             error *= validate.check($scope.form.firstname, 'Firstname');
             error *= validate.check($scope.form.team_id, 'Team');
@@ -89,13 +101,11 @@
             error *= validate.check($scope.form.phone, 'Phone');
 
             if (error) {
-
-   /*             request.send('/homeadvisor/linksSave', $scope.user, function (data) {
+                request.send('/homeadvisor/linksSave', $scope.user, function (data) {
                     if (data) {
-                        console.log(data);
+                        console.log("End");
                     }
-                });*/
-                console.log("save");
+                });
                 $uibModalInstance.close();
             }
         };
