@@ -19,10 +19,10 @@ class UsersController extends Controller
 		return User::where('type', '!=', 1)->get();
 	}
 
-	public function save($post = [])
+	public function save($id = false, $post = [])
 	{
 		$validator = $this->validate(request(), [
-            'email' => 'required|email|unique:users,email'.(empty($post['id']) ? '' : ','.$post['id']),
+            'email' => 'required|email|unique:users,email'.(empty($id) ? '' : ','.$id),
             'teams_id' => 'required',
             'firstname' => 'required',
             'password' => 'required_without:id',
@@ -30,7 +30,7 @@ class UsersController extends Controller
 
         if ( ! $validator->fails()) {
 
-			$user = User::firstOrNew(['id' => empty($post['id']) ? 0 : $post['id']]);
+			$user = User::firstOrNew(['id' => empty($id) ? 0 : $id]);
 			$user->plans_code = $post['plans_code'];
 			$user->teams_id = $post['teams_id'];
 			$user->teams_leader = $post['teams_leader'];
@@ -182,16 +182,16 @@ class UsersController extends Controller
 		return $this->message(__('User was successfully removed'), 'success');
 	}
 
-	public function teamLeader($post = [])
+	public function teamLeader($id = false, $post = [])
 	{
-		$user = User::find($post['id']);
-		$user->teams_leader = $post['teams_leader'];
-		$user->save();
+		$user = User::find($id);
+		$user->update(['teams_leader' => $post['_checked']]);
+		return $user;
 	}
 
 	public function phoneToNumber($phone)
 	{
-		return str_replace('-', '', $phone);
+		return str_replace(['-', '.', ' ', '(', ')'], '', $phone);
 	}
 
 	public function sendActivationEmail(User $user)

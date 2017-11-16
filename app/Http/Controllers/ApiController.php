@@ -13,7 +13,7 @@ class ApiController extends Controller
             $data = $this->data($smethod);
 	    	$method = $this->method($sid, $smethod);
 
-		    $controller = app()->make('\App\Http\Controllers\\'.ucfirst($sunit).'Controller');    
+		    $controller = app()->make('\App\Http\Controllers\\'.ucfirst($sunit).'Controller');
 		    $response = $controller->callAction($method, [
                 'id' => $id,
                 'data' => $data

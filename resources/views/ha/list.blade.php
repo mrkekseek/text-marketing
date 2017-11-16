@@ -93,15 +93,15 @@
 						</td>
 
 						<td>
-							@{{ user.linkHa }}
+							@{{ user.link_for_ha }}
 						</td>
 
 						<td>
-							@{{ user.success }}
+							@{{ user.success_string }}
 						</td>
 
 						<td>
-							@{{ user.payPlan }}
+							@{{ user.sign_up_link }}
 						</td>
 
 						<td class="td-button text-center">
@@ -138,7 +138,7 @@
 					<div class="col-sm-6 col-xs-12">
 						<div class="form-group">
 							<label>{{ __("Required Team") }}</label>
-							<select class="form-control" name="team_id" ng-model="user.team_id" required="required" ng-options="team.id as team.name for team in teams">
+							<select class="form-control" name="team_id" ng-model="user.teams_id" required="required" ng-options="team.id as team.name for team in teams">
 							</select>
 						</div>
 						<div class="form-group">
@@ -157,19 +157,19 @@
 					<div class="col-sm-6 col-xs-12">
 						<div class="form-group">
 							<label>{{ __("Code") }}</label>
-							<input type="text" class="form-control" name="email" ng-model="user.code" disabled="disabled" />
+							<input type="text" class="form-control" name="email" ng-model="user.links_code" disabled="disabled" />
 						</div>
 						<div class="form-group">
 							<label>{{ __("Link for HA") }}</label>
-							<input type="text" class="form-control" ng-model="user.linkHa" disabled="disabled"/>
+							<input type="text" class="form-control" ng-model="user.link_for_ha" disabled="disabled"/>
 						</div>
 						<div class="form-group">
 							<label>{{ __("Success String") }}</label>
-							<input type="text" class="form-control" ng-model="user.success" disabled="disabled"/>
+							<input type="text" class="form-control" ng-model="user.success_string" disabled="disabled"/>
 						</div>	
 						<div class="form-group">
 							<label>{{ __("Sign Up Link") }}</label>
-							<input type="text" class="form-control" ng-model="user.payPlan" disabled="disabled"/>
+							<input type="text" class="form-control" ng-model="user.sign_up_link" disabled="disabled"/>
 						</div>	
 
 					</div>
