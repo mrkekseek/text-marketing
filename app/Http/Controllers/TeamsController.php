@@ -12,7 +12,7 @@ class TeamsController extends Controller
 		$this->middleware('auth');
 	}
 
-    public function get($post = [])
+    public function all()
 	{
 		return Team::all();
 	}
@@ -26,9 +26,9 @@ class TeamsController extends Controller
 		return $this->message(__('Team was successfully saved'), 'success');
 	}
 
-	public function remove($post = [])
+	public function remove($id)
 	{
-		Team::destroy($post['id']);
+		Team::destroy($id);
 		return $this->message(__('Team was successfully removed'), 'success');
 	}
 
