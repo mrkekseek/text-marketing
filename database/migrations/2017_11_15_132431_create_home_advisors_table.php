@@ -22,7 +22,6 @@ class CreateHomeAdvisorsTable extends Migration
             $table->string('phone')->default('');
             $table->string('email')->default('');
             $table->string('link_for_ha')->default('');
-            $table->string('sign_up_link')->default('');
             $table->string('success_string')->default('');
             $table->timestamps();
         });

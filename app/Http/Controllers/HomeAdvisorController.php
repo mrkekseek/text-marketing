@@ -16,7 +16,6 @@ class HomeadvisorController extends Controller
 		$homeAdvisor->lastname = $post['lastname'];
 		$homeAdvisor->phone = $post['phone'];
 		$homeAdvisor->link_for_ha = $this->linkForHAGenerate($homeAdvisor->links_code);
-		$homeAdvisor->sign_up_link = $this->signUpLinkGenerate($homeAdvisor->links_code);
 		$homeAdvisor->success_string = 'User '.$homeAdvisor->links_code;
 		$homeAdvisor->save();
 
@@ -28,9 +27,10 @@ class HomeadvisorController extends Controller
 		return HomeAdvisor::all();
 	}
 
-	public function signUpLinkGenerate($code)
+	public function remove($id = false)
 	{
-		return config('url').'/signup-ha/'.$code;
+		Homeadvisor::destroy($id);
+		return $this->message(__('Link was successfully removed'), 'success');
 	}
 
 	public function linkForHAGenerate($code)
