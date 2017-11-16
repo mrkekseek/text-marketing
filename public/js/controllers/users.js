@@ -18,7 +18,9 @@
     	$scope.teams = function() {
     		request.send('/teams', $scope.auth, function(data) {
     			$scope.teams_list = data;
+    			$scope.teams_list.unshift({'id':'0' ,'name':'Select a Team...'});
 			}, 'get');
+
     	};
 
     	$scope.getTeamById = function(teamsId) {
@@ -126,16 +128,17 @@
             });
 		}
 
-		$scope.teams_leader = function(users_id, teams_leader) {
+		$scope.teamsLeader = function(users_id, teams_leader) {
 			var leader = teams_leader;
 			
 			if (teams_leader === 1) {
 				leader = false;
 			}
 
-			request.send('/users/teamsLeader', {'id': users_id, 'teams_leader': leader}, function(data) {
+			var method = !leader ? 'delete' : 'post';
+			request.send('/users/' + users_id + '/teamLeader', false, function(data) {
                 //$scope.get();
-            });
+            }, method);
 		}
 
 		$scope.change_password = function() {
@@ -158,17 +161,6 @@
 	                }
 	            });
 			}
-		};
-
-		$scope.save = function() {
-			var post_mas = {
-				'firstname': $rootScope.user.firstname,
-				'lastname': $rootScope.user.lastname,
-				'email': $rootScope.user.email,
-				'phone': $rootScope.user.phone
-			};
-			
-			request.send('/users/profile', post_mas);
 		};
     };
 })();
@@ -214,7 +206,6 @@
 						}
 					});
 				}
-				
 			}
 		};
 
