@@ -27,7 +27,7 @@
                     if (data) {
                         $timeout(function () {
                             $window.location.href = "/";
-                        }, 2000);
+                        }, 1000);
                     } else {
                         $rootScope.request_sent = false;
                     }

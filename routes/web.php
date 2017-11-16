@@ -21,7 +21,7 @@ Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = ''
 })->middleware('auth.views');
 
 Route::group(['prefix' => 'api/v1'], function() {
-	Route::any('{unit}/{method}', 'ApiController')->middleware('messages');
+	Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
 });
 
 Route::get('signup/{type?}', function($type = false) {

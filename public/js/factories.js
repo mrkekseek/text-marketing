@@ -101,20 +101,19 @@
     function request($http, $rootScope, Upload, logger) {
         var api_url = '/api/v1';
         return {
-            send: function(adrress, post_mas, callback, method) {
+            send: function (adrress, post_mas, callback, method) {
                 callback = callback || false;
                 method = method || 'post';
-
-                $http.post(api_url + adrress, post_mas).then(function(response) {
+                
+                $http[method](api_url + adrress, post_mas).then(function(response) {
                     var data = logger.check(response.data);
-                    if (callback)
-                    {
+                    if (callback) {
                         (callback)(data);
                     }
                 });
             },
 
-            sendWithFiles: function(adrress, post_mas, callback, percentsCallback, method) {
+            sendWithFiles: function (adrress, post_mas, callback, percentsCallback, method) {
                 callback = callback || false;
                 percentsCallback = percentsCallback || false;
                 method = method || 'post';
@@ -124,16 +123,14 @@
                     data: post_mas
                 }).then(function (response) {
                     var data = logger.check(response.data);
-                    if (callback)
-                    {
+                    if (callback) {
                         (callback)(data);
                     }
                 }, function (response) {
                     
                 }, function (event) {
                     var progress = parseInt(100.0 * event.loaded / event.total);
-                    if (percentsCallback)
-                    {
+                    if (percentsCallback) {
                         (percentsCallback)(progress);
                     }
                 });
