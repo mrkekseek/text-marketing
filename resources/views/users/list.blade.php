@@ -93,7 +93,7 @@
 						
 						<td class="text-center">
 							<label class="ui-switch ui-switch-success ui-switch-sm">
-								<input type="checkbox" ng-model="user.teams_leader" ng-checked="user.teams_leader == 1" ng-click="teams_leader(user.id, user.teams_leader)" />
+								<input type="checkbox" ng-model="user.teams_leader" ng-checked="user.teams_leader == 1" ng-click="teamsLeader(user.id, user.teams_leader)" />
 								<i></i>
 							</label>
 						</td>
@@ -140,9 +140,7 @@
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
 						<label>{{ __("Team") }}</label>
-						<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required">
-							<option value="0">{{ __('Select a Team...') }}</option>
-							<option ng-repeat="team in teams" value="@{{ team.id }}">@{{ team.name }}</option>
+						<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required" ng-options="team.id as team.name for team in teams" >
 						</select>
 					</div>
 					<div class="form-group">

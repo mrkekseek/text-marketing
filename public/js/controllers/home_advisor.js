@@ -19,10 +19,10 @@
         };
 
         $scope.get = function() {
-            request.send('/homeadvisor/getLinks', false, function(data) { 
-                $scope.list = data;
-                $scope.request_finish = true;
-            });
+            request.send('/teams', $scope.auth, function(data) {
+                $scope.teams_list = data;
+                $scope.teams_list.unshift({'id':'0' ,'name':'Select a Team...'});
+            }, 'get');
         };
 
         $scope.getTeamById = function(teamsId) {

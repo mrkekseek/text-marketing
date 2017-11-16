@@ -88,11 +88,20 @@
 			error *= validate.check($scope.form.name, 'Name');
 
 			if (error) {
-				request.send('/teams/save', $scope.team, function (data) {
-					if (data) {
-						$uibModalInstance.close(data);
-					}
-				});
+				if ($scope.team.teams_id) {
+					request.send('/teams/' + $scope.team.teams_id, $scope.team, function (data) {
+						if (data) {
+							$uibModalInstance.close(data);
+						} 
+					});
+				} else {
+					request.send('/teams/save', $scope.team, function (data) {
+						if (data) {
+							$uibModalInstance.close(data);
+						} 
+					}, 'put');
+				}
+				
 			}
 		};
 
