@@ -56,12 +56,6 @@
 							</div>
 						</th>
 
-						<th>
-							<div class="th">
-								{{ __('Sign Up Link') }}
-							</div>
-						</th>
-
 						<th class="th-button">
 						</th>
 
@@ -100,12 +94,8 @@
 							@{{ user.success_string }}
 						</td>
 
-						<td>
-							@{{ user.sign_up_link }}
-						</td>
-
 						<td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-success" ng-click="create(link.links_id)">
+							<a href="javascript:;" class="a-icon text-success" ng-click="create(user.id)">
 								<i class="fa fa-pencil-square-o"></i>
 							</a>
 						</td>
@@ -167,18 +157,13 @@
 							<label>{{ __("Success String") }}</label>
 							<input type="text" class="form-control" ng-model="user.success_string" disabled="disabled"/>
 						</div>	
-						<div class="form-group">
-							<label>{{ __("Sign Up Link") }}</label>
-							<input type="text" class="form-control" ng-model="user.sign_up_link" disabled="disabled"/>
-						</div>	
-
 					</div>
 				</div>
 			</div>
 
 			<div class="modal-footer">
-				<button ng-show="!requestEnd" type="submit" class="btn btn-primary" ng-click="getLinks()">{{ __('Generate') }}</button>
-				<button ng-show="requestEnd" type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
+				<button ng-show="!user.id" type="submit" class="btn btn-primary" ng-click="getLinks()">{{ __('Generate') }}</button>
+				<button ng-show="user.id" type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
 				<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
 			</div>
 		</form>

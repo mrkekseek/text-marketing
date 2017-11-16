@@ -1,8 +1,8 @@
 <div class="page page-table" data-ng-controller="PlansCtrl" data-ng-init="init()">
 	<h2>
 		<div class="pull-right">
-    		<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Plan') }}</span></button>
-    	</div>
+			<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Plan') }}</span></button>
+		</div>
 
 		{{ __('Payment Plans') }}
 	</h2>
@@ -51,32 +51,32 @@
 							</div>
 						</th>
 
-	                    <th class="th-button">
+						<th class="th-button">
 						</th>
 
-	                </tr>
+					</tr>
 				</thead>
 
 				<tbody>
 					<tr ng-repeat="user in list">
 						<td>
-							@{{ "test" }}
+							@{{ user.plans_name }}
 						</td>
 
 						<td>
-							@{{ "test" }}
+							@{{ user.plans_price }}
 						</td>
 						
 						<td>
-							@{{ "test" }}
+							@{{ user.plans_interval }}
 						</td>
 						
 						<td>
-							@{{ "test" }}
+							@{{ user.num }}
 						</td>
 
 						<td>
-							@{{ "test" }}
+							@{{ user.trial }}
 						</td>
 
 						<td class="td-button text-center">
@@ -93,41 +93,44 @@
 
 <script type="text/ng-template" id="PlanCreate.html">
 	<form name="form" method="post" novalidate="novalidate">
-	    <div class="modal-header">
-	        <h4 class="modal-title">{{ __("New Plan") }}</h4>
-	    </div>
+		<div class="modal-header">
+			<h4 class="modal-title">{{ __("New Plan") }}</h4>
+		</div>
 
-	    <div class="modal-body">
-	    	<div class="form-group">
-		    	<label>{{ __("Name") }}</label>
+		<div class="modal-body">
+			<div class="form-group">
+				<label>{{ __("Name") }}</label>
 				<input type="text" name="firstname" class="form-control" ng-model="user.firstname" required="required" />
-	    	</div>
-	    	<div class="form-group">
-		    	<label>{{ __("Amount") }}</label>
-				<input type="text" class="form-control" ng-model="user.lastname" />
-	    	</div>
-	    	<div class="form-group">
-		    	<label>{{ __("Interval") }}</label>
-		    	<select class="form-control" ng-model="plan.interval">
+			</div>
+			<div class="form-group ">
+				<label>{{ __("Amount") }}</label>
+				<div class="input-group">
+					<input type="text" class="form-control" ng-model="user.lastname" required="required" />
+					<span class="input-group-addon">$</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label>{{ __("Interval") }}</label>
+				<select class="form-control" ng-model="plan.interval">
 					<option value="day">{{ __("Day") }}</option>
 					<option value="week">{{ __("Week") }}</option>
 					<option value="month">{{ __("Month") }}</option>
 					<option value="year">{{ __("Year") }}</option>
 				</select>
-	    	</div>
-	    	<div class="form-group">
-		    	<label>{{ __("Counts per week") }}</label>
+			</div>
+			<div class="form-group">
+				<label>{{ __("Counts per week") }}</label>
 				<input type="text" class="form-control" ng-model="user.phone" />
-	    	</div>
-	    	<div class="form-group">
-		    	<label>{{ __("Trial Period (days)") }}</label>
+			</div>
+			<div class="form-group">
+				<label>{{ __("Trial Period (days)") }}</label>
 				<input type="text" class="form-control" ng-model="user.phone" />
-	    	</div>
+			</div>
 		</div>
 
-	    <div class="modal-footer">
+		<div class="modal-footer">
 			<button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
 			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
-	    </div>
+		</div>
 	</form>
 </script>
