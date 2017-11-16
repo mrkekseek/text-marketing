@@ -176,6 +176,13 @@ class UsersController extends Controller
 		}*/
 	}
 
+	public function teamsLeader($post = [])
+	{
+		$user = User::find($post['id']);
+		$user->teams_leader = $post['teams_leader'];
+		$user->save();
+	}
+
 	public function phoneToNumber($phone)
 	{
 		return str_replace('-', '', $phone);
