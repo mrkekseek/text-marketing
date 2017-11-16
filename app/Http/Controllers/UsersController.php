@@ -14,7 +14,7 @@ class UsersController extends Controller
     	echo 'sasdasda';
     }
 
-    public function get($post = [])
+    public function all()
 	{
 		return User::where('type', '!=', 1)->get();
 	}
@@ -176,7 +176,13 @@ class UsersController extends Controller
 		}*/
 	}
 
-	public function teamsLeader($post = [])
+	public function remove($id)
+	{
+		User::destroy($id);
+		return $this->message(__('User was successfully removed'), 'success');
+	}
+
+	public function teamLeader($post = [])
 	{
 		$user = User::find($post['id']);
 		$user->teams_leader = $post['teams_leader'];
