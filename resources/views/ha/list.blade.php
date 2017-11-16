@@ -3,7 +3,6 @@
 		<div class="pull-right">
 			<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Link') }}</span></button>
 		</div>
-
 		{{ __('HomeAdvisor Links') }}
 	</h2>
 
@@ -78,31 +77,31 @@
 				<tbody>
 					<tr ng-repeat="user in list">
 						<td>
-							@{{ "James Blagg" }}
+							@{{ getTeamById(user.teams_id) }}
 						</td>
 
 						<td>
-							@{{ "James" }}
+							@{{ user.firstname }}
 						</td>
 						
 						<td>
-							@{{ "Blagg" }}
+							@{{ user.lastname }}
 						</td>
 						
 						<td>
-							@{{ "4324234234" }}
+							@{{ user.phone }}
 						</td>
 
 						<td>
-							@{{ "http://app.contractortexter.com/home-advisor/15xHDuIRrU_M2/" }}
+							@{{ user.linkHa }}
 						</td>
 
 						<td>
-							@{{ "User 15xHDuIRrU_M2" }}
+							@{{ user.success }}
 						</td>
 
 						<td>
-							@{{ "http://app.contractortexter.com/pages/signup/15xHDuIRrU_M2/" }}
+							@{{ user.payPlan }}
 						</td>
 
 						<td class="td-button text-center">
@@ -150,17 +149,17 @@
 						</div>
 						<div class="form-group">
 							<label>{{ __("Last Name") }}</label>
-							<input name="lastname" type="text" class="form-control" ng-model="user.lastname" />
+							<input name="lastname" type="text" class="form-control" ng-model="user.lastname" required="required" />
 						</div>
 						<div class="form-group">
 							<label>{{ __("Phone") }}</label>
-							<input name="phone" type="text" class="form-control" ng-model="user.phone" />
+							<input name="phone" type="text" class="form-control" ng-model="user.phone" required="required" />
 						</div>	
 					</div>
 					<div class="col-sm-6 col-xs-12">
 						<div class="form-group">
 							<label>{{ __("Code") }}</label>
-							<input type="email" class="form-control" name="email" ng-model="user.code" required="required" disabled="disabled" />
+							<input type="email" class="form-control" name="email" ng-model="user.code" disabled="disabled" />
 						</div>
 						<div class="form-group">
 							<label>{{ __("Link for HA") }}</label>

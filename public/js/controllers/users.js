@@ -193,7 +193,7 @@
         	$scope.user.active = '0';
         	$scope.user.send = '1';
         }
-
+        
         if ( ! $scope.user.plans_code) {
         	$scope.user.plans_code = '0';
         }
