@@ -15,6 +15,7 @@
         $scope.teams = function() {
             request.send('/teams', false, function(data) {
                 $scope.teams_list = data;
+                $scope.teams_list.unshift({'id':'0' ,'name':'Select a Team...'});
             }, 'get');
         };
 
