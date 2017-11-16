@@ -2,18 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\HomeAdvisor;
+use App\Homeadvisor;
 use Illuminate\Http\Request;
 
-class HomeAdvisorController extends Controller
+class HomeadvisorController extends Controller
 {
-    public function linksSave($post = [])
+    public function saveLink($id = false, $post = [])
 	{
-		return true;
+		$homeAdvisor = new Homeadvisor;
+		$homeAdvisor->teams_id = $post['teams_id'];
+		$homeAdvisor->links_code = $this->linksCodeGenerate($post['firstname'].$post['lastname']);
+		$homeAdvisor->firstname = $post['firstname'];
+		$homeAdvisor->lastname = $post['lastname'];
+		$homeAdvisor->phone = $post['phone'];
+		$homeAdvisor->link_for_ha = $this->linkForHAGenerate($homeAdvisor->links_code);
+		$homeAdvisor->sign_up_link = $this->signUpLinkGenerate($homeAdvisor->links_code);
+		$homeAdvisor->success_string = 'User '.$homeAdvisor->links_code;
+		$homeAdvisor->save();
+
+		return $homeAdvisor;
 	}
 
-	public function getLinks()
+	public function all()
 	{
 		return HomeAdvisor::all();
+	}
+
+	public function signUpLinkGenerate($code)
+	{
+		return config('url').'/signup-ha/'.$code;
+	}
+
+	public function linkForHAGenerate($code)
+	{
+		return config('url').'/home-advisor/'.urlencode($code).'/';
+	}
+
+	public function linksCodeGenerate($str)
+	{
+		return str_replace(['.', ',', '/', '&', '$', '=', ':', ';', '"', "'"], '_', crypt(time().$str, time()));
 	}
 }

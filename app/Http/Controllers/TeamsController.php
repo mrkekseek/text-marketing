@@ -17,9 +17,9 @@ class TeamsController extends Controller
 		return Team::all();
 	}
 
-	public function save($post = [])
+	public function save($id = false, $post = [])
 	{
-		$team = Team::firstOrNew(['id' => empty($post['id']) ? 0 : $post['id']]);
+		$team = Team::firstOrNew(['id' => empty($id) ? 0 : $id]);
 		$team->name = $post['name'];
 		$team->save();
 

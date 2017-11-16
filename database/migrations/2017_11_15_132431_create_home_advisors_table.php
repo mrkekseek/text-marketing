@@ -13,9 +13,8 @@ class CreateHomeAdvisorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('home_advisors', function (Blueprint $table) {
+        Schema::create('homeadvisors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('users_id')->unsigned()->default(0);
             $table->integer('teams_id')->unsigned()->default(0);
             $table->string('links_code')->default('');
             $table->string('firstname')->default('');
@@ -23,6 +22,7 @@ class CreateHomeAdvisorsTable extends Migration
             $table->string('phone')->default('');
             $table->string('email')->default('');
             $table->string('link_for_ha')->default('');
+            $table->string('sign_up_link')->default('');
             $table->string('success_string')->default('');
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateHomeAdvisorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('home_advisors');
+        Schema::dropIfExists('homeadvisors');
     }
 }

@@ -13,16 +13,16 @@
         };
 
         $scope.teams = function() {
-            request.send('/teams/get', false, function(data) {
+            request.send('/teams', false, function(data) {
                 $scope.teams_list = data;
-            });
+            }, 'get');
         };
 
         $scope.get = function() {
-            request.send('/homeadvisor/getLinks', false, function(data) { 
+            request.send('/homeadvisor', false, function(data) { 
                 $scope.list = data;
                 $scope.request_finish = true;
-            });
+            }, 'get');
         };
 
         $scope.getTeamById = function(teamsId) {
@@ -70,7 +70,7 @@
         $scope.requestEnd = false;
         
         if (! $scope.user.id) {
-            $scope.user.team_id = '0';            
+            $scope.user.teams_id = '0';            
         }
 
         $scope.getLinks = function () {
@@ -81,7 +81,7 @@
             error *= validate.check($scope.form.phone, 'Phone');
 
             if (error) {
-                request.send('/homeadvisor/linksSave', $scope.user, function (data) {
+                request.send('/homeadvisor/saveLink', $scope.user, function (data) {
                     if (data) {
                         $scope.user.code = data;
                         $scope.user.linkHa = data;
