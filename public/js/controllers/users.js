@@ -4,14 +4,9 @@
     angular.module('app').controller('UsersCtrl', ['$rootScope', '$scope', '$uibModal', '$window', 'request', 'langs', 'validate', UsersCtrl]);
 
     function UsersCtrl($rootScope, $scope, $uibModal, $window, request, langs, validate) {
-    	$rootScope.body_class = '';
-    	$scope.request_finish = false;
-
     	$scope.list = [];
     	$scope.teams_list = [];
     	$scope.plans_list = [];
-    	$scope.activate = false;
-    	$scope.plan = false;
 
     	$scope.get = function() {
     		request.send('/users/get', $scope.auth, function(data) {
@@ -132,13 +127,14 @@
 		}
 
 		$scope.teams_leader = function(users_id, teams_leader) {
-			var leader = true;
-			if (teams_leader === '1') {
+			var leader = teams_leader;
+			
+			if (teams_leader === 1) {
 				leader = false;
 			}
 
-			request.send('/users/teams_leader', {'id': users_id, 'teams_leader': leader}, function(data) {
-                $scope.get();
+			request.send('/users/teamsLeader', {'id': users_id, 'teams_leader': leader}, function(data) {
+                //$scope.get();
             });
 		}
 
@@ -186,20 +182,17 @@
 
     function ModalUsersCreateCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
         $scope.user = angular.copy(items.user);
+        $scope.teams = angular.copy(items.teams);
+        $scope.plans = angular.copy(items.plans);
         $scope.user.password = '';
+
         if ( ! $scope.user.id) {
         	$scope.user.teams_id = '0';
         	$scope.user.teams_leader = '0';
         	$scope.user.active = '0';
         	$scope.user.send = '1';
-        }
-        
-        if ( ! $scope.user.plans_code) {
         	$scope.user.plans_code = '0';
         }
-
-        $scope.teams = angular.copy(items.teams);
-        $scope.plans = angular.copy(items.plans);
 
     	$scope.save = function() {
 	    	var error = 1;

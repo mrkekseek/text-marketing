@@ -183,9 +183,9 @@
 					</div>	
 					<div class="form-group">
 						<label>{{ __("Payment Plan") }}</label>
-						<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required">
+						<select class="form-control" name="plans_id" ng-model="user.plans_code" required="required">
 							<option value="0">{{ __('Select a Plan...') }}</option>
-							<option ng-repeat="plan in plans" value="@{{ plan.id }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
+							<option ng-repeat="plan in plans" value="@{{ plan.plans_code }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
 						</select>
 					</div>	
 				</div>
