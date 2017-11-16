@@ -9,10 +9,10 @@
     	$scope.list = [];
 
     	$scope.get = function () {
-    		request.send('/teams/get', {}, function (data) {
+    		request.send('/teams', {}, function (data) {
     			$scope.list = data;
     			$scope.request_finish = true;
-			});
+			}, 'get');
     	};
 
     	$scope.initAdmin = function () {
@@ -55,9 +55,9 @@
 
 		$scope.remove = function (teams_id) {
             if (confirm(langs.get('Do you really want to remove this team?'))) {
-                request.send('/teams/remove', {'id': teams_id}, function (data) {
+                request.send('/teams/' + teams_id, false, function (data) {
                     $scope.get();
-                });
+                }, 'delete');
             }
         };
 

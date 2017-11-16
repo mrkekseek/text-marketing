@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class PlansController extends Controller
 {
-    public function get($post = [])
+    public function all()
 	{
 		return Plan::all();
 	}

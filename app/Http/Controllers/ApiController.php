@@ -58,6 +58,7 @@ class ApiController extends Controller
                             break;
                         case 'DELETE':
                             $method = 'remove';
+                            break;
                         default:
                             $method = $sid;
                             break;

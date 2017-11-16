@@ -9,16 +9,16 @@
     	$scope.plans_list = [];
 
     	$scope.get = function() {
-    		request.send('/users/get', $scope.auth, function(data) {
+    		request.send('/users', $scope.auth, function(data) {
     			$scope.list = data;
     			$scope.request_finish = true;
-			});
+			}, 'get');
     	};
 
     	$scope.teams = function() {
-    		request.send('/teams/get', $scope.auth, function(data) {
+    		request.send('/teams', $scope.auth, function(data) {
     			$scope.teams_list = data;
-			});
+			}, 'get');
     	};
 
     	$scope.getTeamById = function(teamsId) {
@@ -30,9 +30,9 @@
 		};
 
     	$scope.plans = function() {
-            request.send('/plans/get', false, function(data) {
+            request.send('/plans', false, function(data) {
                 $scope.plans_list = data;
-            });
+            }, 'get');
         };
 
         $scope.initAdmin = function () {
@@ -104,9 +104,9 @@
 
 		$scope.remove = function(users_id) {
             if (confirm(langs.get('Do you realy want to remove this item? It will also remove all user account data'))) {
-                request.send('/users/remove', {'id': users_id}, function(data) {
+                request.send('/users/' + users_id, false, function(data) {
                     $scope.get();
-                });
+                }, 'delete');
             }
         };
 
@@ -201,11 +201,20 @@
 			error *= validate.check($scope.form.teams_id, 'Team');
 
 			if (error) {
-				request.send('/users/save', $scope.user, function(data) {
-					if (data) {
-						$uibModalInstance.close(data);
-					}
-				});
+				if ( ! $scope.user.id) {
+					request.send('/users/save', $scope.user, function(data) {
+						if (data) {
+							$uibModalInstance.close(data);
+						}
+					}, 'put');
+				} else {
+					request.send('/users/' + $scope.user.id, $scope.user, function(data) {
+						if (data) {
+							$uibModalInstance.close(data);
+						}
+					});
+				}
+				
 			}
 		};
 
