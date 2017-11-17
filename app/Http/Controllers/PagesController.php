@@ -11,7 +11,7 @@ class PagesController extends Controller
 {
     public function defaultPage($post = [])
     {
-    	return auth()->user()->type == 1 ? 'users.list' : 'homeadvisor.index';
+    	return auth()->user()->type == 1 ? 'users.list' : 'ha.user';
     }
 
     public function menu($post = [])
@@ -25,7 +25,7 @@ class PagesController extends Controller
     	foreach ($pages as $page) {
     		$temp[$page['code']] = $page;
     	}
-    	
+
     	$items = [];
     	foreach ($menu as $parent) {
 			if (empty($parent['parents_code']))
@@ -37,10 +37,11 @@ class PagesController extends Controller
 					if ($parent['pages_code'] == $child['parents_code']) {
 						$temp[$child['pages_code']]['parents_code'] = $child['parents_code'];
 						$temp[$child['pages_code']]['main'] = $child['main'];
-						$row['pages'][] = $temp[$child['pages_code']];
+						//$row['pages'][] = $temp[$child['pages_code']];
+						//$row['pages'][] = $child;
+						//print_r($child);
 					}
 				}
-
 				$items[] = $row;
 			}
 		}

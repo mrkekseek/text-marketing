@@ -87,7 +87,6 @@
     function AdvisorCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
         $scope.teams = angular.copy(items.teams);
         $scope.user = angular.copy(items.user);
-        $scope.isShown = true;
         $scope.type = 'Save';
 
         if (! $scope.user.id) {
@@ -106,7 +105,7 @@
                     request.send('/homeadvisor/saveLink', $scope.user, function (data) {
                         if (data) {
                             $scope.user = data;
-                            $scope.isShown = false;
+                            $scope.isShown = true;
                         }
                     });
                 }
@@ -118,7 +117,7 @@
 
         $scope.cancel = function () {
             $uibModalInstance.close();
-            $scope.isShown = true;
+            $scope.isShown = false;
         };
     };
 })();
