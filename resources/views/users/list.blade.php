@@ -153,7 +153,7 @@
 					</div>
 					<div class="form-group">
 						<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.teams_leader" ng-true-value="'1'" ng-false-value="'0'" />
+							<input type="checkbox" ng-model="user.teams_leader" />
 							<i></i>
 						</label>
 						<strong class="team-leader">{{ __(' Team Leader') }}</strong>

@@ -162,8 +162,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<button ng-show="!user.id" type="submit" class="btn btn-primary" ng-click="getLinks()">{{ __('Generate') }}</button>
-				<button ng-show="user.id" type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
+				<button ng-show="isShown" type="submit" class="btn btn-primary" ng-click="save()">@{{ type }}</button>
 				<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
 			</div>
 		</form>

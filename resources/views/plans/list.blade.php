@@ -94,7 +94,7 @@
 <script type="text/ng-template" id="PlanCreate.html">
 	<form name="form" method="post" novalidate="novalidate">
 		<div class="modal-header">
-			<h4 class="modal-title">{{ __("New Plan") }}</h4>
+			<h4 class="modal-title">{{ __("Create Plan") }}</h4>
 		</div>
 
 		<div class="modal-body">

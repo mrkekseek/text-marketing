@@ -15,7 +15,7 @@ class AuthController extends Controller
 {
     public $salt = 'eEZue4JfUvJJKn9N';
 
-    public function signin($post = [])
+    public function signin($id = false, $post = [])
     {
         $validator = $this->validate(request(), [
             'email' => 'required|email',
@@ -102,7 +102,7 @@ class AuthController extends Controller
         return $this->message(__("Your email successfully sent."), 'success');
     }
 
-    public function recovery($post = [])
+    public function recovery($id = false, $post = [])
     {
         $user = User::where('email', strtolower($post['email']))->first();
         if ( ! empty($user)) {
