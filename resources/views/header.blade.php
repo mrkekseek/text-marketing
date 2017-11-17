@@ -58,8 +58,8 @@
                         <img data-ng-show="user.users_avatar && user.users_avatar != ''" src="@{{ user.users_avatar }}" alt="@{{ user.users_name }}" class="img-circle img30_30" />
                         <i class="fa fa-user-circle" aria-hidden="true" data-ng-show="! user.users_avatar || user.users_avatar == ''"></i>
                         <span class="hidden-xs">
-                            <span>@{{ user.users_firstname }}</span>
-                            <span>@{{ user.users_lastname }}</span>
+                            <span>@{{ user.firstname }}</span>
+                            <span>@{{ user.lastname }}</span>
                         </span>
                     </a>
 

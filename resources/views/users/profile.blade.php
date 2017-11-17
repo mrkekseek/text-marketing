@@ -1,4 +1,4 @@
-<div class="page page-table ng-scope" data-ng-controller="UsersCtrl" data-ng-init="get()">
+<div class="page page-table ng-scope" data-ng-controller="UsersCtrl">
 	<h2>
 		Profile	</h2>
 
@@ -11,19 +11,19 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<label>First Name</label>
-						<input type="text" name="firstname" data-field="users_firstname" ng-model="user.users_firstname" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" required="required">
+						<input type="text" name="firstname" ng-model="user.firstname" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-required" required="required">
 					</div>
 					<div class="form-group">
 						<label>Last Name</label>
-						<input type="text" name="lastname" data-field="users_lastname" ng-model="user.users_lastname" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty">
+						<input type="text" name="lastname" ng-model="user.lastname" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty">
 					</div>
 					<div class="form-group">
 				    	<label>Email</label>
-						<input type="email" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-email ng-valid-required" name="users_email" ng-model="user.users_email" required="required">
+						<input type="email" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty ng-valid-email ng-valid-required" name="email" ng-model="user.email" required="required">
 			    	</div>
 					<div class="form-group">
 				    	<label>Phone</label>
-						<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="user.users_phone">
+						<input type="text" class="form-control ng-pristine ng-untouched ng-valid ng-empty" ng-model="user.phone">
 			    	</div>
 			    	
 			    	<div class="form-group" ng-show="constants.project != 'ContractorReviewer'">
@@ -47,7 +47,7 @@
 			</div>
 		</div>
 		<div class="col-sm-6">
-			<form name="form" class="ng-pristine ng-invalid ng-invalid-required">
+			<form name="form" class="ng-pristine ng-invalid ng-invalid-required" novalidate="novalidate">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<span>Change Password</span>
