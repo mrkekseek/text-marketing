@@ -53,7 +53,10 @@
 
                                         <div class="btn-log-in">
                                             <div class="form-group">
-                                                <button type="submit" class="btn btn-primary btn-lg btn-block text-center" ng-class="{'btn-load': request_sent}" ng-click="signin()"><span class="loading-text">{{ __('Log in') }}</span><i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i></button>
+                                                <button type="submit" class="btn btn-primary btn-lg btn-block text-center" ng-class="{'btn-load': request_sent}" ng-click="signin()">
+                                                    <span class="loading-text">{{ __('Log in') }}</span>
+                                                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </fieldset>

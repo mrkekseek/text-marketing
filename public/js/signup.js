@@ -27,11 +27,14 @@
             }
 
             if (error) {
+                $rootScope.request_sent = true;
                 request.send('/auth/signup', $scope.signUp, function(data) {
                     if (data) {
                         $timeout(function() {
                             $window.location.href = "/";
                         }, 1000);
+                    } else {
+                        $rootScope.request_sent = false;
                     }
                 }); 
             }

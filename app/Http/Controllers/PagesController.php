@@ -37,7 +37,7 @@ class PagesController extends Controller
 					if ($parent['pages_code'] == $child['parents_code']) {
 						$temp[$child['pages_code']]['parents_code'] = $child['parents_code'];
 						$temp[$child['pages_code']]['main'] = $child['main'];
-						//$row['pages'][] = $temp[$child['pages_code']];
+						$row['pages'][] = $temp[$child['pages_code']];
 						//$row['pages'][] = $child;
 						//print_r($child);
 					}

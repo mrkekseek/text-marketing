@@ -18,8 +18,10 @@
             error *= validate.check($scope.form.message, 'Message'); 
             error *= validate.check($scope.form.name, 'Name');     
             if (error) {
+                $rootScope.request_sent = true;
                 request.send('/auth/support', $scope.support, function(data) {
                     if (data) {
+                        $rootScope.request_sent = false;
                         $timeout(function() {
                             $window.location.href = "/";
                         }, 1000);
