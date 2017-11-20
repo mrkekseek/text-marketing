@@ -4,8 +4,6 @@
     angular.module('app').controller('PlansCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', PlansCtrl]);
 
     function PlansCtrl($rootScope, $scope, $uibModal, request, langs) {
-        $rootScope.body_class = '';
-    	$scope.request_finish = false;
 
         $scope.list = [];
 
@@ -14,10 +12,10 @@
         };
 
         $scope.get = function() {
-        	request.send('/plans/get', false, function(data) {
-    			$scope.list = data;
+        	request.send('/plans', false, function(data) {
+    			$scope.list =  [{'plans_name' : 'name1', 'plans_price' : '14 usd' ,'plans_interval' : 'interval1', 'num' : 'userNum1', 'trial' : '14'}];// data;
     			$scope.request_finish = true;
-			});
+			}, 'get');
         };
 
         $scope.create = function() {

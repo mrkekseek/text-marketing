@@ -2449,6 +2449,11 @@ textarea.form-control.small-area {
 	top: 135px;
 }
 
+.help-icon {
+	    font-size: 18px;
+    vertical-align: top;
+}
+
 .conversion-icon {
 	font-size: 20px;
 	margin-right: 10px;
@@ -3003,3 +3008,4 @@ div[uib-timepicker] {
 [data-type=essay]:-ms-input-placeholder {
    font-style: italic;
 }
+
