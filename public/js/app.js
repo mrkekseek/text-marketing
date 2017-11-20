@@ -96,12 +96,10 @@ angular.module('app').filter('capitalize', function() {
     angular.module('app').controller('AppCtrl', [ '$scope', '$rootScope', '$window', '$timeout', '$location', '$uibModal', 'request', '$document', AppCtrl]);
 
     function AppCtrl($scope, $rootScope, $window, $timeout, $location, $uibModal, request, $document) {
-        $rootScope.request_sent = false;
-        $rootScope.body_class = '';
         $rootScope.own_loader = true;
         $rootScope.show_aside = 0;
-        $scope.new_inbox = {};
-        $rootScope.constants = {'project': ''};
+        $scope.user = {};
+        $scope.open = {};
 
         $scope.signout = function () {
             request.send('/auth/signout', {}, function (data) {
@@ -113,11 +111,9 @@ angular.module('app').filter('capitalize', function() {
             });
         };
 
-        $rootScope.survey_word = 'Survey';
-        $rootScope.user = {};
-        $scope.open = {};
         $scope.init = function() {
             $scope.menu();
+            $scope.get();
             /*request.send('/users/info/', {}, function(data) {
                 if (data)
                 {
@@ -164,6 +160,12 @@ angular.module('app').filter('capitalize', function() {
             });*/
         };
 
+        $scope.get = function() {
+           request.send('/auth/authInfo/', false, function(data) {
+                $scope.user = data;
+            }, 'get'); 
+        };
+
         $scope.menu = function () {
             request.send('/pages/menu/', {}, function(data) {
                 $scope.pages = data;
@@ -207,6 +209,7 @@ angular.module('app').filter('capitalize', function() {
         };
 
         $scope.changePage = function (page) {
+            console.log();
             $scope.open[page.code] = 1 - $scope.open[page.code];
 
             if ($scope.open[page.code]) {
@@ -241,7 +244,12 @@ angular.module('app').filter('capitalize', function() {
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'ModalEmail.html',
-                controller: 'ModalEmailCtrl'
+                controller: 'ModalEmailCtrl',
+                resolve: {
+                    items: function () {
+                        return {'user': $scope.user};
+                    }
+                }
             });
         };
     };
@@ -252,11 +260,14 @@ angular.module('app').filter('capitalize', function() {
 (function () {
     'use strict';
 
-    angular.module('app').controller('ModalEmailCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', ModalEmailCtrl]);
+    angular.module('app').controller('ModalEmailCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalEmailCtrl]);
 
-    function ModalEmailCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs) {
-        $scope.subject_email = '';
-        $scope.text_email = '';
+    function ModalEmailCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
+        $scope.user = angular.copy(items.user);
+        $scope.support = {
+            'name': $scope.user.firstname,
+            'email': $scope.user.email
+        };
 
         $scope.send = function() {
             var error = 1;
@@ -265,12 +276,7 @@ angular.module('app').filter('capitalize', function() {
 
             if (error)
             {
-                var post_mas = {
-                    'subject_email': $scope.subject_email,
-                    'text_email': $scope.text_email
-                };
-
-                request.send('/users/send_email', post_mas, function(data) {
+                request.send('/auth/support', $scope.support, function(data) {
 
                     $uibModalInstance.close();
                 });

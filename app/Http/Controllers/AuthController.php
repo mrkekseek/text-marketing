@@ -7,6 +7,7 @@ use App\Team;
 use App\Events\SignUp;
 use App\Mail\Support;
 use App\Mail\Recovery;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -15,6 +16,11 @@ class AuthController extends Controller
 {
     public $salt = 'eEZue4JfUvJJKn9N';
 
+    public function authInfo()
+    {
+        return $user = Auth::user();
+    }
+    
     public function signin($id = false, $post = [])
     {
         $validator = $this->validate(request(), [
@@ -44,7 +50,7 @@ class AuthController extends Controller
         return false;
     }
 
-    public function signup($post = [])
+    public function signup($id = false, $post = [])
     {
         $validator = $this->validate(request(), [
             'email' => 'required|email|unique:users,email',
@@ -60,7 +66,7 @@ class AuthController extends Controller
 
             $user = new User();
             $user->password = bcrypt($post['password']);
-            $user->plans_code = $post['plans_code'];
+            $user->plans_id = $post['plans_id'];
             $user->teams_id = $team->id;
             $user->teams_leader = 1;
             $user->type = 2;
@@ -68,6 +74,7 @@ class AuthController extends Controller
             $user->firstname = $post['firstname'];
             $user->lastname = ! empty($post['lastname']) ? $post['lastname'] : '';
             $user->active = 1;
+            $user->trial_ends_at = Carbon::now()->addDays(14);
             $user->save();
 
             $owner = User::where('owner', 1)->first();
@@ -78,14 +85,24 @@ class AuthController extends Controller
         return false;
     }
 
-    public function teamsName($post) {
+    public function createSubscriptions($user)
+    {
+        /*$user->newSubscription('main', 'home-advisor-contractortexter')->create([
+            'email' => $user->email,
+            'trial_ends_at' => Carbon::now()->addDays(14),
+        ]);
+        $user = User::create([
+            'trial_ends_at' => ,
+        ]);*/
+    }
 
+    public function teamsName($post)
+    {
         $name = [$post['firstname']];
 
         if ( ! empty($post['lastname'])) {
            $name[] = $post['lastname'];
         }
-        
         return implode(' ', $name);
     }
 
@@ -104,7 +121,7 @@ class AuthController extends Controller
         return $this->message(__("You are out"), 'success');
     }
 
-    public function support($post = [])
+    public function support($id = false, $post = [])
     {
         $owner = User::where('owner', 1)->first();
         Mail::to($owner)->send(new Support($post));

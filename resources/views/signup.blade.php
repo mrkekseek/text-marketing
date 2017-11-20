@@ -69,7 +69,7 @@
 										</div>
 									</div>
 
-									<div class="form-group" ng-if="signUp.plans_code == 'home-advisor' ">
+									<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' ">
 										<div class="input-group input-group-first">
 											<span class="input-group-addon">
 												<span class="fa fa-home"></span>
@@ -90,7 +90,10 @@
 
 									<div class="btn-log-in">
 										<div class="form-group">
-											<button type="submit" class="btn btn-primary btn-lg btn-block text-center" ng-class="{'btn-load': request_sent}" ng-click="signup()"><span class="loading-text">{{ __('Sign Up') }}</span><i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i></button>
+											<button type="submit" class="btn btn-primary btn-lg btn-block text-center" ng-class="{'btn-load': request_sent}" ng-click="signup()">
+												<span class="loading-text">{{ __('Sign Up') }}</span>
+												<i class="fa fa-spinner fa-pulse fa-3x fa-fw loading-icon"></i>
+											</button>
 										</div>
 									</div>
 								</fieldset>

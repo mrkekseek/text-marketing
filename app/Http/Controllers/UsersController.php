@@ -35,7 +35,7 @@ class UsersController extends Controller
 			if ( ! empty($post['teams_leader'])) {
 				$this->resetTeamsLeader($post['teams_id']);
 			}
-			$user->plans_code = $post['plans_code'];
+			$user->plans_id = $post['plans_code'];
 			$user->teams_id = $post['teams_id'];
 			$user->teams_leader = $post['teams_leader'];
 			$user->type = 2;

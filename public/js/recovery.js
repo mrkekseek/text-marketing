@@ -17,11 +17,14 @@
             error *= validate.check($scope.form.email, 'Email');
     
             if (error) {
+                $rootScope.request_sent = true;
                 request.send('/auth/recovery', $scope.recovery, function(data) {
                     if (data) {
                         $timeout(function() {
                             $window.location.href = "/";
                         }, 1000);
+                    } else {
+                        $rootScope.request_sent = false;
                     }
                 });
             }

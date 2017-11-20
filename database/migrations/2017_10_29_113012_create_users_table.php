@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admins_id')->unsigned()->default(0);
-            $table->string('plans_code')->default('');
+            $table->string('plans_id')->default('');
             $table->integer('teams_id')->unsigned()->default(0);
             $table->tinyInteger('teams_leader')->unsigned()->default(0);
             $table->tinyInteger('owner')->unsigned()->default(0);

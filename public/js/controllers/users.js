@@ -166,7 +166,7 @@
         	$scope.user.teams_id = '0';
         	$scope.user.teams_leader = 1;
         	$scope.user.active = 1;
-        	$scope.user.plans_code = '0';
+        	$scope.user.plans_id = '0';
         }
 
     	$scope.save = function() {
