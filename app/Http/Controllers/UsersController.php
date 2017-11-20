@@ -31,7 +31,7 @@ class UsersController extends Controller
         if ( ! $validator->fails()) {
 
 			$user = User::firstOrNew(['id' => empty($id) ? 0 : $id]);
-			$user->plans_code = $post['plans_code'];
+			$user->plans_id = $post['plans_code'];
 			$user->teams_id = $post['teams_id'];
 			$user->teams_leader = $post['teams_leader'];
 			$user->type = 2;

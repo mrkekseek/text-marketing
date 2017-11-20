@@ -30,6 +30,6 @@ class Support extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.support')->with($this->sender);
+        return $this->markdown('emails.support')->subject($this->sender['subject'])->with($this->sender);
     }
 }
