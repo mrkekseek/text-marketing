@@ -115,8 +115,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'analysis-main',
-            'folder' => 'analysis',
-            'file' => 'main',
+            'folder' => 'surveys',
+            'file' => 'analysis',
             'name' => 'Analysis',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -125,7 +125,7 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'settings-alerts',
-            'folder' => 'settings',
+            'folder' => 'surveys',
             'file' => 'alerts',
             'name' => 'Alerts',
             'icon' => 'fa fa-chevron-right',
@@ -145,7 +145,7 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'settings-analysis',
-            'folder' => 'settings',
+            'folder' => 'reviews',
             'file' => 'analysis',
             'name' => 'Reviews Analysis',
             'icon' => 'fa fa-chevron-right',
@@ -155,8 +155,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'settings-reviews',
-            'folder' => 'settings',
-            'file' => 'reviews',
+            'folder' => 'reviews',
+            'file' => 'settings',
             'name' => 'Settings',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -175,7 +175,7 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'messages-add',
-            'folder' => 'messages',
+            'folder' => 'marketing',
             'file' => 'add',
             'name' => 'Send',
             'icon' => 'fa fa-chevron-right',
@@ -185,8 +185,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'dialogs-list',
-            'folder' => 'dialogs',
-            'file' => 'list',
+            'folder' => 'marketing',
+            'file' => 'inbox',
             'name' => 'Inbox',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -195,8 +195,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'messages-list',
-            'folder' => 'messages',
-            'file' => 'list',
+            'folder' => 'marketing',
+            'file' => 'outbox',
             'name' => 'Outbox',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -205,8 +205,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'lists-list',
-            'folder' => 'lists',
-            'file' => 'list',
+            'folder' => 'marketing',
+            'file' => 'contacts',
             'name' => 'Contacts',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
