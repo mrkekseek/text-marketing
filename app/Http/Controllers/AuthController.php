@@ -108,7 +108,16 @@ class AuthController extends Controller
 
     public function signout($post = [])
     {
-        Auth::logout();
+        $user = auth()->user();
+        if ( ! empty($user->admins_id)) {
+            $admin = User::find($user->admins_id);
+            auth()->login($admin);
+            
+            $user->admins_id = 0;
+            $user->save();
+        } else {
+            Auth::logout();
+        }
         return $this->message(__("You are out"), 'success');
     }
 

@@ -55,7 +55,8 @@
 							{{ __('Team Leader') }}
 						</th>
 
-						<th class="th-button">
+						<th class="text-center">
+							{{ __('Active') }}
 						</th>
 
 						<th class="th-button">
@@ -93,22 +94,23 @@
 						
 						<td class="text-center">
 							<label class="ui-switch ui-switch-success ui-switch-sm">
-								<input type="checkbox" ng-model="user.teams_leader" ng-checked="user.teams_leader == 1" ng-click="teamsLeader(user.id, user.teams_leader)" />
+								<input type="checkbox" ng-model="user.teams_leader" ng-true-value="1" ng-false-value="0" ng-click="teamsLeader(user.id)" />
+								<i></i>
+							</label>
+						</td>
+
+						<td class="text-center">
+							<label class="ui-switch ui-switch-success ui-switch-sm">
+								<input type="checkbox" ng-model="user.active" ng-true-value="1" ng-false-value="0" ng-click="active(user.id, user.active)" />
 								<i></i>
 							</label>
 						</td>
 						
-						<!-- <td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-warning" ng-click="sign_in(user.id)">
+						<td class="td-button text-center">
+							<a href="javascript:;" class="a-icon text-warning" ng-click="magic(user.id)">
 								<i class="fa fa-lock" aria-hidden="true"></i>
 							</a>
-						</td> -->
-
-						<!-- <td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-primary" ng-click="settings(user.id)">
-								<i class="fa fa-cog"></i>
-							</a>
-						</td> -->
+						</td>
 
 						<td class="td-button text-center">
 							<a href="javascript:;" class="a-icon text-success" ng-click="create(user.id)">
@@ -140,7 +142,7 @@
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
 						<label>{{ __("Team") }}</label>
-						<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required" ng-options="team.id as team.name for team in teams" >
+						<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required" ng-options="team.id as team.name for team in teams">
 						</select>
 					</div>
 					<div class="form-group">
@@ -153,14 +155,14 @@
 					</div>
 					<div class="form-group">
 						<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.teams_leader" />
+							<input type="checkbox" ng-model="user.teams_leader" ng-true-value="1" ng-false-value="0" />
 							<i></i>
 						</label>
 						<strong class="team-leader">{{ __(' Team Leader') }}</strong>
 					</div>
 					<div class="form-group">
 						<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.active" ng-true-value="'1'" ng-false-value="'0'" />
+							<input type="checkbox" ng-model="user.active" ng-true-value="1" ng-false-value="0" />
 							<i></i>
 						</label>
 						<strong class="team-leader">{{ __('Activate teammate') }}</strong>
@@ -181,41 +183,9 @@
 					</div>	
 					<div class="form-group">
 						<label>{{ __("Payment Plan") }}</label>
-						<select class="form-control" name="plans_id" ng-model="user.plans_code" required="required">
-							<option value="0">{{ __('Select a Plan...') }}</option>
-							<option ng-repeat="plan in plans" value="@{{ plan.plans_code }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
+						<select class="form-control" name="plans_id" ng-model="user.plans_code" required="required" ng-options="plan.id as plan.name for plan in plans">
 						</select>
 					</div>	
-				</div>
-			</div>
-		</div>
-
-		<div class="modal-footer">
-			<button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
-			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
-		</div>
-	</form>
-</script>
-
-<script type="text/ng-template" id="UsersSettings.html">
-	<form name="form" method="post" novalidate="novalidate">
-		<div class="modal-header">
-			<h4 class="modal-title">{{ __("Settings") }}</h4>
-		</div>
-
-		<div class="modal-body">
-			<div class="row">
-				<div class="col-sm-6 col-xs-12 form-group">
-					<label>{{ __("Max Texts per week") }}</label>
-					<input type="text" class="form-control" ng-model="user.limit" />
-				</div>
-
-				<div class="col-sm-6 col-xs-12 form-group">
-					<p><strong class="team-leader">{{ __('Show questions at the Responses') }}</strong></p>
-					<label class="ui-switch ui-switch-success ui-switch-sm">
-						<input type="checkbox" ng-model="user.responses" ng-true-value="'1'" ng-false-value="'0'" />
-						<i></i>
-					</label>
 				</div>
 			</div>
 		</div>
