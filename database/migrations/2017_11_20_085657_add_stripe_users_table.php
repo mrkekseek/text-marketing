@@ -14,7 +14,7 @@ class AddStripeUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function ($table) {
-            $table->string('stripe_id')->nullable()->after('plans_code');
+            $table->string('stripe_id')->nullable()->after('plans_id');
             $table->string('card_brand')->nullable()->after('stripe_id');
             $table->string('card_last_four')->nullable()->after('card_brand');
             $table->timestamp('trial_ends_at')->nullable()->after('card_last_four');

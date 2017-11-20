@@ -39,7 +39,6 @@ class PagesController extends Controller
 						$val = $temp[$child['pages_code']]->toArray();
 						$val['parents_code'] = $child['parents_code'];
 						$val['main'] = $child['main'];
-
 						$row['pages'][] = $val;
 					}
 				}

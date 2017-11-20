@@ -69,7 +69,7 @@
 										</div>
 									</div>
 
-									<div class="form-group" ng-if="signUp.plans_code == 'home-advisor' ">
+									<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' ">
 										<div class="input-group input-group-first">
 											<span class="input-group-addon">
 												<span class="fa fa-home"></span>

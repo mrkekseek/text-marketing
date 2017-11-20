@@ -10,7 +10,9 @@
     angular.module('app').controller('SupportCtrl', ['$rootScope', '$scope', '$window', '$timeout', 'request', 'validate', 'langs', SupportCtrl]);
 
     function SupportCtrl($rootScope, $scope, $window, $timeout, request, validate, langs) {
-        $scope.support = {};
+        $scope.support = {
+            'subject': 'Support'
+        };
 
         $scope.send = function() {
             var error = 1;

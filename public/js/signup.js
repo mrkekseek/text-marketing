@@ -13,7 +13,7 @@
         $scope.signUp = {};
 
         $scope.init = function(plansCode) {
-           $scope.signUp.plans_code = plansCode;
+           $scope.signUp.plans_id = plansCode;
         };
 
         $scope.signup = function() {

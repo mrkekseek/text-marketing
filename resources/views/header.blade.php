@@ -7,12 +7,12 @@
         <div class="modal-body">
             <div class="form-group">
                 <label>{{ __("Subject") }}</label>
-                <input type="text" name="subject_email" class="form-control" ng-model="subject_email" required="required" />
+                <input type="text" name="subject_email" class="form-control" ng-model="support.subject" required="required" />
             </div>
 
             <div class="form-group">
                 <label>{{ __("Text") }}</label>
-                <textarea name="text_email" class="form-control" ng-model="text_email" required="required"></textarea>
+                <textarea name="text_email" class="form-control" ng-model="support.message" required="required"></textarea>
             </div>
         </div>
 
@@ -41,14 +41,14 @@
             </ul>
 
             <ul class="nav-right pull-right list-unstyled">
-                <li>
+                <li ng-show="user.type > 1">
                     <a href="javascript:;" class="dropdown-toggle" ng-click="modal_email()">
                         <i class="fa fa-envelope-o" uib-tooltip="Email us" tooltip-placement="left"></i>
                     </a>
                 </li>
 
-                <li class="dropdown" uib-dropdown>
-                    <a href="/pages/tutorial/" class="dropdown-toggle">
+                <li class="dropdown" uib-dropdown ng-show="user.type > 1">
+                    <a href="/tutorial/" class="dropdown-toggle">
                         <i class="fa fa-question-circle-o" ng-class="{'text-primary': new_inbox.count}" uib-tooltip="Help" tooltip-placement="left"></i>
                     </a>
                 </li>
