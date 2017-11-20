@@ -5,6 +5,7 @@
 
     function MarketingSettingsCtrl($rootScope, $scope, $uibModal, request, langs) {
     	$scope.show = false;
+    	$scope.step = 1;
 
     	$scope.init = function() {
 
@@ -12,6 +13,12 @@
 
     	$scope.choose = function() {
     		$scope.show = ! $scope.show;
+    	};
+
+    	$scope.next = function() {
+    		if ($scope.step < 3) {
+    			$scope.step += 1;
+    		}
     	};
     };
 })();

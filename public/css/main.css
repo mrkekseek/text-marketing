@@ -2672,7 +2672,7 @@ div.chars-area {
 
 div.chars-area textarea {
 	resize: none;
-    height: 75px;
+    height: 250px;
 }
 
 div.chars-area.danger textarea {
@@ -2975,7 +2975,6 @@ div[uib-timepicker] {
 
 .upload-detele {
 	font-size: 18px;
-    margin-top: 20px;
     vertical-align: middle;
     display: inline-block;
 }
