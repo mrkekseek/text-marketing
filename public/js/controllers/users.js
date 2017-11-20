@@ -18,7 +18,10 @@
     	$scope.teams = function() {
     		request.send('/teams', $scope.auth, function(data) {
     			$scope.teams_list = data;
-    			$scope.teams_list.unshift({'id':'0' ,'name':'Select a Team...'});
+    			$scope.teams_list.unshift({
+    				'id': '0',
+    				'name': 'Select a Team...'
+    			});
 			}, 'get');
 
     	};
@@ -34,6 +37,10 @@
     	$scope.plans = function() {
             request.send('/plans', false, function(data) {
                 $scope.plans_list = data;
+                $scope.plans_list.unshift({
+    				'id': '0',
+    				'name': 'Select a Plan...'
+    			});
             }, 'get');
         };
 
@@ -82,28 +89,6 @@
 		    });
 		};
 
-		$scope.settings = function(users_id) {
-            users_id = users_id || false;
-
-			var modalInstance = $uibModal.open({
-				animation: true,
-				size: 'md',
-				templateUrl: 'UsersSettings.html',
-				controller: 'ModalUsersSettingsCtrl',
-				resolve: {
-					items: function () {
-				  		return {'user': $scope.by_id(users_id)};
-					}
-				}
-		    });
-
-		    modalInstance.result.then(function(response) {
-				$scope.list = response.data;
-		    }, function () {
-				
-		    });
-		};
-
 		$scope.remove = function(users_id) {
             if (confirm(langs.get('Do you realy want to remove this item? It will also remove all user account data'))) {
                 request.send('/users/' + users_id, false, function(data) {
@@ -122,24 +107,23 @@
 			return {};
 		};
 
-		$scope.sign_in = function(users_id) {
-			request.send('/users/magic', {'id': users_id}, function(data) {
+		$scope.teamsLeader = function(users_id) {
+			var user = $scope.by_id(users_id);
+			request.send('/users/' + users_id + '/teamsLeader', {}, function() {
+				$scope.get();
+			}, user.teams_leader == '1' ? 'post' : 'delete');
+		};
+
+		$scope.active = function(users_id) {
+			var user = $scope.by_id(users_id);
+			request.send('/users/' + users_id + '/active', {}, false, user.active == '1' ? 'post' : 'delete');
+		};
+
+		$scope.magic = function(users_id) {
+			request.send('/users/' + users_id + '/magic', {}, function(data) {
 				$window.location.href = "/";
-            });
-		}
-
-		$scope.teamsLeader = function(users_id, teams_leader) {
-			var leader = teams_leader;
-			
-			if (teams_leader === 1) {
-				leader = false;
-			}
-
-			var method = !leader ? 'delete' : 'post';
-			request.send('/users/' + users_id + '/teamLeader', false, function(data) {
-                //$scope.get();
-            }, method);
-		}
+            }, 'get');
+		};
 
 		$scope.change_password = function() {
 			var error = 1;
@@ -180,9 +164,8 @@
 
         if ( ! $scope.user.id) {
         	$scope.user.teams_id = '0';
-        	$scope.user.teams_leader = '0';
-        	$scope.user.active = '0';
-        	$scope.user.send = '1';
+        	$scope.user.teams_leader = 1;
+        	$scope.user.active = 1;
         	$scope.user.plans_id = '0';
         }
 
@@ -193,45 +176,12 @@
 			error *= validate.check($scope.form.teams_id, 'Team');
 
 			if (error) {
-				if ( ! $scope.user.id) {
-					request.send('/users/save', $scope.user, function(data) {
-						if (data) {
-							$uibModalInstance.close(data);
-						}
-					}, 'put');
-				} else {
-					request.send('/users/' + $scope.user.id, $scope.user, function(data) {
-						if (data) {
-							$uibModalInstance.close(data);
-						}
-					});
-				}
+				request.send('/users/' + ( ! $scope.user.id ? 'save' : $scope.user.id), $scope.user, function(data) {
+					if (data) {
+						$uibModalInstance.close(data);
+					}
+				}, ( ! $scope.user.id ? 'put' : 'post'));
 			}
-		};
-
-		$scope.cancel = function() {
-			$uibModalInstance.dismiss('cancel');
-		};
-    };
-})();
-
-;
-
-(function () {
-    'use strict';
-
-    angular.module('app').controller('ModalUsersSettingsCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalUsersSettingsCtrl]);
-
-    function ModalUsersSettingsCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
-	    $scope.user = angular.copy(items.user);
-
-    	$scope.save = function() {
-			request.send('/users/settings_personal', $scope.user, function(data) {
-				if (data)
-				{
-					$uibModalInstance.close(data);
-				}
-			});
 		};
 
 		$scope.cancel = function() {
