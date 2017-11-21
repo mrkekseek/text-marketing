@@ -13,7 +13,7 @@
 
         $scope.get = function() {
         	request.send('/plans', false, function(data) {
-    			$scope.list =  [{'plans_name' : 'name1', 'plans_price' : '14 usd' ,'plans_interval' : 'interval1', 'num' : 'userNum1', 'trial' : '14'}];// data;
+                $scope.list = data;
     			$scope.request_finish = true;
 			}, 'get');
         };
@@ -41,7 +41,7 @@
         $scope.remove = function(plans_id) {
             if (confirm(langs.get('Do you realy want to remove this Plan?')))
             {
-                request.send('/users/remove_plan/', {'plans_id': plans_id}, function(data) {
+                request.send('/plans/' + plans_id, false, function(data) {
                     if (data.data)
                     {
                         $scope.list = data.data;
@@ -53,7 +53,7 @@
                             $scope.get_modals(data.modals[j].id, data.modals[j].data);
                         }
                     }
-                });
+                }, 'delete');
             }
         };
 

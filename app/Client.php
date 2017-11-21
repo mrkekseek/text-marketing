@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Plan extends Model
+class Client extends Model
 {
-    protected $fillable = ['plans_id'];
+    protected $guarded = [];
 }

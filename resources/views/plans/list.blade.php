@@ -58,25 +58,25 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="user in list">
+					<tr ng-repeat="plan in list">
 						<td>
-							@{{ user.plans_name }}
+							@{{ plan.plans_name }}
 						</td>
 
 						<td>
-							@{{ user.plans_price }}
+							@{{ plan.plans_price }}
 						</td>
 						
 						<td>
-							@{{ user.plans_interval }}
+							@{{ plan.plans_interval }}
 						</td>
 						
 						<td>
-							@{{ user.num }}
+							@{{ plan.num }}
 						</td>
 
 						<td>
-							@{{ user.trial }}
+							@{{ plan.trial }}
 						</td>
 
 						<td class="td-button text-center">

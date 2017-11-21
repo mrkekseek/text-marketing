@@ -72,5 +72,6 @@
         <script src="/js/controllers/text_marketing.js"></script>
         <script src="/js/controllers/marketing_send.js"></script>
         <script src="/js/controllers/reviews_analysis.js"></script>
+        <script src="/js/controllers/surveys.js"></script>
     </body>
 </html>

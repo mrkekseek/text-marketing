@@ -29,4 +29,9 @@ class User extends Authenticatable
     {
         return $this->email;
     }
+
+    public function clients()
+    {
+        return $this->hasMany('App\Client', 'users_id');
+    }
 }
