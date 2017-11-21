@@ -2672,7 +2672,7 @@ div.chars-area {
 
 div.chars-area textarea {
 	resize: none;
-    height: 250px;
+    height: 150px;
 }
 
 div.chars-area.danger textarea {

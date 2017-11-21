@@ -1,4 +1,4 @@
-<div class="page page-table ng-scope" data-ng-controller="MarketingSettingsCtrl">
+<div class="page page-table ng-scope" data-ng-controller="MarketingSendCtrl">
 	<h2>
 		New Message		
 		<i class="fa fa-question-circle-o help-icon" uib-tooltip="Here is where you type the texts you want to send out to your lists. You can insert the names of your contacts, a link, picture, or video. You can send the texts immediately or schedule them for the future. The texts are sent individually, not as a group text." tooltip-placement="right" aria-hidden="true">
@@ -41,7 +41,7 @@
 								</span>
 							</div>
 
-							<div ng-show="!show_message_text_url" class="btn-group btn-group-justified move-top-pixel">
+							<div class="btn-group btn-group-justified move-top-pixel">
 								<div class="btn-group">
 									<button ng-click="show_message_text_url = true" type="button" class="btn btn-sm btn-default">
 										<i class="fa fa-link"></i> 	Short Link
@@ -291,7 +291,7 @@
 			</div>
 
 			<div class="pull-right">
-				<button ng-click="next()" type="button" class="btn btn-sm btn-primary">Next</button>
+				<button ng-click="step = step + 1" type="button" class="btn btn-sm btn-primary">Next</button>
 			</div>
 		</div>
 	</section>
@@ -317,75 +317,29 @@
 				</div>
 			</div>
 
-			<div class="list-repeat ng-scope">
-				<div class="ng-scope">
-					<i class="choose-list fa fa-circle-o" ng-class="item.choosed ? 'fa-check-circle-o selected' : 'fa-circle-o'" 
-					ng-click="item.choosed = !item.choosed"></i>
-					<div class="item-panel" ng-class="{'active': selected.lists_id &amp;&amp; selected.lists_id == item.lists_id}">
-						<div class="list-actions action-div" ng-click="choose(item.lists_id)">
-						</div>
-						<div class="row-name">
-							<span class="ng-binding ng-hide"></span>
-							<div class="row edit-main-container" >
-								<div class="col-sm-12 col-md-8 col-lg-9">
-									<input class="form-control ng-pristine ng-valid ng-empty ng-touched" type="text" placeholder="List Name" ng-model="item.lists_name" focus-me="item.editable">
-								</div>
-								<div class="col-sm-12 col-md-4 col-lg-3">
-									<div class="btn-group btn-group-justified">
-										<div class="btn-group">
-											<button type="button" class="btn btn-default" ng-click="cancel(item)">Cancel</button>
-										</div>
-										<div class="btn-group">
-											<button type="button" class="btn btn-primary" ng-click="save(item)">Save</button>
-										</div>
+			<div class="list-repeat ng-scope" ng-show="show">
+				<i class="choose-list fa fa-circle-o" ng-class="item.choosed ? 'fa-check-circle-o selected' : 'fa-circle-o'" 
+				ng-click="item.choosed = !item.choosed"></i>
+				<div class="item-panel" ng-class="{'active': selected.lists_id &amp;&amp; selected.lists_id == item.lists_id}">
+					<div class="list-actions action-div" ng-click="choose(item.lists_id)">
+					</div>
+					<div class="row-name">
+						<span class="ng-binding ng-hide"></span>
+						<div class="row edit-main-container" >
+							<div class="col-sm-12 col-md-8 col-lg-9">
+								<input class="form-control ng-pristine ng-valid ng-empty ng-touched" type="text" placeholder="List Name" ng-model="item.lists_name">
+							</div>
+							<div class="col-sm-12 col-md-4 col-lg-3">
+								<div class="btn-group btn-group-justified">
+									<div class="btn-group">
+										<button type="button" class="btn btn-default" ng-click="choose()">Cancel</button>
+									</div>
+									<div class="btn-group">
+										<button type="button" class="btn btn-primary" ng-click="save(item)">Save</button>
 									</div>
 								</div>
 							</div>
-							<a href="javascript:;" ng-show="false" class="a-icon text-success ng-hide" ng-click="edit(item)"><i class="fa fa-pencil"></i></a>
-							<a href="javascript:;" ng-show="false" class="a-icon text-danger ng-hide" ng-click="remove(item.lists_id)"><i class="fa fa-trash"></i></a>
 						</div>
-						<div ng-show="request_phones_finish &amp;&amp; selected.lists_id &amp;&amp; selected.lists_id == item.lists_id" class="ng-hide">
-
-							<button type="button" class="btn btn-default child-button" ng-click="create_phone(item.lists_id)"><i class="fa fa-plus-circle"></i> Add Number Manually</button>
-							<span class="dropable-phones-outer">
-								<button type="button" class="btn btn-default child-button" ng-click="open_numbers_box();"><i class="fa fa-list-ul"></i> Choose from Saved Numbers</button>
-								<div ng-show="open_numbers" class="dropable-phones ng-hide">
-									<div ng-show="numbers.length" class="ng-hide">
-										<div class="search-group">
-											<i class="fa fa-search search-icon" aria-hidden="true"></i>
-											<input ng-model="search.$" class="form-control ng-pristine ng-untouched ng-valid ng-empty" type="text" placeholder="Search from list...">
-										</div>
-										<div class="dropable-phones-inner">
-											<!-- ngRepeat: number in numbers | filter: search -->
-										</div>
-										<div class="pull-right">
-											<div class="btn-group btn-group-justified">
-												<div class="btn-group">
-													<button type="button" class="btn btn-default" ng-click="close_numbers_box()">Cancel</button>
-												</div>
-												<div class="btn-group">
-													<button type="button" class="btn btn-primary" ng-click="save_selected_phones(item.lists_id)">Add</button>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div uib-alert="" class="alert-info ng-isolate-scope alert" ng-show="!numbers.length" role="alert"><button ng-show="closeable" type="button" class="close ng-hide" ng-click="close({$event: $event})">
-										<span aria-hidden="true">×</span>
-										<span class="sr-only">Close</span>
-									</button>
-									<div ng-transclude="">
-										You haven't any phones yet..
-									</div>
-								</div>
-							</div>
-						</span>
-						<button type="button" class="btn btn-default child-button" ng-click="import_phones(item.lists_id)"><i class="fa fa-upload"></i> Import from CSV file</button>
-
-						<div ng-show="phones.length" class="ng-hide">
-							<!-- ngRepeat: phone in phones -->
-						</div>
-
 					</div>
 				</div>
 			</div>
@@ -396,13 +350,47 @@
 						<button type="button" class="btn btn-sm btn-default" ng-click="step = step - 1">Back</button>
 					</div>
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-primary" ng-click="go_to_confirm()">Next</button>
+						<button type="button" class="btn btn-sm btn-primary" ng-click="step = step + 1">Next</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
-	<section class="panel panel-default table-dynamic ng-hide" ng-show="step == 3"></section>
+	<section class="panel panel-default table-dynamic ng-hide" ng-show="step == 3">
+		<div class="panel-body ng-binding">
+					<h3 class="inside-panel">
+						Confirm					</h3>
+					<p>
+						You want to send a message with text <b class="ng-binding">@{{ message.messages_text }}</b> 
+						<span ng-show="!message.send_date || !message.messages_schedule" class="">right now</span>
+						<span ng-show="message.send_date &amp;&amp; message.messages_schedule &amp;&amp; message.messages_switch == 1" class="ng-binding ng-hide">on January 1st</span>
+						<span ng-show="message.send_date &amp;&amp; message.messages_schedule &amp;&amp; message.messages_switch == 2" class="ng-binding ng-hide">every Day starting from January 1st</span>
+						<span ng-show="message.send_date &amp;&amp; message.messages_schedule &amp;&amp; message.messages_switch == 3" class="ng-binding ng-hide">every Thursday starting from January 1st</span>
+						<span ng-show="message.send_date &amp;&amp; message.messages_schedule &amp;&amp; message.messages_switch == 4" class="ng-binding ng-hide">every 1st starting from January 1st</span>
+						<span ng-show="message.send_date &amp;&amp; message.messages_schedule" class="ng-binding ng-hide">at 19:29.</span> 
+						<span ng-show="message.messages_followup_enable == '1'" class="ng-binding ng-hide">and followup with text <b class="ng-binding">""</b> after 10m.</span>
+					</p>
+					<p>
+						This message will be send to:						</p><ul>
+							<!-- ngRepeat: item in list --><li ng-repeat="item in list" ng-show="item.choosed &amp;&amp; item.count_numbers > 0" class="ng-binding ng-scope" style="">
+								asdasd with 1 contacts
+							</li><!-- end ngRepeat: item in list -->
+						</ul>
+						Total: 1 contacts.
+					<p></p>
+
+					<div class="pull-right next-step-button">
+						<div class="btn-group">
+							<div class="btn-group">
+								<button type="button" class="btn btn-sm btn-default" ng-click="step = step - 1">Back</button>
+							</div>
+							<div class="btn-group">
+								<button type="button" class="btn btn-sm btn-primary" ng-click="confirm_send()">Send</button>
+							</div>
+						</div>
+					</div>
+				</div>
+	</section>
 </div>
 </div>
 
