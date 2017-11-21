@@ -66,7 +66,7 @@ class AuthController extends Controller
 
             $user = new User();
             $user->password = bcrypt($post['password']);
-            $user->plans_id = $post['plans_id'];
+            $user->plans_id = $post['plans_id'].'-'.strtolower(config('app.name'));
             $user->teams_id = $team->id;
             $user->teams_leader = 1;
             $user->type = 2;

@@ -70,5 +70,6 @@
         <script src="/js/controllers/plans.js"></script>
         <script src="/js/controllers/home_advisor.js"></script>
         <script src="/js/controllers/text_marketing.js"></script>
+        <script src="/js/controllers/surveys.js"></script>
     </body>
 </html>

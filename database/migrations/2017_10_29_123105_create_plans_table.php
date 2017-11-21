@@ -15,11 +15,11 @@ class CreatePlansTable extends Migration
     {
         Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('plans_id');
-            $table->string('plans_name');
-            $table->string('plans_type');
-            $table->integer('plans_counts_review')->unsigned();
-            $table->integer('plans_counts_tm')->unsigned();
+            $table->string('plans_id')->default('');
+            $table->string('plans_name')->default('');
+            $table->string('plans_type')->default('');
+            $table->integer('plans_counts_review')->unsigned()->default(0);
+            $table->integer('plans_counts_tm')->unsigned()->default(0);
             $table->timestamps();
         });
     }

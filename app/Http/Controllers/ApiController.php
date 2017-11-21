@@ -56,6 +56,9 @@ class ApiController extends Controller
                         case 'POST':
                             $method = 'save';
                             break;
+                        case 'PUT':
+                            $method = 'save';
+                            break;
                         case 'DELETE':
                             $method = 'remove';
                             break;

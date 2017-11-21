@@ -20,6 +20,16 @@ hr {
 	padding: 11px 4px;
 }
 
+.clients .divider {
+	margin: 0px;
+}
+
+.phones div {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0px 5px;
+}
+
 .message-icon {
 	padding-right: 10px;
 }
@@ -370,6 +380,8 @@ li.toggle-provider {
 .phones,
 .btn-body {
 	padding: 15px;
+    display: table;
+    width: 100%;
 }
 
 .phones.review {
@@ -2892,10 +2904,6 @@ h3.inside-panel {
 
 .next-step-button {
 	margin-top: 10px;
-}
-
-div[uib-timepicker] {
-	margin-top: -21px;
 }
 
 .time-container div[uib-timepicker] {
