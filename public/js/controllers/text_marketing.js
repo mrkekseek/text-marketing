@@ -14,7 +14,7 @@
         };
 
         $scope.removeInput = function(index) {
-                $scope.team.phones.splice(index, 1);
+            $scope.team.phones.splice(index, 1);
         };
 
         $scope.save = function() {
@@ -33,37 +33,37 @@
     angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', 'validate', 'request', 'langs', MarketingContactsCtrl]);
 
     function MarketingContactsCtrl($rootScope, $scope, $uibModal, request, langs, validate) {
-    	$scope.newList = true;
         $scope.requestFinish = true;
         $scope.selected = -1;
-
-        $scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false}], 'listName' : 'listsName1', 'editable' : false}];
-        $scope.oldContactList = $scope.contactList;
-
-    	$scope.create = function() {
-    		$scope.newList = false;
-    	};
-
-    	$scope.cancel = function(index) {
-    		$scope.contactList[index].editable = ! $scope.contactList[index].editable;
-    	};
-
-        $scope.cancelPhone = function(itemIndex,index) {
-            console.log('aaaaa');
-            $scope.contactList[itemIndex].phones[index] = $scope.oldContactList[itemIndex].phones[index];
+        var oldContactList = [];
+        $scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'},
+        {'number' : '111111111', 'birthDay': new Date(), 'firstName' : 'name', 'lastName' : 'surname', 'editable' : false, 'source' : 'Manually'}],
+         'listName' : 'listsName1', 'editable' : false}];
+        
+        $scope.init = function() {
+            $scope.copy();
         };
 
-        $scope.saveList = function(name) {
-             $scope.contactList.push({
+        $scope.copy = function() {
+            oldContactList = angular.copy($scope.contactList);
+        };
+
+        $scope.cancel = function(index) {
+            $scope.contactList[index].editable = false;
+            $scope.contactList =  angular.copy(oldContactList);
+        };
+
+        $scope.save = function(index) {
+            $scope.contactList[index].editable = false;
+            $scope.copy();
+        };
+
+        $scope.create = function(name) {
+            $scope.selected = -1;
+            $scope.contactList.unshift({
                 'listName' : name,
-                'number' : '',
-                'bDay' : '',
-                'fName' : '',
-                'lName' : '',
-                'editable': false
+                'editable': true
             });
-             $scope.list = '';
-            $scope.newList = true;
         };
 
         $scope.choose = function(index) {   
@@ -74,9 +74,123 @@
             $scope.contactList[index].editable = ! $scope.contactList[index].editable;
         };
 
-        $scope.edit_phone = function(itemIndex, index) {
-            $scope.contactList[itemIndex].phones[index].editable = true;
+        $scope.savePhone = function(itemIndex, index) {
+            $scope.contactList[itemIndex].phones[index].editable = false;
+            oldContactList[itemIndex].phones[index] =  angular.copy($scope.contactList[itemIndex].phones[index]);
         };
+
+        $scope.createPhone = function(index) {
+            $scope.contactList[index].phones = $scope.contactList[index].phones ? $scope.contactList[index].phones : [];
+            $scope.contactList[index].phones.unshift({
+                'editable' : true,
+                'number' : '',
+                'birthDay': new Date(),
+                'firstName' : '',
+                'lastName' : '',
+                'source' : 'Manually'
+            });
+        };
+
+        $scope.openImport = function() {
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'ImportFile.html',
+                controller: 'ImportFileCtrl'
+            });
+
+            modalInstance.result.then(function(response) {
+            }, function () {
+                
+            });
+        };
+    };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ImportFileCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'langs', 'logger', ImportFileCtrl]);
+
+    function ImportFileCtrl($rootScope, $scope, $uibModalInstance, request, langs, logger) {
+
+        $scope.csv = {'phones_firstname': 1,
+                    'phones_lastname': 2,
+                    'phones_number': 3,
+                    'phones_email': "",
+                    'starts_from': "0",
+                    'upload_csv': false};
+
+        $scope.upload_progress = false;
+        $scope.upload_percent = 100;
+
+       $scope.save = function() {
+            var error = 1;
+            if (! $scope.csv.upload_csv)
+            {
+                logger.logError('Please choose file');
+                return;
+            }
+
+           if (error)
+            {
+                request.send('/phones/csv/', $scope.csv, function(data) {
+                    if (data)
+                    {
+                        $uibModalInstance.close(data);
+                    }
+                });
+            }
+        };
+
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
+
+        $scope.upload_csv = function(event) {
+            var files = event.target.files;
+            if (files.length)
+            {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/api/pub/upload/', true);
+                xhr.onload = function(event)
+                {
+                    if (this.status == 200)
+                    {
+                        var response = JSON.parse(this.response);
+                        if (response.data) {
+                            var part = response.data.split('/data/');
+                            var ext = part[1].split('.');
+                            $timeout(function() { $scope.csv.upload_csv = '/data/' + part[1]; });
+                        }
+                        $scope.upload_progress = false;
+                    }
+                };
+
+                xhr.upload.onprogress = function(event)
+                {
+                    if (event.lengthComputable)
+                    {
+                        $scope.upload_progress = true;
+                        $scope.upload_percent = Math.round(event.loaded * 100 / event.total);
+                    }
+                };
+
+                var fd = new FormData();
+                fd.append("file", files[0]);
+
+                xhr.send(fd);
+                $scope.upload_progress = true;
+            }
+        };
+
+        $scope.getFileName = function(path) {
+            if (!path || path == "") return '';
+            return path.replace(/^.*[\\\/]/, '')
+        };
+        
     };
 })();
 
