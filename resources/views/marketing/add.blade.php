@@ -262,12 +262,12 @@
 																					Stop at:
 																				</label>
 																				<div class="input-group">
-																					<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="message.messagesFinish" datepicker-options="dateOpt" close-text="Close" popup-placement="bottom">
+																					<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="message.messagesFinish" datepicker-options="dateOpt" close-text="Close" popup-placement="bottom" is-open="open">
 																					<div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" 
 																					template-url="/uib/template/datepickerPopup/popup.html">
 																				</div>
 																				<span class="input-group-btn">
-																					<button type="button" class="btn btn-default" ng-click="open_finish()"><i class="glyphicon glyphicon-calendar"></i></button>
+																					<button type="button" class="btn btn-default" ng-click="open = ! open"><i class="glyphicon glyphicon-calendar"></i></button>
 																				</span>
 																			</div>
 																		</div>
@@ -279,7 +279,7 @@
 																	<span ng-show="message.messagesSwitch == 3" >@{{ message.sendDate | date: 'EEEE' }}</span>
 																	<span ng-show="message.messagesSwitch == 4" >1st date</span>
 																	<span ng-show="message.messagesSwitch == 5" >@{{ message.xDay }}</span>
-																	<span ng-show="message.messagesFinish" >and stop at @{{}}th</span>
+																	<span ng-show="message.messagesFinish" >and stop at @{{ messagesFinish | date : 'LLLL d'; getSuffix(messagesFinish | date : 'd') }}</span>
 																	<span ng-show="message.messagesFinish" >(message will be send  times)</span>
 																</div>
 															</div>
@@ -448,7 +448,7 @@
 									 every Day starting from @{{ message.sendDate | date: 'MMMM d' }}@{{getSuffix(message.sendDate | date: 'd')}}</span>
 									<span ng-show="message.sendDate &amp;&amp; message.messagesSchedule &amp;&amp; message.messagesSwitch == 3">
 										every @{{ message.sendDate | date: 'EEEE' }}</span>
-									<span ng-show="message.sendDate &amp;&amp; message.messagesSchedule &amp;&amp; message.messagesSwitch == 4" >every @{{ message.sendDate | date: 'd' }}@{{getSuffix(message.sendDate | date: 'd')}} starting from @{{ message.sendDate | date: 'MMMM d' }}@{{getSuffix(message.sendDate | date: 'd')}}</span>
+									<span ng-show="message.sendDate &amp;&amp; message.messagesSchedule &amp;&amp; message.messagesSwitch == 4" >every @{{ message.sendDate | date: 'd' }}@{{getSuffix(message.sendDate | date: 'd')}} starting from @{{ message.sendDate | date: 'MMMM d' }} @{{ getSuffix(message.sendDate | date: 'd') }}</span>
 									<span ng-show="message.sendDate &amp;&amp; message.messagesSchedule" >at @{{ message.sendTime | date: 'HH:mm'}}.</span> 
 									<span ng-show="message.messagesFollowupEnable == '1'" >And followup with text <b>@{{ message.followupText }}</b> after @{{ message.followupSettings }}m.</span>
 								</p>

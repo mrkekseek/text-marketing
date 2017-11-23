@@ -8,6 +8,7 @@
 		$scope.totalContacts = 0;
 		$scope.step = 1;
 		$scope.minDate = new Date();
+		$scope.open = false;
 		$scope.message = {'messagesFollowupEnable' : '0', 'messagesText' : '', 'messagesTextLength' : 0 ,
 		'followupText' : '', 'followupTextLength' : 0, 'messagesSchedule' : '0', 'maxLength' : 130,
 		 'followupSettings' : '10', 'xDay' : '2', 'messagesSwitch' : '1'};
