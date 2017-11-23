@@ -262,7 +262,7 @@
 																					Stop at:
 																				</label>
 																				<div class="input-group">
-																					<input type="text" class="form-control" uib-datepicker-popup="" ng-model="message.messages_finish" is-open="popup.opened_finish" datepicker-options="date_finish_options" close-text="Close">
+																					<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="message.messagesFinish" datepicker-options="dateOpt" close-text="Close" popup-placement="bottom">
 																					<div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" 
 																					template-url="/uib/template/datepickerPopup/popup.html">
 																				</div>
@@ -276,11 +276,11 @@
 																<div class="alert alert-info">
 																	Message will be send from January 1st every 
 																	<span ng-show="message.messagesSwitch == 2">day</span>
-																	<span ng-show="message.messagesSwitch == 3" >Thursday</span>
+																	<span ng-show="message.messagesSwitch == 3" >@{{ message.sendDate | date: 'EEEE' }}</span>
 																	<span ng-show="message.messagesSwitch == 4" >1st date</span>
-																	<span ng-show="message.messagesSwitch == 5" >2nd day</span>
-																	<span ng-show="message.messages_finish" >and stop at  NaNth</span>
-																	<span ng-show="message.messages_finish" >(message will be send  times)</span>
+																	<span ng-show="message.messagesSwitch == 5" >@{{ message.xDay }}</span>
+																	<span ng-show="message.messagesFinish" >and stop at @{{}}th</span>
+																	<span ng-show="message.messagesFinish" >(message will be send  times)</span>
 																</div>
 															</div>
 														</div>
