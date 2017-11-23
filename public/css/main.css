@@ -2884,8 +2884,8 @@ h3.inside-panel {
 
 .choose-list {
 	font-size: 22px;
-	position: relative; 
-	/* top: 17px; */
+	position: absolute; 
+	top: 15px; 
 	cursor: pointer;
 }
 
