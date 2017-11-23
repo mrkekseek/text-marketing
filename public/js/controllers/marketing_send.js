@@ -5,6 +5,7 @@
 	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', MarketingSendCtrl]);
 
 	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs) {
+		$scope.totalContacts = 0;
 		$scope.step = 1;
 		$scope.minDate = new Date();
 		$scope.message = {'messagesFollowupEnable' : '0', 'messagesText' : '', 'messagesTextLength' : 0 ,
@@ -12,10 +13,20 @@
 		 'followupSettings' : '10', 'xDay' : '2', 'messagesSwitch' : '1'};
 
 		$scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'}],
+		'listName' : 'listsName1', 'editable' : false, 'choosed' : false}, {'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'}],
 		'listName' : 'listsName1', 'editable' : false, 'choosed' : false}];
 		var oldContactList = [];
 		var mask = 0;
 
+		$scope.totalCount = function() {
+			$scope.totalContacts = 0;
+			for (var i in $scope.contactList) {
+				if ($scope.contactList[i].choosed && $scope.contactList[i].phones.length > 0) {
+					$scope.totalContacts = $scope.totalContacts + $scope.contactList[i].phones.length;
+				}
+			}
+		};
+		
 		$scope.getSuffix = function(day) {
 			switch(day){
 				case '1': return 'st';
@@ -70,7 +81,8 @@
 			$scope.selected = -1;
 			$scope.contactList.unshift({
 				'listName' : name,
-				'editable': true
+				'editable': true,
+				'phones' : []
 			});
 		};
 
@@ -142,10 +154,7 @@
 			txtarea.scrollTop = scrollPos;
 			$scope.message[areaId] = txtarea.value;
 		}
-
 	};
-
-
 })();
 
 ;

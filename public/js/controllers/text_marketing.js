@@ -30,18 +30,28 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', 'validate', 'request', 'langs', MarketingContactsCtrl]);
+    angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', MarketingContactsCtrl]);
 
-    function MarketingContactsCtrl($rootScope, $scope, $uibModal, request, langs, validate) {
+    function MarketingContactsCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate) {
         $scope.requestFinish = true;
         $scope.selected = -1;
         var oldContactList = [];
-        $scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'},
+        $scope.contactList = [];
+        /*$scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'},
         {'number' : '111111111', 'birthDay': new Date(), 'firstName' : 'name', 'lastName' : 'surname', 'editable' : false, 'source' : 'Manually'}],
-         'listName' : 'listsName1', 'editable' : false}];
+         'listName' : 'listsName1', 'editable' : false}];*/
         
         $scope.init = function() {
+            $scope.get();
             $scope.copy();
+            
+            console.log($scope.contactList);
+        };
+
+        $scope.get = function() {
+             request.send('/clients', false, function (data) {
+                $scope.contactList = data;
+            }, 'get');
         };
 
         $scope.copy = function() {

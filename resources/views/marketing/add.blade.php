@@ -428,7 +428,7 @@
 											<button type="button" class="btn btn-sm btn-default" ng-click="step = step - 1">Back</button>
 										</div>
 										<div class="btn-group">
-											<button type="button" class="btn btn-sm btn-primary" ng-click="step = step + 1">Next</button>
+											<button type="button" class="btn btn-sm btn-primary" ng-click="step = step + 1; totalCount()">Next</button>
 										</div>
 									</div>
 								</div>
@@ -455,12 +455,12 @@
 								<p>
 									This message will be send to:
 								</p>
-								<ul>
-									<li ng-repeat="item in list" ng-show="item.choosed &amp;&amp; item.count_numbers > 0">
-										asdasd with 1 contacts
-									</li><!-- end ngRepeat: item in list -->
+								<ul class="total">
+									<li ng-repeat="item in contactList " ng-show="item.choosed &amp;&amp; item.phones.length > 0">
+										@{{ item.listName + ' with ' + item.phones.length }} contacts
+									</li>
 								</ul>
-								Total: 1 contacts.
+								Total: @{{ totalContacts }} contacts.
 								<p></p>
 
 								<div class="pull-right next-step-button">
