@@ -183,7 +183,7 @@
 					</div>	
 					<div class="form-group">
 						<label>{{ __("Payment Plan") }}</label>
-						<select class="form-control" name="plans_id" ng-model="user.plans_code" required="required" ng-options="plan.id as plan.name for plan in plans">
+						<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required" ng-options="plan.plans_id as plan.name for plan in plans">
 						</select>
 					</div>	
 				</div>
