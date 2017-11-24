@@ -2068,6 +2068,10 @@ hr.large {
 	opacity: 0.5;
 }
 
+.progress-bar {
+	width: 100%;
+}
+
 textarea.form-control.small-area {
 	max-width: 280px;
 	height: 100px;
@@ -2882,8 +2886,8 @@ h3.inside-panel {
 
 .choose-list {
 	font-size: 22px;
-	position: absolute;
-	top: 17px;
+	position: absolute; 
+	top: 15px; 
 	cursor: pointer;
 }
 
@@ -2985,7 +2989,6 @@ h3.inside-panel {
 
 .upload-detele {
 	font-size: 18px;
-    margin-top: 20px;
     vertical-align: middle;
     display: inline-block;
 }

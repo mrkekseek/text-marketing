@@ -33,9 +33,9 @@ class UsersController extends Controller
 
 			$user = User::firstOrNew(['id' => empty($id) ? 0 : $id]);
 			if ( ! empty($post['teams_leader'])) {
-				$this->resetTeamsLeader($post['teams_id']);
+				$this->resetTeamsLeader($post['teams_id'], $id);
 			}
-			$user->plans_id = $post['plans_code'];
+			$user->plans_id = $post['plans_id'];
 			$user->teams_id = $post['teams_id'];
 			$user->teams_leader = $post['teams_leader'];
 			$user->type = 2;
@@ -67,15 +67,16 @@ class UsersController extends Controller
 	{
 		$user = User::find($id);
 		if ( ! empty($post['_checked'])) {
-			$this->resetTeamsLeader($user->teams_id);
+			$this->resetTeamsLeader($user->teams_id, $id);
 		}
 		$user->update(['teams_leader' => $post['_checked']]);
 		return true;
 	}
 
-	public function resetTeamsLeader($teams_id)
+	public function resetTeamsLeader($teams_id, $id = false)
 	{
 		DB::table('users')
+			->where('id', '<>', $id)
 			->where('teams_id', $teams_id)
 			->update(['teams_leader' => false]);
 	}
