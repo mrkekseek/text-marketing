@@ -38,7 +38,7 @@
             request.send('/plans', false, function(data) {
                 $scope.plans_list = data;
                 $scope.plans_list.unshift({
-    				'id': '0',
+    				'plans_id': '0',
     				'name': 'Select a Plan...'
     			});
             }, 'get');
@@ -49,24 +49,6 @@
 			$scope.teams();
 			$scope.plans();
 		};
-
-/*        $scope.get_plan_info = function() {
-        	if ($rootScope.user.plans_code)
-        	{
-        		request.send('/users/get_plan_info/', {'plans_code': $rootScope.user.plans_code}, function(data) {
-        			if (data.data)
-        			{
-        				$scope.plan = data.data;
-        			}
-	            });
-        	}
-        };*/
-
-/*        $scope.cancel_plan = function() {
-        	request.send('/users/cancel_subscription/', {'users_sub_id': $rootScope.user.users_sub_id, 'users_id': $rootScope.user.users_id}, function(data) {
-                $window.location.href = "/";
-            });
-        };*/
 
     	$scope.create = function(users_id) {
             users_id = users_id || false;

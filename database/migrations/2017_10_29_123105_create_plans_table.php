@@ -16,10 +16,13 @@ class CreatePlansTable extends Migration
         Schema::create('plans', function (Blueprint $table) {
             $table->increments('id');
             $table->string('plans_id')->default('');
-            $table->string('plans_name')->default('');
-            $table->string('plans_type')->default('');
-            $table->integer('plans_counts_review')->unsigned()->default(0);
-            $table->integer('plans_counts_tm')->unsigned()->default(0);
+            $table->string('name')->default('');
+            $table->double('amount', 8, 2)->unsigned()->default(0);
+            $table->string('interval')->default('');
+            $table->integer('reviews')->unsigned()->default(0);
+            $table->integer('tms')->unsigned()->default(0);
+            $table->integer('emails')->unsigned()->default(0);
+            $table->tinyInteger('trial')->unsigned()->default(0);
             $table->timestamps();
         });
     }
