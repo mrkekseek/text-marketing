@@ -9,13 +9,10 @@
 		$scope.step = 1;
 		$scope.minDate = new Date();
 		$scope.open = false;
-		$scope.message = {'messagesFollowupEnable' : '0', 'messagesText' : '', 'messagesTextLength' : 0 ,
-		'followupText' : '', 'followupTextLength' : 0, 'messagesSchedule' : '0', 'maxLength' : 130,
-		 'followupSettings' : '10', 'xDay' : '2', 'messagesSwitch' : '1'};
+		$scope.message = {'messagesText' : '', 'messagesTextLength' : 0 ,
+		'messagesSchedule' : '0', 'maxLength' : 130, 'xDay' : '2', 'messagesSwitch' : '1'};
 
-		$scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'}],
-		'listName' : 'listsName1', 'editable' : false, 'choosed' : false}, {'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'}],
-		'listName' : 'listsName1', 'editable' : false, 'choosed' : false}];
+		$scope.contactList =  [];
 		var oldContactList = [];
 		var mask = 0;
 
@@ -45,13 +42,9 @@
 		};
 
 		$scope.charCount = function(id) {
-			if (id === 'messagesText') {
-				mask = ($scope.message.messagesText.match(/\[\$FirstName\]|\[\$LastName\]/g) || []).length;
-				$scope.message.messagesTextLength = mask * 18 + $scope.message.messagesText.length;
-			} else {
-				mask = ($scope.message.followupText.match(/\[\$FirstName\]|\[\$LastName\]/g) || []).length;
-				$scope.message.followupTextLength = mask * 18 + $scope.message.followupText.length;
-			}
+			mask = ($scope.message.messagesText.match(/\[\$FirstName\]|\[\$LastName\]/g) || []).length;
+			$scope.message.messagesTextLength = mask * 18 + $scope.message.messagesText.length;
+			
 			$scope.message.maxLength = $scope.message.messagesTextLength < 130 ? 130 : 472;
 		};
 
@@ -70,7 +63,7 @@
 
 		$scope.cancel = function(index) {
 			$scope.contactList[index].editable = false;
-			$scope.contactList[index] =  angular.copy(oldContactList[index]);
+			$scope.contactList =  angular.copy(oldContactList);
 		};
 
 		$scope.save = function(index) {
@@ -97,11 +90,10 @@
 
 		$scope.savePhone = function(itemIndex, index) {
 			$scope.contactList[itemIndex].phones[index].editable = false;
-			oldContactList[itemIndex].phones[index] =  angular.copy($scope.contactList[itemIndex].phones[index]);
+			oldContactList[itemIndex].phones =  angular.copy($scope.contactList[itemIndex].phones);
 		};
 
 		$scope.createPhone = function(index) {
-			$scope.contactList[index].phones = $scope.contactList[index].phones ? $scope.contactList[index].phones : [];
 			$scope.contactList[index].phones.unshift({
 				'editable' : true,
 				'number' : '',
@@ -155,6 +147,110 @@
 			txtarea.scrollTop = scrollPos;
 			$scope.message[areaId] = txtarea.value;
 		}
+
+		$scope.openImport = function() {
+
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: 'ImportFiles.html',
+				controller: 'ImportFileCtrl'
+			});
+
+			modalInstance.result.then(function(response) {
+			}, function () {
+
+			});
+		};
+	};
+})();
+
+;
+
+
+
+
+(function () {
+	'use strict';
+
+	angular.module('app').controller('ImportFilesCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'langs', 'logger', ImportFilesCtrl]);
+
+	function ImportFilesCtrl($rootScope, $scope, $uibModalInstance, request, langs, logger) {
+
+		$scope.csv = {'phones_firstname': 1,
+		'phones_lastname': 2,
+		'phones_number': 3,
+		'phones_email': "",
+		'starts_from': "0",
+		'upload_csv': false};
+
+		$scope.upload_progress = false;
+		$scope.upload_percent = 100;
+
+		$scope.save = function() {
+			var error = 1;
+			if (! $scope.csv.upload_csv)
+			{
+				logger.logError('Please choose file');
+				return;
+			}
+
+			if (error)
+			{
+				request.send('/phones/csv/', $scope.csv, function(data) {
+					if (data)
+					{
+						$uibModalInstance.close(data);
+					}
+				});
+			}
+		};
+
+		$scope.cancel = function() {
+			$uibModalInstance.dismiss('cancel');
+		};
+
+		$scope.upload_csv = function(event) {
+			var files = event.target.files;
+			if (files.length)
+			{
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', '/api/pub/upload/', true);
+				xhr.onload = function(event)
+				{
+					if (this.status == 200)
+					{
+						var response = JSON.parse(this.response);
+						if (response.data) {
+							var part = response.data.split('/data/');
+							var ext = part[1].split('.');
+							$timeout(function() { $scope.csv.upload_csv = '/data/' + part[1]; });
+						}
+						$scope.upload_progress = false;
+					}
+				};
+
+				xhr.upload.onprogress = function(event)
+				{
+					if (event.lengthComputable)
+					{
+						$scope.upload_progress = true;
+						$scope.upload_percent = Math.round(event.loaded * 100 / event.total);
+					}
+				};
+
+				var fd = new FormData();
+				fd.append("file", files[0]);
+
+				xhr.send(fd);
+				$scope.upload_progress = true;
+			}
+		};
+
+		$scope.getFileName = function(path) {
+			if (!path || path == "") return '';
+			return path.replace(/^.*[\\\/]/, '')
+		};
+
 	};
 })();
 

@@ -1,4 +1,4 @@
-body,
+btn-googlebody,
 .body-auth #content {
 	background: #fff;
 }
@@ -2099,7 +2099,7 @@ textarea.form-control.small-area {
 .btn.btn-primary.btn-yelp {
 	background-color: #CD2027;
 	border-color: #A00608;
-	width: 200px;
+	width: 90px;
 }
 
 .btn.btn-primary.btn-yelp:hover {
@@ -2117,7 +2117,7 @@ textarea.form-control.small-area {
 .btn.btn-primary.btn-google {
 	background-color: #37a96c;
 	border-color: #148747;
-	width: 200px;
+	width: 90px;
 }
 
 .btn.btn-primary.btn-google:hover {
@@ -2135,7 +2135,7 @@ textarea.form-control.small-area {
 .btn.btn-primary.btn-facebook {
 	background-color: #3B5998;
 	border-color: #12306d;
-	width: 200px;
+	width: 90px;
 }
 
 .btn.btn-primary.btn-facebook:hover {
@@ -2538,6 +2538,10 @@ div.item-panel.panel-child:hover .position {
 	display: none;
 }
 
+div.panel-child {
+	margin-top: 10px;
+}
+
 .handle {
 	display: none;
 }
@@ -2778,6 +2782,7 @@ div.chars-area.danger span {
 
 .calendar-container .uib-daypicker {
 	outline: none;
+	margin-top: 22px;
 }
 
 .calendar-container .uib-daypicker > table {

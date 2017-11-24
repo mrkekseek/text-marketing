@@ -16,3 +16,17 @@
 })();
 
 ;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('CorporateReviewCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', CorporateReviewCtrl]);
+
+    function CorporateReviewCtrl($rootScope, $scope, $uibModal, request, langs) {
+
+           $scope.list = [{'firstName' : 'name', 'lastName' : 'surname'},{'firstName' : 'name2', 'lastName' : 'surname2'},{'firstName' : 'name3', 'lastName' : 'surname3'}];
+           
+    };
+})();
+
+;
