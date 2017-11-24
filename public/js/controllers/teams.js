@@ -21,7 +21,7 @@
     	};
 
         $scope.companies = function () {
-            request.send('/teams/companies', {}, function(data) {
+            request.send('/teams/companies', {}, function (data) {
                for (var k in $scope.list) {
                     for (var j in data) {
                         if ($scope.list[k].teams_name == data[j].org_names_name) {
@@ -46,7 +46,7 @@
 				}
 		    });
 
-		    modalInstance.result.then(function(response) {
+		    modalInstance.result.then(function (response) {
 				$scope.get();
 		    }, function () {
 				
@@ -88,20 +88,11 @@
 			error *= validate.check($scope.form.name, 'Name');
 
 			if (error) {
-				if ($scope.team.teams_id) {
-					request.send('/teams/' + $scope.team.teams_id, $scope.team, function (data) {
-						if (data) {
-							$uibModalInstance.close(data);
-						} 
-					});
-				} else {
-					request.send('/teams/save', $scope.team, function (data) {
-						if (data) {
-							$uibModalInstance.close(data);
-						} 
-					}, 'put');
-				}
-				
+				request.send('/teams/' + ($scope.team.teams_id ? $scope.team.teams_id : 'save'), $scope.team, function (data) {
+					if (data) {
+						$uibModalInstance.close(data);
+					} 
+				}, ($scope.team.teams_id ? 'post' : 'put'));
 			}
 		};
 
