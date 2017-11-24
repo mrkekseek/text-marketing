@@ -42,6 +42,12 @@ hr {
 	display: inline-block;
 }
 
+.help-send-icon {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
 .card-content form {
 	width: 480px;
 	margin: 20px auto;
@@ -2684,7 +2690,7 @@ div.chars-area {
 
 div.chars-area textarea {
 	resize: none;
-    height: 75px;
+    height: 150px;
 }
 
 div.chars-area.danger textarea {
