@@ -7,6 +7,7 @@
     	$scope.team = {};
         $scope.team.company_name = 'ContractorTexter';
         $scope.team.phones = [];
+        $scope.emails = [];
 
         $scope.addInput = function(input) {
             $scope.team.phones.push(input);
@@ -17,9 +18,15 @@
             $scope.team.phones.splice(index, 1);
         };
 
-        $scope.save = function() {
-            console.log($scope.team);
+        $scope.addEmail = function(input) {
+            $scope.emails.push(input);
+            $scope.email = '';
         };
+
+        $scope.removeEmail = function(index) {
+            $scope.emails.splice(index, 1);
+        };
+
     };
 })();
 
@@ -37,15 +44,13 @@
         $scope.selected = -1;
         var oldContactList = [];
         $scope.contactList = [];
-        /*$scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'},
-        {'number' : '111111111', 'birthDay': new Date(), 'firstName' : 'name', 'lastName' : 'surname', 'editable' : false, 'source' : 'Manually'}],
-         'listName' : 'listsName1', 'editable' : false}];*/
         
+        $scope.numbers = [{'phoneNnumber' : '112313123', 'firstName' : 'name', 'lastName' : 'surname', 'selected' : false},
+        {'phoneNnumber' : '2222222', 'firstName' : 'namee', 'lastName' : 'surname', 'selected' : false}];
+
         $scope.init = function() {
             $scope.get();
             $scope.copy();
-            
-            console.log($scope.contactList);
         };
 
         $scope.get = function() {
@@ -72,7 +77,8 @@
             $scope.selected = -1;
             $scope.contactList.unshift({
                 'listName' : name,
-                'editable': true
+                'editable': true,
+                'phones' : []
             });
         };
 

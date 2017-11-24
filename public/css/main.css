@@ -2538,6 +2538,10 @@ div.item-panel.panel-child:hover .position {
 	display: none;
 }
 
+div.panel-child {
+	margin-top: 10px;
+}
+
 .handle {
 	display: none;
 }

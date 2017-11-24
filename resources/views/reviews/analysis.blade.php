@@ -54,7 +54,7 @@
 				</div>
 
 				<div class="form-group">
-					<a href="/settings/corporate/" class="btn btn-primary">Corporate</a>
+					<a href="/reviews/corporate/" class="btn btn-primary">Corporate</a>
 				</div>
 				<div class="row">
 					<select ng-show="false" class="form-control providers-list ng-pristine ng-untouched ng-valid ng-not-empty ng-hide active" ng-class="{'active': user.teams_leader == 1}" ng-model="analysis.users_id" ng-change="toggle_users(analysis.users_id)">
