@@ -7,6 +7,7 @@
     	$scope.team = {};
         $scope.team.company_name = 'ContractorTexter';
         $scope.team.phones = [];
+        $scope.emails = [];
 
         $scope.addInput = function(input) {
             $scope.team.phones.push(input);
@@ -17,9 +18,15 @@
             $scope.team.phones.splice(index, 1);
         };
 
-        $scope.save = function() {
-            console.log($scope.team);
+        $scope.addEmail = function(input) {
+            $scope.emails.push(input);
+            $scope.email = '';
         };
+
+        $scope.removeEmail = function(index) {
+            $scope.emails.splice(index, 1);
+        };
+
     };
 })();
 
@@ -30,22 +37,20 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', MarketingContactsCtrl]);
+    angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'langs', 'validate', MarketingContactsCtrl]);
 
-    function MarketingContactsCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate) {
+    function MarketingContactsCtrl($rootScope, $scope, $uibModal, $filter, request, langs, validate) {
         $scope.requestFinish = true;
         $scope.selected = -1;
-        var oldContactList = [];
         $scope.contactList = [];
-        /*$scope.contactList =  [{'phones': [{'number' : '222222222', 'birthDay': new Date(), 'firstName' : 'FNAME', 'lastName' : 'LNAME', 'editable' : false, 'source' : 'Other'},
-        {'number' : '111111111', 'birthDay': new Date(), 'firstName' : 'name', 'lastName' : 'surname', 'editable' : false, 'source' : 'Manually'}],
-         'listName' : 'listsName1', 'editable' : false}];*/
-        
+        $scope.numbers = [];
+
+         var oldContactList = [];
+
+
         $scope.init = function() {
             $scope.get();
             $scope.copy();
-            
-            console.log($scope.contactList);
         };
 
         $scope.get = function() {
@@ -72,7 +77,8 @@
             $scope.selected = -1;
             $scope.contactList.unshift({
                 'listName' : name,
-                'editable': true
+                'editable': true,
+                'phones' : []
             });
         };
 
@@ -86,11 +92,10 @@
 
         $scope.savePhone = function(itemIndex, index) {
             $scope.contactList[itemIndex].phones[index].editable = false;
-            oldContactList[itemIndex].phones[index] =  angular.copy($scope.contactList[itemIndex].phones[index]);
+            oldContactList[itemIndex].phones =  angular.copy($scope.contactList[itemIndex].phones);
         };
 
         $scope.createPhone = function(index) {
-            $scope.contactList[index].phones = $scope.contactList[index].phones ? $scope.contactList[index].phones : [];
             $scope.contactList[index].phones.unshift({
                 'editable' : true,
                 'number' : '',
@@ -110,9 +115,7 @@
             });
 
             modalInstance.result.then(function(response) {
-            }, function () {
-                
-            });
+            }, function () {});
         };
     };
 })();
