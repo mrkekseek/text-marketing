@@ -1,4 +1,4 @@
-btn-googlebody,
+body,
 .body-auth #content {
 	background: #fff;
 }
@@ -2101,7 +2101,7 @@ textarea.form-control.small-area {
 .btn.btn-primary.btn-yelp {
 	background-color: #CD2027;
 	border-color: #A00608;
-	width: 90px;
+	width: 200px;
 }
 
 .btn.btn-primary.btn-yelp:hover {
@@ -2119,7 +2119,7 @@ textarea.form-control.small-area {
 .btn.btn-primary.btn-google {
 	background-color: #37a96c;
 	border-color: #148747;
-	width: 90px;
+	width: 200px;
 }
 
 .btn.btn-primary.btn-google:hover {
@@ -2137,7 +2137,7 @@ textarea.form-control.small-area {
 .btn.btn-primary.btn-facebook {
 	background-color: #3B5998;
 	border-color: #12306d;
-	width: 90px;
+	width: 200px;
 }
 
 .btn.btn-primary.btn-facebook:hover {
