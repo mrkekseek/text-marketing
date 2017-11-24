@@ -23,7 +23,6 @@
     				'name': 'Select a Team...'
     			});
 			}, 'get');
-
     	};
 
     	$scope.getTeamById = function(teamsId) {

@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1722d439ba4fc8a718f2084fe1970699",
+    "hash": "ed74dd9b5297b4c6132d145505c2a134",
+    "content-hash": "9016cf1fdb2fcf47c4a615cbeef47e9a",
     "packages": [
         {
             "name": "cartalyst/collections",
@@ -1918,6 +1919,54 @@
                 "stylesheet"
             ],
             "time": "2016-07-19T19:14:21+00:00"
+        },
+        {
+            "name": "shivella/laravel-bitly",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Shivella/laravel-bitly.git",
+                "reference": "f54dfaced5d7369abe619a8ab9d4029b52a50146"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Shivella/laravel-bitly/zipball/f54dfaced5d7369abe619a8ab9d4029b52a50146",
+                "reference": "f54dfaced5d7369abe619a8ab9d4029b52a50146",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "^5.1",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.1",
+                "symfony/http-foundation": "~3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Shivella\\Bitly": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Wessel Strengholt",
+                    "email": "wessel.strengholt@gmail.com"
+                }
+            ],
+            "description": "Laravel package for generating bitly url",
+            "homepage": "https://github.com/Shivella/laravel-bitly",
+            "keywords": [
+                "bitly",
+                "laravel",
+                "package"
+            ],
+            "time": "2017-09-29 07:54:06"
         },
         {
             "name": "stripe/stripe-php",

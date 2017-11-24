@@ -42,6 +42,12 @@ hr {
 	display: inline-block;
 }
 
+.help-send-icon {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
 .card-content form {
 	width: 480px;
 	margin: 20px auto;
@@ -1664,10 +1670,6 @@ body.surveys {
 
 .questions-text {
 	font-weight: bold;
-}
-
-.questions-answers {
-	padding-left: 24px;
 }
 
 .questions-answers .form-control {
