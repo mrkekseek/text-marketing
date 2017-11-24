@@ -24,7 +24,7 @@
 
 									<div class="row-info">
 										<span class="messages-info-send">
-											<span>Will be sent on November 20th at 10:58 AM</span>
+											<span>Will be sent on @{{ item.sendDate | date: 'MMMM d' }}th at @{{ item.sendDate | date: 'h:mm a' }}</span>
 										</span>
 
 										<span>0 lists / 0 numbers.</span>
@@ -38,7 +38,7 @@
 										</div>
 									</div>
 
-									<div ng-show="item.isSelected" class="alert-info alert" role="alert">
+									<div ng-show="selected == $index && ! item.isSended" class="alert-info alert" role="alert">
 										<div>
 											This message wasn't sent yet
 										</div>

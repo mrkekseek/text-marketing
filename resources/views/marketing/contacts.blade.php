@@ -186,7 +186,6 @@
 </div>
 
 <script type="text/ng-template" id="ImportFile.html">
-
 	<form name="form" method="post" novalidate="novalidate">
 		<div class="modal-header">
 			<h4 class="modal-title">Import Numbers from CSV file</h4>
@@ -214,5 +213,4 @@
 			<button type="button" class="btn btn-default " ng-click="cancel()" ng-if=" ! view">Cancel</button>
 		</div>
 	</form>
-
 </script>

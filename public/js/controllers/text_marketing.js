@@ -37,16 +37,16 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', MarketingContactsCtrl]);
+    angular.module('app').controller('MarketingContactsCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', 'request', 'langs', 'validate', MarketingContactsCtrl]);
 
-    function MarketingContactsCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate) {
+    function MarketingContactsCtrl($rootScope, $scope, $uibModal, $filter, request, langs, validate) {
         $scope.requestFinish = true;
         $scope.selected = -1;
-        var oldContactList = [];
         $scope.contactList = [];
-        
-        $scope.numbers = [{'phoneNnumber' : '112313123', 'firstName' : 'name', 'lastName' : 'surname', 'selected' : false},
-        {'phoneNnumber' : '2222222', 'firstName' : 'namee', 'lastName' : 'surname', 'selected' : false}];
+        $scope.numbers = [];
+
+         var oldContactList = [];
+
 
         $scope.init = function() {
             $scope.get();
@@ -92,11 +92,10 @@
 
         $scope.savePhone = function(itemIndex, index) {
             $scope.contactList[itemIndex].phones[index].editable = false;
-            oldContactList[itemIndex].phones[index] =  angular.copy($scope.contactList[itemIndex].phones[index]);
+            oldContactList[itemIndex].phones =  angular.copy($scope.contactList[itemIndex].phones);
         };
 
         $scope.createPhone = function(index) {
-            $scope.contactList[index].phones = $scope.contactList[index].phones ? $scope.contactList[index].phones : [];
             $scope.contactList[index].phones.unshift({
                 'editable' : true,
                 'number' : '',
@@ -116,9 +115,7 @@
             });
 
             modalInstance.result.then(function(response) {
-            }, function () {
-                
-            });
+            }, function () {});
         };
     };
 })();
