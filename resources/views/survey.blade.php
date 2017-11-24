@@ -17,8 +17,51 @@
 	<div class="surveys-header">
 		<div class="surveys_title">
 			<div class="container">
+				<h3>@{{ seance.survey.title }}</h3>
 			</div>
 		</div>
+	</div>
+
+	<div class="container text-center" ng-show="show_thanks">
+		<div class="form-group thanks-text">
+			<b>{{ __('Thanks so much!') }}</b>
+		</div>
+		<div class="form-group url-btn-box">
+			<div class="form-group">
+				<a href="" class="btn btn-primary btn-facebook"">Facebook</a>
+			</div>
+			<div class="form-group">
+				<a href="" class="btn btn-primary btn-google"">Google</a>
+			</div>
+			<div class="form-group">
+				<a href="" class="btn btn-primary btn-yelp"">Yelp</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="questions-box" ng-show="! show_thanks">
+		<div class="container">
+			<div class="questions-item" ng-repeat="(key, question) in seance.survey.questions" ng-show="question.type == 'star' || bed_answer" ng-class="{'current': current == key, 'next': next == key, 'prev': prev == key, 'pre': pre == key}">
+				<div class="questions-text">
+					<span>@{{ question.text }}</span>
+				</div>
+				<div class="questions-answers">
+					<div class="radio" ng-show="question.type == 'star'" ng-repeat="i in [5, 4, 3, 2, 1, 0]">
+						<label>
+							<input type="radio" value="@{{i}}" name="value" ng-model="question.value" ng-click="setAnswers(question)" />
+							<span>
+								<i class="fa fa-star surveys-stars" ng-repeat="s in repeatStars(i) track by $index"></i>
+								<span ng-show="!i">{{ __('N/A') }}</span>
+							</span>
+						</label>
+					</div>
+					<textarea ng-show="question.type == 'essay'" class="form-control"></textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container text-center">
+		<button class="btn btn-primary" ng-show="bed_answer && ! show_thanks">{{ __('Finish') }}</button>
 	</div>
 
 	

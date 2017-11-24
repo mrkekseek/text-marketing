@@ -1672,10 +1672,6 @@ body.surveys {
 	font-weight: bold;
 }
 
-.questions-answers {
-	padding-left: 24px;
-}
-
 .questions-answers .form-control {
 	max-width: 320px;
 }

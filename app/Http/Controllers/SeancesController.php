@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Seance;
 use App\Survey;
+use App\User;
 use App\Question;
 use Bitly;
 use Illuminate\Http\Request;
@@ -51,7 +52,9 @@ class SeancesController extends Controller
     public function getSeance($param)
     {
         $seance = Seance::where('code', $param)->first();
+        $seance['user'] = User::where('id', $seance['users_id'])->first();
         $seance['survey'] = Survey::where('id', $seance['surveys_id'])->first();
+        $seance['survey']['title'] = $this->replaceUsername($seance['user'], $seance['survey']['title']);
         $seance['survey']['questions'] = Question::all();
         return view('survey')->with(['seance' => $seance]);
     }
@@ -72,4 +75,10 @@ class SeancesController extends Controller
 	{
 		return Bitly::getUrl(config('app.url').'/survey/'.$code);
 	}
+
+    public function replaceUsername($user, $title)
+    {
+        $temp = str_replace('[$user_firstname]', $user['firstname'], $title);
+        return str_replace('[$user_lastname]', ! empty($user['lastname']) ? $user['lastname'] : '', $temp);
+    }
 }
