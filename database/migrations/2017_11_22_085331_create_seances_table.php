@@ -22,6 +22,7 @@ class CreateSeancesTable extends Migration
             $table->string('url');
             $table->string('date');
             $table->integer('completed')->unsigned()->default(0);
+            $table->integer('social_show')->unsigned()->default(0);
             $table->string('type');
             $table->timestamps();
         });

@@ -77,6 +77,8 @@ class AuthController extends Controller
             $user->trial_ends_at = Carbon::now()->addDays(14);
             $user->save();
 
+            $user->defaultUrls();
+
             $owner = User::where('owner', 1)->first();
             event(new SignUp($user, $owner));
 
