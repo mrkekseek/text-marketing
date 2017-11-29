@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\SocialUrl;
 use App\Mail\ActivateUser;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
@@ -30,8 +31,9 @@ class UsersController extends Controller
         ]);
 
         if ( ! $validator->fails()) {
-
+        	$new = false;
 			$user = User::firstOrNew(['id' => empty($id) ? 0 : $id]);
+			$new = ! $user->exists;
 			if ( ! empty($post['teams_leader'])) {
 				$this->resetTeamsLeader($post['teams_id'], $id);
 			}
@@ -50,6 +52,10 @@ class UsersController extends Controller
 			}
 
 			$user->save();
+
+			if ($new) {
+				$user->defaultUrls();
+			}
 
 			return $this->message(__('Teammate was successfully saved'), 'success');
 		}

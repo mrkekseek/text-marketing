@@ -22,19 +22,13 @@
 		</div>
 	</div>
 
-	<div class="container text-center" ng-show="show_thanks">
-		<div class="form-group thanks-text">
+	<div class="container text-center">
+		<div class="form-group thanks-text" ng-show="show_thanks">
 			<b>{{ __('Thanks so much!') }}</b>
 		</div>
-		<div class="form-group url-btn-box">
-			<div class="form-group">
-				<a href="" class="btn btn-primary btn-facebook"">Facebook</a>
-			</div>
-			<div class="form-group">
-				<a href="" class="btn btn-primary btn-google"">Google</a>
-			</div>
-			<div class="form-group">
-				<a href="" class="btn btn-primary btn-yelp"">Yelp</a>
+		<div class="form-group url-btn-box" ng-show="seance.show_reviews">
+			<div class="form-group" ng-repeat="url in seance.user.urls">
+				<a href="" class="btn btn-primary btn-@{{ url.name.toLowerCase() }}" ng-click="socialSave(url)">@{{ url.name }}</a>
 			</div>
 		</div>
 	</div>
@@ -55,13 +49,13 @@
 							</span>
 						</label>
 					</div>
-					<textarea ng-show="question.type == 'essay'" class="form-control"></textarea>
+					<textarea ng-show="question.type == 'essay'" ng-model="question.value" class="form-control"></textarea>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="container text-center">
-		<button class="btn btn-primary" ng-show="bed_answer && ! show_thanks">{{ __('Finish') }}</button>
+		<button class="btn btn-primary" ng-show="bed_answer && ! show_thanks" ng-click="save()">{{ __('Finish') }}</button>
 	</div>
 
 	

@@ -6,6 +6,7 @@ use App\Seance;
 use App\Survey;
 use App\User;
 use App\Question;
+use App\SocialUrl;
 use Bitly;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,6 +54,7 @@ class SeancesController extends Controller
     {
         $seance = Seance::where('code', $param)->first();
         $seance['user'] = User::where('id', $seance['users_id'])->first();
+        $seance['user']['urls'] = SocialUrl::where('users_id', $seance['users_id'])->get();
         $seance['survey'] = Survey::where('id', $seance['surveys_id'])->first();
         $seance['survey']['title'] = $this->replaceUsername($seance['user'], $seance['survey']['title']);
         $seance['survey']['questions'] = Question::all();
@@ -64,6 +66,12 @@ class SeancesController extends Controller
     	$date = strtotime($date);
     	$time = strtotime($time);
     	return mktime(date('H', $time), date('i', $time), 0, date('m', $date), date('d', $date), date('Y', $date));
+    }
+
+    public function socialSave($id = false, $post = [])
+    {
+        $seance = Seance::find($id);
+        $seance->update(['social_tap' => $post['name']]);
     }
 
     public function codeGenerate($post)
