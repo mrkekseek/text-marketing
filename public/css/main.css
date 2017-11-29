@@ -23,6 +23,17 @@ hr {
 .clients .divider {
 	margin: 0px;
 }
+.url-switch {
+	vertical-align: bottom;
+    margin-left: 10px;
+    margin-bottom: 3px;
+}
+
+.help-icon-review {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
 
 .phones div {
 	display: table-cell;

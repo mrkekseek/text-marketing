@@ -17,6 +17,7 @@
 
         $scope.init = function(seance) {
             $scope.seance = seance;
+            console.log($scope.seance);
         };
 
         $scope.repeatStars = function(key) {
@@ -60,9 +61,15 @@
             $scope.sendAnswers();
         };
 
+        $scope.socialSave = function(url) {
+            request.send('/seances/' + url.id + '/socialSave/', url, function (data) {
+
+            }, 'put');
+        };
+
         $scope.sendAnswers = function() {
             request.send('/answers/save', {'answers': $scope.answers, 'seance': $scope.seance}, function (data) {
-                console.log(data);
+
             }, 'put');
         };
     };

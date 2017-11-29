@@ -27,14 +27,8 @@
 			<b>{{ __('Thanks so much!') }}</b>
 		</div>
 		<div class="form-group url-btn-box" ng-show="seance.show_reviews">
-			<div class="form-group">
-				<a href="" class="btn btn-primary btn-facebook"">Facebook</a>
-			</div>
-			<div class="form-group">
-				<a href="" class="btn btn-primary btn-google"">Google</a>
-			</div>
-			<div class="form-group">
-				<a href="" class="btn btn-primary btn-yelp"">Yelp</a>
+			<div class="form-group" ng-repeat="url in seance.user.urls">
+				<a href="" class="btn btn-primary btn-@{{ url.name.toLowerCase() }}" ng-click="socialSave(url)">@{{ url.name }}</a>
 			</div>
 		</div>
 	</div>
