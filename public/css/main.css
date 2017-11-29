@@ -2752,6 +2752,10 @@ div.chars-area.danger span {
 	min-height: 250px;
 }
 
+ #surveys-send-accordion .panel .panel-body {
+	min-height: 50px;
+}
+
 .panel-body.surveys,
 .panel-body.analysis {
 	min-height: auto;

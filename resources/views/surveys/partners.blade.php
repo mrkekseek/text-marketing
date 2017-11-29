@@ -1,6 +1,6 @@
-<div class="page page-table" data-ng-controller="SurveysCtrl" ng-init="init()">
+<div class="page page-table" data-ng-controller="SurveysPartnersCtrl" ng-init="init()">
 	<h2>
-		<span>{{ __('Send') }}</span>
+		<span>{{ __('Partners') }}</span>
 		<i class="fa fa-question-circle-o help-icon" uib-tooltip-template="'surveysTooltip.html'" tooltip-placement="right-top" aria-hidden="true"></i>
 	</h2>
 	<div class="row">
@@ -191,6 +191,29 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="col-sm-12">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<strong>{{ __('Review Sites') }}</strong>
+									</div>
+									<div class="panel-body" >
+										<div class="form-horizontal">
+											<div class="form-group">
+												<label class="col-sm-3 control-label" for="facebook-input">
+													<span class="pull-left">
+														<i class="fa fa-facebook reviews-icons" aria-hidden="true"></i>{{ __('Facebook') }}
+													</span>
+												</label>
+												<div class="input-group full-width col-sm-8">
+													<input name="facebook-input" id="facebook-input" type="text" class="form-control" ng-model="url.url" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
 							<div class="col-sm-12" id="surveys-send-accordion">
 								<div class="panel panel-default">
 									<div class="panel-heading">

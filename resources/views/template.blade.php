@@ -74,5 +74,7 @@
         <script src="/js/controllers/marketing_outbox.js"></script>
         <script src="/js/controllers/reviews.js"></script>
         <script src="/js/controllers/surveys.js"></script>
+        <script src="/js/controllers/surveys_partners.js"></script>
+        <script src="/js/directives/charset.js"></script>
     </body>
 </html>
