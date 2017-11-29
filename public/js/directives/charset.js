@@ -5,14 +5,25 @@ angular.module('app').directive('charSet', function() {
   		id: '=id'
   	},
   	controller: ['$scope', function CharSetCtrl($scope) {
-  		$scope.messages = {};
+  		$scope.messages = {'messagesText': '', 'messagesTextLength': 0, 'maxLength' : 130 };
+
+  		$scope.sendData = function() {
+  			$scope.$emit('myCustomEvent', $scope.messages.messagesText);  //  <---------------------------------------
+  		};
+
   		$scope.insertMask = function(id, text) {
 			$scope.insertAtCaret(id,text);
 		};
 
+		$scope.charCount = function(id) {
+			mask = ($scope.messages.messagesText.match(/\[\$FirstName\]|\[\$LastName\]/g) || []).length;
+			$scope.messages.messagesTextLength = mask * 18 + $scope.messages.messagesText.length;
+  			
+			$scope.messages.maxLength = $scope.messages.messagesTextLength < 130 ? 130 : 472;
+		};
+
 		$scope.insertAtCaret = function(areaId,text) {
 			var txtarea = document.getElementById(areaId);
-			console.log(txtarea);
 			var scrollPos = txtarea.scrollTop;
 			var strPos = 0;
 			var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ? 

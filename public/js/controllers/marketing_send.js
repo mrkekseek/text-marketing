@@ -16,6 +16,16 @@
 		var oldContactList = [];
 		var mask = 0;
 
+		$scope.dateOpt = {
+			minDate: $scope.minDate,
+			dateFormat: 'yyyy-MMMM-dd'
+		};
+
+
+		$scope.$on('myCustomEvent', function (event, data) {
+  			console.log(data); // <----------------------------------------------------
+		});
+
 		$scope.totalCount = function() {
 			$scope.totalContacts = 0;
 			for (var i in $scope.contactList) {
@@ -35,20 +45,6 @@
 				default: return  'th';
 			}
 		};
-
-		$scope.dateOpt = {
-			minDate: $scope.minDate,
-			dateFormat: 'yyyy-MMMM-dd'
-		};
-
-		$scope.charCount = function(id) {
-			mask = ($scope.message.messagesText.match(/\[\$FirstName\]|\[\$LastName\]/g) || []).length;
-			$scope.message.messagesTextLength = mask * 18 + $scope.message.messagesText.length;
-			
-			$scope.message.maxLength = $scope.message.messagesTextLength < 130 ? 130 : 472;
-		};
-
-		
 
 		$scope.init = function() {
 			$scope.copy();

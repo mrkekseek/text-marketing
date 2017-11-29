@@ -1,12 +1,13 @@
 
 	<div class="chars-area" ng-class="{'danger': message.messagesTextLength > 130}">
 		<label>Message Text</label>
-		<textarea id="{{id}}" class="form-control" placeholder="Message Text" ng-model="messages.id" ng-keyup="charCount('messagesText')">
+		<textarea id="{{id}}" class="form-control" placeholder="Message Text" ng-model="messages.messagesText"
+		 ng-keyup="charCount(id)" ng-blur="sendData()">
 		</textarea>
 		<span>
 			<span ng-show="message.messagesTextLength > 130">3 messages </span>
-			<span>@{{ message.messagesTextLength }}</span> /
-			<span>@{{ message.maxLength }}</span>
+			<span>{{ messages.messagesTextLength }}</span> /
+			<span>{{ messages.maxLength }}</span>
 			<span class="fa fa-question-circle-o" uib-tooltip="You can go over 130 characters and have 460. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
