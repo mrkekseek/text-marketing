@@ -9,9 +9,7 @@
 		$scope.step = 1;
 		$scope.minDate = new Date();
 		$scope.open = false;
-		$scope.message = {'messagesText' : '', 'messagesTextLength' : 0 ,
-		'messagesSchedule' : '0', 'maxLength' : 130, 'xDay' : '2', 'messagesSwitch' : '1'};
-
+		
 		$scope.contactList =  [];
 		var oldContactList = [];
 		var mask = 0;
@@ -20,7 +18,7 @@
 			minDate: $scope.minDate,
 			dateFormat: 'yyyy-MMMM-dd'
 		};
-
+		$scope.test
 
 		$scope.$on('myCustomEvent', function (event, data) {
   			console.log(data); // <----------------------------------------------------

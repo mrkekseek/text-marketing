@@ -5,14 +5,16 @@ angular.module('app').directive('charSet', function() {
   		id: '=id'
   	},
   	controller: ['$scope', function CharSetCtrl($scope) {
+  		var mask = 0;
   		$scope.messages = {'messagesText': '', 'messagesTextLength': 0, 'maxLength' : 130 };
-
+  		console.log($scope.id);
   		$scope.sendData = function() {
   			$scope.$emit('myCustomEvent', $scope.messages.messagesText);  //  <---------------------------------------
   		};
 
   		$scope.insertMask = function(id, text) {
 			$scope.insertAtCaret(id,text);
+			$scope.charCount(id);
 		};
 
 		$scope.charCount = function(id) {
