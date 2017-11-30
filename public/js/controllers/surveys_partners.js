@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('SurveysCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', 'charset', SurveysCtrl]);
+    angular.module('app').controller('SurveysPartnersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', 'charset', SurveysPartnersCtrl]);
 
-    function SurveysCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger, charset) {
+    function SurveysPartnersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger, charset) {
         $scope.open_edit = false;
         $scope.popup_date = false;
         $scope.surveys_schedule = '0';
