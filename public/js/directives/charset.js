@@ -1,27 +1,35 @@
 angular.module('app').directive('charSet', function() {
   return {
   	transclude: true,
+  	replace: true,
+  	require: 'ngModel',
   	scope: {
-  		id: '=id'
+  		options: '=options',
+  		result: '=ngModel'
   	},
   	controller: ['$scope', function CharSetCtrl($scope) {
-  		var mask = 0;
-  		$scope.messages = {'messagesText': '', 'messagesTextLength': 0, 'maxLength' : 130 };
-  		console.log($scope.id);
-  		$scope.sendData = function() {
-  			$scope.$emit('myCustomEvent', $scope.messages.messagesText);  //  <---------------------------------------
+  		$scope.max_text_len = 140 - ' Txt STOP to OptOut'.length;
+        $scope.max_lms_text_len = 500 - ' Txt STOP to OptOut'.length;
+        $scope.showMessageTextUrl = false;
+        $scope.totalLength = 0;
+  		var maskFirstName = 0;
+  		var maskLastName = 0;
+
+  		$scope.chooseButtonFunc = function(type, id, mask) {
+  			 type ==='insert' ?  $scope.insertMask(id,mask) : $scope.showMessageTextUrl = true;
   		};
 
   		$scope.insertMask = function(id, text) {
 			$scope.insertAtCaret(id,text);
-			$scope.charCount(id);
+			$scope.charCount();
 		};
 
-		$scope.charCount = function(id) {
-			mask = ($scope.messages.messagesText.match(/\[\$FirstName\]|\[\$LastName\]/g) || []).length;
-			$scope.messages.messagesTextLength = mask * 18 + $scope.messages.messagesText.length;
-  			
-			$scope.messages.maxLength = $scope.messages.messagesTextLength < 130 ? 130 : 472;
+		$scope.charCount = function() {
+			maskFirstName = ($scope.result.match(/\[\$FirstName\]/g) || []).length * 18;
+			maskLastName = ($scope.result.match(/\[\$LastName\]/g) || []).length * 19;
+			$scope.totalLength = maskFirstName + maskLastName + $scope.result.length;
+  			$scope.max_text_len = $scope.max_text_len < 121 ? $scope.max_text_len : $scope.max_lms_text_len;
+			
 		};
 
 		$scope.insertAtCaret = function(areaId,text) {
@@ -65,7 +73,8 @@ angular.module('app').directive('charSet', function() {
 				txtarea.focus();
 			}
 			txtarea.scrollTop = scrollPos;
-			$scope.messages[areaId] = txtarea.value;
+			$scope.result = txtarea.value;
+
 		}
 
 

@@ -1,33 +1,21 @@
-
-	<div class="chars-area" ng-class="{'danger': message.messagesTextLength > 130}">
-		<label>Message Text</label>
-		<textarea id="{{id}}" class="form-control" placeholder="Message Text" ng-model="messages.messagesText"
-		 ng-keyup="charCount(id)" ng-blur="sendData()">
+<div ng-init="init()">
+	<div class="chars-area" ng-class="{'danger': totalLength > 130}">
+		<label>{{ options.title }}</label>
+		<textarea id="{{options.id}}" class="form-control" placeholder="Message Text" ng-model="result"
+		 ng-keyup="charCount()">
 		</textarea>
 		<span>
-			<span ng-show="message.messagesTextLength > 130">3 messages </span>
-			<span>{{ messages.messagesTextLength }}</span> /
-			<span>{{ messages.maxLength }}</span>
+			<span ng-show="totalLength > 130">3 messages </span>
+			<span>{{ totalLength }}</span> /
+			<span>{{ max_text_len }}</span>
 			<span class="fa fa-question-circle-o" uib-tooltip="You can go over 130 characters and have 460. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
 
 	<div class="btn-group btn-group-justified move-top-pixel">
-		<div class="btn-group">
-			<button ng-click="showMessageTextUrl = true" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-link"></i> 	Short Link
-			</button>
-		</div>
-
-		<div class="btn-group">
-			<button type="button" ng-click="insertMask( id,'[$FirstName]')" class="btn btn-sm btn-default" uib-tooltip="Be aware adding this takes 30 characters off your limit">
-				<i class="fa fa-user"></i> First Name
-			</button>
-		</div>
-
-		<div class="btn-group">
-			<button type="button" ng-click="insertMask('messagesText', '[$LastName]')" class="btn btn-sm btn-default" uib-tooltip="Be aware adding this takes 30 characters off your limit">
-				<i class="fa fa-user-o"></i> Last Name
+		<div class="btn-group" ng-repeat="button in options.buttons">
+			<button ng-click="chooseButtonFunc(button.type, options.id, button.mask)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-{{button.icon}}"></i> 	{{ button.name }}
 			</button>
 		</div>
 	</div>
@@ -35,11 +23,10 @@
 	<div ng-show="showMessageTextUrl" class="input-group short-url-box">
 		<input class="form-control" type="text" placeholder="Add your link here" ng-model="short_link_message_text">
 		<div class="input-group-btn">
-			<button ng-click="insertShortLink('messagesText', short_link_message_text)" type="button" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i>
+			<button ng-click="insertShortLink()" type="button" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i>
 			</button>
-			<button ng-click="urlFunc()" type="button" class="btn btn-sm btn-default"><i class="fa fa-times"></i></button>
+			<button ng-click="showMessageTextUrl  = false" type="button" class="btn btn-sm btn-default"><i class="fa fa-times"></i></button>
 		</div>
 	</div>
-
-	
+</div>	
 

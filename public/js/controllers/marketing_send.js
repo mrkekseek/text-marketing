@@ -9,8 +9,57 @@
 		$scope.step = 1;
 		$scope.minDate = new Date();
 		$scope.open = false;
-		
 		$scope.contactList =  [];
+		$scope.TextCharSetOptions = {
+			'id' : 'messageText' ,
+			'title': 'Message Text',
+			'buttons': [
+				{
+				'name': 'Short Link',
+				'mask': '[$ShortLink]',
+				'type': 'short-link',
+				'icon': 'link'
+				},
+				{
+				'name': 'First Name',
+				'mask': '[$FirstName]',
+				'type': 'insert',
+				'icon': 'user'	
+				},
+				{
+				'name': 'Last Name',
+				'mask': '[$LastName]',
+				'type': 'insert',
+				'icon': 'user-o'
+				}
+			 ]
+		};
+
+		$scope.EmailCharSetOptions = {
+			'id' : 'emailText',
+			'title': 'Email Text',
+			'buttons': [
+				{
+				'name': 'Short Link',
+				'mask': '[$ShortLink]',
+				'type': 'short-link',
+				'icon': 'link'
+				},
+				{
+				'name': 'First Name',
+				'mask': '[$FirstName]',
+				'type': 'insert',
+				'icon': 'user'	
+				},
+				{
+				'name': 'Last Name',
+				'mask': '[$LastName]',
+				'type': 'insert',
+				'icon': 'user-o'
+				}
+			 ]
+		};
+
 		var oldContactList = [];
 		var mask = 0;
 
@@ -18,11 +67,10 @@
 			minDate: $scope.minDate,
 			dateFormat: 'yyyy-MMMM-dd'
 		};
-		$scope.test
-
-		$scope.$on('myCustomEvent', function (event, data) {
-  			console.log(data); // <----------------------------------------------------
-		});
+		$scope.showConsole = function() {
+			console.log($scope.textData);
+			console.log($scope.emailData);
+		};
 
 		$scope.totalCount = function() {
 			$scope.totalContacts = 0;
