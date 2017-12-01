@@ -17,7 +17,6 @@
 
         $scope.init = function(seance) {
             $scope.seance = seance;
-            console.log($scope.seance);
         };
 
         $scope.repeatStars = function(key) {
