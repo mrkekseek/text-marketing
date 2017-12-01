@@ -1,13 +1,13 @@
 <div ng-init="init()">
-	<div class="chars-area" ng-class="{'danger': totalLength > 130}">
+	<div class="chars-area" ng-class="{'danger': totalLength > 121}">
 		<label>{{ options.title }}</label>
 		<textarea id="{{options.id}}" class="form-control" placeholder="Message Text" ng-model="result"
 		 ng-keyup="charCount()">
 		</textarea>
 		<span>
-			<span ng-show="totalLength > 130">3 messages </span>
+			<span ng-show="totalLength > 121">3 messages </span>
 			<span>{{ totalLength }}</span> /
-			<span>{{ max_text_len }}</span>
+			<span>{{ maxLength }}</span>
 			<span class="fa fa-question-circle-o" uib-tooltip="You can go over 130 characters and have 460. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
@@ -21,9 +21,9 @@
 	</div>
 
 	<div ng-show="showMessageTextUrl" class="input-group short-url-box">
-		<input class="form-control" type="text" placeholder="Add your link here" ng-model="short_link_message_text">
+		<input class="form-control" type="text" placeholder="Add your link here" ng-model="shortLinkMessageText">
 		<div class="input-group-btn">
-			<button ng-click="insertShortLink()" type="button" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i>
+			<button ng-click="insertShortLink(shortLinkMessageText)" type="button" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i>
 			</button>
 			<button ng-click="showMessageTextUrl  = false" type="button" class="btn btn-sm btn-default"><i class="fa fa-times"></i></button>
 		</div>

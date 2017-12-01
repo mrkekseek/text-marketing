@@ -35,38 +35,13 @@
 			 ]
 		};
 
-		$scope.EmailCharSetOptions = {
-			'id' : 'emailText',
-			'title': 'Email Text',
-			'buttons': [
-				{
-				'name': 'Short Link',
-				'mask': '[$ShortLink]',
-				'type': 'short-link',
-				'icon': 'link'
-				},
-				{
-				'name': 'First Name',
-				'mask': '[$FirstName]',
-				'type': 'insert',
-				'icon': 'user'	
-				},
-				{
-				'name': 'Last Name',
-				'mask': '[$LastName]',
-				'type': 'insert',
-				'icon': 'user-o'
-				}
-			 ]
-		};
-
 		var oldContactList = [];
-		var mask = 0;
 
 		$scope.dateOpt = {
 			minDate: $scope.minDate,
 			dateFormat: 'yyyy-MMMM-dd'
 		};
+
 		$scope.showConsole = function() {
 			console.log($scope.textData);
 			console.log($scope.emailData);

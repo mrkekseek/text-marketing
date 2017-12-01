@@ -1,0 +1,24 @@
+
+<div class="vertical-magin-container">
+	<div class="form-group">
+		<span class="upload-button-box">
+			<button type="button" class="btn btn-sm btn-default"><i class="fa fa-picture-o"></i> Choose File</button>
+			<input custom-on-change="upload" type="file" accept="image/jpeg,image/png,image/gif,image/bmp,video/avi,video/mp4,video/quicktime,video/x-ms-wmv">
+		</span>
+
+		<span class="upload-tooltip" uib-tooltip="Image size limit is 500 KB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP Video size limit is 3 MB; supported video file types include .AVI, .MP4, .WMV, and .MOV"><i class="fa fa-question-circle"></i> Upload details</span>
+	</div>
+	<div ng-show="false" class="upload-image-container">
+		<i ng-show="false" class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+		<div class="upload-name-box">
+			<div class="upload-file-name"></div>
+			<div class="progress upload-progress">
+				<div ng-class="{'active progress-bar-warning': upload_percent != 100, 'progress-bar-success': upload_percent == 100}"
+				 class="progress-bar progress-bar-striped progress-bar-success" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+					<span class="sr-only">100% Complete</span>
+				</div>
+			</div>
+		</div>
+		<a href="javascript:;" class="text-danger upload-detele" ng-click="deleteFunc()"><i class="fa fa-trash"></i></a>
+	</div>
+</div>
