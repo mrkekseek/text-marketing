@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Team;
+use App\Plan;
 use App\Events\SignUp;
 use App\Mail\Support;
 use App\Mail\Recovery;
@@ -65,6 +66,7 @@ class AuthController extends Controller
             $team->save();
 
             $plan = $this->getPlan($post['plans_id']);
+            $trial = $plan ? $plan->trial : 0;
 
             $user = new User();
             $user->password = bcrypt($post['password']);
@@ -76,10 +78,10 @@ class AuthController extends Controller
             $user->firstname = $post['firstname'];
             $user->lastname = ! empty($post['lastname']) ? $post['lastname'] : '';
             $user->active = 1;
-            $user->trial_ends_at = Carbon::now()->addDays(14);
+            $user->trial_ends_at = Carbon::now()->addDays($trial);
             $user->save();
 
-            $user->defaultUrls();
+            auth()->login($user);
 
             $owner = User::where('owner', 1)->first();
             event(new SignUp($user, $owner));
@@ -89,9 +91,9 @@ class AuthController extends Controller
         return false;
     }
 
-    public function getPlan()
+    public function getPlan($plans_id)
     {
-        
+        return Plan::where('plans_id', $plans_id.'-'.strtolower(config('app.name')))->first();
     }
 
     public function createSubscriptions($user)
