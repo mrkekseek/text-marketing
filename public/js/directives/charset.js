@@ -1,7 +1,5 @@
-angular.module('app').directive('charSet', function(getShortUrl) {
+angular.module('app').directive('charSet', function(getShortUrl, logger) {
   return {
-  	transclude: true,
-  	replace: true,
   	require: 'ngModel',
   	scope: {
   		options: '=options',
@@ -35,7 +33,11 @@ angular.module('app').directive('charSet', function(getShortUrl) {
 
 		$scope.insertShortLink = function(longLink) {
 			getShortUrl.getLink(longLink, function(shortUrl) {
-    			$scope.insertMask($scope.options.id, shortUrl);
+				if (shortUrl) {
+					$scope.insertMask($scope.options.id, shortUrl);
+				} else {
+					logger.logError('Inccorect link');
+				}
 			});
 		};
 

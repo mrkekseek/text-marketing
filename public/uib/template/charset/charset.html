@@ -8,7 +8,8 @@
 			<span ng-show="totalLength > 121">3 messages </span>
 			<span>{{ totalLength }}</span> /
 			<span>{{ maxLength }}</span>
-			<span class="fa fa-question-circle-o" uib-tooltip="You can go over 130 characters and have 460. This will cost 3 text credits." tooltip-placement="left"></span>
+			<span class="fa fa-question-circle-o" uib-tooltip="You can go over {{ max_text_len }} characters and have 
+			{{ max_lms_text_len }}. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
 
