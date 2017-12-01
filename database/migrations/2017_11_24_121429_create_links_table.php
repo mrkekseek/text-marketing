@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHomeAdvisorsTable extends Migration
+class CreateLinksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,16 @@ class CreateHomeAdvisorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('homeadvisors', function (Blueprint $table) {
+        Schema::create('links', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('teams_id')->unsigned()->default(0);
-            $table->string('links_code')->default('');
+            $table->string('code')->default('');
             $table->string('firstname')->default('');
             $table->string('lastname')->default('');
             $table->string('phone')->default('');
             $table->string('email')->default('');
-            $table->string('link_for_ha')->default('');
-            $table->string('success_string')->default('');
+            $table->string('url')->default('');
+            $table->string('success')->default('');
             $table->timestamps();
         });
     }
@@ -34,6 +34,6 @@ class CreateHomeAdvisorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('homeadvisors');
+        Schema::dropIfExists('links');
     }
 }
