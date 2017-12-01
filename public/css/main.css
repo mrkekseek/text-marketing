@@ -23,6 +23,17 @@ hr {
 .clients .divider {
 	margin: 0px;
 }
+.url-switch {
+	vertical-align: bottom;
+    margin-left: 10px;
+    margin-bottom: 3px;
+}
+
+.help-icon-review {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
 
 .phones div {
 	display: table-cell;
@@ -40,6 +51,12 @@ hr {
 
 .row-info-item {
 	display: inline-block;
+}
+
+.help-send-icon {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 
 .card-content form {
@@ -1666,10 +1683,6 @@ body.surveys {
 	font-weight: bold;
 }
 
-.questions-answers {
-	padding-left: 24px;
-}
-
 .questions-answers .form-control {
 	max-width: 320px;
 }
@@ -2538,6 +2551,10 @@ div.item-panel.panel-child:hover .position {
 	display: none;
 }
 
+div.panel-child {
+	margin-top: 10px;
+}
+
 .handle {
 	display: none;
 }
@@ -2735,6 +2752,10 @@ div.chars-area.danger span {
 	min-height: 250px;
 }
 
+ #surveys-send-accordion .panel .panel-body {
+	min-height: 50px;
+}
+
 .panel-body.surveys,
 .panel-body.analysis {
 	min-height: auto;
@@ -2778,6 +2799,7 @@ div.chars-area.danger span {
 
 .calendar-container .uib-daypicker {
 	outline: none;
+	margin-top: 22px;
 }
 
 .calendar-container .uib-daypicker > table {

@@ -114,6 +114,16 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages')->insert([
+            'code' => 'surveys-partners',
+            'folder' => 'surveys',
+            'file' => 'partners',
+            'name' => 'Partners',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
             'code' => 'analysis-main',
             'folder' => 'surveys',
             'file' => 'analysis',
@@ -260,6 +270,11 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_access')->insert([
+            'code' => 'surveys-partners',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
             'code' => 'analysis-main',
             'users_type' => 1,
         ]);
@@ -368,17 +383,24 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_menu')->insert([
-            'pages_code' => 'analysis-main',
+            'pages_code' => 'surveys-partners',
             'parents_code' => 'surveys-surveys',
             'main' => 0,
             'pos' => 2,
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'analysis-main',
+            'parents_code' => 'surveys-surveys',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
             'pages_code' => 'settings-alerts',
             'parents_code' => 'surveys-surveys',
             'main' => 0,
-            'pos' => 1,
+            'pos' => 3,
         ]);
 
         DB::table('pages_menu')->insert([

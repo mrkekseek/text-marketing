@@ -34,4 +34,34 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Client', 'users_id');
     }
+
+    public function surveys()
+    {
+        return $this->hasMany('App\Survey', 'users_id');
+    }
+
+    public function links()
+    {
+        return $this->hasMany('App\SocialUrl', 'users_id');
+    }
+
+    public function defaultUrls()
+    {
+        $socialsUrls = [
+            [
+                'name' => 'Facebook',
+                'default' => 1
+            ], [
+               'name' => 'Google',
+                'default' => 1 
+            ], [
+                'name' => 'Yelp',
+                'default' => 1
+            ]
+        ];
+
+        foreach ($socialsUrls as $row) {
+            $this->links()->create($row);
+        }
+    }
 }

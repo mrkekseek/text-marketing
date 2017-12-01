@@ -36,6 +36,8 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
+Route::get('survey/{param?}', 'SeancesController@getSeance');
+
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');

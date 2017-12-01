@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\User;
+use App\Seance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -16,7 +17,9 @@ class ClientsController extends Controller
 
 	public function info($id = false)
 	{
-		return Client::find($id);
+		$data['client'] = Client::find($id);
+		$data['seances'] = Seance::where('clients_id', $id)->where('completed', 1)->get();
+		return $data;
 	}
 
 	public function save($id = false, $post = [])
