@@ -10,10 +10,16 @@
     angular.module('app').controller('SignUpCtrl', ['$rootScope', '$scope', '$window', '$timeout', 'request', 'validate', 'langs', SignUpCtrl]);
 
     function SignUpCtrl($rootScope, $scope, $window, $timeout, request, validate, langs) {
+        $scope.signUpPage = '';
         $scope.signUp = {};
-
+        
         $scope.init = function(plansCode) {
-           $scope.signUp.plans_id = plansCode;
+            if (plansCode != 'error') {
+                $scope.signUp.plans_id = plansCode;
+                $scope.signUpPage = 'show';
+            } else {
+                $scope.signUpPage = 'error';
+            }
         };
 
         $scope.signup = function() {

@@ -68,7 +68,7 @@
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/teams.js"></script>
         <script src="/js/controllers/plans.js"></script>
-        <script src="/js/controllers/home_advisor.js"></script>
+        <script src="/js/controllers/links.js"></script>
         <script src="/js/controllers/text_marketing.js"></script>
         <script src="/js/controllers/marketing_send.js"></script>
         <script src="/js/controllers/marketing_outbox.js"></script>
