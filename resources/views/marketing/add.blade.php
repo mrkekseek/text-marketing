@@ -31,8 +31,9 @@
 					<div class="row">
 						<div class="col-lg-6 col-xs-12 form-group">
 
-							<div char-set id="'messagesText'"></div>
-
+							<div char-set ng-model="textData" options="TextCharSetOptions"></div>
+							<div char-set ng-model="emailData" options="EmailCharSetOptions"></div>
+							<button ng-click="showConsole()">Console</button>
 							<div class="vertical-magin-container">
 								<div class="form-group">
 									<span class="upload-button-box">
