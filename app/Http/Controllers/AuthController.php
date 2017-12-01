@@ -64,6 +64,8 @@ class AuthController extends Controller
             $team->name = $this->teamsName($post);
             $team->save();
 
+            $plan = $this->getPlan($post['plans_id']);
+
             $user = new User();
             $user->password = bcrypt($post['password']);
             $user->plans_id = $post['plans_id'].'-'.strtolower(config('app.name'));
@@ -85,6 +87,11 @@ class AuthController extends Controller
             return $this->message(__("You were successfully registered."), 'success');
         }
         return false;
+    }
+
+    public function getPlan()
+    {
+        
     }
 
     public function createSubscriptions($user)
