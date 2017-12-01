@@ -107,7 +107,7 @@ class PagesSeeder extends Seeder
             'code' => 'surveys-send',
             'folder' => 'surveys',
             'file' => 'send',
-            'name' => 'Send',
+            'name' => 'Clients',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
             'public' => 0,

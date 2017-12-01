@@ -40,9 +40,9 @@
 
 						<div ng-repeat="(key, client) in clients" class="phones-list">
 							<div class="divider divider-dashed"></div>
-							<div class="phones" ng-click="setClient(client.id);" ng-class="{'active': active_client.id == client.id}">
-								<div>
-									<input type="checkbox" ng-model="client.send" />
+							<div class="phones" ng-click="setClient(client);" ng-class="{'active': active_client.id == client.id}">
+								<div class="checker-client">
+									<i class="choose-list fa fa-check-circle-o fa-circle-o" ng-class="client.send ? 'fa-check-circle-o selected' : 'fa-circle-o'"></i>
 								</div>
 								<div>
 									<strong>@{{ client.view_phone }}</strong>
