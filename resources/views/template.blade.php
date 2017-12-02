@@ -76,5 +76,6 @@
         <script src="/js/controllers/surveys.js"></script>
         <script src="/js/controllers/surveys_partners.js"></script>
         <script src="/js/directives/charset.js"></script>
+        <script src="/js/directives/upload.js"></script>
     </body>
 </html>

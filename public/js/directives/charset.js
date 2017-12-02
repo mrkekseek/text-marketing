@@ -1,17 +1,17 @@
-angular.module('app').directive('charSet', function() {
+angular.module('app').directive('charSet', function(getShortUrl, logger) {
   return {
-  	transclude: true,
-  	replace: true,
   	require: 'ngModel',
   	scope: {
   		options: '=options',
   		result: '=ngModel'
   	},
-  	controller: ['$scope', function CharSetCtrl($scope) {
+  	controller: ['$scope', '$timeout', function CharSetCtrl($scope, $timeout) {
   		$scope.max_text_len = 140 - ' Txt STOP to OptOut'.length;
         $scope.max_lms_text_len = 500 - ' Txt STOP to OptOut'.length;
         $scope.showMessageTextUrl = false;
         $scope.totalLength = 0;
+        $scope.maxLength = $scope.max_text_len;
+        $scope.result = '';
   		var maskFirstName = 0;
   		var maskLastName = 0;
 
@@ -21,14 +21,24 @@ angular.module('app').directive('charSet', function() {
 
   		$scope.insertMask = function(id, text) {
 			$scope.insertAtCaret(id,text);
-			$scope.charCount();
+			$timeout($scope.charCount(), 10); //<--------fix			
 		};
 
 		$scope.charCount = function() {
 			maskFirstName = ($scope.result.match(/\[\$FirstName\]/g) || []).length * 18;
 			maskLastName = ($scope.result.match(/\[\$LastName\]/g) || []).length * 19;
 			$scope.totalLength = maskFirstName + maskLastName + $scope.result.length;
-  			$scope.max_text_len = $scope.max_text_len < 121 ? $scope.max_text_len : $scope.max_lms_text_len;
+			$scope.maxLength = $scope.totalLength < $scope.max_text_len ? $scope.max_text_len : $scope.max_lms_text_len;
+		};
+
+		$scope.insertShortLink = function(longLink) {
+			getShortUrl.getLink(longLink, function(shortUrl) {
+				if (shortUrl) {
+					$scope.insertMask($scope.options.id, shortUrl);
+				} else {
+					logger.logError('Inccorect link');
+				}
+			});
 		};
 
 		$scope.insertAtCaret = function(areaId,text) {

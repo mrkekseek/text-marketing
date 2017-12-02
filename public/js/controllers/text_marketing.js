@@ -55,7 +55,7 @@
 
         $scope.get = function() {
              request.send('/clients', false, function (data) {
-                $scope.contactList = data;
+                //$scope.contactList = data;
             }, 'get');
         };
 
