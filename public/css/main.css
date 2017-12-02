@@ -23,10 +23,16 @@ hr {
 .clients .divider {
 	margin: 0px;
 }
+
 .url-switch {
 	vertical-align: bottom;
     margin-left: 10px;
     margin-bottom: 3px;
+}
+
+.phones .checker-client {
+	position: relative;
+	padding: 0px 14px 0px 0px;
 }
 
 .help-icon-review {
@@ -2902,6 +2908,10 @@ div.chars-area.danger span {
 h3.inside-panel {
 	margin-top: 0px;
 	margin-bottom: 20px;
+}
+
+.checker-client .choose-list {
+	top: 7px;
 }
 
 .choose-list {

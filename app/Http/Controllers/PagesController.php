@@ -11,13 +11,20 @@ class PagesController extends Controller
 {
     public function defaultPage($post = [])
     {
-    	return auth()->user()->type == 1 ? 'users.list' : 'ha.user';
+    	if (auth()->user()->type == 1) {
+    		return 'users.list';
+    	} else {
+    		switch (auth()->user()->plans_id) {
+    			case 'home-advisor-contractortexter': return 'ha.user';
+    			default:  return 'surveys.send';
+    		}
+    	}
     }
 
     public function menu($post = [])
     {
     	$noAccess = PagesAccess::where('users_type', auth()->user()->type)->get()->pluck('code')->toArray();
-    	$menu = PagesMenu::whereNotIn('pages_code', $noAccess)->orderBy('pos')->get();
+    	$menu = PagesMenu::whereNotIn('pages_code', $noAccess)->where('plans', auth()->user()->plans_id)->orderBy('pos')->get();
     	$codes = $menu->pluck('pages_code')->toArray();
     	$pages = Page::whereIn('code', $codes)->get();
 

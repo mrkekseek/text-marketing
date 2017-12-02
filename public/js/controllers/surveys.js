@@ -53,9 +53,10 @@
             $scope.popup.popup_date = ! $scope.popup.popup_date;
         };
 
-        $scope.setClient = function(client_id) {
+        $scope.setClient = function(client) {
             $scope.open_edit = false;
-            request.send('/clients/' + client_id, false, function (data) {
+            client.send = ! client.send;
+            request.send('/clients/' + client.id, false, function (data) {
                 $scope.active_client = data.client;
                 $scope.seances = data.seances;
             }, 'get');
