@@ -135,7 +135,7 @@
 												<div class="col-sm-8">
 													<div class="form-group" ng-show="seance_text">
 														<label>{{ __('Company Name') }}</label>
-														<input type="text" class="form-control" maxlength="32" ng-model="team.company_name" placeholder="{{ __('Company Name') }}" />
+														<input type="text" class="form-control" maxlength="32" ng-model="survey.company_name" placeholder="{{ __('Company Name') }}" />
 													</div>
 													<div class="form-group" ng-show="seance_text">
 														<label>{{ __('SMS Text') }}</label>
@@ -164,12 +164,16 @@
 													</div>
 													<div class="form-group" ng-show="seance_email">
 														<div class="form-group">
+															<label>{{ __('Sender Name') }}</label>
+															<input type="text" class="form-control" ng-model="survey.sender" placeholder="{{ __('Sender Name') }}" />
+														</div>
+														<div class="form-group">
 															<label>{{ __('Subject Line') }}</label>
-															<input type="text" class="form-control" maxlength="32" ng-model="survey.email_subject" placeholder="{{ __('Subject Line') }}" />
+															<input type="text" class="form-control" ng-model="survey.subject" placeholder="{{ __('Subject Line') }}" />
 														</div>
 														<div class="chars-area">
 															<label>{{ __('Email Text') }}</label>
-															<textarea id="email_text" class="form-control" ng-model="survey.email_text" placeholder="{{ __('Email Text') }}"></textarea>
+															<textarea id="email_text" class="form-control" ng-model="survey.email" placeholder="{{ __('Email Text') }}"></textarea>
 														</div>
 														<div class="btn-group btn-group-justified move-top-pixel">
 															<div class="btn-group">

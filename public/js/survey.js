@@ -15,6 +15,11 @@
         $scope.show_thanks = false;
         $scope.answers = [];
 
+        const BUTTON_ID="redirectClick";
+        const PLATFORM_OTHER = 0;
+        const PLATFORM_IOS = 1;
+        const PLATFORM_ANDROID = 2;
+
         $scope.init = function(seance) {
             $scope.seance = seance;
         };
@@ -24,7 +29,7 @@
         };
 
         $scope.setAnswers = function(question) {
-            if (($scope.seance.survey.type == 1 && question.value >= 4) || ($scope.seance.survey.type == 0 && question.value == 5) && ! $scope.bed_answer) {
+            if (question.value == 5 && ! $scope.bed_answer) {
                 $scope.seance.show_reviews = $scope.show_thanks = true;
                 $scope.answers.push({
                     'users_id': $scope.seance.user.id,
@@ -61,16 +66,90 @@
         };
 
         $scope.socialSave = function(url) {
-            request.send('/seances/' + url.id + '/socialSave/', url, function (data) {
+            request.send('/seances/' + $scope.seance.id + '/socialSave/', url, function(data) {
 
             }, 'put');
+            
+            switch (url.name) {
+                case 'Facebook': $scope.reviewFacebook(url.social_id); break;
+                case 'Google': $scope.reviewGoogle(url.social_id); break;
+                case 'Yelp': $scope.reviewYelp(url.social_id); break;
+                default: return;
+            }
         };
 
         $scope.sendAnswers = function() {
-            request.send('/answers/save', {'answers': $scope.answers, 'seance': $scope.seance}, function (data) {
+            request.send('/answers/save', {'answers': $scope.answers, 'seance': $scope.seance}, function(data) {
 
             }, 'put');
         };
+
+        $scope.reviewYelp = function(businessId) {
+            const browserLink = 'https://www.yelp.com/writeareview/biz/' + businessId + '?return_url=%2Fbiz%2F' + businessId;
+            switch ($scope.getPlatform()) {
+                case PLATFORM_ANDROID: $scope.redirect($scope.getEncodeAndroidIntent(browserLink)); break;
+                case PLATFORM_IOS: $scope.redirect($scope.getEncodeIOSLink(browserLink)); break;
+                default: $scope.redirect(browserLink); break;
+            }
+        }
+
+        $scope.reviewFacebook = function(pageId) {
+            const browserLink = "https://www.facebook.com/pg/"+pageId+"/reviews/";
+            switch ($scope.getPlatform()){
+                case PLATFORM_ANDROID: $scope.redirect($scope.getEncodeAndroidIntent(browserLink)); break;
+                case PLATFORM_IOS:
+                    $scope.redirect($scope.getEncodeIOSLink(browserLink));
+                    break;
+                default:
+                    $scope.redirect(browserLink);
+                    break;
+            }
+        }
+
+        $scope.reviewGoogle = function(placeId) {
+            //this link will send user directly to the review page however it is using browser
+            const browserLink = "https://search.google.com/local/writereview?placeid="+placeId;
+
+            //this link will send user to the maps application and will display the specific place
+            //const browserLink = "https://www.google.com/maps/search/?api=1&query="+placeId+"&query_place_id="+placeId;
+            
+            $scope.redirect(browserLink);
+        }
+
+        $scope.getPlatform = function() {
+            const userAgent = navigator.userAgent.toString().toLowerCase();
+            if (userAgent.indexOf("iphone") > -1 || userAgent.indexOf("ipad") > -1) {
+                return PLATFORM_IOS;
+            } else if (userAgent.indexOf("android") > -1) {
+                return PLATFORM_ANDROID;
+            } else {
+                return PLATFORM_OTHER;
+            }
+        }
+
+        $scope.redirect = function(link) {
+            document.getElementById(BUTTON_ID).href=link;
+            document.getElementById(BUTTON_ID).click();
+        }
+
+        $scope.getEncodeIOSLink = function(fallbackUrl, url, scheme) {
+            const urlParts = fallbackUrl.split('://');
+            if(urlParts.length > 1) {
+                scheme = scheme || urlParts.shift();
+                url = url || urlParts.join('');
+                return scheme+"://"+url;
+            }
+            return fallbackUrl;
+        }
+
+        $scope.getEncodeAndroidIntent = function(fallbackUrl, url, scheme) {
+            const urlParts = fallbackUrl.split('://');
+            if(urlParts.length > 1) {
+                scheme = scheme || urlParts.shift();
+                url = url || urlParts.join('');
+            }
+            return "intent://"+url+"#Intent;action=android.intent.action.VIEW;scheme="+scheme+";S.browser_fallback_url="+fallbackUrl+";end"
+        }
     };
 })();
 

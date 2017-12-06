@@ -10,6 +10,7 @@
 		$scope.minDate = new Date();
 		$scope.open = false;
 		$scope.contactList =  [];
+		
 		$scope.TextCharSetOptions = {
 			'id' : 'messageText' ,
 			'title': 'Message Text',

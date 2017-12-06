@@ -38,37 +38,65 @@
 							<div class="divider divider-dashed divider-lg pull-in"></div>
 						</div>
 
-						<div class="form-group" ng-repeat="input in inputs track by $index">
+						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-3">
 									<label>{{ __('Name') }}</label>
-									<input type="text" class="form-control" ng-model="inputs[$index].name"  />
 								</div>
 								<div class="col-sm-6">
 									<label>{{ __('Url') }}</label>
-									<input type="text" class="form-control" ng-model="inputs[$index].url" />
 								</div>
 								<div class="col-sm-3">
-									<div><label>&nbsp;</label></div>
-									<button type="button" class="btn btn-default" ng-click="addInput()" ng-if="$index == inputs.length - 1">
-										<i class="fa fa-plus" aria-hidden="true"></i>
-									</button>
-									<button type="button" class="btn btn-default" ng-click="removeInput($index)" ng-if="$index < inputs.length - 1">
-										<i class="fa fa-minus" aria-hidden="true"></i>
-									</button>
-									<label class="ui-switch ui-switch-success ui-switch-sm url-switch">
-										<input type="checkbox" ng-model="inputs[$index].active" ng-click="changeActive(inputs[$index])" />
-										<i></i>
-									</label>
-									<span ng-if="inputs[$index].active">{{ __('Active') }}</span>
-									<span ng-if="!inputs[$index].active">&nbsp;</span>
+									<label>{{ __('Enabled') }}</label>
 								</div>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<button type="button" class="btn btn-primary" ng-click="save()">{{ __('Save Pages') }}</button>
-							<i class="fa fa-question-circle-o help-icon-review" uib-tooltip="If only Google is Active, your 5 star reviewers will be redirected straight to Google Reviews. If Facebook or Yelp is Active, 5 star reviewers will be redirected to a Page where they can click and go to those. Note: Reviewer needs the Facebook/Yelp app to access those." tooltip-placement="right" aria-hidden="true"></i>
+						<div class="form-group url-block" ng-repeat="input in inputs track by $index">
+							<div class="row">
+								<div class="col-sm-3">
+									<div class="span-url" ng-show="! inputs[$index].editable">
+										<img src="/img/icon_url_@{{ inputs[$index].id }}.ico" />
+										<strong>@{{ inputs[$index].name }}</strong>
+									</div>
+									<div ng-show="inputs[$index].editable">
+										<input type="text" class="form-control" ng-model="inputs[$index].name"  />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="span-url" ng-show="! inputs[$index].editable">
+										<a href="@{{ inputs[$index].url }}" target="_blank"><strong>@{{ inputs[$index].url }}</strong></a>
+									</div>
+									<div ng-show="inputs[$index].editable">
+										<input type="text" class="form-control" ng-model="inputs[$index].url" />
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<div class="switch-cell">
+										<label class="ui-switch ui-switch-success ui-switch-sm url-switch">
+											<input type="checkbox" ng-model="inputs[$index].active" ng-click="changeActive(inputs[$index])" />
+											<i></i>
+										</label>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<button type="button" class="btn btn-primary" ng-click="save(inputs[$index])" ng-if="$index == inputs.length - 1">
+										{{ __('Add') }}
+									</button>
+									<div class="icon-cell" ng-show="$index < inputs.length - 1 && ! inputs[$index].editable">
+										<div>
+											<i class="fa fa-pencil text-success" ng-click="edit(inputs[$index])" aria-hidden="true"></i>
+										</div>
+										<div>
+											<i class="fa fa-trash text-danger" ng-click="removeInput(inputs[$index], $index)" aria-hidden="true"></i>
+										</div>
+									</div>
+									<div class="btn-group" role="group" ng-show="inputs[$index].editable && $index != inputs.length - 1">
+										<button type="button" ng-click="cancel($index)" class="btn btn-default">{{ __('Cancel') }}</button>
+										<button type="button" class="btn btn-primary" ng-click="save(inputs[$index])">{{ __('Save') }}</button>
+									</div>
+								</div>
+							</div>
 						</div>
 					</form>
 				</div>

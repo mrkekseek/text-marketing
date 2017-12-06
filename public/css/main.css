@@ -27,7 +27,54 @@ hr {
 .url-switch {
 	vertical-align: bottom;
     margin-left: 10px;
-    margin-bottom: 3px;
+    margin-top: 5px;
+}
+
+.span-url {
+	padding: 8px 10px;
+	overflow: hidden;
+}
+
+.span-url a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.url-btn-box .btn {
+	width: 200px;
+}
+
+.span-url strong {
+	white-space: nowrap;
+}
+
+.icon-cell {
+	display: none;
+}
+
+.url-block:hover .icon-cell {
+	display: block;
+}
+
+.url-block {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 11px;
+}
+
+.url-block:hover {
+	border-color: #e9e9e9;
+    box-shadow: 0 0 3px rgba(0,0,0,.1);
+}
+
+.icon-cell i {
+	font-size: 24px;
+}
+
+.icon-cell div {
+	display: inline-block;
+	padding: 2px 7px;
+	cursor: pointer;
 }
 
 .phones .checker-client {
@@ -2115,56 +2162,60 @@ textarea.form-control.small-area {
 	margin-left: 15px;
 }
 
-.btn.btn-primary.btn-yelp {
+.btn.btn-default.btn-yelp {
 	background-color: #CD2027;
 	border-color: #A00608;
 	width: 200px;
+	color: #fff;
 }
 
-.btn.btn-primary.btn-yelp:hover {
+.btn.btn-default.btn-yelp:hover {
 	background-color: #B51015 !important;
 	border-color: #A00608 !important;
+
 }
 
-.btn.btn-primary.btn-yelp:focus,
-.btn.btn-primary.btn-yelp:active,
-.btn.btn-primary.btn-yelp.active {
+.btn.btn-default.btn-yelp:focus,
+.btn.btn-default.btn-yelp:active,
+.btn.btn-default.btn-yelp.active {
 	background-color: #A00608 !important;
 	border-color: #A00608 !important;
 }
 
-.btn.btn-primary.btn-google {
+.btn.btn-default.btn-google {
 	background-color: #37a96c;
 	border-color: #148747;
 	width: 200px;
+	color: #fff;
 }
 
-.btn.btn-primary.btn-google:hover {
+.btn.btn-default.btn-google:hover {
 	background-color: #269b5b !important;
 	border-color: #148747 !important;
 }
 
-.btn.btn-primary.btn-google:focus,
-.btn.btn-primary.btn-google:active,
-.btn.btn-primary.btn-google.active {
+.btn.btn-default.btn-google:focus,
+.btn.btn-default.btn-google:active,
+.btn.btn-default.btn-google.active {
 	background-color: #148747 !important;
 	border-color: #148747 !important;
 }
 
-.btn.btn-primary.btn-facebook {
+.btn.btn-default.btn-facebook {
 	background-color: #3B5998;
 	border-color: #12306d;
 	width: 200px;
+	color: #fff;
 }
 
-.btn.btn-primary.btn-facebook:hover {
+.btn.btn-default.btn-facebook:hover {
 	background-color: #214387 !important;
 	border-color: #123272 !important;
 }
 
-.btn.btn-primary.btn-facebook:focus,
-.btn.btn-primary.btn-facebook:active,
-.btn.btn-primary.btn-facebook.active {
+.btn.btn-default.btn-facebook:focus,
+.btn.btn-default.btn-facebook:active,
+.btn.btn-default.btn-facebook.active {
 	background-color: #123272 !important;
 	border-color: #123272 !important;
 }

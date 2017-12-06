@@ -9,7 +9,7 @@ use App\Question;
 use App\SocialUrl;
 use Bitly;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Jobs\SendEmail;
 
 class SeancesController extends Controller
 {
@@ -24,7 +24,7 @@ class SeancesController extends Controller
 
     	foreach ($post['clients'] as $row) {
     		$seance = new Seance;
-    		$seance->users_id = Auth::user()->id;
+    		$seance->users_id = auth()->user()->id;
     		$seance->clients_id = $row['id'];
     		$seance->surveys_id = $survey->id;
     		$seance->code = $this->codeGenerate($post);
@@ -33,19 +33,30 @@ class SeancesController extends Controller
     		$seance->completed = 0;
     		$seance->type = ! empty($post['type']) ? implode(',', $post['type']) : '';
     		$seance->save();
+
+            if (array_search('email', $post['type']) !== FALSE) {
+                $this->sendEmail($seance, $survey, $row);
+            }
     	}
+        
     	$this->message(__('Seances was successfully saved'), 'success');
+    }
+
+    public function sendEmail($seance, $survey, $client)
+    {
+        $job = (new SendEmail($client, $seance, $survey))->delay(60 * 1)->onQueue('emails');
+        $this->dispatch($job);
     }
 
     public function surveySave($post)
     {
-        $survey = Survey::firstOrNew(['users_id' => Auth::user()->id]);
-        $survey->users_id = Auth::user()->id;
-        $survey->title = $post['survey']['title'];
+        $survey = Survey::firstOrNew(['users_id' => auth()->user()->id]);
+        $survey->users_id = auth()->user()->id;
+        $survey->company_name = $post['survey']['company_name'];
         $survey->text = $post['survey']['text'];
-        $survey->email_text = $post['survey']['email_text'];
-        $survey->email_subject = $post['survey']['email_subject'];
-        $survey->email_sender = $post['survey']['email_sender'];
+        $survey->email = $post['survey']['email'];
+        $survey->subject = $post['survey']['subject'];
+        $survey->sender = $post['survey']['sender'];
         $survey->save();
         return $survey;
     }
@@ -56,7 +67,6 @@ class SeancesController extends Controller
         $seance['user'] = User::where('id', $seance['users_id'])->first();
         $seance['user']['urls'] = SocialUrl::where('users_id', $seance['users_id'])->get();
         $seance['survey'] = Survey::where('id', $seance['surveys_id'])->first();
-        $seance['survey']['title'] = $this->replaceUsername($seance['user'], $seance['survey']['title']);
         $seance['survey']['questions'] = Question::all();
         return view('survey')->with(['seance' => $seance]);
     }
@@ -83,10 +93,4 @@ class SeancesController extends Controller
 	{
 		return Bitly::getUrl(config('app.url').'/survey/'.$code);
 	}
-
-    public function replaceUsername($user, $title)
-    {
-        $temp = str_replace('[$user_firstname]', $user['firstname'], $title);
-        return str_replace('[$user_lastname]', ! empty($user['lastname']) ? $user['lastname'] : '', $temp);
-    }
 }

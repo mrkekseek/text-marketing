@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'ContractorTexter'),
+    'token' => env('APP_TOKEN', '$2y$10$hBYMT3gYolARvwHUf4q4NuTkwcNLpwZHR3VF4nF3esfjcqIg7rHfO'),
 
     /*
     |--------------------------------------------------------------------------
@@ -178,6 +179,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Yangqi\Htmldom\HtmldomServiceProvider::class,
 
     ],
 
@@ -229,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
+        'Htmldom' => Yangqi\Htmldom\Htmldom::class,
     ],
 
 ];
