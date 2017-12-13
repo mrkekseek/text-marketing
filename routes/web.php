@@ -37,6 +37,9 @@ Route::get('recovery', function() {
 });
 
 Route::get('survey/{param?}', 'SeancesController@getSeance');
+Route::get('email/answers/{id?}/{value?}', 'AnswersController@saveEmail');
+
+Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');

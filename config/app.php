@@ -232,6 +232,6 @@ return [
         'Stripe' => Cartalyst\Stripe\Laravel\Facades\Stripe::class,
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
         'Htmldom' => Yangqi\Htmldom\Htmldom::class,
+        'Guzzle' => GuzzleHttp\Client::class,
     ],
-
 ];

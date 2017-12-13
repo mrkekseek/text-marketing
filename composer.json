@@ -8,7 +8,7 @@
         "php": ">=7.0.0",
         "cartalyst/stripe-laravel": "7.0.*",
         "fideloper/proxy": "~3.3",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "~6.0",
         "imangazaliev/didom": "^1.12",
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.5.*",

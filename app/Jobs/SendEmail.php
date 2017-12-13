@@ -37,6 +37,6 @@ class SendEmail implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->client)->send(new SurveySend($this->seance, $this->survey));
+        Mail::to($this->client['email'])->send(new SurveySend($this->seance, $this->survey));
     }
 }

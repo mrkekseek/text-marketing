@@ -17,4 +17,20 @@ class SurveysController extends Controller
     	}
     	return $survey;
     }
+
+    public function save($id = false, $post = [])
+    {
+    	$survey = Survey::firstOrNew(['users_id' => auth()->user()->id]);
+        $survey->users_id = auth()->user()->id;
+        $survey->text = $post['text'];
+        $survey->email = $post['email'];
+        $survey->subject = $post['subject'];
+        $survey->sender = $post['sender'];
+        $survey->alerts_often = $post['alerts_often'];
+        $survey->alerts_stars = $post['alerts_stars'];
+        $survey->alerts_emails = ! empty($post['alerts_emails']) ? $post['alerts_emails'] : '';
+        $survey->save();
+
+        $this->message(__('Settings was successfully saved'), 'success');
+    }
 }

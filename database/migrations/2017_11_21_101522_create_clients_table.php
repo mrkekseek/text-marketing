@@ -21,6 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('phone')->default('');
             $table->string('view_phone')->default('');
             $table->string('email')->default('');
+            $table->string('source')->default('');
             $table->timestamps();
         });
     }

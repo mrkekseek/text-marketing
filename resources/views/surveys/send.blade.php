@@ -135,7 +135,7 @@
 												<div class="col-sm-8">
 													<div class="form-group" ng-show="seance_text">
 														<label>{{ __('Company Name') }}</label>
-														<input type="text" class="form-control" maxlength="32" ng-model="survey.company_name" placeholder="{{ __('Company Name') }}" />
+														<input type="text" class="form-control" maxlength="32" ng-model="user.company_name" placeholder="{{ __('Company Name') }}" />
 													</div>
 													<div class="form-group" ng-show="seance_text">
 														<label>{{ __('SMS Text') }}</label>

@@ -17,7 +17,7 @@
 	<div class="surveys-header">
 		<div class="surveys_title">
 			<div class="container">
-				<h3>@{{ seance.survey.company_name }}</h3>
+				<h3>@{{ seance.user.company_name }}</h3>
 			</div>
 		</div>
 	</div>
@@ -38,7 +38,7 @@
 
 	<div class="questions-box" ng-show="! show_thanks">
 		<div class="container">
-			<div class="questions-item" ng-repeat="(key, question) in seance.survey.questions" ng-show="question.type == 'star' || bed_answer" ng-class="{'current': current == key, 'next': next == key, 'prev': prev == key, 'pre': pre == key}">
+			<div class="questions-item @{{ class }}" ng-repeat="(key, question) in seance.survey.questions" ng-show="question.type == 'star' || bed_answer" ng-class="{'current': current == key, 'next': next == key, 'prev': prev == key, 'pre': pre == key}">
 				<div class="questions-text">
 					<span>@{{ question.text }}</span>
 				</div>

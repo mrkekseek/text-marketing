@@ -16,11 +16,13 @@ class CreateSurveysTable extends Migration
         Schema::create('surveys', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('users_id')->unsigned()->default(0);
-            $table->string('company_name')->default('');
             $table->text('text');
             $table->text('email');
             $table->string('subject')->default('');
             $table->string('sender')->default('');
+            $table->string('alerts_emails')->default('');
+            $table->tinyInteger('alerts_stars')->unsigned()->default(1);
+            $table->tinyInteger('alerts_often')->unsigned()->default(0);
             $table->timestamps();
         });
     }

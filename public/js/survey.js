@@ -13,6 +13,7 @@
         $scope.seance = {'show_reviews': false};
         $scope.bed_answer = false;
         $scope.show_thanks = false;
+        $scope.class = '';
         $scope.answers = [];
 
         const BUTTON_ID="redirectClick";
@@ -22,6 +23,9 @@
 
         $scope.init = function(seance) {
             $scope.seance = seance;
+            $scope.bed_answer = $scope.seance.bed_answers;
+            $scope.class = $scope.seance.class;
+            $scope.seance.show_reviews = $scope.show_thanks = $scope.seance.show_reviews;
         };
 
         $scope.repeatStars = function(key) {
@@ -70,6 +74,11 @@
 
             }, 'put');
             
+            if ( ! url.social_id) {
+                $scope.redirect(url.url);
+                return;
+            }
+
             switch (url.name) {
                 case 'Facebook': $scope.reviewFacebook(url.social_id); break;
                 case 'Google': $scope.reviewGoogle(url.social_id); break;

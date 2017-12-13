@@ -15,6 +15,7 @@ class CreateLinksTable extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('users_id')->unsigned()->default(0);
             $table->integer('teams_id')->unsigned()->default(0);
             $table->string('code')->default('');
             $table->string('firstname')->default('');

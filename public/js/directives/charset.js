@@ -9,11 +9,6 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
   		$scope.max_text_len = 140 - ' Txt STOP to OptOut'.length;
         $scope.max_lms_text_len = 500 - ' Txt STOP to OptOut'.length;
         $scope.showMessageTextUrl = false;
-        $scope.totalLength = 0;
-        $scope.maxLength = $scope.max_text_len;
-        $scope.result = '';
-  		var maskFirstName = 0;
-  		var maskLastName = 0;
 
   		$scope.chooseButtonFunc = function(type, id, mask) {
   			 type ==='insert' ?  $scope.insertMask(id,mask) : $scope.showMessageTextUrl = ! $scope.showMessageTextUrl;
@@ -24,16 +19,25 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			$timeout($scope.charCount(), 10); //<--------fix			
 		};
 
-		$scope.charCount = function() {
-			maskFirstName = ($scope.result.match(/\[\$FirstName\]/g) || []).length * 18;
-			maskLastName = ($scope.result.match(/\[\$LastName\]/g) || []).length * 19;
-			$scope.totalLength = maskFirstName + maskLastName + $scope.result.length;
-			$scope.maxLength = $scope.totalLength < $scope.max_text_len ? $scope.max_text_len : $scope.max_lms_text_len;
+		$scope.charCount = function(text) {
+			var firstname = 0;
+			var lastname = 0;
+			if (text) {
+				if (text.indexOf('[$FirstName]') + 1) {
+					firstname = 30 - '[$LastName]'.length;
+				}
+				if (text.indexOf('[$LastName]') + 1) {
+					lastname = 30 - '[$LastName]'.length;
+				}
+				return text.length + firstname + lastname + $scope.options.user.company_name.length;
+			}
+			return 0;
 		};
 
 		$scope.insertShortLink = function(longLink) {
 			getShortUrl.getLink(longLink, function(shortUrl) {
 				if (shortUrl) {
+					shortUrl = shortUrl.replace('http://', '');
 					$scope.insertMask($scope.options.id, shortUrl);
 				} else {
 					logger.logError('Inccorect link');

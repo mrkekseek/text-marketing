@@ -42,8 +42,4 @@ class LinksController extends Controller
 		Link::destroy($id);
 		return $this->message(__('Link was successfully removed'), 'success');
 	}
-
-	
-
-	
 }

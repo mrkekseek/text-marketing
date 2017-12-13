@@ -16,6 +16,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SignUp' => [
             'App\Listeners\SendSignUpNotification',
         ],
+        'App\Events\FirstLead' => [
+            'App\Listeners\SendFirstLeadNotification',
+        ],
+        'App\Events\NewLead' => [
+            'App\Listeners\SendNewLeadNotification',
+        ],
     ];
 
     /**

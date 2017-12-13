@@ -476,6 +476,24 @@ li.toggle-provider {
 
 .message-body {
 	margin-left: 43px;
+	display: inline-block;
+    padding: 10px 15px 10px 15px;
+    background: #fff;
+    border-radius: 15px;
+    position: relative;
+}
+
+.message-body span {
+	font-size: 11px;
+}
+
+.message-body:before {
+    border-bottom: 10px solid #fff;
+    border-left: 14px solid rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 4px;
+    left: -9px;
+    content: "";
 }
 
 .message-avatar {
@@ -483,6 +501,7 @@ li.toggle-provider {
 	float: left;
 	position: relative;
 	z-index: 0;
+	padding: 15px 0px;
 }
 
 .search-icon {

@@ -21,6 +21,10 @@ class SeancesController extends Controller
     public function save($id = false, $post = [])
     {
         $survey = $this->surveySave($post);
+        if ( ! empty($post['company_name'])) {
+            $user = User::find(auth()->user()->id);
+            $user->update(['company_name' => $post['company_name']]);
+        }
 
     	foreach ($post['clients'] as $row) {
     		$seance = new Seance;
@@ -44,7 +48,7 @@ class SeancesController extends Controller
 
     public function sendEmail($seance, $survey, $client)
     {
-        $job = (new SendEmail($client, $seance, $survey))->delay(60 * 1)->onQueue('emails');
+        $job = (new SendEmail($client, $seance, $survey))->onQueue('emails');
         $this->dispatch($job);
     }
 
@@ -52,7 +56,6 @@ class SeancesController extends Controller
     {
         $survey = Survey::firstOrNew(['users_id' => auth()->user()->id]);
         $survey->users_id = auth()->user()->id;
-        $survey->company_name = $post['survey']['company_name'];
         $survey->text = $post['survey']['text'];
         $survey->email = $post['survey']['email'];
         $survey->subject = $post['survey']['subject'];

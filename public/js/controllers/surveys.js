@@ -95,7 +95,7 @@
                 error = 0;
             }
 
-            if (! $scope.survey.company_name && (type.indexOf('text') + 1)) {
+            if (! $scope.user.company_name && (type.indexOf('text') + 1)) {
                 logger.logError(langs.get('Company Name is empty.'));
                 error = 0;
             }
@@ -121,7 +121,8 @@
                     'date': $scope.seance_date,
                     'time': $scope.seance_time,
                     'type': type,
-                    'survey': $scope.survey
+                    'survey': $scope.survey,
+                    'company_name': $scope.user.company_name
                 };
 
                 request.send('/seances/save', post_mas, function (data) {
@@ -176,6 +177,7 @@
                 'firstname': $scope.client_firstname,
                 'lastname': $scope.client_lastname,
                 'phone': $scope.client_phone,
+                'view_phone': $scope.client_phone,
                 'email': $scope.client_email
             };
 
@@ -184,8 +186,12 @@
             error *= validate.check($scope.form_client.email, 'Email');
 
             if (error) {
+                if (! $scope.client_id) {
+                    $scope.clients.push(post_mas);
+                }
+                
                 request.send('/clients/' + (! $scope.client_id ? 'save' : $scope.client_id), post_mas, function (data) {
-                    $scope.clients = data;
+                    $scope.clients[$scope.clients.length - 1].id = data;
                     $scope.open_edit = false;
                 }, ( ! $scope.client.id ? 'put' : 'post'));
             }
