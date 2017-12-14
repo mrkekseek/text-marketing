@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Team;
 use App\Plan;
+use App\Link;
+use App\Homeadvisor;
 use App\Events\SignUp;
 use App\Mail\Support;
 use App\Mail\Recovery;
@@ -19,7 +21,7 @@ class AuthController extends Controller
 
     public function authInfo()
     {
-        return $user = Auth::user();
+        return $user = auth()->user();
     }
     
     public function signin($id = false, $post = [])
@@ -82,13 +84,45 @@ class AuthController extends Controller
             $user->save();
 
             auth()->login($user);
-
             $owner = User::where('owner', 1)->first();
             event(new SignUp($user, $owner));
+
+            if ( ! empty($post['ha_rep'])) {
+                $this->createHa($user, $post);
+            }
 
             return $this->message(__("You were successfully registered."), 'success');
         }
         return false;
+    }
+
+    public function createHa($user, $post)
+    {
+        $homeadvisor = Homeadvisor::firstOrNew(['users_id' => $user->id]);
+        $homeadvisor->text = '';
+        $homeadvisor->rep = $post['ha_rep'];
+        $homeadvisor->save();
+
+        $link = new Link();
+        $link->users_id = $user->id;
+        $link->teams_id = $user->teams_id;
+        $link->code = $this->code($user);
+        $link->firstname = $user->firstname;
+        $link->lastname = $user->lastname;
+        $link->phone = '';
+        $link->url = $this->url($link->code);
+        $link->success = 'User '.$link->code;
+        $link->save();
+    }
+
+    public function code($user)
+    {
+        return str_replace(['.', ',', '/', '&', '$', '=', ':', ';', '"', "'"], '_', crypt(time().$user->firstname.$user->lastname, time()));
+    }
+    
+    public function url($code)
+    {
+        return config('app.url').'/home-advisor/'.urlencode($code).'/';
     }
 
     public function getPlan($plans_id)

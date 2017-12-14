@@ -17,25 +17,28 @@
 	<div class="surveys-header">
 		<div class="surveys_title">
 			<div class="container">
-				<h3>@{{ seance.survey.title }}</h3>
+				<h3>@{{ seance.user.company_name }}</h3>
 			</div>
 		</div>
 	</div>
 
+	<a id="redirectClick" style="display: none" href="#"></a>
+	
 	<div class="container text-center">
 		<div class="form-group thanks-text" ng-show="show_thanks">
 			<b>{{ __('Thanks so much!') }}</b>
 		</div>
 		<div class="form-group url-btn-box" ng-show="seance.show_reviews">
 			<div class="form-group" ng-repeat="url in seance.user.urls">
-				<a href="" class="btn btn-primary btn-@{{ url.name.toLowerCase() }}" ng-click="socialSave(url)">@{{ url.name }}</a>
+
+				<a href="" class="btn btn-default btn-@{{ url.name.toLowerCase() }}" ng-click="socialSave(url)">@{{ url.name }}</a>
 			</div>
 		</div>
 	</div>
 
 	<div class="questions-box" ng-show="! show_thanks">
 		<div class="container">
-			<div class="questions-item" ng-repeat="(key, question) in seance.survey.questions" ng-show="question.type == 'star' || bed_answer" ng-class="{'current': current == key, 'next': next == key, 'prev': prev == key, 'pre': pre == key}">
+			<div class="questions-item @{{ class }}" ng-repeat="(key, question) in seance.survey.questions" ng-show="question.type == 'star' || bed_answer" ng-class="{'current': current == key, 'next': next == key, 'prev': prev == key, 'pre': pre == key}">
 				<div class="questions-text">
 					<span>@{{ question.text }}</span>
 				</div>

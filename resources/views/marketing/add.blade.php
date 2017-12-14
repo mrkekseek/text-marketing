@@ -1,6 +1,6 @@
 <div class="page page-table" data-ng-controller="MarketingSendCtrl" ng-init="init()">
 	<h2>
-		New Message
+		{{ __('New Message') }}
 		<i class="fa fa-question-circle-o help-icon" uib-tooltip="Here is where you type the texts you want to send out to your lists. You can insert the names of your contacts, a link, picture, or video. You can send the texts immediately or schedule them for the future. The texts are sent individually, not as a group text." tooltip-placement="right" aria-hidden="true">
 		</i>
 	</h2>
@@ -8,19 +8,19 @@
 	<div class="row">
 		<div class="col-sm-4 hidden-xs form-group">
 			<a href="javascript:;" class="btn btn-block align-left btn-primary" ng-class="{'btn-primary': step == 1, 'btn-default': step != 1}" ng-click="step = 1">
-				1. Write a Message
+				{{ __('1. Write a Message') }}
 			</a>
 		</div>
 
 		<div class="col-sm-4 hidden-xs form-group">
 			<a href="javascript:;" class="btn btn-block align-left btn-disabled" ng-class="{'btn-primary': step == 2, 'btn-disabled': step == 1, 'btn-default': step == 3}" ng-click="step = (step > 2) ? 2 : step">
-				2. Select Contact List
+				{{ __('2. Select Contact List') }}
 			</a>
 		</div>
 
 		<div class="col-sm-4 hidden-xs form-group">
 			<a href="javascript:;" class="btn btn-block align-left btn-disabled" ng-class="{'btn-primary': step == 3, 'btn-disabled': step != 3}">
-				3. Confirm
+				{{ __('3. Confirm') }}
 			</a>
 		</div>
 	</div>
@@ -31,113 +31,76 @@
 					<div class="row">
 						<div class="col-lg-6 col-xs-12 form-group">
 
-							<div char-set ng-model="textData" options="TextCharSetOptions"></div>
+							<div char-set ng-model="message.text" options="TextCharSetOptions"></div>
 
 							<div upload></div>
 							<div class="row">
 								<div class="col-sm-6">
-									<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.messagesSchedule" value="0" >
-										<span>Send Now</span>
+									<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="0" >
+										<span>{{ __('Send Now') }}</span>
 									</label>
-									<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.messagesSchedule" value="1" >
-										<span>Schedule</span>
+									<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="1" >
+										<span>{{ __('Schedule') }}</span>
 									</label>
 								</div>
 							</div>	
 						</div>
 					
-						<div ng-show="message.messagesSchedule == '1'">
+						<div ng-show="message.schedule == '1'">
 							<div class="col-lg-6 col-xs-12 form-group">
-								<div class="calendar-container" min="minDate" >
-									<div uib-datepicker="" ng-model="message.sendDate" role="application" datepicker-options="dateOpt">
+								<div class="calendar-container">
+									<div uib-datepicker ng-model="message.date" datepicker-options="dateOptions" role="application">
 									</div>
 								</div>
-								<div ng-show="message.sendDate" class="vertical-magin-container">
+								<div ng-show="message.date" class="vertical-magin-container">
 									<div class="interval-container">
-										<label>Send</label><br>
-										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.messagesSwitch" type="radio" value="1" >
-										<span>on @{{ message.sendDate | date: 'MMMM d' }}@{{getSuffix(message.sendDate | date: 'd')}}</span></label><br>
-										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.messagesSwitch" type="radio" value="2" >
-										<span>every Day</span></label><br>
-										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.messagesSwitch" type="radio" value="3" >
-										<span>every @{{ message.sendDate | date: 'EEEE' }}</span></label><br>
-										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.messagesSwitch" type="radio" value="4" >
-											<span>every @{{ message.sendDate | date: 'd'  }}@{{getSuffix(message.sendDate | date: 'd')}} </span></label><br>
-											<label class="ui-radio"><input name="messagesSwitch" ng-model="message.messagesSwitch" type="radio" value="5" >
-												<span>every</span>
-												<select ng-model="message.xDay" >
-													<option value="2">2nd</option>
-													<option value="3">3rd</option>
-													<option value="4">4th</option>
-													<option value="5">5th</option>
-													<option value="6">6th</option>
+										<label>{{ __('Send') }}</label><br>
+										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.switch" type="radio" value="1" >
+										<span>{{ __('on') }} @{{ message.date | date: 'MMMM d' }}@{{getSuffix(message.date | date: 'd')}}</span></label><br>
+										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.switch" type="radio" value="2" >
+										<span>{{ __('every Day') }}</span></label><br>
+										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.switch" type="radio" value="3" >
+										<span>{{ __('every') }} @{{ message.date | date: 'EEEE' }}</span></label><br>
+										<label class="ui-radio"><input name="messagesSwitch" ng-model="message.switch" type="radio" value="4" >
+											<span>{{ __('every') }} @{{ message.date | date: 'd'  }}@{{getSuffix(message.date | date: 'd')}} </span></label><br>
+											<label class="ui-radio"><input name="messagesSwitch" ng-model="message.switch" type="radio" value="5" >
+												<span>{{ __('every') }}</span>
+												<select ng-model="message.day" >
+													<option value="2">{{ __('2nd') }}</option>
+													<option value="3">{{ __('3rd') }}</option>
+													<option value="4">{{ __('4th') }}</option>
+													<option value="5">{{ __('5th') }}</option>
+													<option value="6">{{ __('6th') }}</option>
 												</select>
-												<span class="x-day">day</span>
+												<span class="x-day">{{ __('day') }}</span>
 											</label>
 											<div class="time-container">
-												<span>at</span>
-												<div uib-timepicker="" ng-model="message.sendTime" hour-step="1" minute-step="1" show-meridian="true">
-													<table class="uib-timepicker">
-														<tbody>
-															<tr class="text-center" ng-show="::showSpinners">
-																<td class="uib-increment hours"><a ng-click="incrementHours()" ng-class="{disabled: noIncrementHours()}" class="btn btn-link" ng-disabled="noIncrementHours()" tabindex="-1"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
-																<td>&nbsp;</td>
-																<td class="uib-increment minutes"><a ng-click="incrementMinutes()" ng-class="{disabled: noIncrementMinutes()}" class="btn btn-link" ng-disabled="noIncrementMinutes()" tabindex="-1"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
-																<td ng-show="showSeconds">&nbsp;</td>
-																<td ng-show="showSeconds" class="uib-increment seconds"><a ng-click="incrementSeconds()" ng-class="{disabled: noIncrementSeconds()}" class="btn btn-link" ng-disabled="noIncrementSeconds()" tabindex="-1"><span class="glyphicon glyphicon-chevron-up"></span></a></td>
-																<td ng-show="showMeridian" class=""></td>
-															</tr>
-															<tr>
-																<td class="form-group uib-time hours" ng-class="{'has-error': invalidHours}">
-																	<input type="text" placeholder="HH" ng-model="hours" ng-change="updateHours()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="0" ng-disabled="noIncrementHours()" ng-blur="blur()">
-																</td>
-																<td class="uib-separator">:</td>
-																<td class="form-group uib-time minutes" ng-class="{'has-error': invalidMinutes}">
-																	<input type="text" placeholder="MM" ng-model="minutes" ng-change="updateMinutes()" class="form-control text-center" ng-readonly="::readonlyInput" maxlength="2" tabindex="0" ng-disabled="noIncrementMinutes()" ng-blur="blur()">
-																</td>
-																<td ng-show="showSeconds" class="uib-separator">:</td>
-																<td class="form-group uib-time seconds" ng-class="{'has-error': invalidSeconds}" ng-show="showSeconds">
-																	<input type="text" placeholder="SS" ng-model="seconds" ng-change="updateSeconds()" class="form-control text-center" ng-readonly="readonlyInput" maxlength="2" tabindex="0" ng-disabled="noIncrementSeconds()" ng-blur="blur()">
-																</td>
-																<td ng-show="showMeridian" class="uib-time am-pm"><button type="button" ng-class="{disabled: noToggleMeridian()}" class="btn btn-default text-center" ng-click="toggleMeridian()" ng-disabled="noToggleMeridian()" tabindex="0">PM</button></td>
-															</tr>
-															<tr class="text-center" ng-show="::showSpinners">
-																<td class="uib-decrement hours"><a ng-click="decrementHours()" ng-class="{disabled: noDecrementHours()}" class="btn btn-link" ng-disabled="noDecrementHours()" tabindex="-1"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
-																<td>&nbsp;</td>
-																<td class="uib-decrement minutes"><a ng-click="decrementMinutes()" ng-class="{disabled: noDecrementMinutes()}" class="btn btn-link" ng-disabled="noDecrementMinutes()" tabindex="-1"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
-																<td ng-show="showSeconds">&nbsp;</td>
-																<td ng-show="showSeconds" class="uib-decrement seconds"><a ng-click="decrementSeconds()" ng-class="{disabled: noDecrementSeconds()}" class="btn btn-link" ng-disabled="noDecrementSeconds()" tabindex="-1"><span class="glyphicon glyphicon-chevron-down"></span></a></td>
-																<td ng-show="showMeridian" class=""></td>
-															</tr>
-														</tbody>
-													</table>
-												</div>
+												<span>{{ __('at') }}</span>
+												<div uib-timepicker ng-model="message.time" show-meridian="ismeridian"></div>
 											</div>
-											<div class="stop-container" ng-show="message.messagesSwitch == 2 || message.messagesSwitch == 3 || message.messagesSwitch == 4 || message.messagesSwitch == 5">
+											<div class="stop-container" ng-show="message.switch > 1">
 												<div class="row">
 													<div class="col-sm-6">
 														<div class="form-group">
 															<label>
-																Stop at:
+																{{ __('Stop at:') }}
 															</label>
 															<div class="input-group">
-																<input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" ng-model="message.messagesFinish" datepicker-options="dateOpt" close-text="Close" popup-placement="bottom" is-open="open">
-																<div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" 
-																template-url="/uib/template/datepickerPopup/popup.html">
+																<input type="text" class="form-control" uib-datepicker-popup ng-model="message.finish" datepicker-options="finishOptions" close-text="Close" popup-placement="bottom" is-open="open">
+																<span class="input-group-btn">
+																	<button type="button" class="btn btn-default" ng-click="open = ! open"><i class="glyphicon glyphicon-calendar"></i></button>
+																</span>
 															</div>
-															<span class="input-group-btn">
-																<button type="button" class="btn btn-default" ng-click="open = ! open"><i class="glyphicon glyphicon-calendar"></i></button>
-															</span>
 														</div>
-													</div>
-													<div class="alert alert-info">
-														Message will be send from January 1st every 
-														<span ng-show="message.messagesSwitch == 2">day</span>
-														<span ng-show="message.messagesSwitch == 3" >@{{ message.sendDate | date: 'EEEE' }}</span>
-														<span ng-show="message.messagesSwitch == 4" >1st date</span>
-														<span ng-show="message.messagesSwitch == 5" >@{{ message.xDay }}</span>
-														<span ng-show="message.messagesFinish" >and stop at @{{ messagesFinish | date : 'LLLL d'; getSuffix(messagesFinish | date : 'd') }}</span>
-														<span ng-show="message.messagesFinish" >(message will be send  times)</span>
+														<div class="alert alert-info">
+															{{ __('Message will be send from') }} @{{ message.date | date: 'MMMM d' }} {{ __('every') }} 
+															<span ng-show="message.switch == 2">day</span>
+															<span ng-show="message.switch == 3" >@{{ message.date | date: 'EEEE' }}</span>
+															<span ng-show="message.switch == 4" >@{{ message.date | date: 'd' }}@{{getSuffix(message.date | date: 'd')}}</span>
+															<span ng-show="message.switch == 5" >@{{ message.day }}@{{getSuffix(message.day)}} {{ __('day') }}</span>
+															<span ng-show="message.finish" >and stop at @{{ message.finish | date : 'MMMM d' }}@{{ getSuffix(message.finish | date : 'd') }}</span>
+															<span ng-show="message.finish" >(message will be send @{{ countTimes() }} times)</span>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -146,9 +109,9 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="pull-right">
-						<button ng-click="step = step + 1" type="button" class="btn btn-sm btn-primary">Next</button>
+						<div class="pull-right">
+							<button ng-click="saveMessage()" type="button" class="btn btn-sm btn-primary">{{ __('Next') }}</button>
+						</div>
 					</div>
 				</div>
 			</section>

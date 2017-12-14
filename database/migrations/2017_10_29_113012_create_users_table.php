@@ -16,6 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('admins_id')->unsigned()->default(0);
+            $table->string('company_name')->default('');
             $table->string('plans_id')->default('');
             $table->integer('teams_id')->unsigned()->default(0);
             $table->tinyInteger('teams_leader')->unsigned()->default(0);
@@ -26,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname')->default('');
             $table->string('lastname')->default('');
             $table->string('phone')->default('');
+            $table->string('additional_phones')->default('');
             $table->tinyInteger('active')->unsigned()->default(0);
             $table->string('remember_token')->default('');
             $table->timestamps();

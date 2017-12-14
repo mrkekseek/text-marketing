@@ -4,29 +4,40 @@ namespace App\Http\Controllers;
 
 use App\SocialUrl;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use File;
+use App\Jobs\GetSocialIds;
 
 class UrlsController extends Controller
 {
     public function all()
 	{
-		return SocialUrl::where('users_id', Auth::user()->id)->get();
+		return SocialUrl::where('users_id', auth()->user()->id)->get();
 	}
 
 	public function save($id = false, $post = [])
 	{
-		SocialUrl::where('default', 0)->where('users_id', Auth::user()->id)->delete();
+		$url = SocialUrl::firstOrNew(['id' => empty($id) ? 0 : $id]);
+		$url->users_id = auth()->user()->id;
+		$url->name = $post['name'];
+		$url->url = $post['url'];
+		$url->active = ! empty($post['active']) ? $post['active'] : 0;
+		$url->save();
 
-		foreach ($post as $row) {
-			if ( ! empty($row)) {
-				$url = SocialUrl::firstOrNew(['id' => empty($row['id']) ? 0 : $row['id']]);
-				$url->users_id = Auth::user()->id;
-				$url->name = $row['name'];
-				$url->url = ! empty($row['url']) ? $row['url'] : '';
-				$url->active = ! empty($row['active']) ? $row['active'] : 0;
-				$url->save();
-			}
-		}
-		return $this->message(__('Social Profile Pages were successfully saved'), 'success');
+		$file = 'img/icon_url_'.$url->id.'.ico';
+		copy('https://www.google.com/s2/favicons?domain='.$url->url, $file);
+		$url->icon = $file;
+		$this->message(__('Social Profile Pages were successfully saved'), 'success');
+
+		$job = (new GetSocialIds($url))->onQueue('socials');
+        $this->dispatch($job);
+
+		return $url;
+	}
+
+	public function remove($id = false, $post = [])
+	{
+		SocialUrl::destroy($id);
+		File::delete('img/icon_url_'.$id.'.ico');
+		return $this->message(__('Url was successfully removed'), 'success');
 	}
 }

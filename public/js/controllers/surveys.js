@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('SurveysCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', 'charset', SurveysCtrl]);
+    angular.module('app').controller('SurveysCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', SurveysCtrl]);
 
-    function SurveysCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger, charset) {
+    function SurveysCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger) {
         $scope.open_edit = false;
         $scope.popup_date = false;
         $scope.surveys_schedule = '0';
@@ -95,18 +95,23 @@
                 error = 0;
             }
 
-            if (! $scope.team.company_name && (type.indexOf('text') + 1)) {
+            if (! $scope.user.company_name && (type.indexOf('text') + 1)) {
                 logger.logError(langs.get('Company Name is empty.'));
                 error = 0;
             }
 
-            if (! $scope.survey.email_text && (type.indexOf('email') + 1)) {
+            if (! $scope.survey.email && (type.indexOf('email') + 1)) {
                 logger.logError(langs.get('Text of Email is empty.'));
                 error = 0;
             }
 
-            if (! $scope.survey.email_subject && (type.indexOf('email') + 1)) {
+            if (! $scope.survey.subject && (type.indexOf('email') + 1)) {
                 logger.logError(langs.get('Subject Line is empty.'));
+                error = 0;
+            }
+
+            if (! $scope.survey.sender && (type.indexOf('email') + 1)) {
+                logger.logError(langs.get('Sender Name is empty.'));
                 error = 0;
             }
 
@@ -117,7 +122,7 @@
                     'time': $scope.seance_time,
                     'type': type,
                     'survey': $scope.survey,
-                    'company_name': $scope.team.company_name
+                    'company_name': $scope.user.company_name
                 };
 
                 request.send('/seances/save', post_mas, function (data) {
@@ -127,7 +132,7 @@
         };
 
         $scope.insertMask = function(textarea, mask) {
-           $scope.survey.survey_text = charset.set(textarea, mask);
+           //$scope.survey.survey_text = charset.set(textarea, mask);
         };
 
         $scope.charsCount = function(text) {
@@ -172,6 +177,7 @@
                 'firstname': $scope.client_firstname,
                 'lastname': $scope.client_lastname,
                 'phone': $scope.client_phone,
+                'view_phone': $scope.client_phone,
                 'email': $scope.client_email
             };
 
@@ -180,8 +186,12 @@
             error *= validate.check($scope.form_client.email, 'Email');
 
             if (error) {
+                if (! $scope.client_id) {
+                    $scope.clients.push(post_mas);
+                }
+                
                 request.send('/clients/' + (! $scope.client_id ? 'save' : $scope.client_id), post_mas, function (data) {
-                    $scope.clients = data;
+                    $scope.clients[$scope.clients.length - 1].id = data;
                     $scope.open_edit = false;
                 }, ( ! $scope.client.id ? 'put' : 'post'));
             }

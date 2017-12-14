@@ -36,7 +36,6 @@
                     return $scope.list[k];
                 }
             }
-
             return {};
         };
 

@@ -14,12 +14,10 @@ class SurveysSeeder extends Seeder
         DB::table('surveys')->truncate();
 
         DB::table('surveys')->insert([
-            'title' => '[$user_firstname] [$user_lastname] - Your Contractor',
             'text' => '[$client_firstname], can you please take 3 seconds & answer 1 question? It will really help me, thanks! Click - [$Link]',
-            'email_text' => 'It will really help me, thanks!',
-            'email_subject' => '[$client_firstname], can you please take 3 seconds?',
-            'email_sender' => '[$user_firstname] - Your Contractor',
-            'type' => 0,
+            'email' => 'It will really help me, thanks!',
+            'subject' => '[$client_firstname], can you please take 3 seconds?',
+            'sender' => '[$user_firstname] - Your Contractor'
         ]);
     }
 }

@@ -2,49 +2,87 @@
 (function () {
 	'use strict';
 
-	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', MarketingSendCtrl]);
+	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', '$location', 'logger', MarketingSendCtrl]);
 
-	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs) {
+	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger) {
 		$scope.totalContacts = 0;
 		$scope.step = 1;
-		$scope.minDate = new Date();
 		$scope.open = false;
 		$scope.contactList =  [];
+
+		$scope.message = {
+			'text': '',
+			'schedule': '0',
+			'switch': '1',
+			'date': new Date(),
+			'time': new Date(),
+			'day': '2',
+			'finish': new Date()
+		};
+		
 		$scope.TextCharSetOptions = {
 			'id' : 'messageText' ,
 			'title': 'Message Text',
+			'user': $scope.user,
 			'buttons': [
-				{
-				'name': 'Short Link',
+				{'name': 'Short Link',
 				'mask': '[$ShortLink]',
 				'type': 'short-link',
-				'icon': 'link'
-				},
-				{
-				'name': 'First Name',
+				'icon': 'link'},
+				{'name': 'First Name',
 				'mask': '[$FirstName]',
 				'type': 'insert',
-				'icon': 'user'	
-				},
-				{
-				'name': 'Last Name',
+				'icon': 'user'},
+				{'name': 'Last Name',
 				'mask': '[$LastName]',
 				'type': 'insert',
-				'icon': 'user-o'
-				}
-			 ]
+				'icon': 'user-o'}
+			]
 		};
 
 		var oldContactList = [];
 
-		$scope.dateOpt = {
-			minDate: $scope.minDate,
-			dateFormat: 'yyyy-MMMM-dd'
+		$scope.dateOptions = {
+			minDate: new Date()
 		};
 
-		$scope.showConsole = function() {
-			console.log($scope.textData);
-			console.log($scope.emailData);
+		$scope.finishOptions = {
+			minDate: $scope.message.date,
+			dateFormat: 'yyyy-MMMM-dd',
+			dateDisabled: disabled
+		};
+
+		function disabled(data) {
+			var date = data.date;
+			var t = 0;
+			switch ($scope.message.switch) {
+				case '3': return date.getDay() !== $scope.message.date.getDay();
+				case '4': return date.getDate() !== $scope.message.date.getDate();
+				case '5': return (date.getDate() + 1) %  $scope.message.day;
+				default: return false;
+			}
+		}
+
+		$scope.saveMessage = function() {
+			if ( ! $scope.message.text || $scope.message.text == '') {
+				logger.logError('Message text is required');
+				return;
+			}
+			$scope.step++;
+			request.send('/messages/' + ( ! $scope.message.id ? 'save' : $scope.message.id), $scope.message, function (data) {
+				$scope.message.id = data.id;	
+        	}, ( ! $scope.message.id ? 'put' : 'post'));
+		};
+
+		$scope.countTimes = function() {
+			var from = $scope.message.date.getTime();
+			var to = $scope.message.finish.getTime();
+			switch ($scope.message.switch) {
+				case '2': return (to - from) / 60 / 60 / 24 / 1000 + 1;
+				case '3': return (to - from) / 60 / 60 / 24 / 1000 / 7 + 1;
+				case '4': return ($scope.message.finish.getMonth() + (($scope.message.finish.getFullYear() - $scope.message.date.getFullYear()) * 12) - $scope.message.date.getMonth()) + 1;
+				case '5': return Math.floor(((to - from) / 60 / 60 / 24 / 1000 + 1) / $scope.message.day + 1);
+			}
 		};
 
 		$scope.totalCount = function() {
@@ -57,18 +95,27 @@
 		};
 		
 		$scope.getSuffix = function(day) {
-			switch(day){
+			switch (day) {
 				case '1': return 'st';
-				break;
 				case '2': return 'nd';
-				break;
 				case '3': return 'rd';
 				default: return  'th';
 			}
 		};
 
 		$scope.init = function() {
+			$scope.get();
 			$scope.copy();
+		};
+
+		$scope.get = function() {
+			var url = $location.path();
+			var temp = url.split('/');
+			if (temp[3]) {
+				request.send('/messages/' + temp[3], {}, function (data) {
+					$scope.message = data;	
+            	}, 'get');
+			}
 		};
 
 		$scope.copy = function() {
@@ -119,7 +166,6 @@
 		};
 
 		$scope.openImport = function() {
-
 			var modalInstance = $uibModal.open({
 				animation: true,
 				templateUrl: 'ImportFiles.html',
@@ -135,9 +181,6 @@
 })();
 
 ;
-
-
-
 
 (function () {
 	'use strict';

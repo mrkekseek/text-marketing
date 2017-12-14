@@ -79,6 +79,11 @@ class UsersController extends Controller
 		return true;
 	}
 
+	public function saveSettings($id = false, $post = [])
+	{
+		print_r($post);
+	}
+
 	public function resetTeamsLeader($teams_id, $id = false)
 	{
 		DB::table('users')

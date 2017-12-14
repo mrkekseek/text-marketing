@@ -93,7 +93,7 @@ angular.module('app').filter('capitalize', function() {
 (function () {
     'use strict';
 
-    angular.module('app').controller('AppCtrl', [ '$scope', '$rootScope', '$window', '$timeout', '$location', '$uibModal', 'request', '$document', AppCtrl]);
+    angular.module('app').controller('AppCtrl', ['$scope', '$rootScope', '$window', '$timeout', '$location', '$uibModal', 'request', '$document', AppCtrl]);
 
     function AppCtrl($scope, $rootScope, $window, $timeout, $location, $uibModal, request, $document) {
         $rootScope.own_loader = true;
@@ -114,54 +114,10 @@ angular.module('app').filter('capitalize', function() {
         $scope.init = function() {
             $scope.menu();
             $scope.get();
-            /*request.send('/users/info/', {}, function(data) {
-                if (data)
-                {
-                   $rootScope.user = data.data;
-                   if ($rootScope.user.users_first_time == '0' && $rootScope.user.plans_id == 'text-contractorreviewer')
-                   {
-                        $scope.modal_first_time();
-                   }
-                }
-            });
-
-			request.send('/teams/info/', {}, function(data) {
-                if (data.data)
-                {
-                   $rootScope.team = data.data;
-                   $rootScope.max_lms_chars = 500 - ($rootScope.team.teams_name.length + 1) - 18;
-                }
-            });
-
-            request.send('/pages/get_aside_menu/', {}, function(data) {
-                $scope.pages = data.data;
-                for (var k in $scope.pages)
-                {
-                    $scope.open[$scope.pages[k].pages_code] = $scope.checkMenuOpen($scope.pages[k]);
-                }
-            });
-
-            request.send('/pub/get_constants/', {}, function(data) {
-                $rootScope.constants = data.data;
-
-                if ($rootScope.constants.project == 'ContractorReviewer' || $rootScope.constants.project == 'ContractorTexter')
-                {
-                    $rootScope.survey_word = '';
-                }
-
-                if ($rootScope.constants.project != 'ContractorReviewer') 
-                {
-                    setInterval(function() {
-                        request.send('/dialogs/get_new_message/', $rootScope.user.users_id, function(data) {
-                            $scope.new_inbox = data.data;
-                        });
-                    }, 5000);
-                }
-            });*/
         };
 
         $scope.get = function() {
-           request.send('/auth/authInfo/', false, function(data) {
+           request.send('/auth/authInfo/', {}, function(data) {
                 $scope.user = data;
             }, 'get'); 
         };
