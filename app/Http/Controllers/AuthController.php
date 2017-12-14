@@ -7,50 +7,31 @@ use App\Team;
 use App\Plan;
 use App\Link;
 use App\Homeadvisor;
+use App\Http\Requests\SignUpRequest;
 use App\Events\SignUp;
 use App\Mail\Support;
 use App\Mail\Recovery;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
     public $salt = 'eEZue4JfUvJJKn9N';
 
-    public function authInfo()
+    public function info()
     {
-        return $user = auth()->user();
+        return auth()->user();
     }
     
-    public function signin($id = false, $post = [])
+    public function signin(SignUpRequest $request)
     {
-        $validator = $this->validate(request(), [
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if ( ! $validator->fails()) {
-            $auth = [
-            	'email' => $post['email'],
-            	'password' => $post['password']
-            ];
-
-            if (Auth::validate($auth)) {
-                $user = User::where('email', $auth['email'])->first();
-                if ( ! empty($user->active)) {
-                    Auth::attempt($auth);
-                    $this->message(__('You are in'), 'success');
-                    return true;
-                } else {
-                    $this->message(__('Your account is not active'));
-                }
-            } else {
-                $this->message(__('Invalid username/password'));
-            }
+        if (auth()->validate($request->all())) {
+            auth()->attempt($request->all());
+            return $this->message('You are in', 'success');
         }
-        return false;
+
+        return $this->message('Invalid Email or Password');
     }
 
     public function signup($id = false, $post = [])
@@ -102,27 +83,6 @@ class AuthController extends Controller
         $homeadvisor->text = '';
         $homeadvisor->rep = $post['ha_rep'];
         $homeadvisor->save();
-
-        $link = new Link();
-        $link->users_id = $user->id;
-        $link->teams_id = $user->teams_id;
-        $link->code = $this->code($user);
-        $link->firstname = $user->firstname;
-        $link->lastname = $user->lastname;
-        $link->phone = '';
-        $link->url = $this->url($link->code);
-        $link->success = 'User '.$link->code;
-        $link->save();
-    }
-
-    public function code($user)
-    {
-        return str_replace(['.', ',', '/', '&', '$', '=', ':', ';', '"', "'"], '_', crypt(time().$user->firstname.$user->lastname, time()));
-    }
-    
-    public function url($code)
-    {
-        return config('app.url').'/home-advisor/'.urlencode($code).'/';
     }
 
     public function getPlan($plans_id)
@@ -151,7 +111,7 @@ class AuthController extends Controller
         return implode(' ', $name);
     }
 
-    public function signout($post = [])
+    public function signout()
     {
         $user = auth()->user();
         if ( ! empty($user->admins_id)) {
@@ -161,9 +121,10 @@ class AuthController extends Controller
             $user->admins_id = 0;
             $user->save();
         } else {
-            Auth::logout();
+            auth()->logout();
         }
-        return $this->message(__("You are out"), 'success');
+
+        return $this->message('You are out', 'success');
     }
 
     public function support($id = false, $post = [])

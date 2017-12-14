@@ -106,9 +106,9 @@ angular.module('app').filter('capitalize', function() {
                 if (data) {
                     $timeout(function() {
                         $window.location.href = "/";
-                    }, 2000);
+                    }, 1000);
                 }
-            });
+            }, 'get');
         };
 
         $scope.init = function() {
@@ -117,7 +117,7 @@ angular.module('app').filter('capitalize', function() {
         };
 
         $scope.get = function() {
-           request.send('/auth/authInfo/', {}, function(data) {
+           request.send('/auth/info/', {}, function(data) {
                 $scope.user = data;
             }, 'get'); 
         };

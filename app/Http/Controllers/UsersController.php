@@ -3,115 +3,92 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\SocialUrl;
-use App\Mail\ActivateUser;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Services\UsersService;
+use App\Http\Services\LinksService;
+use App\Http\Requests\UsersCreateRequest;
+use App\Http\Requests\UsersPasswordRequest;
 
 class UsersController extends Controller
 {
-    public function info($id = false)
+    public function info($id)
     {
-    	echo 'sasdasda';
+    	//
     }
 
     public function all()
 	{
-		return User::where('type', '!=', 1)->get();
+		return User::allUsers();
 	}
 
-	public function save($id = false, $post = [])
+	public function create(UsersCreateRequest $request)
 	{
-		$validator = $this->validate(request(), [
-            'email' => 'required|email|unique:users,email'.(empty($id) ? '' : ','.$id),
-            'teams_id' => 'required',
-            'firstname' => 'required',
-            'password' => 'required_without:id',
-        ]);
+		$data = $request->only(['plans_id', 'firstname', 'lastname', 'email', 'password', 'view_phone']);
+		$data['type'] = 2;
+		$data['teams_leader'] = true;
+		$data['active'] = true;
+		$data['password'] = UsersService::password($data);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['teams_id'] = UsersService::createTeam($data);
+		$data = array_filter($data, 'strlen');
 
-        if ( ! $validator->fails()) {
-        	$new = false;
-			$user = User::firstOrNew(['id' => empty($id) ? 0 : $id]);
-			$new = ! $user->exists;
-			if ( ! empty($post['teams_leader'])) {
-				$this->resetTeamsLeader($post['teams_id'], $id);
-			}
-			$user->plans_id = $post['plans_id'];
-			$user->teams_id = $post['teams_id'];
-			$user->teams_leader = $post['teams_leader'];
-			$user->type = 2;
-			$user->email = strtolower($post['email']);
-			$user->firstname = $post['firstname'];
-			$user->lastname = $post['lastname'];
-			$user->phone = $this->phoneToNumber($post['phone']);
-			$user->active = $post['active'];
+		$user = User::create($data);
+		$user->defaultUrls();
+		LinksService::create($user);
 
-			if ( ! empty($post['password'])) {
-				$user->password = bcrypt($post['password']);
-			}
+		return $this->message('Teammate was successfully saved', 'success');
+	}
 
-			$user->save();
+	public function update(UsersCreateRequest $request, $id)
+	{
+		$data = $request->only(['plans_id', 'firstname', 'lastname', 'email', 'password', 'view_phone']);
+		$data['password'] = UsersService::password($data['password']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data = array_filter($data, 'strlen');
 
-			if ($new) {
-				$user->defaultUrls();
-			}
+		$user = User::find($id)->update($data);
 
-			return $this->message(__('Teammate was successfully saved'), 'success');
-		}
+		return $this->message('Teammate was successfully saved', 'success');
+	}
 
-		return false;
+	public function profile(UsersCreateRequest $request)
+	{
+		$data = $request->only(['firstname', 'lastname', 'email', 'view_phone']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data = array_filter($data, 'strlen');
+
+		$user = auth()->user()->update($data);
+
+		return $this->message('Profile was successfully saved', 'success');
 	}
 
 	public function remove($id)
 	{
-		User::destroy($id);
-		return $this->message(__('User was successfully removed'), 'success');
-	}
-
-	public function teamsLeader($id = false, $post = [])
-	{
 		$user = User::find($id);
-		if ( ! empty($post['_checked'])) {
-			$this->resetTeamsLeader($user->teams_id, $id);
-		}
-		$user->update(['teams_leader' => $post['_checked']]);
-		return true;
+		$user->links()->delete();
+
+		$user->delete();
+		return $this->message('User was successfully removed', 'success');
 	}
 
-	public function saveSettings($id = false, $post = [])
-	{
-		print_r($post);
-	}
-
-	public function resetTeamsLeader($teams_id, $id = false)
-	{
-		DB::table('users')
-			->where('id', '<>', $id)
-			->where('teams_id', $teams_id)
-			->update(['teams_leader' => false]);
-	}
-
-	public function active($id = false, $post = [])
-	{
-		$user = User::find($id);
-		$user->update(['active' => $post['_checked']]);
-		return true;
-	}
-
-	public function phoneToNumber($phone)
-	{
-		return str_replace(['-', '.', ' ', '(', ')'], '', $phone);
-	}
-
-	public function magic($id = false, $post = [])
+	public function magic($id)
 	{
 		$user = User::find($id);
 		$user->admins_id = auth()->id();
 		$user->save();
 
 		auth()->login($user);
-		
-		return true;
+	}
+
+	public function password(UsersPasswordRequest $request)
+	{
+		$user = auth()->user();
+		if (Hash::check($request->old_password, $user->password)) {
+			$user->password = UsersService::password($request->password);
+			$user->save();
+			return $this->message('Password was successfully changed', 'success');
+		}
+
+		return $this->message('Old Password is incorrect');
 	}
 }

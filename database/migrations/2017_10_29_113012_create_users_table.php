@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('firstname')->default('');
             $table->string('lastname')->default('');
             $table->string('phone')->default('');
+            $table->string('view_phone')->default('');
             $table->string('additional_phones')->default('');
             $table->tinyInteger('active')->unsigned()->default(0);
             $table->string('remember_token')->default('');

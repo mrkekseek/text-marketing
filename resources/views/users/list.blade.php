@@ -51,14 +51,6 @@
 							</div>
 						</th>
 						
-						<th class="text-center">
-							{{ __('Team Leader') }}
-						</th>
-
-						<th class="text-center">
-							{{ __('Active') }}
-						</th>
-
 						<th class="th-button">
 						</th>
 
@@ -85,25 +77,11 @@
 						</td>
 						
 						<td>
-							@{{ user.phone }}
+							@{{ user.view_phone }}
 						</td>
 
 						<td>
-							@{{ getTeamById(user.teams_id) }}
-						</td>
-						
-						<td class="text-center">
-							<label class="ui-switch ui-switch-success ui-switch-sm">
-								<input type="checkbox" ng-model="user.teams_leader" ng-true-value="1" ng-false-value="0" ng-click="teamsLeader(user.id)" />
-								<i></i>
-							</label>
-						</td>
-
-						<td class="text-center">
-							<label class="ui-switch ui-switch-success ui-switch-sm">
-								<input type="checkbox" ng-model="user.active" ng-true-value="1" ng-false-value="0" ng-click="active(user.id, user.active)" />
-								<i></i>
-							</label>
+							@{{ user.teams.name }}
 						</td>
 						
 						<td class="td-button text-center">
@@ -141,51 +119,37 @@
 			<div class="row">
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
-						<label>{{ __("Team") }}</label>
-						<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required" ng-options="team.id as team.name for team in teams">
+						<label>{{ __("Payment Plan") }}</label>
+						<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required" ng-options="plan.plans_id as plan.name for plan in plans">
 						</select>
 					</div>
+
 					<div class="form-group">
 						<label>{{ __("First Name") }}</label>
 						<input type="text" name="firstname" class="form-control" ng-model="user.firstname" required="required" />
 					</div>
+
 					<div class="form-group">
 						<label>{{ __("Last Name") }}</label>
 						<input type="text" class="form-control" ng-model="user.lastname" />
 					</div>
-					<div class="form-group">
-						<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.teams_leader" ng-true-value="1" ng-false-value="0" />
-							<i></i>
-						</label>
-						<strong class="team-leader">{{ __(' Team Leader') }}</strong>
-					</div>
-					<div class="form-group">
-						<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.active" ng-true-value="1" ng-false-value="0" />
-							<i></i>
-						</label>
-						<strong class="team-leader">{{ __('Activate teammate') }}</strong>
-					</div>
 				</div>
+
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
 						<label>{{ __("Email") }}</label>
 						<input type="email" class="form-control" name="email" ng-model="user.email" required="required" />
 					</div>
+
 					<div class="form-group">
 						<label>{{ __("Password") }}</label>
 						<input type="password" class="form-control" ng-model="user.password" />
 					</div>
+
 					<div class="form-group">
 						<label>{{ __("Phone") }}</label>
-						<input type="text" class="form-control" ng-model="user.phone" />
-					</div>	
-					<div class="form-group">
-						<label>{{ __("Payment Plan") }}</label>
-						<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required" ng-options="plan.plans_id as plan.name for plan in plans">
-						</select>
-					</div>	
+						<input type="text" class="form-control" ng-model="user.view_phone" />
+					</div>
 				</div>
 			</div>
 		</div>

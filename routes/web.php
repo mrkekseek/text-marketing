@@ -20,8 +20,23 @@ Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = ''
 	return view($view);
 })->middleware('auth.views');
 
-Route::group(['prefix' => 'api/v1'], function() {
-	Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
+Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
+	//Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
+
+	Route::post('auth/signin', 'AuthController@signin');
+	Route::get('auth/signout', 'AuthController@signout');
+	Route::get('auth/info', 'AuthController@info');
+
+	Route::get('pages/menu', 'PagesController@menu');
+
+	Route::post('users/password', 'UsersController@password');
+	Route::get('users', 'UsersController@all');
+	Route::put('users', 'UsersController@create');
+	Route::post('users/{id}', 'UsersController@update');
+	Route::delete('users/{id}', 'UsersController@remove');
+	Route::get('users/{id}/magic', 'UsersController@magic');
+
+	Route::get('plans', 'PlansController@all');
 });
 
 Route::get('signup/{type?}', function($type = false) {

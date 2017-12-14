@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'ContractorTexter'),
+    'name' => 'ContractorTexter',
     'token' => env('APP_TOKEN', '$2y$10$hBYMT3gYolARvwHUf4q4NuTkwcNLpwZHR3VF4nF3esfjcqIg7rHfO'),
 
     /*

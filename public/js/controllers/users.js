@@ -4,37 +4,19 @@
     angular.module('app').controller('UsersCtrl', ['$rootScope', '$scope', '$uibModal', '$window', 'request', 'langs', 'validate', UsersCtrl]);
 
     function UsersCtrl($rootScope, $scope, $uibModal, $window, request, langs, validate) {
+		$scope.request_finish = false;
     	$scope.list = [];
-    	$scope.teams_list = [];
     	$scope.plans_list = [];
 
-    	$scope.get = function() {
-    		request.send('/users', $scope.auth, function(data) {
+    	$scope.get = function () {
+    		request.send('/users', $scope.auth, function (data) {
     			$scope.list = data;
     			$scope.request_finish = true;
 			}, 'get');
     	};
 
-    	$scope.teams = function() {
-    		request.send('/teams', $scope.auth, function(data) {
-    			$scope.teams_list = data;
-    			$scope.teams_list.unshift({
-    				'id': '0',
-    				'name': 'Select a Team...'
-    			});
-			}, 'get');
-    	};
-
-    	$scope.getTeamById = function(teamsId) {
-			for (var t in $scope.teams_list) {
-				if ($scope.teams_list[t].id == teamsId) {
-					return $scope.teams_list[t].name;
-				}
-			}
-		};
-
-    	$scope.plans = function() {
-            request.send('/plans', false, function(data) {
+    	$scope.plans = function () {
+            request.send('/plans', false, function (data) {
                 $scope.plans_list = data;
                 $scope.plans_list.unshift({
     				'plans_id': '0',
@@ -45,11 +27,10 @@
 
         $scope.initAdmin = function () {
 			$scope.get();
-			$scope.teams();
 			$scope.plans();
 		};
 
-    	$scope.create = function(users_id) {
+    	$scope.create = function (users_id) {
             users_id = users_id || false;
 
 			var modalInstance = $uibModal.open({
@@ -58,27 +39,27 @@
 				controller: 'ModalUsersCreateCtrl',
 				resolve: {
 					items: function () {
-				  		return {'user': $scope.by_id(users_id), 'teams': $scope.teams_list, 'plans': $scope.plans_list};
+				  		return {'user': $scope.by_id(users_id), 'plans': $scope.plans_list};
 					}
 				}
 		    });
 
-		    modalInstance.result.then(function(response) {
+		    modalInstance.result.then(function (response) {
 				$scope.get();
 		    }, function () {
 				
 		    });
 		};
 
-		$scope.remove = function(users_id) {
-            if (confirm(langs.get('Do you realy want to remove this item? It will also remove all user account data'))) {
-                request.send('/users/' + users_id, false, function(data) {
+		$scope.remove = function (users_id) {
+            if (confirm(langs.get('Do you realy want to remove this user? It will also remove all account data'))) {
+                request.send('/users/' + users_id, {}, function (data) {
                     $scope.get();
                 }, 'delete');
             }
         };
 
-		$scope.by_id = function(users_id) {
+		$scope.by_id = function (users_id) {
 			for (var k in $scope.list) {
 				if ($scope.list[k].id == users_id) {
 					return $scope.list[k];
@@ -88,44 +69,32 @@
 			return {};
 		};
 
-		$scope.teamsLeader = function(users_id) {
-			var user = $scope.by_id(users_id);
-			request.send('/users/' + users_id + '/teamsLeader', {}, function() {
-				$scope.get();
-			}, user.teams_leader == '1' ? 'post' : 'delete');
-		};
-
-		$scope.active = function(users_id) {
-			var user = $scope.by_id(users_id);
-			request.send('/users/' + users_id + '/active', {}, false, user.active == '1' ? 'post' : 'delete');
-		};
-
-		$scope.magic = function(users_id) {
-			request.send('/users/' + users_id + '/magic', {}, function(data) {
+		$scope.magic = function (users_id) {
+			request.send('/users/' + users_id + '/magic', {}, function (data) {
 				$window.location.href = "/";
             }, 'get');
 		};
 
-		$scope.change_password = function() {
+		$scope.pass = {};
+		$scope.password = function () {
 			var error = 1;
-			error *= validate.check($scope.form.old_password, 'Old Password');
-			error *= validate.check($scope.form.new_password, 'New Password');
-			error *= validate.check($scope.form.confirm_password, 'Confirm Password');
+			error *= validate.check($scope.form_password.old_password, 'Old Password');
+			error *= validate.check($scope.form_password.password, 'New Password');
+			error *= validate.check($scope.form_password.password_confirmation, 'Password Confirmation');
 
-			var post_mas = {'old_password': $scope.form.old_password.$viewValue,
-							'new_password': $scope.form.new_password.$viewValue,
-							'confirm_password': $scope.form.confirm_password.$viewValue};
-			if (error)
-			{
-				request.send('/users/password', post_mas, function(data) {
-	                if (data)
-	                {
-	                	$scope.old_password = '';
-	                	$scope.new_password = '';
-	                	$scope.confirm_password = '';
-	                }
+			if (error) {
+				request.send('/users/password', $scope.pass, function (data) {
+					if (data) {
+						$scope.pass.old_password = '';
+						$scope.pass.password = '';
+						$scope.pass.password_confirmation = '';
+					}
 	            });
 			}
+		};
+
+		$scope.profile = function () {
+			request.send('/users/profile', $scope.user);
 		};
     };
 })();
@@ -139,25 +108,21 @@
 
     function ModalUsersCreateCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
         $scope.user = angular.copy(items.user);
-        $scope.teams = angular.copy(items.teams);
-        $scope.plans = angular.copy(items.plans);
         $scope.user.password = '';
+        $scope.plans = angular.copy(items.plans);
 
         if ( ! $scope.user.id) {
-        	$scope.user.teams_id = '0';
-        	$scope.user.teams_leader = 1;
-        	$scope.user.active = 1;
         	$scope.user.plans_id = '0';
         }
 
-    	$scope.save = function() {
-	    	var error = 1;
+    	$scope.save = function () {
+			var error = 1;
+			error *= validate.check($scope.form.plans_id, 'Payment Plan');
 			error *= validate.check($scope.form.firstname, 'Name');
 			error *= validate.check($scope.form.email, 'Email');
-			error *= validate.check($scope.form.teams_id, 'Team');
 
 			if (error) {
-				request.send('/users/' + ( ! $scope.user.id ? 'save' : $scope.user.id), $scope.user, function(data) {
+				request.send('/users/' + ($scope.user.id ? $scope.user.id : ''), $scope.user, function (data) {
 					if (data) {
 						$uibModalInstance.close(data);
 					}
@@ -165,7 +130,7 @@
 			}
 		};
 
-		$scope.cancel = function() {
+		$scope.cancel = function () {
 			$uibModalInstance.dismiss('cancel');
 		};
     };

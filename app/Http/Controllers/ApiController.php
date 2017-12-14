@@ -10,13 +10,13 @@ class ApiController extends Controller
     {
     	if ($sunit == 'auth' || $sunit != 'auth' && auth()->check()) {
             $id = $this->id($sid);
-            $data = $this->data($smethod);
 	    	$method = $this->method($sid, $smethod);
+            $request = $this->request($smethod);
 
 		    $controller = app()->make('\App\Http\Controllers\\'.ucfirst($sunit).'Controller');
 		    $response = $controller->callAction($method, [
+                'request' => $request,
                 'id' => $id,
-                'data' => $data
             ]);
             return json_encode($response, JSON_NUMERIC_CHECK);
     	}
@@ -31,21 +31,20 @@ class ApiController extends Controller
         return false;
     }
 
-    public function data($smethod)
+    public function request($smethod)
     {
-        $data = request()->all();
+        $request = request();
         if ($smethod && in_array(request()->method(), ['POST', 'DELETE'])) {
-            $data['_checked'] = request()->method() == 'POST';
+            $request->_checked = request()->method() == 'POST';
         }
-
-        return $data;
+        return $request;
     }
 
     public function method($sid, $smethod)
     {
         $method = $smethod;
         if (empty($sid)) {
-            return 'all';
+            return request()->method() == 'PUT' ? 'create' : 'all';
         } else {
             if (is_numeric($sid)) {
                 if (empty($smethod)) {
@@ -54,10 +53,10 @@ class ApiController extends Controller
                             $method = 'info';
                             break;
                         case 'POST':
-                            $method = 'save';
+                            $method = 'update';
                             break;
                         case 'PUT':
-                            $method = 'save';
+                            $method = 'create';
                             break;
                         case 'DELETE':
                             $method = 'remove';

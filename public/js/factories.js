@@ -13,21 +13,18 @@
             get: function(key, vars) {
                 vars = vars || {};
                 var text = key;
-                for (var i in list) 
-                {
-                    if (i.toLowerCase() == key.toLowerCase() && list[i] != '')
-                    {
+                for (var i in list) {
+                    if (i.toLowerCase() == key.toLowerCase() && list[i] != '') {
                         text = list[i];
                     }
                 }
 
-                for (var i in vars) 
-                {
+                for (var i in vars) {
                     text = text.replace(":" + i, vars[i]);
                 }
 
                 return text;
-           }
+            }
         };
     };
 })();
@@ -47,44 +44,35 @@
             "timeOut": "3000"
         };
 
-        var logIt = function(message, vars, type) {
+        var logIt = function (message, vars, type) {
             return toastr[type](langs.get(message, vars));
         };
 
         return {
-            log: function(message, vars) {
+            log: function (message, vars) {
                 logIt(message, vars, 'info');
             },
-            logWarning: function(message, vars) {
+            logWarning: function (message, vars) {
                 logIt(message, vars, 'warning');
             },
-            logSuccess: function(message, vars) {
+            logSuccess: function (message, vars) {
                 logIt(message, vars, 'success');
             },
-            logError: function(message, vars) {
+            logError: function (message, vars) {
                 logIt(message, vars, 'error');
             },
-            check: function(data) {
-                if (data.messages)
-                {
-                    for (var key in data.messages)
-                    {
+            check: function (data) {
+                if (data.messages) {
+                    for (var key in data.messages) {
                         var message = data.messages[key];
                         this[this.method(message.type)](message.text);
                     }
                 }
 
-                var data = typeof(data.data) == "string" ? JSON.parse(data.data) : data.data;
-                if (data)
-                {
-                    return data;
-                }
-                else
-                {
-                    return false;
-                }
+                var data = typeof(data.data) == "string" && data.data != '' ? JSON.parse(data.data) : data.data;
+                return data ? data : false;
             },
-            method: function(type) {
+            method: function (type) {
                 return 'log' + type.charAt(0).toUpperCase() + type.slice(1);
             }
         };
@@ -105,10 +93,14 @@
                 callback = callback || false;
                 method = method || 'post';
                 
-                $http[method](api_url + adrress, post_mas).then(function(response) {
+                $http[method](api_url + adrress, post_mas).then(function (response) {
                     var data = logger.check(response.data);
                     if (callback) {
                         (callback)(data);
+                    }
+                }, function (reason) {
+                    for (var k in reason.data.errors) {
+                        logger.logError(reason.data.errors[k]);
                     }
                 });
             },
