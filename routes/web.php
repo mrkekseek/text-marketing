@@ -23,13 +23,17 @@ Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = ''
 Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	//Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
 
+	Route::post('auth/support', 'AuthController@support');
+	Route::post('auth/signup', 'AuthController@signup');
 	Route::post('auth/signin', 'AuthController@signin');
+	Route::post('auth/recovery', 'AuthController@recovery');
 	Route::get('auth/signout', 'AuthController@signout');
 	Route::get('auth/info', 'AuthController@info');
 
 	Route::get('pages/menu', 'PagesController@menu');
 
 	Route::post('users/password', 'UsersController@password');
+	Route::post('users/profile', 'UsersController@profile');
 	Route::get('users', 'UsersController@all');
 	Route::put('users', 'UsersController@create');
 	Route::post('users/{id}', 'UsersController@update');

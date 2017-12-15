@@ -12,10 +12,7 @@
     angular.module('app').controller('SignInCtrl', ['$rootScope', '$scope', '$window', '$timeout', 'request', 'validate', 'langs', SignInCtrl]);
 
     function SignInCtrl($rootScope, $scope, $window, $timeout, request, validate, langs) {
-        $scope.auth = {
-            'email': '',
-            'password': ''
-        };
+        $scope.auth = {};
 
         $scope.signin = function () {
             var error = 1;

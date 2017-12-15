@@ -3,6 +3,8 @@
 namespace App\Http\Services;
 
 use App\Team;
+use App\Plan;
+use Carbon\Carbon;
 
 class UsersService
 {
@@ -25,5 +27,11 @@ class UsersService
 	static public function phoneToNumber($data)
 	{
 		return ! empty($data['view_phone']) ? str_replace(['-', '.', ' ', '(', ')'], '', $data['view_phone']) : '';
-	}
+    }
+    
+    static public function trialEndsAt($plans_id)
+    {
+        $plan = Plan::findById($plans_id);
+        return Carbon::now()->addDays($plan ? $plan->trial : 0);
+    }
 }

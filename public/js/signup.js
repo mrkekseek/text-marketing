@@ -28,8 +28,8 @@
             error *= validate.check($scope.form.password, 'Password');
             error *= validate.check($scope.form.firstname, 'Name');
 
-            if ($scope.signUp.plans_code == 'home-advisor') {
-                error *= validate.check($scope.form.ha_rep, 'HomeAdvisor Rep');
+            if ($scope.signUp.plans_id == 'home-advisor') {
+                error *= validate.check($scope.form.rep, 'HomeAdvisor Rep');
             }
 
             if (error) {

@@ -18,7 +18,8 @@
             var error = 1;
             error *= validate.check($scope.form.email, 'Email');
             error *= validate.check($scope.form.message, 'Message'); 
-            error *= validate.check($scope.form.name, 'Name');     
+            error *= validate.check($scope.form.name, 'Name');
+            
             if (error) {
                 $rootScope.request_sent = true;
                 request.send('/auth/support', $scope.support, function(data) {

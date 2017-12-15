@@ -24,7 +24,6 @@ class UsersCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'plans_id' => 'required',
             'email' => 'required|email|unique:users,email'.( ! empty($this->id) ? ','.$this->id : ''),
             'firstname' => 'required',
             'password' => 'required_without:id',
@@ -39,7 +38,6 @@ class UsersCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            'plans_id.required' => __('Choose Payment Plan first'),
             'password.required_without' => __('Password is required'),
         ];
     }

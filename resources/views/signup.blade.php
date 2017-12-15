@@ -74,7 +74,7 @@
 												<span class="input-group-addon">
 													<span class="fa fa-home"></span>
 												</span>
-												<input type="text" name="ha_rep" class="form-control input-lg" placeholder="{{ __('Name of your HomeAdvisor Rep') }}" ng-model="signUp.ha_rep" required="required" />
+												<input type="text" name="rep" class="form-control input-lg" placeholder="{{ __('Name of your HomeAdvisor Rep') }}" ng-model="signUp.rep" required="required" />
 											</div>
 										</div>
 
@@ -98,13 +98,14 @@
 										</div>
 									</fieldset>
 								</form>
+
 								<section class="additional-info">
 									<a href="/">
 										<i class="fa fa-lock" aria-hidden="true"></i>
 										{{ __('Log In') }}
 									</a>
 
-									<a href="/pages/support" class="pull-right">
+									<a href="/support" class="pull-right">
 										<i class="fa fa-life-ring" aria-hidden="true"></i>
 										{{ __('Support') }}
 									</a>

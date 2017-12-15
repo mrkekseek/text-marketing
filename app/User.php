@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Link', 'users_id');
     }
 
+    public function homeadvisors()
+    {
+        return $this->hasOne('App\HomeAdvisor', 'users_id');
+    }
+
     public function clients()
     {
         return $this->hasMany('App\Client', 'users_id');

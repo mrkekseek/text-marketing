@@ -16,7 +16,7 @@ class CreateHomeadvisorsTable extends Migration
         Schema::create('homeadvisors', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('users_id')->unsigned()->default(0);
-            $table->text('text');
+            $table->text('text')->nullable();
             $table->string('additional_phones')->default('');
             $table->string('rep')->default('');
             $table->tinyInteger('send_request')->unsigned()->default(0);

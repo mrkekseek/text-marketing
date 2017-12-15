@@ -3,28 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Team;
-use App\Plan;
-use App\Link;
-use App\Homeadvisor;
+use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Events\SignUp;
 use App\Mail\Support;
 use App\Mail\Recovery;
-use Carbon\Carbon;
+use App\Http\Services\UsersService;
+use App\Http\Services\LinksService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-    public $salt = 'eEZue4JfUvJJKn9N';
-
     public function info()
     {
         return auth()->user();
     }
     
-    public function signin(SignUpRequest $request)
+    public function signin(SignInRequest $request)
     {
         if (auth()->validate($request->all())) {
             auth()->attempt($request->all());
@@ -34,60 +30,30 @@ class AuthController extends Controller
         return $this->message('Invalid Email or Password');
     }
 
-    public function signup($id = false, $post = [])
+    public function signup(SignUpRequest $request)
     {
-        $validator = $this->validate(request(), [
-            'email' => 'required|email|unique:users,email',
-            'firstname' => 'required',
-            'password' => 'required',
-            'ha_rep' => 'required_if:plans_code,home-advisor'
-        ]);
+        $data = $request->only(['plans_id', 'email', 'password', 'firstname', 'lastname']);
+        $data['plans_id'] = $data['plans_id'].'-'.strtolower(config('app.name'));
+        $data['type'] = 2;
+		$data['teams_leader'] = true;
+		$data['active'] = true;
+		$data['password'] = UsersService::password($data['password']);
+		$data['teams_id'] = UsersService::createTeam($data);
+		$data['trial_ends_at'] = UsersService::trialEndsAt($data['plans_id']);
+        $data = array_filter($data, 'strlen');
 
-        if ( ! $validator->fails()) {
-            $team = new Team();
-            $team->name = $this->teamsName($post);
-            $team->save();
+        $user = User::create($data);
+        LinksService::create($user);
 
-            $plan = $this->getPlan($post['plans_id']);
-            $trial = $plan ? $plan->trial : 0;
-
-            $user = new User();
-            $user->password = bcrypt($post['password']);
-            $user->plans_id = $post['plans_id'].'-'.strtolower(config('app.name'));
-            $user->teams_id = $team->id;
-            $user->teams_leader = 1;
-            $user->type = 2;
-            $user->email = strtolower($post['email']);
-            $user->firstname = $post['firstname'];
-            $user->lastname = ! empty($post['lastname']) ? $post['lastname'] : '';
-            $user->active = 1;
-            $user->trial_ends_at = Carbon::now()->addDays($trial);
-            $user->save();
-
-            auth()->login($user);
-            $owner = User::where('owner', 1)->first();
-            event(new SignUp($user, $owner));
-
-            if ( ! empty($post['ha_rep'])) {
-                $this->createHa($user, $post);
-            }
-
-            return $this->message(__("You were successfully registered."), 'success');
+        if ( ! empty($request->rep)) {
+            $user->homeadvisors()->create(['rep' => $request->rep]);
         }
-        return false;
-    }
 
-    public function createHa($user, $post)
-    {
-        $homeadvisor = Homeadvisor::firstOrNew(['users_id' => $user->id]);
-        $homeadvisor->text = '';
-        $homeadvisor->rep = $post['ha_rep'];
-        $homeadvisor->save();
-    }
+        auth()->login($user);
+        $owner = User::where('owner', 1)->first();
+        event(new SignUp($user, $owner));
 
-    public function getPlan($plans_id)
-    {
-        return Plan::where('plans_id', $plans_id.'-'.strtolower(config('app.name')))->first();
+        return $this->message('You were successfully registered', 'success');
     }
 
     public function createSubscriptions($user)
@@ -99,16 +65,6 @@ class AuthController extends Controller
         $user = User::create([
             'trial_ends_at' => ,
         ]);*/
-    }
-
-    public function teamsName($post)
-    {
-        $name = [$post['firstname']];
-
-        if ( ! empty($post['lastname'])) {
-           $name[] = $post['lastname'];
-        }
-        return implode(' ', $name);
     }
 
     public function signout()
@@ -127,24 +83,28 @@ class AuthController extends Controller
         return $this->message('You are out', 'success');
     }
 
-    public function support($id = false, $post = [])
+    public function support(Request $request)
     {
+        $data = $request->only(['name', 'email', 'message', 'subject']);
         $owner = User::where('owner', 1)->first();
-        Mail::to($owner)->send(new Support($post));
-        return $this->message(__("Your email successfully sent."), 'success');
+        Mail::to($owner)->send(new Support($data));
+        return $this->message('Your email successfully sent', 'success');
     }
 
-    public function recovery($id = false, $post = [])
+    public function recovery(Request $request)
     {
-        $user = User::where('email', strtolower($post['email']))->first();
+        $user = User::where('email', strtolower($request->email))->first();
         if ( ! empty($user)) {
             $password = crypt($user->password, time());
-            $user->password = bcrypt($password);
+            $user->password = UsersService::password($password);
             $user->save();
 
-            Mail::to($post['email'])->send(new Recovery(['pass' => $password, 'email' => $post['email']]));
-            return $this->message(__("New password was sent to your email address."), 'success');
+            Mail::to($request->email)->send(new Recovery([
+                'pass' => $password,
+                'email' => $request->email
+            ]));
+            return $this->message('New password was sent to your email address', 'success');
         }
-        return $this->message(__("Invalid email."));
+        return $this->message('Invalid email');
     }
 }

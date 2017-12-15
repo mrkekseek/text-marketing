@@ -13,7 +13,7 @@ class UsersController extends Controller
 {
     public function info($id)
     {
-    	//
+    	return User::find($id);
     }
 
     public function all()
@@ -27,7 +27,7 @@ class UsersController extends Controller
 		$data['type'] = 2;
 		$data['teams_leader'] = true;
 		$data['active'] = true;
-		$data['password'] = UsersService::password($data);
+		$data['password'] = UsersService::password($data['password']);
 		$data['phone'] = UsersService::phoneToNumber($data);
 		$data['teams_id'] = UsersService::createTeam($data);
 		$data = array_filter($data, 'strlen');

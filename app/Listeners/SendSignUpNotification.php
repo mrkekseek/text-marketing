@@ -30,7 +30,7 @@ class SendSignUpNotification
      */
     public function handle(SignUp $event)
     {
-        if ($event->user->plans_code == 'home-advisor') {
+        if ($event->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
             Notification::send($event->user, new SignUpEmailForUserHA($event->config));
         }else {
             Notification::send($event->user, new SignUpEmailForUser($event->config));
