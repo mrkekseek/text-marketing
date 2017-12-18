@@ -14,7 +14,7 @@ class UrlsController extends Controller
 		return SocialUrl::where('users_id', auth()->user()->id)->get();
 	}
 
-	public function save($id = false, $post = [])
+	public function save(Request $request, $id = false)
 	{
 		$url = SocialUrl::firstOrNew(['id' => empty($id) ? 0 : $id]);
 		$url->users_id = auth()->user()->id;

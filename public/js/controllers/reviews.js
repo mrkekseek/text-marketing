@@ -86,6 +86,7 @@
                         input.icon = data.icon;
                     });
                 } else {
+                    console.log(input);
                     request.send('/urls/save', input, function (data) {
                         input.id = data.id;
                         input.icon = data.icon;

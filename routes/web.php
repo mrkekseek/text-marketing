@@ -41,6 +41,20 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::get('users/{id}/magic', 'UsersController@magic');
 
 	Route::get('plans', 'PlansController@all');
+
+	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
+	Route::get('homeadvisor/info', 'HomeadvisorController@info');
+	Route::post('homeadvisor/{id}', 'HomeadvisorController@save');
+
+	Route::get('clients/leads', 'ClientsController@leads');
+	Route::get('clients', 'ClientsController@all');
+
+	Route::get('surveys', 'SurveysController@all');
+	Route::put('surveys/save', 'SurveysController@save');
+
+	Route::get('urls', 'UrlsController@all');
+	Route::put('urls/save', 'UrlsController@save');
+	Route::delete('urls/{id}', 'UrlsController@remove');
 });
 
 Route::get('signup/{type?}', function($type = false) {

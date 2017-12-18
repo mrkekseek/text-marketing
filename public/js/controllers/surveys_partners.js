@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('SurveysPartnersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', 'charset', SurveysPartnersCtrl]);
+    angular.module('app').controller('SurveysPartnersCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', SurveysPartnersCtrl]);
 
-    function SurveysPartnersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger, charset) {
+    function SurveysPartnersCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger) {
         $scope.open_edit = false;
         $scope.popup_date = false;
         $scope.surveys_schedule = '0';
@@ -126,7 +126,7 @@
         };
 
         $scope.insertMask = function(textarea, mask) {
-           $scope.survey.survey_text = charset.set(textarea, mask);
+           
         };
 
         $scope.charsCount = function(text) {
