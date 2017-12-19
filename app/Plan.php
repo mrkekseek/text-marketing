@@ -10,7 +10,7 @@ class Plan extends Model
 
     static public function findById($plans_id)
     {
-        return self::where('plans_id', $plans_id.'-'.strtolower(config('app.name')))->first();
+        return self::where('plans_id', $plans_id)->first();
     }
 
     public function users()
