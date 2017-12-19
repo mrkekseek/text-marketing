@@ -9,6 +9,8 @@
 		$scope.step = 1;
 		$scope.open = false;
 		$scope.contactList =  [];
+		$scope.listsList = [];
+		$scope.list = [];
 
 		$scope.message = {
 			'text': '',
@@ -61,7 +63,12 @@
 				case '5': return (date.getDate() + 1) %  $scope.message.day;
 				default: return false;
 			}
-		}
+		};
+
+		$scope.getPhones = function() {
+			$scope.getContacts();
+			$scope.getList();
+		};
 
 		$scope.saveMessage = function() {
 			if ( ! $scope.message.text || $scope.message.text == '') {
@@ -69,10 +76,22 @@
 				return;
 			}
 			$scope.step++;
-			request.send('/messages/' + ( ! $scope.message.id ? 'save' : $scope.message.id), $scope.message, function (data) {
+			/*request.send('/messages/' + ( ! $scope.message.id ? 'save' : $scope.message.id), $scope.message, function (data) {
 				$scope.message.id = data.id;	
-        	}, ( ! $scope.message.id ? 'put' : 'post'));
+        	}, ( ! $scope.message.id ? 'put' : 'post'));*/
 		};
+
+		$scope.getContacts = function() {
+            request.send('/clients', {}, function (data) {
+                $scope.list = data;
+            }, 'get');
+        };
+
+		$scope.getList = function() {
+            request.send('/lists', {}, function (data) {
+                $scope.listsList = data;
+            }, 'get');
+        };
 
 		$scope.countTimes = function() {
 			var from = $scope.message.date.getTime();

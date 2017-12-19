@@ -21,32 +21,41 @@ class ClientsController extends Controller
 		return Client::where('users_id', auth()->user()->id)->where('source', 'HomeAdvisor')->get();
 	}
 
-	public function info($id = false)
+	public function info(Request $request, $id = false)
 	{
 		$data['client'] = Client::find($id);
 		$data['seances'] = Seance::where('clients_id', $id)->where('completed', 1)->get();
 		return $data;
 	}
 
-	public function save($id = false, $post = [])
+	public function save(Request $request, $id = false)
 	{
 		$client = Client::firstOrNew(['id' => empty($id) ? 0 : $id]);
 		$client->users_id = auth()->user()->id;
-		$client->firstname = $post['firstname'];
-		$client->lastname = ! empty($post['lastname']) ? $post['lastname'] : '';
-		$client->phone = $this->editPhone($post['phone']);
-		$client->view_phone = $post['phone'];
-		$client->email = trim($post['email']);
+		$client->firstname = $request['firstname'];
+		$client->lastname = ! empty($request['lastname']) ? $request['lastname'] : '';
+		$client->phone = $this->editPhone($request['phone']);
+		$client->view_phone = $request['phone'];
+		$client->email = trim($request['email']);
 		$client->save();
 
-		if ( ! empty($post['lists_id'])) {
-			$client->lists()->detach($post['lists_id']);
-			$client->lists()->attach($post['lists_id']);
+		if ( ! empty($request['lists_id'])) {
+			$client->lists()->detach($request['lists_id']);
+			$client->lists()->attach($request['lists_id']);
 		}
 
 		$this->message(__('Client was successfully saved'), 'success');
 
 		return $client->id;
+	}
+
+	public function addToList(Request $request, $id = false)
+	{
+		foreach ($request->all() as $row) {
+			$client = Client::find($row['id']);
+			$client->lists()->detach($id);
+			$client->lists()->attach($id);
+		}
 	}
 
 	public function remove($id = false)

@@ -29,7 +29,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 				if (text.indexOf('[$LastName]') + 1) {
 					lastname = 30 - '[$LastName]'.length;
 				}
-				return text.length + firstname + lastname + $scope.options.user.company_name.length;
+				return text.length + firstname + lastname + ($scope.options.user.company_name ? $scope.options.user.company_name.length : 0);
 			}
 			return 0;
 		};
@@ -39,6 +39,8 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 				if (shortUrl) {
 					shortUrl = shortUrl.replace('http://', '');
 					$scope.insertMask($scope.options.id, shortUrl);
+					$scope.shortLinkMessageText = '';
+					$scope.showMessageTextUrl = false;
 				} else {
 					logger.logError('Inccorect link');
 				}

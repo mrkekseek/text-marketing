@@ -41,6 +41,35 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::get('users/{id}/magic', 'UsersController@magic');
 
 	Route::get('plans', 'PlansController@all');
+
+	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
+	Route::get('homeadvisor/info', 'HomeadvisorController@info');
+	Route::post('homeadvisor/{id}', 'HomeadvisorController@save');
+
+	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
+	Route::get('clients/leads', 'ClientsController@leads');
+	Route::put('clients/save', 'ClientsController@save');
+	Route::put('clients/{id}', 'ClientsController@save');
+	Route::get('clients/{id}', 'ClientsController@info');
+	Route::delete('clients/{id}', 'ClientsController@remove');
+	Route::get('clients', 'ClientsController@all');
+
+	Route::get('surveys', 'SurveysController@all');
+	Route::put('surveys/save', 'SurveysController@save');
+
+	Route::get('urls', 'UrlsController@all');
+	Route::put('urls/save', 'UrlsController@save');
+	Route::delete('urls/{id}', 'UrlsController@remove');
+
+	Route::put('seances/save', 'SeancesController@save');
+
+	Route::put('answers/save', 'AnswersController@save');
+
+	Route::put('messages/save', 'MessagesController@save');
+
+	Route::get('lists', 'ListsController@all');
+	Route::put('lists/save', 'ListsController@save');
+	Route::post('lists/{id}', 'ListsController@save');
 });
 
 Route::get('signup/{type?}', function($type = false) {

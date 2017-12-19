@@ -14,7 +14,7 @@
         };
 
         $scope.get = function() {
-            request.send('/homeadvisor/' + $scope.user.id, {}, function (data) {
+            request.send('/homeadvisor/info', {}, function (data) {
                 $scope.homeadvisor = data;
                 $scope.homeadvisor.active == 1 ? $scope.homeadvisor.active = true : false;
                 $scope.requestForHa = $scope.homeadvisor.send_request;

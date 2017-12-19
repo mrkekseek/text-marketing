@@ -12,16 +12,16 @@ class MessagesController extends Controller
 		return Message::find($id);
 	}
 
-    public function save($id = false, $post = [])
+    public function save(Request $request, $id = false)
     {
     	$message = Message::firstOrNew(['id' => empty($id) ? 0 : $id]);
     	$message->users_id = auth()->user()->id;
-    	$message->lists_id = ! empty($post['lists_id']) ? $post['lists_id'] : 0;
-    	$message->text = $post['text'];
+    	$message->lists_id = ! empty($request['lists_id']) ? $request['lists_id'] : 0;
+    	$message->text = $request['text'];
     	$message->file = '';
-    	$message->schedule = $post['schedule'];
-    	$message->switch = $post['switch'];
-    	$message->date = $this->getDate($post);
+    	$message->schedule = $request['schedule'];
+    	$message->switch = $request['switch'];
+    	$message->date = $this->getDate($request);
     	$message->status = 2;
     	$message->active = 1;
     	$message->save();

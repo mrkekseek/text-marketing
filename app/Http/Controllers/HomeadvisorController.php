@@ -17,7 +17,7 @@ class HomeadvisorController extends Controller
 {
 	public function info($id = false, $post = [])
 	{
-		return Homeadvisor::where('users_id', $id)->first();
+		return Homeadvisor::where('users_id', auth()->user()->id)->first();
 	}
 
 	public function save($id = false, $post = [])
@@ -26,11 +26,14 @@ class HomeadvisorController extends Controller
 		$homeadvisor->users_id = auth()->user()->id;
 		$homeadvisor->text = ! empty($post['text']) ? $post['text'] : '';
 		$homeadvisor->additional_phones = ! empty($post['additional_phones']) ? $post['additional_phones'] : '';
-		$homeadvisor->active = $post['active'];
+		$homeadvisor->active = ! empty($post['active']) ? $post['active'] : 0;
 		$homeadvisor->save();
 
 		$user = User::find(auth()->user()->id);
-		$user->update(['company_name' => $post['company_name'], 'phone' => $post['phone']]);
+		$user->update([
+            'company_name' => ! empty($post['company_name']) ? $post['company_name'] : '',
+            'phone' => ! empty($post['phone']) ? $post['phone'] : ''
+        ]);
 
 		return $this->message(__('Settings are successfully saved.'), 'success');
 	}

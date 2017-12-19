@@ -18,27 +18,27 @@ class SeancesController extends Controller
 		return Seance::find($id);
 	}
 
-    public function save($id = false, $post = [])
+    public function save(Request $request, $id = false)
     {
-        $survey = $this->surveySave($post);
-        if ( ! empty($post['company_name'])) {
+        $survey = $this->surveySave($request);
+        if ( ! empty($request['company_name'])) {
             $user = User::find(auth()->user()->id);
-            $user->update(['company_name' => $post['company_name']]);
+            $user->update(['company_name' => $request['company_name']]);
         }
 
-    	foreach ($post['clients'] as $row) {
+    	foreach ($request['clients'] as $row) {
     		$seance = new Seance;
     		$seance->users_id = auth()->user()->id;
     		$seance->clients_id = $row['id'];
     		$seance->surveys_id = $survey->id;
-    		$seance->code = $this->codeGenerate($post);
+    		$seance->code = $this->codeGenerate($request);
     		$seance->url = $this->urlGenerate($seance->code);
-    		$seance->date = $this->getDate($post['date'], $post['time']);
+    		$seance->date = $this->getDate($request['date'], $request['time']);
     		$seance->completed = 0;
-    		$seance->type = ! empty($post['type']) ? implode(',', $post['type']) : '';
+    		$seance->type = ! empty($request['type']) ? implode(',', $request['type']) : '';
     		$seance->save();
 
-            if (array_search('email', $post['type']) !== FALSE) {
+            if (array_search('email', $request['type']) !== FALSE) {
                 $this->sendEmail($seance, $survey, $row);
             }
     	}

@@ -45,7 +45,7 @@ class SignUpEmailForUserHA extends Notification
         $project = $this->config['name'];
 
         return (new MailMessage)
-            ->subject('Thanks from '.config('name'))
+            ->subject('Thanks from '.config('app.name'))
             ->markdown('emails.signup_for_user_ha', [
                 'user' => $notifiable,
                 'project' => $project

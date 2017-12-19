@@ -13,10 +13,10 @@ use App\Jobs\SendAlert;
 
 class AnswersController extends Controller
 {
-    public function save($id = false, $post = [])
+    public function save(Request $request, $id = false)
     {
-    	if ( ! empty($post['answers'])) {
-    		foreach ($post['answers'] as $row) {
+    	if ( ! empty($request['answers'])) {
+    		foreach ($request['answers'] as $row) {
     			$answer = Answer::firstOrNew(['seances_id' => $row['seances_id'], 'questions_id' => $row['questions_id']]);
                 $answer->users_id = $row['users_id'];
                 $answer->clients_id = $row['clients_id'];
@@ -28,16 +28,16 @@ class AnswersController extends Controller
                 $answer->value = $row['value'];
     			$answer->save();
 			}
-			$seance = Seance::where('id', $post['seance']['id']);
+			$seance = Seance::where('id', $request['seance']['id']);
 			$seance->update([
 				'completed' => 1,
-				'social_show' => ! empty($post['seance']['show_reviews']) ? $post['seance']['show_reviews'] : 0
+				'social_show' => ! empty($request['seance']['show_reviews']) ? $request['seance']['show_reviews'] : 0
 			]);
 
             $survey = Survey::where('id', $answer->surveys_id)->first();
 
             if ( ! empty($survey->alerts_emails)) {
-                $answer = Answer::where('seances_id', $post['seance']['id'])->where('questions_type', 'star')->first();
+                $answer = Answer::where('seances_id', $request['seance']['id'])->where('questions_type', 'star')->first();
                 $this->sendAlerts($survey, $answer->value);
             }
     	}
