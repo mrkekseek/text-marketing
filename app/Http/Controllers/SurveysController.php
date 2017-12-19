@@ -18,17 +18,17 @@ class SurveysController extends Controller
     	return $survey;
     }
 
-    public function save($id = false, $post = [])
+    public function save(Request $request, $id = false)
     {
     	$survey = Survey::firstOrNew(['users_id' => auth()->user()->id]);
         $survey->users_id = auth()->user()->id;
-        $survey->text = $post['text'];
-        $survey->email = $post['email'];
-        $survey->subject = $post['subject'];
-        $survey->sender = $post['sender'];
-        $survey->alerts_often = $post['alerts_often'];
-        $survey->alerts_stars = $post['alerts_stars'];
-        $survey->alerts_emails = ! empty($post['alerts_emails']) ? $post['alerts_emails'] : '';
+        $survey->text = $request['text'];
+        $survey->email = $request['email'];
+        $survey->subject = $request['subject'];
+        $survey->sender = $request['sender'];
+        $survey->alerts_often = $request['alerts_often'];
+        $survey->alerts_stars = $request['alerts_stars'];
+        $survey->alerts_emails = ! empty($request['alerts_emails']) ? $request['alerts_emails'] : '';
         $survey->save();
 
         $this->message(__('Settings was successfully saved'), 'success');

@@ -10,7 +10,6 @@ class ListsController extends Controller
 {
     public function all()
 	{
-		$user = auth()->user();
 		$user = User::with('lists.clients')->find(auth()->user()->id);
 
 		$lists = $user->lists;
@@ -21,11 +20,11 @@ class ListsController extends Controller
 		return $lists;
 	}
 
-	public function save($id = false, $post = [])
+	public function save(Request $request, $id = false)
 	{
 		$list = ContactList::firstOrNew(['id' => empty($id) ? 0 : $id]);
 		$list->users_id = auth()->user()->id;
-		$list->name = $post['name'];
+		$list->name = $request['name'];
 		$list->save();
 		return $list->id;
 	}

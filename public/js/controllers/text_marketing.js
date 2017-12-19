@@ -147,8 +147,12 @@
             }, 'get');
         };
 
-        $scope.cancel = function(index) {
-            $scope.listsList[index] = $scope.originList;
+        $scope.cancel = function(index, list) {
+            if (! list.id) {
+                $scope.listsList.splice(index, 1);
+            } else {
+                $scope.listsList[index] = $scope.originList;
+            }
         };
 
         $scope.saveList = function(index) {
@@ -172,7 +176,7 @@
         };
 
         $scope.create = function() {
-            $scope.listsList.push({
+            $scope.listsList.unshift({
                 'editable': true,
                 'clients': []
             });
@@ -198,12 +202,12 @@
                 error = 0;
             }
 
-            if ( ! client.phone.firstname) {
+            if ( ! client.firstname) {
                 logger.logError('Name is required');
                 error = 0;
             }
 
-            if ( ! client.phone.email) {
+            if ( ! client.email) {
                 logger.logError('Email is required');
                 error = 0;
             }
@@ -243,6 +247,19 @@
         $scope.editClient = function(client) {
             $scope.originClient = angular.copy(client);
             client.editable = true;
+        };
+
+        $scope.saveSelectedPhones = function(index) {
+            for (var k in $scope.list) {
+                if ($scope.list[k].selected) {
+                    $scope.listsList[index].clients.push($scope.list[k]);
+                    $scope.list[k].selected = false;
+                }
+            }
+            
+            request.send('/clients/addToList/' + $scope.listsList[index].id, $scope.listsList[index].clients, function (data) {
+
+            });
         };
 
         $scope.openImport = function() {

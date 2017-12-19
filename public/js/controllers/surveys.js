@@ -75,7 +75,7 @@
                 logger.logError(langs.get('Choose clients, please.'));
                 error = 0;
             }
-
+            
             var type = [];
             if ($scope.seance_text) {
                 type.push($scope.seance_text);
@@ -193,6 +193,7 @@
                 request.send('/clients/' + (! $scope.client_id ? 'save' : $scope.client_id), post_mas, function (data) {
                     $scope.clients[$scope.clients.length - 1].id = data;
                     $scope.open_edit = false;
+
                 }, ( ! $scope.client.id ? 'put' : 'post'));
             }
         };

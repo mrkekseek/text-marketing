@@ -18,11 +18,13 @@
 						<div ng-show="phone.phones_firstname != '' || phone.phones_lastname != ''">
 							@{{ item.firstname + ' ' + item.lastname}}
 						</div>
-						<div class="divider divider-md divider-dashed"></div>
+						<div class="divider divider-md divider-dashed">
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="col-md-8 col-sm-12">
 			<h2>
 				<div class="pull-right">
@@ -30,9 +32,9 @@
 				</div>
 				{{ __('Contact Lists') }}
 			</h2>
-			<div>
-				<section class="panel panel-default table-dynamic">
-					<div class="panel-body">
+
+			<section class="panel panel-default table-dynamic">
+				<div class="panel-body">
 						<div class="alert-info alert" ng-show=" ! listsList.length" role="alert">
 							<div >
 								{{ __("You don't have any list yet.") }}<a href="javascript:;" ng-click="create()">{{ __('Create your first list') }}</a> {{ __('right now.') }}
@@ -43,7 +45,6 @@
 								<div class="item-panel" ng-class="{'active': selectedList.id == item.id}">
 									<div class="action-div list-actions" ng-click="choose($index)">
 									</div>
-									
 									<div class="row-name">
 										<span ng-show=" ! item.editable" >@{{ item.name }}</span>
 										<div class="row edit-main-container" ng-show="item.editable">
@@ -53,10 +54,10 @@
 											<div class="col-sm-12 col-md-4 col-lg-3">
 												<div class="btn-group btn-group-justified">
 													<div class="btn-group">
-														<button type="button" class="btn btn-default" ng-click="cancel($index)">Cancel</button>
+														<button type="button" class="btn btn-default" ng-click="cancel($index, item)">{{ __('Cancel') }}</button>
 													</div>
 													<div class="btn-group">
-														<button type="button" class="btn btn-primary" ng-click="saveList($index)">Save</button>
+														<button type="button" class="btn btn-primary" ng-click="saveList($index)">{{ __('Save') }}</button>
 													</div>
 												</div>
 											</div>
@@ -69,19 +70,19 @@
 									<div ng-show="selectedList.id == item.id">
 										<button type="button" class="btn btn-default" ng-click="createClient($index)"><i class="fa fa-plus-circle"></i>{{ __(' Add Number Manually') }}</button>
 										<span class="dropable-phones-outer">
-											<button type="button" class="btn btn-default" ng-click="showNumberBox = ! showNumberBox"><i class="fa fa-list-ul"></i> Choose from Saved Numbers</button>
-											<div ng-show="showNumberBox" class="dropable-phones">
-												<div ng-show="numbers.length">
+											<button type="button" class="btn btn-default" ng-click="showPhonesBox = ! showPhonesBox"><i class="fa fa-list-ul"></i> {{ __('Choose from Saved Numbers') }}</button>
+											<div ng-show="showPhonesBox" class="dropable-phones">
+												<div ng-show="list.length">
 													<div class="search-group">
 														<i class="fa fa-search search-icon" aria-hidden="true"></i>
 														<input ng-model="search.$" class="form-control" type="text" placeholder="Search from list...">
 													</div>
 													<div class="dropable-phones-inner">
-														<div ng-repeat="number in numbers | filter: search">
+														<div ng-repeat="number in list | filter: search">
 															<div class="divider divider-xs divider-dashed"></div>
 															<a href="javascript:;" class="selecting-phones" ng-class="{'active': number.selected}" ng-click="number.selected = !number.selected">
-																<i class="fa fa-circle-o" ng-class="number.selected ? 'fa-check-circle-o' : 'fa-circle-o'" style=""></i>
-																<strong class="ng-binding">@{{ number.phoneNnumber}}</strong> @{{ ' ' + number.firstName + ' ' + number.lastName }}
+																<i class="fa fa-circle-o" ng-class="number.selected ? 'fa-check-circle-o' : 'fa-circle-o'"></i>
+																<strong class="ng-binding">@{{ number.phone}}</strong> @{{ ' ' + number.firstname + ' ' + number.lastname }}
 															</a>
 
 														</div>
@@ -89,21 +90,22 @@
 													<div class="pull-right">
 														<div class="btn-group btn-group-justified">
 															<div class="btn-group">
-																<button type="button" class="btn btn-default" ng-click="showNumberBox = ! showNumberBox">Cancel</button>
+																<button type="button" class="btn btn-default" ng-click="showPhonesBox = ! showPhonesBox">{{ __('Cancel') }}</button>
 															</div>
 															<div class="btn-group">
-																<button type="button" class="btn btn-primary" ng-click="saveSelectedPhones(item.lists_id)">Add</button>
+																<button type="button" class="btn btn-primary" ng-click="saveSelectedPhones($index); showPhonesBox = false">{{ __('Add') }}</button>
 															</div>
 														</div>
 													</div>
 												</div>	
-												<div uib-alert="" class="alert-info alert" ng-show="!numbers.length" role="alert">
+												<div uib-alert class="alert-info alert" ng-show="! list.length" role="alert">
 												<div>
-													You haven't any phones yet..
+													{{ __("You haven't any phones yet..") }}
 												</div>
 											</div>
 										</div>
 									</span>
+
 									<button type="button" class="btn btn-default" ng-click="openImport()"><i class="fa fa-upload"></i> Import from CSV file</button>
 									
 									<div ng-show="item.clients.length" >
@@ -164,14 +166,14 @@
 									</div>
 								</div>
 							</div>
-							<div ng-show="$index < (listsList.length - 1)" class="divider divider-dashed divider-sm pull-in"></div>
+							<div ng-show="$index < (listsList.length - 1)" class="divider divider-dashed divider-sm pull-in">
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 		</div>
 	</div>
-</div>
 </div>
 
 <script type="text/ng-template" id="ImportFile.html">
