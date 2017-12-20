@@ -9,10 +9,10 @@
     	$scope.list = [];
 
     	$scope.get = function () {
-    		request.send('/teams/get', {}, function (data) {
+    		request.send('/teams', {}, function (data) {
     			$scope.list = data;
     			$scope.request_finish = true;
-			});
+			}, 'get');
     	};
 
     	$scope.initAdmin = function () {
@@ -21,7 +21,7 @@
     	};
 
         $scope.companies = function () {
-            request.send('/teams/companies', {}, function(data) {
+            request.send('/teams/companies', {}, function (data) {
                for (var k in $scope.list) {
                     for (var j in data) {
                         if ($scope.list[k].teams_name == data[j].org_names_name) {
@@ -46,7 +46,7 @@
 				}
 		    });
 
-		    modalInstance.result.then(function(response) {
+		    modalInstance.result.then(function (response) {
 				$scope.get();
 		    }, function () {
 				
@@ -55,9 +55,9 @@
 
 		$scope.remove = function (teams_id) {
             if (confirm(langs.get('Do you really want to remove this team?'))) {
-                request.send('/teams/remove', {'id': teams_id}, function (data) {
+                request.send('/teams/' + teams_id, false, function (data) {
                     $scope.get();
-                });
+                }, 'delete');
             }
         };
 
@@ -88,11 +88,11 @@
 			error *= validate.check($scope.form.name, 'Name');
 
 			if (error) {
-				request.send('/teams/save', $scope.team, function (data) {
+				request.send('/teams/' + ($scope.team.teams_id ? $scope.team.teams_id : 'save'), $scope.team, function (data) {
 					if (data) {
 						$uibModalInstance.close(data);
-					}
-				});
+					} 
+				}, ($scope.team.teams_id ? 'post' : 'put'));
 			}
 		};
 

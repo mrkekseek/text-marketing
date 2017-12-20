@@ -34,7 +34,7 @@ class Controller extends BaseController
 
     public function message($text, $type = 'error')
     {
-        self::$errors[] = ['type' => $type, 'text' => $text];
-        return $type != 'error';
+        self::$errors[] = ['type' => $type, 'text' => __($text)];
+        return $type != 'error' ? 1 : 0;
     }
 }

@@ -15,11 +15,13 @@ class UsersSeeder extends Seeder
     	
         DB::table('users')->insert([
             'type' => 1,
+            'owner' => 1,
             'firstname' => 'John',
             'lastname' => 'Smith',
             'email' => 'uri@medicalreputation.com',
             'password' => bcrypt('1234'),
             'phone' => '9179726832',
+            'view_phone' => '9179726832',
             'active' => 1,
         ]);
 
@@ -30,6 +32,7 @@ class UsersSeeder extends Seeder
             'email' => 'id@div-art.com',
             'password' => bcrypt('1234'),
             'phone' => '981745686',
+            'view_phone' => '981745686',
             'active' => 1,
         ]);
     }

@@ -1,8 +1,8 @@
 <div class="page page-table" data-ng-controller="UsersCtrl" data-ng-init="initAdmin()">
 	<h2>
 		<div class="pull-right">
-    		<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Teammate') }}</span></button>
-    	</div>
+			<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Teammate') }}</span></button>
+		</div>
 
 		{{ __('Users') }}
 	</h2>
@@ -51,13 +51,6 @@
 							</div>
 						</th>
 						
-						<th class="text-center">
-							{{ __('Team Leader') }}
-						</th>
-
-	                    <th class="th-button">
-						</th>
-
 						<th class="th-button">
 						</th>
 
@@ -66,7 +59,7 @@
 
 						<th class="th-button">
 						</th>
-	                </tr>
+					</tr>
 				</thead>
 
 				<tbody>
@@ -84,29 +77,16 @@
 						</td>
 						
 						<td>
-							@{{ user.phone }}
+							@{{ user.view_phone }}
 						</td>
 
 						<td>
 							@{{ user.teams.name }}
 						</td>
 						
-						<td class="text-center">
-							<label class="ui-switch ui-switch-success ui-switch-sm">
-								<input type="checkbox" ng-model="user.teams_leader" ng-checked="user.teams_leader == 1" ng-click="teams_leader(user.id, user.teams_leader)" />
-								<i></i>
-							</label>
-						</td>
-						
 						<td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-warning" ng-click="sign_in(user.id)">
+							<a href="javascript:;" class="a-icon text-warning" ng-click="magic(user.id)">
 								<i class="fa fa-lock" aria-hidden="true"></i>
-							</a>
-						</td>
-
-						<td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-primary" ng-click="settings(user.id)">
-								<i class="fa fa-cog"></i>
 							</a>
 						</td>
 
@@ -130,119 +110,53 @@
 
 <script type="text/ng-template" id="UsersCreate.html">
 	<form name="form" method="post" novalidate="novalidate">
-	    <div class="modal-header">
-	        <h4 class="modal-title" ng-show=" ! user.id">{{ __("Create New Teammate") }}</h4>
-	        <h4 class="modal-title" ng-show="user.id">{{ __("Edit Teammate") }}</h4>
-	    </div>
-
-	    <div class="modal-body">
-	    	<div class="row">
-	    		<div class="col-sm-6 col-xs-12">
-			    	<div class="form-group">
-				    	<label>{{ __("First Name") }}</label>
-						<input type="text" name="firstname" class="form-control" ng-model="user.firstname" required="required" />
-			    	</div>
-			    	<div class="form-group">
-				    	<label>{{ __("Last Name") }}</label>
-						<input type="text" class="form-control" ng-model="user.lastname" />
-			    	</div>
-			    	<div class="form-group">
-				    	<label>{{ __("Phone") }}</label>
-						<input type="text" class="form-control" ng-model="user.phone" />
-			    	</div>
-
-			    	<div class="form-group">
-			    		<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.teams_leader" ng-true-value="'1'" ng-false-value="'0'" />
-							<i></i>
-						</label>
-
-						<strong class="team-leader">{{ __(' Team Leader') }}</strong>
-					</div>
-
-					<div class="form-group">
-			    		<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.active" ng-true-value="'1'" ng-false-value="'0'" />
-							<i></i>
-						</label>
-
-						<strong class="team-leader">{{ __('Activate teammate') }}</strong>
-					</div>
-
-					<div class="form-group">
-			    		<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
-							<input type="checkbox" ng-model="user.send" ng-true-value="'1'" ng-false-value="'0'" />
-							<i></i>
-						</label>
-
-						<strong class="team-leader">{{ __('Send Activation email') }}</strong>
-					</div>
-	    		</div>
-
-	    		<div class="col-sm-6 col-xs-12">
-	    			<div class="form-group">
-				    	<label>{{ __("Email") }}</label>
-						<input type="email" class="form-control" name="email" ng-model="user.email" required="required" />
-			    	</div>
-
-			    	<div class="form-group">
-				    	<label>{{ __("Password") }}</label>
-						<input type="password" class="form-control" ng-model="user.password" />
-			    	</div>
-
-			    	<div class="form-group">
-			    		<label>{{ __("Team") }}</label>
-			    		<select class="form-control" name="teams_id" ng-model="user.teams_id" required="required">
-			    			<option value="0">{{ __('Select a Team...') }}</option>
-			    			<option ng-repeat="team in teams" value="@{{ team.id }}">@{{ team.name }}</option>
-			    		</select>
-		    		</div>
-
-		    		<div class="form-group">
-			    		<label>{{ __("Payment Plan") }}</label>
-			    		<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required">
-			    			<option value="0">{{ __('Select a Plan...') }}</option>
-			    			<option ng-repeat="plan in plans" value="@{{ plan.id }}">@{{ plan.name }} (@{{ plan.amount / 100 }}$/@{{ plan.interval }})</option>
-			    		</select>
-		    		</div>
-
-	    		</div>
-    		</div>
+		<div class="modal-header">
+			<h4 class="modal-title" ng-show=" ! user.id">{{ __("Create New Teammate") }}</h4>
+			<h4 class="modal-title" ng-show="user.id">{{ __("Edit Teammate") }}</h4>
 		</div>
 
-	    <div class="modal-footer">
-			<button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
-			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
-	    </div>
-	</form>
-</script>
+		<div class="modal-body">
+			<div class="row">
+				<div class="col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label>{{ __("Payment Plan") }}</label>
+						<select class="form-control" name="plans_id" ng-model="user.plans_id" required="required" ng-options="plan.plans_id as plan.name for plan in plans">
+						</select>
+					</div>
 
-<script type="text/ng-template" id="UsersSettings.html">
-	<form name="form" method="post" novalidate="novalidate">
-	    <div class="modal-header">
-	        <h4 class="modal-title">{{ __("Settings") }}</h4>
-	    </div>
+					<div class="form-group">
+						<label>{{ __("First Name") }}</label>
+						<input type="text" name="firstname" class="form-control" ng-model="user.firstname" required="required" />
+					</div>
 
-	    <div class="modal-body">
-	    	<div class="row">
-	    		<div class="col-sm-6 col-xs-12 form-group">
-			    	<label>{{ __("Max Texts per week") }}</label>
-					<input type="text" class="form-control" ng-model="user.limit" />
-			    </div>
+					<div class="form-group">
+						<label>{{ __("Last Name") }}</label>
+						<input type="text" class="form-control" ng-model="user.lastname" />
+					</div>
+				</div>
 
-		    	<div class="col-sm-6 col-xs-12 form-group">
-					<p><strong class="team-leader">{{ __('Show questions at the Responses') }}</strong></p>
-		    		<label class="ui-switch ui-switch-success ui-switch-sm">
-						<input type="checkbox" ng-model="user.responses" ng-true-value="'1'" ng-false-value="'0'" />
-						<i></i>
-					</label>
+				<div class="col-sm-6 col-xs-12">
+					<div class="form-group">
+						<label>{{ __("Email") }}</label>
+						<input type="email" class="form-control" name="email" ng-model="user.email" required="required" />
+					</div>
+
+					<div class="form-group">
+						<label>{{ __("Password") }}</label>
+						<input type="password" class="form-control" ng-model="user.password" />
+					</div>
+
+					<div class="form-group">
+						<label>{{ __("Phone") }}</label>
+						<input type="text" class="form-control" ng-model="user.view_phone" />
+					</div>
 				</div>
 			</div>
-    	</div>
+		</div>
 
-	    <div class="modal-footer">
+		<div class="modal-footer">
 			<button type="submit" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>
 			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
-	    </div>
+		</div>
 	</form>
 </script>

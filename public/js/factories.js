@@ -13,21 +13,18 @@
             get: function(key, vars) {
                 vars = vars || {};
                 var text = key;
-                for (var i in list) 
-                {
-                    if (i.toLowerCase() == key.toLowerCase() && list[i] != '')
-                    {
+                for (var i in list) {
+                    if (i.toLowerCase() == key.toLowerCase() && list[i] != '') {
                         text = list[i];
                     }
                 }
 
-                for (var i in vars) 
-                {
+                for (var i in vars) {
                     text = text.replace(":" + i, vars[i]);
                 }
 
                 return text;
-           }
+            }
         };
     };
 })();
@@ -47,44 +44,35 @@
             "timeOut": "3000"
         };
 
-        var logIt = function(message, vars, type) {
+        var logIt = function (message, vars, type) {
             return toastr[type](langs.get(message, vars));
         };
 
         return {
-            log: function(message, vars) {
+            log: function (message, vars) {
                 logIt(message, vars, 'info');
             },
-            logWarning: function(message, vars) {
+            logWarning: function (message, vars) {
                 logIt(message, vars, 'warning');
             },
-            logSuccess: function(message, vars) {
+            logSuccess: function (message, vars) {
                 logIt(message, vars, 'success');
             },
-            logError: function(message, vars) {
+            logError: function (message, vars) {
                 logIt(message, vars, 'error');
             },
-            check: function(data) {
-                if (data.messages)
-                {
-                    for (var key in data.messages)
-                    {
+            check: function (data) {
+                if (data.messages) {
+                    for (var key in data.messages) {
                         var message = data.messages[key];
                         this[this.method(message.type)](message.text);
                     }
                 }
 
-                var data = typeof(data.data) == "string" ? JSON.parse(data.data) : data.data;
-                if (data)
-                {
-                    return data;
-                }
-                else
-                {
-                    return false;
-                }
+                var data = typeof(data.data) == "string" && data.data != '' ? JSON.parse(data.data) : data.data;
+                return data ? data : false;
             },
-            method: function(type) {
+            method: function (type) {
                 return 'log' + type.charAt(0).toUpperCase() + type.slice(1);
             }
         };
@@ -101,20 +89,23 @@
     function request($http, $rootScope, Upload, logger) {
         var api_url = '/api/v1';
         return {
-            send: function(adrress, post_mas, callback, method) {
+            send: function (adrress, post_mas, callback, method) {
                 callback = callback || false;
                 method = method || 'post';
-
-                $http.post(api_url + adrress, post_mas).then(function(response) {
+                
+                $http[method](api_url + adrress, post_mas).then(function (response) {
                     var data = logger.check(response.data);
-                    if (callback)
-                    {
+                    if (callback) {
                         (callback)(data);
+                    }
+                }, function (reason) {
+                    for (var k in reason.data.errors) {
+                        logger.logError(reason.data.errors[k]);
                     }
                 });
             },
 
-            sendWithFiles: function(adrress, post_mas, callback, percentsCallback, method) {
+            sendWithFiles: function (adrress, post_mas, callback, percentsCallback, method) {
                 callback = callback || false;
                 percentsCallback = percentsCallback || false;
                 method = method || 'post';
@@ -124,16 +115,14 @@
                     data: post_mas
                 }).then(function (response) {
                     var data = logger.check(response.data);
-                    if (callback)
-                    {
+                    if (callback) {
                         (callback)(data);
                     }
                 }, function (response) {
                     
                 }, function (event) {
                     var progress = parseInt(100.0 * event.loaded / event.total);
-                    if (percentsCallback)
-                    {
+                    if (percentsCallback) {
                         (percentsCallback)(progress);
                     }
                 });
@@ -191,6 +180,35 @@
             }
         };
     };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').factory('getShortUrl',[getShortUrl]);
+
+    function getShortUrl(){
+        return {
+            getLink: function(longUrl, func) {
+                $.getJSON(
+                    "http://api.bitly.com/v3/shorten?callback=?", 
+                    { 
+                        "format": "json",
+                        "apiKey": 'R_ac165a693c4d43ab87337e0264f74263',
+                        "login": "vbaychura",
+                        "longUrl": longUrl
+                    },
+                    function(response)
+                    {
+                         func(response.data.url);
+                    }
+                );
+            } 
+        };
+    };
+    
 })();
 
 ;

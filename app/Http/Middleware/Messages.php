@@ -16,8 +16,7 @@ class Messages
     public function handle($request, Closure $next)
     {
         $response = $next($request);
-        if ($response->status() == 200)
-        {
+        if ($response->status() == 200) {
             $controller = app()->make('\App\Http\Controllers\Controller');
             $response = response()->json(['messages' => $controller::$errors, 'data' => $response->content()]);
         }

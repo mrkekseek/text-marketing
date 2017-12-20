@@ -14,10 +14,7 @@
         <link rel="stylesheet" type="text/css" href="/css/{{ config('app.name') }}.css" media="screen" />
     </head>
 
-    <body id="app" class="app" data-ng-class="body_class">
-        <div class="init-loader" data-ng-class="loaded">
-            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-        </div>
+    <body id="app" class="app">
 
         @include('header')
 
@@ -71,6 +68,17 @@
         <script src="/js/controllers/users.js"></script>
         <script src="/js/controllers/teams.js"></script>
         <script src="/js/controllers/plans.js"></script>
+        <script src="/js/controllers/links.js"></script>
+        <script src="/js/controllers/alerts.js"></script>
+        <script src="/js/controllers/text_marketing.js"></script>
+        <script src="/js/controllers/marketing_send.js"></script>
+        <script src="/js/controllers/marketing_outbox.js"></script>
         <script src="/js/controllers/home_advisor.js"></script>
+        <script src="/js/controllers/reviews.js"></script>
+        <script src="/js/controllers/surveys.js"></script>
+        <script src="/js/controllers/surveys_partners.js"></script>
+        <script src="/js/directives/charset.js"></script>
+        <script src="/js/directives/upload.js"></script>
+        <script src="/js/directives/scroll_bottom.js"></script>
     </body>
 </html>

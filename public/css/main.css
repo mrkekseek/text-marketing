@@ -7,12 +7,91 @@ hr {
 	opacity: 0.3;
 }
 
+.page-signin {
+	display: table;
+	width: 100%;
+}
+
 .wrap-logo {
 	width: 100%;
 }
 
 .logo {
 	padding: 11px 4px;
+}
+
+.clients .divider {
+	margin: 0px;
+}
+
+.url-switch {
+	vertical-align: bottom;
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.span-url {
+	padding: 8px 10px;
+	overflow: hidden;
+}
+
+.span-url a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.url-btn-box .btn {
+	width: 200px;
+}
+
+.span-url strong {
+	white-space: nowrap;
+}
+
+.icon-cell {
+	display: none;
+}
+
+.url-block:hover .icon-cell {
+	display: block;
+}
+
+.url-block {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    padding: 11px;
+}
+
+.url-block:hover {
+	border-color: #e9e9e9;
+    box-shadow: 0 0 3px rgba(0,0,0,.1);
+}
+
+.icon-cell i {
+	font-size: 24px;
+}
+
+.icon-cell div {
+	display: inline-block;
+	padding: 2px 7px;
+	cursor: pointer;
+}
+
+.phones .checker-client {
+	position: relative;
+	padding: 0px 14px 0px 0px;
+}
+
+.help-icon-review {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+.phones div {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 0px 5px;
 }
 
 .message-icon {
@@ -25,6 +104,12 @@ hr {
 
 .row-info-item {
 	display: inline-block;
+}
+
+.help-send-icon {
+	font-size: 24px;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 
 .card-content form {
@@ -365,6 +450,8 @@ li.toggle-provider {
 .phones,
 .btn-body {
 	padding: 15px;
+    display: table;
+    width: 100%;
 }
 
 .phones.review {
@@ -389,6 +476,24 @@ li.toggle-provider {
 
 .message-body {
 	margin-left: 43px;
+	display: inline-block;
+    padding: 10px 15px 10px 15px;
+    background: #fff;
+    border-radius: 15px;
+    position: relative;
+}
+
+.message-body span {
+	font-size: 11px;
+}
+
+.message-body:before {
+    border-bottom: 10px solid #fff;
+    border-left: 14px solid rgba(0, 0, 0, 0);
+    position: absolute;
+    bottom: 4px;
+    left: -9px;
+    content: "";
 }
 
 .message-avatar {
@@ -396,6 +501,7 @@ li.toggle-provider {
 	float: left;
 	position: relative;
 	z-index: 0;
+	padding: 15px 0px;
 }
 
 .search-icon {
@@ -535,12 +641,20 @@ li.toggle-provider {
 	padding: 6px 0;
 }
 
+.textarea .input-group-addon {
+	position: absolute;
+}
+
 .textarea {
 	padding-top: 20px;
 }
 
+.textarea textarea {
+	padding-left: 90px;
+} 
+
 .page-signin .form-group textarea {
-	border: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
 	resize: none;
 }
 
@@ -1641,10 +1755,6 @@ body.surveys {
 	font-weight: bold;
 }
 
-.questions-answers {
-	padding-left: 24px;
-}
-
 .questions-answers .form-control {
 	max-width: 320px;
 }
@@ -2041,6 +2151,10 @@ hr.large {
 	opacity: 0.5;
 }
 
+.progress-bar {
+	width: 100%;
+}
+
 textarea.form-control.small-area {
 	max-width: 280px;
 	height: 100px;
@@ -2067,56 +2181,60 @@ textarea.form-control.small-area {
 	margin-left: 15px;
 }
 
-.btn.btn-primary.btn-yelp {
+.btn.btn-default.btn-yelp {
 	background-color: #CD2027;
 	border-color: #A00608;
 	width: 200px;
+	color: #fff;
 }
 
-.btn.btn-primary.btn-yelp:hover {
+.btn.btn-default.btn-yelp:hover {
 	background-color: #B51015 !important;
 	border-color: #A00608 !important;
+
 }
 
-.btn.btn-primary.btn-yelp:focus,
-.btn.btn-primary.btn-yelp:active,
-.btn.btn-primary.btn-yelp.active {
+.btn.btn-default.btn-yelp:focus,
+.btn.btn-default.btn-yelp:active,
+.btn.btn-default.btn-yelp.active {
 	background-color: #A00608 !important;
 	border-color: #A00608 !important;
 }
 
-.btn.btn-primary.btn-google {
+.btn.btn-default.btn-google {
 	background-color: #37a96c;
 	border-color: #148747;
 	width: 200px;
+	color: #fff;
 }
 
-.btn.btn-primary.btn-google:hover {
+.btn.btn-default.btn-google:hover {
 	background-color: #269b5b !important;
 	border-color: #148747 !important;
 }
 
-.btn.btn-primary.btn-google:focus,
-.btn.btn-primary.btn-google:active,
-.btn.btn-primary.btn-google.active {
+.btn.btn-default.btn-google:focus,
+.btn.btn-default.btn-google:active,
+.btn.btn-default.btn-google.active {
 	background-color: #148747 !important;
 	border-color: #148747 !important;
 }
 
-.btn.btn-primary.btn-facebook {
+.btn.btn-default.btn-facebook {
 	background-color: #3B5998;
 	border-color: #12306d;
 	width: 200px;
+	color: #fff;
 }
 
-.btn.btn-primary.btn-facebook:hover {
+.btn.btn-default.btn-facebook:hover {
 	background-color: #214387 !important;
 	border-color: #123272 !important;
 }
 
-.btn.btn-primary.btn-facebook:focus,
-.btn.btn-primary.btn-facebook:active,
-.btn.btn-primary.btn-facebook.active {
+.btn.btn-default.btn-facebook:focus,
+.btn.btn-default.btn-facebook:active,
+.btn.btn-default.btn-facebook.active {
 	background-color: #123272 !important;
 	border-color: #123272 !important;
 }
@@ -2436,6 +2554,11 @@ textarea.form-control.small-area {
 	top: 135px;
 }
 
+.help-icon {
+	    font-size: 18px;
+    vertical-align: top;
+}
+
 .conversion-icon {
 	font-size: 20px;
 	margin-right: 10px;
@@ -2502,6 +2625,10 @@ div.item-panel.panel-child:hover .handle {
 
 div.item-panel.panel-child:hover .position {
 	display: none;
+}
+
+div.panel-child {
+	margin-top: 10px;
 }
 
 .handle {
@@ -2654,7 +2781,7 @@ div.chars-area {
 
 div.chars-area textarea {
 	resize: none;
-    height: 75px;
+    height: 150px;
 }
 
 div.chars-area.danger textarea {
@@ -2701,6 +2828,10 @@ div.chars-area.danger span {
 	min-height: 250px;
 }
 
+ #surveys-send-accordion .panel .panel-body {
+	min-height: 50px;
+}
+
 .panel-body.surveys,
 .panel-body.analysis {
 	min-height: auto;
@@ -2744,6 +2875,7 @@ div.chars-area.danger span {
 
 .calendar-container .uib-daypicker {
 	outline: none;
+	margin-top: 22px;
 }
 
 .calendar-container .uib-daypicker > table {
@@ -2792,7 +2924,7 @@ div.chars-area.danger span {
 
 .dropable-phones {
 	position: absolute;
-	z-index: 1;
+	z-index: 3;
 	background: #fff;
 	padding: 10px;
 	left: 0;
@@ -2848,10 +2980,14 @@ h3.inside-panel {
 	margin-bottom: 20px;
 }
 
+.checker-client .choose-list {
+	top: 7px;
+}
+
 .choose-list {
 	font-size: 22px;
-	position: absolute;
-	top: 17px;
+	position: absolute; 
+	top: 15px; 
 	cursor: pointer;
 }
 
@@ -2874,10 +3010,6 @@ h3.inside-panel {
 
 .next-step-button {
 	margin-top: 10px;
-}
-
-div[uib-timepicker] {
-	margin-top: -21px;
 }
 
 .time-container div[uib-timepicker] {
@@ -2957,7 +3089,6 @@ div[uib-timepicker] {
 
 .upload-detele {
 	font-size: 18px;
-    margin-top: 20px;
     vertical-align: middle;
     display: inline-block;
 }
@@ -2990,3 +3121,4 @@ div[uib-timepicker] {
 [data-type=essay]:-ms-input-placeholder {
    font-style: italic;
 }
+

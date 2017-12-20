@@ -17,6 +17,7 @@ class CreatePagesMenuTable extends Migration
             $table->increments('id');
             $table->string('pages_code');
             $table->string('parents_code');
+            $table->string('plans');
             $table->tinyInteger('main')->unsigned()->nullable(false)->default(0);
             $table->tinyInteger('pos')->unsigned()->nullable(false)->default(0);
             $table->timestamps();

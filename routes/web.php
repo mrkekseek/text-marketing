@@ -14,16 +14,85 @@
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
 	if (empty($view)) {
-		$controller = app()->make('\App\Http\Controllers\PagesController');    
+		$controller = app()->make('\App\Http\Controllers\PagesController');
 		$view = $controller->callAction('defaultPage', []); 
 	}
 	return view($view);
 })->middleware('auth.views');
 
-Route::group(['prefix' => 'api/v1'], function() {
-	Route::any('{unit}/{method}', 'ApiController')->middleware('messages');
+Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
+	//Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
+
+	Route::post('auth/support', 'AuthController@support');
+	Route::post('auth/signup', 'AuthController@signup');
+	Route::post('auth/signin', 'AuthController@signin');
+	Route::post('auth/recovery', 'AuthController@recovery');
+	Route::get('auth/signout', 'AuthController@signout');
+	Route::get('auth/info', 'AuthController@info');
+
+	Route::get('pages/menu', 'PagesController@menu');
+
+	Route::post('users/password', 'UsersController@password');
+	Route::post('users/profile', 'UsersController@profile');
+	Route::get('users', 'UsersController@all');
+	Route::put('users', 'UsersController@create');
+	Route::post('users/{id}', 'UsersController@update');
+	Route::delete('users/{id}', 'UsersController@remove');
+	Route::get('users/{id}/magic', 'UsersController@magic');
+
+	Route::get('plans', 'PlansController@all');
+
+	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
+	Route::get('homeadvisor/info', 'HomeadvisorController@info');
+	Route::post('homeadvisor/{id}', 'HomeadvisorController@save');
+
+	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
+	Route::get('clients/leads', 'ClientsController@leads');
+	Route::put('clients/save', 'ClientsController@save');
+	Route::put('clients/{id}', 'ClientsController@save');
+	Route::get('clients/{id}', 'ClientsController@info');
+	Route::delete('clients/{id}', 'ClientsController@remove');
+	Route::get('clients', 'ClientsController@all');
+
+	Route::get('surveys', 'SurveysController@all');
+	Route::put('surveys/save', 'SurveysController@save');
+
+	Route::get('urls', 'UrlsController@all');
+	Route::put('urls/save', 'UrlsController@save');
+	Route::delete('urls/{id}', 'UrlsController@remove');
+
+	Route::put('seances/save', 'SeancesController@save');
+
+	Route::put('answers/save', 'AnswersController@save');
+
+	Route::put('messages/create', 'MessagesController@create');
+	Route::delete('messages/{id}', 'MessagesController@remove');
+	Route::get('messages', 'MessagesController@all');
+	Route::get('messages/{id}', 'MessagesController@info');
+
+	Route::get('lists', 'ListsController@all');
+	Route::put('lists/save', 'ListsController@save');
+	Route::post('lists/{id}', 'ListsController@save');
+	Route::delete('lists/{id}', 'ListsController@remove');
 });
 
+Route::get('signup/{type?}', function($type = false) {
+	return view('signup')->with(['type' => $type]);
+});
+
+Route::get('support', function() {
+	return view('support');
+});
+
+Route::get('recovery', function() {
+	return view('recovery');
+});
+
+Route::get('survey/{param?}', 'SeancesController@getSeance');
+Route::get('email/answers/{id?}/{value?}', 'AnswersController@saveEmail');
+
+Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
+
 Route::any('{catchall}', function() {
-	return view('template');
+	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');

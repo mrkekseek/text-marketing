@@ -58,8 +58,8 @@
 						</td>
 
 						<td class="td-button">
-							<a href="javascript:;" class="a-icon text-primary" ng-click="create(team.id)">
-								<i class="fa fa-cog"></i>
+							<a href="javascript:;" class="a-icon text-success" ng-click="create(team.id)">
+								<i class="fa fa-pencil-square-o"></i>
 							</a>
 						</td>
 

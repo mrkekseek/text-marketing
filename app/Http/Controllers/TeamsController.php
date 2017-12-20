@@ -12,23 +12,23 @@ class TeamsController extends Controller
 		$this->middleware('auth');
 	}
 
-    public function get($post = [])
+    public function all()
 	{
 		return Team::all();
 	}
 
-	public function save($post = [])
+	public function save($id = false, $post = [])
 	{
-		$team = Team::firstOrNew(['id' => empty($post['id']) ? 0 : $post['id']]);
+		$team = Team::firstOrNew(['id' => empty($id) ? 0 : $id]);
 		$team->name = $post['name'];
 		$team->save();
 
 		return $this->message(__('Team was successfully saved'), 'success');
 	}
 
-	public function remove($post = [])
+	public function remove($id)
 	{
-		Team::destroy($post['id']);
+		Team::destroy($id);
 		return $this->message(__('Team was successfully removed'), 'success');
 	}
 

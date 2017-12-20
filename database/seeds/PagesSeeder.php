@@ -107,7 +107,17 @@ class PagesSeeder extends Seeder
             'code' => 'surveys-send',
             'folder' => 'surveys',
             'file' => 'send',
-            'name' => 'Send',
+            'name' => 'Clients',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
+        DB::table('pages')->insert([
+            'code' => 'surveys-partners',
+            'folder' => 'surveys',
+            'file' => 'partners',
+            'name' => 'Partners',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
             'public' => 0,
@@ -115,8 +125,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'analysis-main',
-            'folder' => 'analysis',
-            'file' => 'main',
+            'folder' => 'surveys',
+            'file' => 'analysis',
             'name' => 'Analysis',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -125,7 +135,7 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'settings-alerts',
-            'folder' => 'settings',
+            'folder' => 'surveys',
             'file' => 'alerts',
             'name' => 'Alerts',
             'icon' => 'fa fa-chevron-right',
@@ -145,7 +155,7 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'settings-analysis',
-            'folder' => 'settings',
+            'folder' => 'reviews',
             'file' => 'analysis',
             'name' => 'Reviews Analysis',
             'icon' => 'fa fa-chevron-right',
@@ -155,8 +165,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'settings-reviews',
-            'folder' => 'settings',
-            'file' => 'reviews',
+            'folder' => 'reviews',
+            'file' => 'settings',
             'name' => 'Settings',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -175,7 +185,7 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'messages-add',
-            'folder' => 'messages',
+            'folder' => 'marketing',
             'file' => 'add',
             'name' => 'Send',
             'icon' => 'fa fa-chevron-right',
@@ -185,8 +195,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'dialogs-list',
-            'folder' => 'dialogs',
-            'file' => 'list',
+            'folder' => 'marketing',
+            'file' => 'inbox',
             'name' => 'Inbox',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -195,8 +205,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'messages-list',
-            'folder' => 'messages',
-            'file' => 'list',
+            'folder' => 'marketing',
+            'file' => 'outbox',
             'name' => 'Outbox',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -205,8 +215,8 @@ class PagesSeeder extends Seeder
 
         DB::table('pages')->insert([
             'code' => 'lists-list',
-            'folder' => 'lists',
-            'file' => 'list',
+            'folder' => 'marketing',
+            'file' => 'contacts',
             'name' => 'Contacts',
             'icon' => 'fa fa-chevron-right',
             'tpl' => '',
@@ -256,6 +266,11 @@ class PagesSeeder extends Seeder
 
         DB::table('pages_access')->insert([
             'code' => 'surveys-send',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'surveys-partners',
             'users_type' => 1,
         ]);
 
@@ -324,17 +339,11 @@ class PagesSeeder extends Seeder
 
 
         DB::table('pages_menu')->truncate();
-    	
-        DB::table('pages_menu')->insert([
-            'pages_code' => 'teams-list',
-            'parents_code' => '',
-            'main' => 0,
-            'pos' => 1,
-        ]);
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'users-list',
             'parents_code' => '',
+            'plans' => 'none',
             'main' => 1,
             'pos' => 2,
         ]);
@@ -342,6 +351,7 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'plans-list',
             'parents_code' => '',
+            'plans' => 'none',
             'main' => 0,
             'pos' => 3,
         ]);
@@ -349,6 +359,7 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'ha-list',
             'parents_code' => '',
+            'plans' => 'none',
             'main' => 0,
             'pos' => 4,
         ]);
@@ -356,6 +367,23 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'surveys-surveys',
             'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-surveys',
+            'parents_code' => '',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-surveys',
+            'parents_code' => '',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 1,
         ]);
@@ -363,27 +391,119 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'surveys-send',
             'parents_code' => 'surveys-surveys',
+            'plans' => 'none',
             'main' => 1,
             'pos' => 1,
         ]);
 
         DB::table('pages_menu')->insert([
-            'pages_code' => 'analysis-main',
+            'pages_code' => 'surveys-send',
             'parents_code' => 'surveys-surveys',
+            'plans' => 'free-contractortexter',
+            'main' => 1,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-send',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'text-contractortexter',
+            'main' => 1,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-partners',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'none',
             'main' => 0,
             'pos' => 2,
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-partners',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-partners',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'analysis-main',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'analysis-main',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'analysis-main',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
             'pages_code' => 'settings-alerts',
             'parents_code' => 'surveys-surveys',
+            'plans' => 'none',
             'main' => 0,
-            'pos' => 1,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-alerts',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-alerts',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 3,
         ]);
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'online-reviews',
             'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'online-reviews',
+            'parents_code' => '',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'online-reviews',
+            'parents_code' => '',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 2,
         ]);
@@ -391,6 +511,23 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'settings-analysis',
             'parents_code' => 'online-reviews',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-analysis',
+            'parents_code' => 'online-reviews',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-analysis',
+            'parents_code' => 'online-reviews',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 1,
         ]);
@@ -398,6 +535,23 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'settings-reviews',
             'parents_code' => 'online-reviews',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-reviews',
+            'parents_code' => 'online-reviews',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-reviews',
+            'parents_code' => 'online-reviews',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 2,
         ]);
@@ -405,6 +559,15 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'messages-messages',
             'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'messages-messages',
+            'parents_code' => '',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 3,
         ]);
@@ -412,6 +575,15 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'messages-add',
             'parents_code' => 'messages-messages',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'messages-add',
+            'parents_code' => 'messages-messages',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 1,
         ]);
@@ -419,13 +591,32 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'dialogs-list',
             'parents_code' => 'messages-messages',
+            'plans' => 'none',
             'main' => 0,
             'pos' => 2,
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'dialogs-list',
+            'parents_code' => 'messages-messages',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+
+        DB::table('pages_menu')->insert([
             'pages_code' => 'messages-list',
             'parents_code' => 'messages-messages',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'messages-list',
+            'parents_code' => 'messages-messages',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 3,
         ]);
@@ -433,6 +624,15 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'lists-list',
             'parents_code' => 'messages-messages',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'lists-list',
+            'parents_code' => 'messages-messages',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 4,
         ]);
@@ -440,6 +640,15 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'marketing-settings',
             'parents_code' => 'messages-messages',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 5,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'marketing-settings',
+            'parents_code' => 'messages-messages',
+            'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 5,
         ]);
@@ -447,8 +656,33 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'ha-user',
             'parents_code' => '',
+            'plans' => 'none',
             'main' => 0,
             'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'ha-user',
+            'parents_code' => '',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'ha-user',
+            'parents_code' => '',
+            'plans' => 'home-advisor-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'dialogs-list',
+            'parents_code' => '',
+            'plans' => 'home-advisor-contractortexter',
+            'main' => 0,
+            'pos' => 5,
         ]);
     }
 }

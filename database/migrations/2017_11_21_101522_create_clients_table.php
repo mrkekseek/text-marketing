@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateClientsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('clients', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('users_id')->unsigned()->default(0);
+            $table->string('firstname')->default('');
+            $table->string('lastname')->default('');
+            $table->string('phone')->default('');
+            $table->string('view_phone')->default('');
+            $table->string('email')->default('');
+            $table->string('source')->default('');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('clients');
+    }
+}
