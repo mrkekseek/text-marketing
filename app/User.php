@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany('App\SocialUrl', 'users_id');
     }
 
+    public function messages()
+    {
+        return $this->hasMany('App\Message', 'user_id');
+    }
+
     public function defaultUrls()
     {
         $socialsUrls = [

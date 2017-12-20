@@ -132,7 +132,7 @@
         };
 
         $scope.insertMask = function(textarea, mask) {
-           //$scope.survey.survey_text = charset.set(textarea, mask);
+           $scope.insertAtCaret(id,text);
         };
 
         $scope.charsCount = function(text) {
@@ -161,6 +161,7 @@
             }
             return 0;
         };
+        
 
         $scope.edit = function(client) {
             $scope.open_edit = true;

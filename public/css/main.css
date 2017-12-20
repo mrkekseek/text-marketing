@@ -2924,7 +2924,7 @@ div.chars-area.danger span {
 
 .dropable-phones {
 	position: absolute;
-	z-index: 1;
+	z-index: 3;
 	background: #fff;
 	padding: 10px;
 	left: 0;

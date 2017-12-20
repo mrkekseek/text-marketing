@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Message;
+use App\Http\Requests\MessageCreateRequest;
 
 class MessagesController extends Controller
 {
@@ -12,26 +13,32 @@ class MessagesController extends Controller
 		return Message::find($id);
 	}
 
-    public function save(Request $request, $id = false)
+    public function all()
     {
-    	$message = Message::firstOrNew(['id' => empty($id) ? 0 : $id]);
-    	$message->users_id = auth()->user()->id;
-    	$message->lists_id = ! empty($request['lists_id']) ? $request['lists_id'] : 0;
-    	$message->text = $request['text'];
-    	$message->file = '';
-    	$message->schedule = $request['schedule'];
-    	$message->switch = $request['switch'];
-    	$message->date = $this->getDate($request);
-    	$message->status = 2;
-    	$message->active = 1;
-    	$message->save();
-    	return $this->info($message->id);
+        return auth()->user()->messages;
+    } 
+
+    public function create(MessageCreateRequest $request)
+    {
+        $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch', 'date']);
+        $data['lists_id'] = implode(',', $data['lists_id']);
+        $data['date'] = $this->getDate($request->only(['time', 'date']));
+        $data['status'] = 2;
+        $data['active'] = true;
+        auth()->user()->messages()->create($data);
+        return $this->message('Message was successfully saved', 'success');
     }
 
-    public function getDate($post)
+    public function remove($id = false)
     {
-    	$date = explode('T', $post['date'])[0];
-    	$time = explode('T', $post['time'])[1];
+        Message::destroy($id);
+        return $this->message(__('Message was successfully removed'), 'success');
+    }
+
+    public function getDate($data)
+    {
+    	$date = explode('T', $data['date'])[0];
+    	$time = explode('T', $data['time'])[1];
     	$time = substr($time, 0, strpos($time, '.'));
     	return strtotime($date.' '.$time);
     }
