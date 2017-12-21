@@ -63,7 +63,7 @@ class SeancesController extends Controller
     public function sendEmail($client, $seance, $survey, $date)
     {
         $delay = Carbon::now()->diffInSeconds($date);
-        
+
         $job = (new SendEmail($client, $seance, $survey))->delay($delay)->onQueue('emails');
         $this->dispatch($job);
     }
@@ -98,7 +98,7 @@ class SeancesController extends Controller
     public function getDate($schedule, $time)
     {
         if ( ! empty($schedule)) {
-            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, 'Europe/Kiev');
+            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
         }
     	return Carbon::now();
     }
