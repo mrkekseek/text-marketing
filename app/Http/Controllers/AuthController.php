@@ -52,7 +52,7 @@ class AuthController extends Controller
         auth()->login($user);
         $owner = User::where('owner', 1)->first();
 
-        $job = (new SignUp($owner, $user))->onQueue('emails');
+        $job = (new SignUp($owner, $user))->delay(0)->onQueue('emails');
         $this->dispatch($job);
 
         return $this->message('You were successfully registered', 'success');
