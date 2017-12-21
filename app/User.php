@@ -49,11 +49,6 @@ class User extends Authenticatable
         return $this->hasOne('App\HomeAdvisor', 'users_id');
     }
 
-    public function clients()
-    {
-        return $this->hasMany('App\Client', 'users_id');
-    }
-
     public function lists()
     {
          return $this->hasMany('App\ContactList', 'users_id');
@@ -61,7 +56,12 @@ class User extends Authenticatable
 
     public function surveys()
     {
-        return $this->hasMany('App\Survey', 'users_id');
+        return $this->hasOne('App\Survey', 'user_id');
+    }
+
+    public function seances()
+    {
+        return $this->hasOne('App\Seance', 'user_id');
     }
 
     public function socials()

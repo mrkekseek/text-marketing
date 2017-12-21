@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->integer('admins_id')->unsigned()->default(0);
             $table->string('company_name')->default('');
+            $table->string('company_status')->default('');
             $table->string('plans_id')->default('');
             $table->integer('teams_id')->unsigned()->default(0);
             $table->tinyInteger('teams_leader')->unsigned()->default(0);

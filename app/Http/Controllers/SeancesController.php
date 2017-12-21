@@ -8,8 +8,11 @@ use App\User;
 use App\Question;
 use App\SocialUrl;
 use Bitly;
+use App\Http\Requests\SeancesCreateRequest;
+use App\Http\Services\SurveysService;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmail;
+use Carbon\Carbon;
 
 class SeancesController extends Controller
 {
@@ -18,50 +21,62 @@ class SeancesController extends Controller
 		return Seance::find($id);
 	}
 
-    public function save(Request $request, $id = false)
+    public function create(SeancesCreateRequest $request)
     {
-        $survey = $this->surveySave($request);
-        if ( ! empty($request['company_name'])) {
-            $user = User::find(auth()->user()->id);
-            $user->update(['company_name' => $request['company_name']]);
+        $this->surveySave($request);
+
+        if ( ! empty($request->text)) {
+            if (auth()->user()->company_name == $request->company) {
+                if (auth()->user()->company_status != 'verified') {
+                    return $this->message('Company Name must be verified');
+                }
+            } else {
+                return $this->message('This Company Name isn\'t verified');
+            }
         }
+            
 
-    	foreach ($request['clients'] as $row) {
-    		$seance = new Seance;
-    		$seance->users_id = auth()->user()->id;
-    		$seance->clients_id = $row['id'];
-    		$seance->surveys_id = $survey->id;
-    		$seance->code = $this->codeGenerate($request);
-    		$seance->url = $this->urlGenerate($seance->code);
-    		$seance->date = $this->getDate($request['date'], $request['time']);
-    		$seance->completed = 0;
-    		$seance->type = ! empty($request['type']) ? implode(',', $request['type']) : '';
-    		$seance->save();
+    	foreach ($request->clients as $client) {
+            $code = $this->code($request->time);
+            $data = [
+                'client_id' => $client['id'],
+                'survey_id' => auth()->user()->surveys()->first()->id,
+                'code' => $code,
+                'url' => $this->url($code),
+                'date' => $this->getDate($request->schedule, $request->time),
+                'type' => $this->getType($request->text, $request->email),
+            ];
+            $seance = auth()->user()->seances()->create($data);
 
-            if (array_search('email', $request['type']) !== FALSE) {
-                $this->sendEmail($seance, $survey, $row);
+            if ( ! empty($request->text)) {
+                // Send text
+            }
+
+            if ( ! empty($request->email)) {
+                $this->sendEmail($client, $seance, $request->survey, $data['date']);
             }
     	}
         
-    	$this->message(__('Seances was successfully saved'), 'success');
+    	return $this->message('Review was successfully saved', 'success');
     }
 
-    public function sendEmail($seance, $survey, $client)
+    public function sendEmail($client, $seance, $survey, $date)
     {
-        $job = (new SendEmail($client, $seance, $survey))->onQueue('emails');
+        $delay = Carbon::now()->diffInSeconds($date);
+
+        $job = (new SendEmail($client, $seance, $survey))->delay($delay)->onQueue('emails');
         $this->dispatch($job);
     }
 
-    public function surveySave($post)
+    private function surveySave($request)
     {
-        $survey = Survey::firstOrNew(['users_id' => auth()->user()->id]);
-        $survey->users_id = auth()->user()->id;
-        $survey->text = $post['survey']['text'];
-        $survey->email = $post['survey']['email'];
-        $survey->subject = $post['survey']['subject'];
-        $survey->sender = $post['survey']['sender'];
-        $survey->save();
-        return $survey;
+        $data = [
+            'text' => $request->survey['text'],
+            'sender' => $request->survey['sender'],
+            'subject' => $request->survey['subject'],
+            'email' => $request->survey['email'],
+        ];
+        SurveysService::save($data);
     }
 
     public function getSeance($param)
@@ -74,25 +89,40 @@ class SeancesController extends Controller
         return view('survey')->with(['seance' => $seance]);
     }
 
-    public function getDate($date, $time)
-    {
-    	$date = strtotime($date);
-    	$time = strtotime($time);
-    	return mktime(date('H', $time), date('i', $time), 0, date('m', $date), date('d', $date), date('Y', $date));
-    }
-
     public function socialSave($id = false, $post = [])
     {
         $seance = Seance::find($id);
         $seance->update(['social_tap' => $post['name']]);
     }
 
-    public function codeGenerate($post)
+    public function getDate($schedule, $time)
+    {
+        if ( ! empty($schedule)) {
+            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+        }
+    	return Carbon::now();
+    }
+
+    public function getType($text, $email)
+    {
+        $type = [];
+        if ( ! empty($text)) {
+            $type[] = 'text';
+        }
+
+        if ( ! empty($email)) {
+            $type[] = 'email';
+        }
+
+        return implode(',', $type);
+    }
+
+    public function code($time)
 	{
-		return md5(mt_rand(100, 999).time().$post['date'].$post['time']);
+		return md5(mt_rand(100, 999).time().$time['hours'].$time['minutes']);
 	}
 
-	public function urlGenerate($code)
+	public function url($code)
 	{
 		return Bitly::getUrl(config('app.url').'/survey/'.$code);
 	}

@@ -6,6 +6,8 @@ use App\Client;
 use App\User;
 use App\Seance;
 use App\ListClient;
+use App\Http\Services\UsersService;
+use App\Http\Requests\ClientCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +15,7 @@ class ClientsController extends Controller
 {
     public function all()
 	{
-		return User::find(auth()->user()->id)->clients;
+		return auth()->user()->teams->clients;
 	}
 
 	public function leads()
@@ -28,25 +30,31 @@ class ClientsController extends Controller
 		return $data;
 	}
 
-	public function save(Request $request, $id = false)
+	public function create(ClientCreateRequest $request)
 	{
-		$client = Client::firstOrNew(['id' => empty($id) ? 0 : $id]);
-		$client->users_id = auth()->user()->id;
-		$client->firstname = $request['firstname'];
-		$client->lastname = ! empty($request['lastname']) ? $request['lastname'] : '';
-		$client->phone = $this->editPhone($request['phone']);
-		$client->view_phone = $request['phone'];
-		$client->email = trim($request['email']);
-		$client->save();
+		$data = $request->only(['firstname', 'lastname', 'view_phone', 'email']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['team_id'] = auth()->user()->teams_id;
+		$data = array_filter($data, 'strlen');
+		$client = Client::create($data);
 
-		if ( ! empty($request['lists_id'])) {
-			$client->lists()->detach($request['lists_id']);
-			$client->lists()->attach($request['lists_id']);
-		}
+		return $this->message('Client was successfully saved', 'success');
+	}
 
-		$this->message(__('Client was successfully saved'), 'success');
+	public function update(ClientCreateRequest $request, $id)
+	{
+		$data = $request->only(['firstname', 'lastname', 'view_phone', 'email']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data = array_filter($data, 'strlen');
+		$client = Client::find($id)->update($data);
 
-		return $client->id;
+		return $this->message('Client was successfully saved', 'success');
+	}
+
+	public function remove($id)
+	{
+		Client::destroy($id);
+		return $this->message(__('Client was successfully removed'), 'success');
 	}
 
 	public function addToList(Request $request, $id = false)
@@ -56,12 +64,6 @@ class ClientsController extends Controller
 			$client->lists()->detach($id);
 			$client->lists()->attach($id);
 		}
-	}
-
-	public function remove($id = false)
-	{
-		Client::destroy($id);
-		return $this->message(__('Client was successfully removed'), 'success');
 	}
 
 	public function editPhone($phone)

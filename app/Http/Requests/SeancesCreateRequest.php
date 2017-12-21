@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClientCreateRequest extends FormRequest
+class SeancesCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,13 @@ class ClientCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required',
-            'view_phone' => 'required',
-            'phone' => 'required|digits:10|unique:clients,phone,'.(empty($this->id) ? 'null' : $this->id).',id,team_id,'.(auth()->user()->teams_id),
-            'email' => 'required|email|unique:clients,email,'.(empty($this->id) ? 'null' : $this->id).',id,team_id,'.(auth()->user()->teams_id),
+            'clients' => 'required|filled|array',
+            'text' => 'boolean',
+            'email' => 'boolean',
+            'schedule' => 'boolean',
+            'time' => 'array',
+            'survey' => 'required',
+            'company' => 'required_if:text,1',
         ];
     }
 }
