@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Newsignupforadmin extends Mailable
+class SignUpForAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
