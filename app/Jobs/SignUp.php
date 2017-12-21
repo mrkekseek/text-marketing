@@ -9,7 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SignUpForUser;
-use App\Mail\SignUpForAdmin;
+use App\Mail\Newsignupforadmin;
 use App\Mail\SignUpForUserHa;
 use App\Mail\SupportMail;
 
@@ -40,12 +40,11 @@ class SignUp implements ShouldQueue
      */
     public function handle()
     {
-        //Mail::to($this->owner)->send(new SupportMail(['subject' => 'test', 'name' => 'test', 'email' => 'test@test', 'message' => 'text test']));
-        //Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->config));
-        if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
+        Mail::to($this->owner)->send(new Newsignupforadmin($this->user, $this->config));
+        /*if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
             Mail::to($this->user->email)->send(new SignUpForUserHa($this->user, $this->config));
         } else {
             Mail::to($this->user->email)->send(new SignUpForUser($this->user, $this->config));
-        }
+        }*/
     }
 }
