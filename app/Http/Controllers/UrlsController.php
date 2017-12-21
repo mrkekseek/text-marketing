@@ -18,9 +18,9 @@ class UrlsController extends Controller
 	{
 		$url = SocialUrl::firstOrNew(['id' => empty($id) ? 0 : $id]);
 		$url->users_id = auth()->user()->id;
-		$url->name = $post['name'];
-		$url->url = $post['url'];
-		$url->active = ! empty($post['active']) ? $post['active'] : 0;
+		$url->name = $request['name'];
+		$url->url = $request['url'];
+		$url->active = ! empty($request['active']) ? $request['active'] : 0;
 		$url->save();
 
 		$file = 'img/icon_url_'.$url->id.'.ico';

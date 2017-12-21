@@ -24,7 +24,7 @@ class SignUpRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|email|unique:users,email',
+            //'email' => 'required|email|unique:users,email',
             'firstname' => 'required',
             'password' => 'required',
             'rep' => 'required_if:plans_code,home-advisor'

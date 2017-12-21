@@ -15,13 +15,15 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('users_id')->unsigned()->default(0);
-            $table->integer('lists_id')->unsigned()->default(0);
+            $table->integer('user_id')->unsigned()->default(0);
+            $table->string('lists_id')->default('');
             $table->text('text');
             $table->string('file')->default('');
             $table->tinyInteger('schedule')->unsigned()->default(0);
             $table->tinyInteger('switch')->unsigned()->default(0);
             $table->string('date')->default('');
+            $table->string('finish')->default('');
+            $table->tinyInteger('send')->unsigned()->default(0);
             $table->tinyInteger('status')->unsigned()->default(0);
             $table->tinyInteger('active')->unsigned()->default(0);
             $table->timestamps();

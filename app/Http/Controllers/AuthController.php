@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
-use App\Events\SignUp;
+use App\Jobs\SignUp;
 use App\Mail\Support;
 use App\Mail\Recovery;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -51,7 +50,9 @@ class AuthController extends Controller
 
         auth()->login($user);
         $owner = User::where('owner', 1)->first();
-        event(new SignUp($user, $owner));
+
+        $job = (new SignUp($owner, $user))->onQueue('emails');
+        $this->dispatch($job);
 
         return $this->message('You were successfully registered', 'success');
     }

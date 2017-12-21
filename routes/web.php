@@ -68,11 +68,15 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 
 	Route::put('answers/save', 'AnswersController@save');
 
-	Route::put('messages/save', 'MessagesController@save');
+	Route::put('messages/create', 'MessagesController@create');
+	Route::delete('messages/{id}', 'MessagesController@remove');
+	Route::get('messages', 'MessagesController@all');
+	Route::get('messages/{id}', 'MessagesController@info');
 
 	Route::get('lists', 'ListsController@all');
 	Route::put('lists/save', 'ListsController@save');
 	Route::post('lists/{id}', 'ListsController@save');
+	Route::delete('lists/{id}', 'ListsController@remove');
 });
 
 Route::get('signup/{type?}', function($type = false) {

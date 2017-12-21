@@ -29,7 +29,7 @@ class ListsController extends Controller
 		return $list->id;
 	}
 
-	public function remove($id = false)
+	public function remove(Request $request, $id = false)
 	{
 		$list = ContactList::find($id);
 		$list->delete();

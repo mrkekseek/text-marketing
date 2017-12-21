@@ -218,6 +218,12 @@
                     } 
                 }
             }
+<<<<<<< HEAD
+=======
+            return 0;
+        };
+        
+>>>>>>> 212361428fa046cc0f0abac7ea1dee1eb9fdd3c1
 
             if ($scope.seanceEmail) {
                 if ($scope.survey.email == '') {
