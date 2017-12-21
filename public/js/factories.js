@@ -140,43 +140,59 @@
     
     function validate(logger) {     
         return {
-            check: function(field, name, object_field, zero) {
+            check: function (field, name, object_field, zero) {
                 zero = zero || false;
                 object_field = object_field || false;
-                if (object_field && typeof(field.$viewValue) == 'object')
-                {
-                    if (field.$viewValue[object_field] == '0')
-                    {
+                if (object_field && typeof(field.$viewValue) == 'object') {
+                    if (field.$viewValue[object_field] == '0') {
                         logger.logError(':name is required', {'name': name});
                         return false;
                     }
                 }
 
-                if (field.$valid)
-                {
-                    if ((field.$$element["0"].localName == 'select' || zero) && field.$viewValue == '0')
-                    {
+                if (field.$valid) {
+                    if ((field.$$element["0"].localName == 'select' || zero) && field.$viewValue == '0') {
                         logger.logError('Choose :name first', {'name': name});
                         return false;
-                    }
-                    else
-                    {
+                    } else {
                         return true;
                     }
-                }
-                else
-                {
-
-                    if ( field.$viewValue == '' || field.$viewValue == undefined )
-                    {
+                } else {
+                    if (field.$viewValue == '' || field.$viewValue == undefined) {
                         logger.logError(':name is required', {'name': name});
-                    }
-                    else
-                    {
+                    } else {
                         logger.logError(':name is incorrect', {'name': name});
                     }
                     return false;
                 }
+            },
+            phone: function (field, name) {
+                if (field.$valid) {
+                    var val = this.phoneToNumber(field.$viewValue);
+                    if (val.toString().match(/^[0-9]+$/)) {
+                        if (val.length == 10) {
+                            if (val.charAt(0) == '0' || val.charAt(0) == '1') {
+                                logger.logError(':name can\'t start from 0 or 1', { 'name': name });
+                            } else {
+                                return true;
+                            }
+                        } else {
+                            logger.logError(':name must contain 10 digits', {'name': name});
+                        }
+                    } else {
+                        logger.logError(':name must contain only digits', {'name': name});
+                    }
+                } else {
+                    if (field.$viewValue == '' || field.$viewValue == undefined) {
+                        logger.logError(':name is required', {'name': name});
+                    } else {
+                        logger.logError(':name is incorrect', {'name': name});
+                    }
+                    return false;
+                }
+            },
+            phoneToNumber: function(view_phone) {
+                return $.trim(view_phone.replace(/\./gi, '').replace(/-/gi, '').replace(/ /gi, '').replace(/\(\)/gi, ''));
             }
         };
     };

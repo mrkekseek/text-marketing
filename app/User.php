@@ -61,7 +61,7 @@ class User extends Authenticatable
 
     public function surveys()
     {
-        return $this->hasMany('App\Survey', 'users_id');
+        return $this->hasOne('App\Survey', 'user_id');
     }
 
     public function socials()

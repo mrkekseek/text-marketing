@@ -1,21 +1,36 @@
 <div ng-init="init()">
-	<div class="chars-area" ng-class="{'danger': charCount(result) > max_text_len}">
-		<label>{{ options.title }}</label>
-		<textarea id="{{options.id}}" class="form-control" placeholder="Message Text" ng-model="result" ng-change="charCount(result)">
-		</textarea>
+	<div class="chars-area">
+		<textarea id="{{ id }}" class="form-control" placeholder="Message Text" ng-model="result" maxlength="{{ max }}"></textarea>
 		<span>
-			<span ng-show="charCount(result) > max_text_len">3 messages </span>
-			<span>{{ charCount(result) }}</span> /
-			<span ng-show="charCount(result) <= max_text_len">{{ max_text_len }}</span>
-			<span ng-show="charCount(result) > max_text_len">{{ max_lms_text_len }}</span>
-			<span class="fa fa-question-circle-o" uib-tooltip="You can go over {{ max_text_len }} characters and have {{ max_lms_text_len }}. This will cost 3 text credits." tooltip-placement="left"></span>
+			<span ng-show="size > minLms">3 messages </span>
+			<span>{{ size }}</span> /
+			<span>{{ max }}</span>
+			<span class="fa fa-question-circle-o" uib-tooltip="You can go over {{ minLms }} characters and have {{ max }}. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
 
 	<div class="btn-group btn-group-justified move-top-pixel">
-		<div class="btn-group" ng-repeat="button in options.buttons">
+		<div class="btn-group" ng-if="firstname">
+			<button ng-click="insert(firstnameTag)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-user"></i> First Name
+			</button>
+		</div>
+
+		<div class="btn-group" ng-if="lastname">
+			<button ng-click="insert(lastnameTag)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-user-o"></i> Last Name
+			</button>
+		</div>
+
+		<div class="btn-group" ng-if="link">
+			<button ng-click="insert(linkTag)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-link"></i> Review Link
+			</button>
+		</div>
+
+		<div class="btn-group" ng-if="shortlink">
 			<button ng-click="chooseButtonFunc(button.type, options.id, button.mask)" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-{{button.icon}}"></i> 	{{ button.name }}
+				<i class="fa fa-link"></i> Short Link
 			</button>
 		</div>
 	</div>
@@ -28,5 +43,4 @@
 			<button ng-click="showMessageTextUrl  = false" type="button" class="btn btn-sm btn-default"><i class="fa fa-times"></i></button>
 		</div>
 	</div>
-</div>	
-
+</div>

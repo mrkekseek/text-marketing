@@ -35,4 +35,7 @@ return [
         'secret' => 'sk_test_rI8xLHVCXOZfY4JnY3ST8k4g',
     ],
 
+    'api' => [
+        'domain' => env('API_DOMAIN', 'http://api.ct.da/api/v1/'),
+    ],
 ];
