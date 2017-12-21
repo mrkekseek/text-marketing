@@ -56,8 +56,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::post('clients/{id}', 'ClientsController@update');
 	Route::delete('clients/{id}', 'ClientsController@remove');
 
+	Route::get('surveys', 'SurveysController@info');
 	Route::put('surveys/save', 'SurveysController@save');
-	Route::get('surveys/info', 'SurveysController@info');
 	Route::post('surveys/text', 'SurveysController@text');
 	Route::post('surveys/email', 'SurveysController@email');
 

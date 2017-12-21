@@ -42,7 +42,7 @@
         };
 
         $scope.getSurvey = function() {
-            request.send('/surveys/info', false, function (data) {
+            request.send('/surveys', false, function (data) {
                 $scope.survey = data;
                 $scope.oldText = angular.copy($scope.survey.text);
                 $scope.oldSender = angular.copy($scope.survey.sender);
