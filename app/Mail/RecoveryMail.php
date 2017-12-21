@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class Recovery extends Mailable
+class RecoveryMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -30,6 +30,6 @@ class Recovery extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.recovery')->with($this->credentials);
+        return $this->markdown('emails.recovery')->subject('Recovery Password')->with($this->credentials);
     }
 }

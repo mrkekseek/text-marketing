@@ -63,8 +63,8 @@ class AnswersController extends Controller
         $answer->questions_id = 1;
         $answer->questions_type = 'star';
         $answer->questions_text = $question->text;
+        $answer->value = $value;
         $answer->save();
-
         $seance['user'] = User::where('id', $seance['users_id'])->first();
         $seance['user']['urls'] = SocialUrl::where('users_id', $seance['users_id'])->get();
         $seance['survey'] = Survey::where('id', $seance['surveys_id'])->first();

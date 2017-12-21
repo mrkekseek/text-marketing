@@ -13,9 +13,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\SignUp' => [
-            'App\Listeners\SendSignUpNotification',
-        ],
         'App\Events\FirstLead' => [
             'App\Listeners\SendFirstLeadNotification',
         ],

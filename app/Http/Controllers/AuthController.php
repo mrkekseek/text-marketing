@@ -6,11 +6,12 @@ use App\User;
 use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Jobs\SignUp;
-use App\Mail\Support;
-use App\Mail\Recovery;
+use App\Jobs\Support;
+use App\Jobs\Recovery;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -88,7 +89,10 @@ class AuthController extends Controller
     {
         $data = $request->only(['name', 'email', 'message', 'subject']);
         $owner = User::where('owner', 1)->first();
-        Mail::to($owner)->send(new Support($data));
+
+        $job = (new Support($owner, $data))->onQueue('emails');
+        $this->dispatch($job);
+
         return $this->message('Your email successfully sent', 'success');
     }
 
@@ -100,10 +104,9 @@ class AuthController extends Controller
             $user->password = UsersService::password($password);
             $user->save();
 
-            Mail::to($request->email)->send(new Recovery([
-                'pass' => $password,
-                'email' => $request->email
-            ]));
+            $job = (new Recovery($request->email, $password))->onQueue('emails');
+            $this->dispatch($job);
+
             return $this->message('New password was sent to your email address', 'success');
         }
         return $this->message('Invalid email');
