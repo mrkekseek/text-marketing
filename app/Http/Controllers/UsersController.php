@@ -109,4 +109,9 @@ class UsersController extends Controller
 
 		return ['status' => $status];
 	}
+
+	public function status()
+	{
+		return ['status' => auth()->user()->company_status];
+	}
 }
