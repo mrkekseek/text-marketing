@@ -33,6 +33,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::get('pages/menu', 'PagesController@menu');
 
 	Route::put('users/company', 'UsersController@company');
+	Route::get('users/status', 'UsersController@status');
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
 	Route::get('users', 'UsersController@all');
