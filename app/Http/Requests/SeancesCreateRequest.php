@@ -27,10 +27,11 @@ class SeancesCreateRequest extends FormRequest
             'clients' => 'required|filled|array',
             'text' => 'boolean',
             'email' => 'boolean',
+            'schedule' => 'boolean',
             'date' => 'date',
             'time' => 'date',
             'survey' => 'required',
-            'company' => 'required',
+            'company' => 'required_if:text,1',
         ];
     }
 }

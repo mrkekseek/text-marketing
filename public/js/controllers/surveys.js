@@ -131,7 +131,6 @@
 
         $scope.companySave = function () {
             request.send('/users/company', {'company': $scope.user.company_name}, function (data) {
-                console.log(data);
                 if (data) {
                     $scope.user.company_status = data.status;
                     $scope.companyChanged = false;
@@ -241,12 +240,13 @@
                     'clients': $scope.selectedClients,
                     'text': $scope.seanceText,
                     'email': $scope.seanceEmail,
-                    'date': $scope.seancDate,
+                    'schedule': $scope.surveySchedule,
+                    'date': $scope.seanceDate,
                     'time': $scope.seanceTime,
                     'survey': $scope.survey,
                     'company': $scope.user.company_name
                 };
-
+                
                 request.send('/seances', data, function (data) {
 
                 }, 'put');

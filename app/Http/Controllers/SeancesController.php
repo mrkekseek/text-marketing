@@ -12,6 +12,7 @@ use App\Http\Requests\SeancesCreateRequest;
 use App\Http\Services\SurveysService;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmail;
+use Carbon\Carbon;
 
 class SeancesController extends Controller
 {
@@ -24,13 +25,16 @@ class SeancesController extends Controller
     {
         $this->surveySave($request);
 
-        if (auth()->user()->company_name == $request->company) {
-            if (auth()->user()->company_status != 'verified') {
-                return $this->message('Company Name must be verified');
+        if ( ! empty($request->text)) {
+            if (auth()->user()->company_name == $request->company) {
+                if (auth()->user()->company_status != 'verified') {
+                    return $this->message('Company Name must be verified');
+                }
+            } else {
+                return $this->message('This Company Name isn\'t verified');
             }
-        } else {
-            return $this->message('This Company Name isn\'t verified');
         }
+            
 
     	foreach ($request->clients as $client) {
             $code = $this->code($request->date, $request->time);
@@ -39,7 +43,7 @@ class SeancesController extends Controller
                 'survey_id' => auth()->user()->surveys()->first()->id,
                 'code' => $code,
                 'url' => $this->url($code),
-                'date' => $this->getDate($request->date, $request->time),
+                'date' => $this->getDate($request->schedule ,$request->date, $request->time),
                 'type' => $this->getType($request->text, $request->email),
             ];
             $seance = auth()->user()->seances()->create($data);
@@ -49,16 +53,19 @@ class SeancesController extends Controller
             }
 
             if ( ! empty($request->email)) {
-                // Send email
+                $this->sendEmail($client, $seance, $request->survey, $data['date']);
             }
     	}
         
     	return $this->message('Review was successfully saved', 'success');
     }
 
-    public function sendEmail($seance, $survey, $client)
+    public function sendEmail($client, $seance, $survey, $date)
     {
-        $job = (new SendEmail($client, $seance, $survey))->onQueue('emails');
+        $now = Carbon::now();
+        $delay = $now->diffInminutes($date);
+        die;
+        $job = (new SendEmail($client, $seance, $survey))->delay($delay)->onQueue('emails');
         $this->dispatch($job);
     }
 
@@ -89,11 +96,14 @@ class SeancesController extends Controller
         $seance->update(['social_tap' => $post['name']]);
     }
 
-    public function getDate($date, $time)
+    public function getDate($schedule, $date, $time)
     {
-    	$date = strtotime($date);
-    	$time = strtotime($time);
-    	return mktime(date('H', $time), date('i', $time), 0, date('m', $date), date('d', $date), date('Y', $date));
+        if ( ! empty($schedule)) {
+            $date = strtotime($date);
+            $time = strtotime($time);
+            return mktime(date('H', $time), date('i', $time), 0, date('m', $date), date('d', $date), date('Y', $date));
+        }
+    	return Carbon::now();
     }
 
     public function getType($text, $email)
@@ -104,7 +114,7 @@ class SeancesController extends Controller
         }
 
         if ( ! empty($email)) {
-            $type = 'email';
+            $type[] = 'email';
         }
 
         return implode(',', $type);

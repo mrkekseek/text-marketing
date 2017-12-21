@@ -34,6 +34,6 @@ class SurveySend extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.survey')->subject($this->survey['subject'])->with(['id' => $this->seance->id, 'text' => $this->survey->email]);
+        return $this->markdown('emails.survey')->subject($this->survey['subject'])->with(['id' => $this->seance->id, 'text' => $this->survey['email']]);
     }
 }
