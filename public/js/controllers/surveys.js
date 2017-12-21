@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('SurveysCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', 'request', 'langs', 'validate', 'logger', SurveysCtrl]);
+    angular.module('app').controller('SurveysCtrl', ['$rootScope', '$scope', '$uibModal', '$filter', '$location', '$timeout', 'request', 'langs', 'validate', 'logger', SurveysCtrl]);
 
-    function SurveysCtrl($rootScope, $scope, $uibModal, $filter, $location, request, langs, validate, logger) {
+    function SurveysCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, request, langs, validate, logger) {
         $scope.clients = [];
         $scope.client = {};
         $scope.survey = {};
@@ -15,6 +15,7 @@
         $scope.oldCompany = angular.copy($scope.user.company_name);
         $scope.surveySchedule = '0';
         $scope.popup = {};
+        $scope.timer = false;
 
         var date = new Date();
         $scope.seanceDate = date;
@@ -31,6 +32,7 @@
     	$scope.init = function() {
             $scope.getClients();
             $scope.getSurvey();
+            $scope.checkCompany();
         };
 
         $scope.getClients = function() {
@@ -131,12 +133,26 @@
 
         $scope.companySave = function () {
             request.send('/users/company', {'company': $scope.user.company_name}, function (data) {
-                console.log(data);
                 if (data) {
                     $scope.user.company_status = data.status;
                     $scope.companyChanged = false;
+                    $scope.checkCompany();
                 }
             }, 'put');
+        };
+
+        $scope.checkCompany = function () {
+            $timeout.cancel($scope.timer);
+            if ($scope.user.company_status == 'pending') {
+                $scope.timer = $timeout(function () {
+                    request.send('/users/status', {}, function (data) {
+                        if (data) {
+                            $scope.user.company_status = data.status;
+                        }
+                        $scope.checkCompany();
+                    }, 'get');
+                }, 5000);
+            }
         };
 
         $scope.$watch('survey.text', function(oldVal, newVal) {
@@ -248,7 +264,13 @@
                 };
 
                 request.send('/seances', data, function (data) {
+                    $scope.oldText = angular.copy($scope.survey.text);
+                    $scope.textChanged = false;
 
+                    $scope.oldSender = angular.copy($scope.survey.sender);
+                    $scope.oldSubject = angular.copy($scope.survey.subject);
+                    $scope.oldEmail = angular.copy($scope.survey.email);
+                    $scope.emailChanged = false;
                 }, 'put');
             }
         };
