@@ -12,17 +12,19 @@ class SignUpForUserHa extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $config;
+    public $url;
+    public $name;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $config)
+    public function __construct($user, $url, $name)
     {
         $this->user = $user;
-        $this->config = $config;
+        $this->url = $url;
+        $this->name = $name;
     }
 
     /**
@@ -32,7 +34,7 @@ class SignUpForUserHa extends Mailable
      */
     public function build()
     {
-        $project = $this->config['name'];
+        $project = $this->name;
 
         return $this->markdown('emails.signup_for_user_ha')
         ->subject('Thanks from '.$project)

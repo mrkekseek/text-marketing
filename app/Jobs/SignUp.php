@@ -19,7 +19,8 @@ class SignUp implements ShouldQueue
 
     protected $owner;
     protected $user;
-    protected $config;
+    protected $url;
+    protected $name;
 
     /**
      * Create a new job instance.
@@ -30,7 +31,8 @@ class SignUp implements ShouldQueue
     {
         $this->owner = $owner;
         $this->user = $user;
-        $this->config = config('app');
+        $this->url = config('app.url');
+        $this->name = config('app.name');
     }
 
     /**
@@ -40,11 +42,11 @@ class SignUp implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->config));
+        Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->url, $this->name));
         if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
-            Mail::to($this->user->email)->send(new SignUpForUserHa($this->user, $this->config));
+            Mail::to($this->user->email)->send(new SignUpForUserHa($this->user, $this->url, $this->name));
         } else {
-            Mail::to($this->user->email)->send(new SignUpForUser($this->user, $this->config));
+            Mail::to($this->user->email)->send(new SignUpForUser($this->user, $this->url, $this->name));
         }
     }
 }
