@@ -37,13 +37,13 @@ class SeancesController extends Controller
             
 
     	foreach ($request->clients as $client) {
-            $code = $this->code($request->date, $request->time);
+            $code = $this->code($request->time);
             $data = [
                 'client_id' => $client['id'],
                 'survey_id' => auth()->user()->surveys()->first()->id,
                 'code' => $code,
                 'url' => $this->url($code),
-                'date' => $this->getDate($request->schedule ,$request->date, $request->time),
+                'date' => $this->getDate($request->schedule, $request->time),
                 'type' => $this->getType($request->text, $request->email),
             ];
             $seance = auth()->user()->seances()->create($data);
@@ -62,9 +62,8 @@ class SeancesController extends Controller
 
     public function sendEmail($client, $seance, $survey, $date)
     {
-        $now = Carbon::now();
-        $delay = $now->diffInminutes($date);
-        die;
+        $delay = Carbon::now()->diffInSeconds($date);
+        
         $job = (new SendEmail($client, $seance, $survey))->delay($delay)->onQueue('emails');
         $this->dispatch($job);
     }
@@ -96,12 +95,10 @@ class SeancesController extends Controller
         $seance->update(['social_tap' => $post['name']]);
     }
 
-    public function getDate($schedule, $date, $time)
+    public function getDate($schedule, $time)
     {
         if ( ! empty($schedule)) {
-            $date = strtotime($date);
-            $time = strtotime($time);
-            return mktime(date('H', $time), date('i', $time), 0, date('m', $date), date('d', $date), date('Y', $date));
+            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, 'Europe/Kiev');
         }
     	return Carbon::now();
     }
@@ -120,9 +117,9 @@ class SeancesController extends Controller
         return implode(',', $type);
     }
 
-    public function code($date, $time)
+    public function code($time)
 	{
-		return md5(mt_rand(100, 999).time().$date.$time);
+		return md5(mt_rand(100, 999).time().$time['hours'].$time['minutes']);
 	}
 
 	public function url($code)

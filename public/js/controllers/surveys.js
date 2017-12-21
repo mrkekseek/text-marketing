@@ -253,13 +253,21 @@
             }
 
             if (error) {
+                var time = {
+                    'year': $scope.seanceDate.getFullYear(),
+                    'month': $scope.seanceDate.getMonth() + 1,
+                    'date': $scope.seanceDate.getDate(),
+                    'hours': $scope.seanceTime.getHours(),
+                    'minutes': $scope.seanceTime.getMinutes()
+                };
+                console.log(time);
+
                 var data = {
                     'clients': $scope.selectedClients,
                     'text': $scope.seanceText,
                     'email': $scope.seanceEmail,
                     'schedule': $scope.surveySchedule,
-                    'date': $scope.seanceDate,
-                    'time': $scope.seanceTime,
+                    'time': time,
                     'survey': $scope.survey,
                     'company': $scope.user.company_name
                 };

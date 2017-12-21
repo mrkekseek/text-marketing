@@ -28,8 +28,7 @@ class SeancesCreateRequest extends FormRequest
             'text' => 'boolean',
             'email' => 'boolean',
             'schedule' => 'boolean',
-            'date' => 'date',
-            'time' => 'date',
+            'time' => 'array',
             'survey' => 'required',
             'company' => 'required_if:text,1',
         ];
