@@ -40,10 +40,10 @@ class SignUp implements ShouldQueue
     public function handle()
     {
         Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->config));
-        if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
+        /*if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
             Mail::to($this->user->email)->send(new SignUpForUserHa($this->user, $this->config));
         } else {
             Mail::to($this->user->email)->send(new SignUpForUser($this->user, $this->config));
-        }
+        }*/
     }
 }
