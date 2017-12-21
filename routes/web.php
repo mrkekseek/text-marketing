@@ -32,6 +32,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 
 	Route::get('pages/menu', 'PagesController@menu');
 
+	Route::put('users/company', 'UsersController@company');
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
 	Route::get('users', 'UsersController@all');
@@ -48,20 +49,22 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
 	Route::get('clients/leads', 'ClientsController@leads');
-	Route::put('clients/save', 'ClientsController@save');
-	Route::put('clients/{id}', 'ClientsController@save');
 	Route::get('clients/{id}', 'ClientsController@info');
-	Route::delete('clients/{id}', 'ClientsController@remove');
 	Route::get('clients', 'ClientsController@all');
+	Route::put('clients', 'ClientsController@create');
+	Route::post('clients/{id}', 'ClientsController@update');
+	Route::delete('clients/{id}', 'ClientsController@remove');
 
-	Route::get('surveys', 'SurveysController@all');
 	Route::put('surveys/save', 'SurveysController@save');
+	Route::get('surveys/info', 'SurveysController@info');
+	Route::post('surveys/text', 'SurveysController@text');
+	Route::post('surveys/email', 'SurveysController@email');
 
 	Route::get('urls', 'UrlsController@all');
 	Route::put('urls/save', 'UrlsController@save');
 	Route::delete('urls/{id}', 'UrlsController@remove');
 
-	Route::put('seances/save', 'SeancesController@save');
+	Route::put('seances', 'SeancesController@create');
 
 	Route::put('answers/save', 'AnswersController@save');
 

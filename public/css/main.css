@@ -88,7 +88,7 @@ hr {
     margin-left: 10px;
 }
 
-.phones div {
+.phones > div {
 	display: table-cell;
 	vertical-align: middle;
 	padding: 0px 5px;
@@ -507,13 +507,14 @@ li.toggle-provider {
 .search-icon {
 	position: absolute;
 	z-index: 10;
-	left: 10px;
+	right: 10px;
 	top: 50%;
-	margin-top: -8px;
+	margin-top: -10px;
+	font-size: 20px;
 }
 
 .search-group .form-control {
-	padding-left: 27px !important;
+	padding-right: 27px !important;
     z-index: 0;
 }
 
@@ -619,8 +620,44 @@ li.toggle-provider {
 	text-decoration: none;
 }
 
+.client-item {
+	position: relative;
+	z-index: 0;
+}
+
+.icon-client {
+	position: absolute;
+	z-index: 0;
+	right: 15px;
+	bottom: 10px;
+	font-size: 16px;
+	display: none;
+}
+
+.calendar-box {
+	display: inline-block;
+	vertical-align: middle;
+	width: 200px;
+}
+
+.time-box {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 30px;
+}
+
+.phones-list:hover .icon-client {
+	display: inline-block;
+}
+
+.icon-client.icon-edit {
+	right: 40px;
+}
+
 .team-leader {
 	vertical-align: top;
+	font-weight: normal;
+	margin-left: 5px;
 }
 
 .header-container > .top-header .dropdown-menu .active a {
