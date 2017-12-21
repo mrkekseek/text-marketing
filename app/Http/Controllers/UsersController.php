@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Libraries\Api;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
 use App\Http\Requests\UsersCreateRequest;
 use App\Http\Requests\UsersPasswordRequest;
+use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
@@ -90,5 +92,21 @@ class UsersController extends Controller
 		}
 
 		return $this->message('Old Password is incorrect');
+	}
+
+	public function company(Request $request)
+	{
+		$status = 'pending';
+		$data = Api::company($request->company);
+		if ($data['code'] == 200) {
+			$status = $data['data'];
+		}
+
+		auth()->user()->update([
+			'company_name' => $request->company,
+			'company_status' => $status,
+		]);
+
+		return ['status' => $status];
 	}
 }
