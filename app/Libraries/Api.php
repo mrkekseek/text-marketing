@@ -8,7 +8,6 @@ class Api
 {
 	static private function send($uri, $data, $method = 'POST')
     {
-    	//print_r($data); die;
         $client = new Guzzle(['base_uri' => config('services.api.domain')]);
         $response = $client->request($method, $uri, [
             'headers' => [
@@ -23,7 +22,6 @@ class Api
 
 	static private function response($response)
 	{
-		//print_r($response->getBody()->getContents()); exit;
 		$data = json_decode($response->getBody(), true);
 		$data['code'] = $response->getStatusCode();
 		return $data;
@@ -34,10 +32,10 @@ class Api
 		return self::send('company/name', ['name' => $name]);
 	}
 
-	static public function survey($clients, $text, $company)
+	static public function survey($clients, $message, $company)
 	{
 		$type = 'survey';
 		$block = true;
-		return self::send('message/send', compact('clients', 'text', 'company', 'type', 'block'));
+		return self::send('message/send', compact('clients', 'message', 'company', 'type', 'block'));
 	}
 }

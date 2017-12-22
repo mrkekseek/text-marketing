@@ -84,7 +84,6 @@ class SeancesController extends Controller
     public function sendText($clients, $text)
     {
         $data = Api::survey($clients, $text, auth()->user()->company_name);
-        print_r($data);
     }
 
     public function sendEmail($client, $seance, $survey, $date)
