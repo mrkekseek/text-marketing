@@ -12,17 +12,19 @@ class SignUpForUser extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $config;
+    public $url;
+    public $name;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user, $config)
+    public function __construct($user, $url, $name)
     {
         $this->user = $user;
-        $this->config = $config;
+        $this->url = $url;
+        $this->name = $name;
     }
 
     /**
@@ -32,11 +34,11 @@ class SignUpForUser extends Mailable
      */
     public function build()
     {
-        $link = $this->config['url'].'/magic/'.md5($this->user->id.$this->user->email).'/send';
-        $project = $this->config['name'];
+        $link = $this->url.'/magic/'.md5($this->user->id.$this->user->email).'/send';
+        $project = $this->name;
         
         return $this->markdown('emails.signup_for_user')
-        ->subject('Thanks from '.$this->config['name'])
+        ->subject('Thanks from '.$this->name)
         ->with([
                 'user' => $this->user,
                 'link' => $link,

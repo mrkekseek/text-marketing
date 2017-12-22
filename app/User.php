@@ -46,7 +46,7 @@ class User extends Authenticatable
 
     public function homeadvisors()
     {
-        return $this->hasOne('App\HomeAdvisor', 'users_id');
+        return $this->hasOne('App\Homeadvisor', 'users_id');
     }
 
     public function lists()
