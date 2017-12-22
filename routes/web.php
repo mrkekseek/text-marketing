@@ -97,6 +97,8 @@ Route::get('email/answers/{id?}/{value?}', 'AnswersController@saveEmail');
 
 Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
 
+Route::any('company/push', 'ResponseController@company');
+
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');
