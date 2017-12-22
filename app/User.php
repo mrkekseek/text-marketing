@@ -64,9 +64,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Seance', 'user_id');
     }
 
-    public function socials()
+    public function urls()
     {
-        return $this->hasMany('App\SocialUrl', 'users_id');
+        return $this->hasMany('App\Url', 'user_id');
     }
 
     public function messages()
@@ -76,7 +76,7 @@ class User extends Authenticatable
 
     public function defaultUrls()
     {
-        $socialsUrls = [
+        $urls = [
             [
                 'name' => 'Facebook',
                 'default' => 1
@@ -89,8 +89,8 @@ class User extends Authenticatable
             ]
         ];
 
-        foreach ($socialsUrls as $row) {
-            $this->socials()->create($row);
+        foreach ($urls as $row) {
+            $this->urls()->create($row);
         }
     }
 }

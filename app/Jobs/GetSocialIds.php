@@ -7,7 +7,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\SocialUrl;
 use DiDom\Document;
 
 class GetSocialIds implements ShouldQueue
@@ -16,6 +15,7 @@ class GetSocialIds implements ShouldQueue
 
     public $url;
     public $googleApiKey = 'AIzaSyBN_OUWOCTBwlgf_gBz6DTL1_jnT2JqxWY';
+    public $facebookToken = '1797563467234797|ycsQAJVBO5fNRTqjI3EsQ63OIqo';
 
     /**
      * Create a new job instance.
@@ -34,16 +34,26 @@ class GetSocialIds implements ShouldQueue
      */
     public function handle()
     {
+        $this->getIcon($this->url);
+
         if (strpos($this->url->url, 'facebook') !== false) {
             $this->getFacebookId($this->url);
         }
+
         if (strpos($this->url->url, 'google') !== false) {
             $this->getGoogleId($this->url);
         }
+
         if (strpos($this->url->url, 'yelp') !== false) {
             $this->getYelpId($this->url);
         }
     }
+
+    public function getIcon($url)
+	{
+		$file = 'img/icon_url_'.$url->id.'.ico';
+		copy('https://www.google.com/s2/favicons?domain='.$url->url, $file);
+	}
 
     public function getFacebookId($url)
     {
@@ -51,19 +61,18 @@ class GetSocialIds implements ShouldQueue
         $part = array_pop($part);
 
         if ( ! empty($part)) {
-            $facebook = @file_get_contents('https://graph.facebook.com/'.$part.'?access_token=1797563467234797|ycsQAJVBO5fNRTqjI3EsQ63OIqo');
+            $facebook = @file_get_contents('https://graph.facebook.com/'.$part.'?access_token='.$this->facebookToken);
             $result = json_decode($facebook, true);
 
             if (empty($result)) {
                 $temp = explode('-', $part);
                 $part = array_pop($temp);
-                $facebook = @file_get_contents('https://graph.facebook.com/'.$part.'?access_token=1797563467234797|ycsQAJVBO5fNRTqjI3EsQ63OIqo');
+                $facebook = @file_get_contents('https://graph.facebook.com/'.$part.'?access_token='.$this->facebookToken);
                 $result = json_decode($facebook, true);
             }
             
             if ( ! empty($result['id'])) {
-                $social = SocialUrl::find($url->id);
-                $social->update(['social_id' => $result['id']]);
+                $url->update(['social_id' => $result['id']]);
             }
         }
     }
@@ -84,14 +93,14 @@ class GetSocialIds implements ShouldQueue
                 $location = str_replace('@', '', $location[0].','.$location[1]);
             }
         }
+
         $json = array_shift(json_decode(file_get_contents($googleapis.$query.'&location='.$location.'&radius=10&key='.$this->googleApiKey.'&language=en'))->results);
         if ($json) {
             $id = $json->place_id;
         }
 
         if ( ! empty($id)) {
-            $social = SocialUrl::find($url->id);
-            $social->update(['social_id' => $id]);
+            $url->update(['social_id' => $id]);
         }
     }
 
@@ -102,7 +111,6 @@ class GetSocialIds implements ShouldQueue
         $link = parse_url($link[0]);
         $link = explode('/', $link['path']);
         $id = array_pop($link);
-        $social = SocialUrl::find($url->id);
-        $social->update(['social_id' => $id]);
+        $url->update(['social_id' => $id]);
     }
 }
