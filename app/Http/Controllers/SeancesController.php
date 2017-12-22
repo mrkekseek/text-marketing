@@ -7,6 +7,7 @@ use App\Survey;
 use App\User;
 use App\Question;
 use App\SocialUrl;
+use App\Libraries\Api;
 use Bitly;
 use App\Http\Requests\SeancesCreateRequest;
 use App\Http\Services\SurveysService;
@@ -34,7 +35,9 @@ class SeancesController extends Controller
                 return $this->message('This Company Name isn\'t verified');
             }
         }
-            
+
+        $text = auth()->user()->surveys()->first()->text; 
+        $clients = [];
 
     	foreach ($request->clients as $client) {
             $code = $this->code($request->time);
@@ -46,18 +49,42 @@ class SeancesController extends Controller
                 'date' => $this->getDate($request->schedule, $request->time),
                 'type' => $this->getType($request->text, $request->email),
             ];
+
             $seance = auth()->user()->seances()->create($data);
 
             if ( ! empty($request->text)) {
-                // Send text
+                $row = [
+                    'phone' => $client['phone'],
+                    'link' => $seance->url
+                ];
+
+                if (strpos($text, '[$FirstName]') !== false) {
+                    $row['firstname'] = $client['firstname'];
+                }
+
+                if (strpos($text, '[$LastName]') !== false) {
+                    $row['lastname'] = $client['lastname'];
+                }
+
+                $clients[] = $row;
             }
 
             if ( ! empty($request->email)) {
                 $this->sendEmail($client, $seance, $request->survey, $data['date']);
             }
     	}
+
+        if ( ! empty($request->text)) {
+            $this->sendText($clients, $text);
+        }
         
     	return $this->message('Review was successfully saved', 'success');
+    }
+
+    public function sendText($clients, $text)
+    {
+        $data = Api::survey($clients, $text, auth()->user()->company_name);
+        print_r($data);
     }
 
     public function sendEmail($client, $seance, $survey, $date)
