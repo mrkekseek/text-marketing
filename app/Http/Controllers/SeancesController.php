@@ -26,20 +26,22 @@ class SeancesController extends Controller
     {
         $this->surveySave($request);
 
+        $canSave = true;
         if ( ! empty($request->text)) {
-            if (auth()->user()->company_name == $request->company) {
-                if (auth()->user()->company_status != 'verified') {
-                    return $this->message('Company Name must be verified');
-                }
-            } else {
-                return $this->message('This Company Name isn\'t verified');
-            }
+            $canSave *= $this->textValidate($request);
         }
 
-        $text = auth()->user()->surveys()->first()->text; 
-        $clients = [];
+        if ( ! empty($request->email)) {
+            $canSave *= $this->emailValidate($request);
+        }
 
-    	foreach ($request->clients as $client) {
+        if (empty($canSave)) {
+            return false;
+        }
+
+        $text = trim(auth()->user()->surveys()->first()->text);
+
+        foreach ($request->clients as $client) {
             $code = $this->code($request->time);
             $data = [
                 'client_id' => $client['id'],
@@ -51,39 +53,108 @@ class SeancesController extends Controller
             ];
 
             $seance = auth()->user()->seances()->create($data);
-
-            if ( ! empty($request->text)) {
-                $row = [
-                    'phone' => $client['phone'],
-                    'link' => $seance->url
-                ];
-
-                if (strpos($text, '[$FirstName]') !== false) {
-                    $row['firstname'] = $client['firstname'];
-                }
-
-                if (strpos($text, '[$LastName]') !== false) {
-                    $row['lastname'] = $client['lastname'];
-                }
-
-                $clients[] = $row;
-            }
-
+            
             if ( ! empty($request->email)) {
                 $this->sendEmail($client, $seance, $request->survey, $data['date']);
             }
-    	}
+        }
 
         if ( ! empty($request->text)) {
-            $this->sendText($clients, $text);
+            $this->sendText($request, $text);
         }
-        
-    	return $this->message('Review was successfully saved', 'success');
+
+        return $this->message('Review was successfully saved', 'success');
     }
 
-    public function sendText($clients, $text)
+    private function textValidate($request)
     {
-        $data = Api::survey($clients, $text, auth()->user()->company_name);
+        if ( ! ApiValidate::companyExists($request->company)) {
+            return $this->message('This Company Name isn\'t verified');
+        }
+
+        if ( ! ApiValidate::companyVerified($request->company)) {
+            return $this->message('Company Name must be verified');
+        }
+
+        $text = trim(auth()->user()->surveys()->first()->text);
+        if ( ! ApiValidate::messageSymbols($text)) {
+            return $this->message('SMS Text contains forbidden characters');
+        }
+
+        $clients = $this->getClients($request, $text);
+        $length = true;
+        $phones = true;
+        foreach ($clients as $client) {
+            $message = $text;
+
+            if ( ! empty($client['link'])) {
+                $message = str_replace('[$Link]', $client['firstname'], $message);
+            }
+
+            if ( ! empty($client['firstname'])) {
+                $message = str_replace('[$FirstName]', $client['firstname'], $message);
+            }
+
+            if ( ! empty($client['lastname'])) {
+                $message = str_replace('[$LastName]', $client['lastname'], $message);
+            }
+
+            if ( ! ApiValidate::messageLength($message, $request->company)) {
+                $length = false;
+            }
+
+            if ( ! ApiValidate::phoneFormat($client['phone'])) {
+                $phones = false;
+            }
+        }
+
+        if (empty($length)) {
+            return $this->message('SMS Text is too long');
+        }
+
+        if (empty($phones)) {
+            return $this->message('Some client\'s phone numbers have wrong format');
+        }
+
+        if (ApiValidate::underBlocking()) {
+            return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
+        }
+
+        return true;
+    }
+
+    private function emailValidate($request)
+    {
+        return true;
+    }
+
+    private function getClients($request, $text)
+    {
+        $clients = [];
+        foreach ($request->clients as $client) {
+            $row = [
+                'phone' => $client['phone'],
+                'link' => $data['url']
+            ];
+
+            if (strpos($text, '[$FirstName]') !== false) {
+                $row['firstname'] = $client['firstname'];
+            }
+
+            if (strpos($text, '[$LastName]') !== false) {
+                $row['lastname'] = $client['lastname'];
+            }
+
+            $clients[] = $row;
+        }
+    }
+
+    public function sendText($request, $text)
+    {
+        $response = Api::survey($this->getClients($request, $text), $text, auth()->user()->company_name);
+        if ($response['code'] == 200) {
+            // save Receiveers
+        }
     }
 
     public function sendEmail($client, $seance, $survey, $date)
