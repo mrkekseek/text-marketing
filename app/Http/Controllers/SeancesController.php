@@ -252,7 +252,8 @@ class SeancesController extends Controller
 
 	public function url($code)
 	{
-		return Bitly::getUrl(config('app.url').'/survey/'.$code);
+        list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/survey/'.$code));
+		return $url;
 	}
 
     public function push(Request $request, Review $review)
