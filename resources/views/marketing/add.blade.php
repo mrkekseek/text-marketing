@@ -30,72 +30,96 @@
 			<div class="row">
 				<div class="col-lg-6 col-xs-12">
 					<div class="form-group">
-						<div class="chars-area" ng-class="{'danger': charsCount(message.text) > max_text_len}">
-							<label>{{ __('Message Text') }}</label>
-							<textarea id="messageText" class="form-control" placeholder="Message Text" ng-model="message.text" ng-change="charsCount(message.text)">
-							</textarea>
-							<span>
-								<span ng-show="charsCount(message.text) > max_text_len">{{ __('3 messages') }} </span>
-								<span>@{{ charsCount(message.text) }}</span> /
-								<span ng-show="charsCount(message.text) <= max_text_len">@{{ max_text_len }}</span>
-								<span ng-show="charsCount(message.text) > max_text_len">@{{ max_lms_text_len }}</span>
-								<span class="fa fa-question-circle-o" uib-tooltip="You can go over @{{ max_text_len }} characters and have @{{ max_lms_text_len }}. This will cost 3 text credits." tooltip-placement="left"></span>
+						<label>{{ __('Company Name') }}</label>
+						<div class="input-group">
+							<input type="text" class="form-control" maxlength="32" ng-model="user.company_name" ng-change="companyChange()" placeholder="{{ __('Company Name') }}" />
+							<span class="input-group-addon bg-success" ng-show="user.company_status == 'verified' && ! companyChanged">{{ __('Verified') }}</span>
+							<span class="input-group-addon bg-warning" ng-show="user.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
+							<span class="input-group-addon bg-danger" ng-show="user.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
+							<span class="input-group-btn" ng-show="user.company_status == '' || companyChanged">
+								<button class="btn btn-default" ng-click="companySave()">{{ __('Save') }}</button>
 							</span>
 						</div>
-						<div class="btn-group btn-group-justified move-top-pixel" ng-show="! longLink.show">
-							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-default" ng-click="longLink.show = ! longLink.show">
-									<i class="fa fa-link"></i>
-									{{ __('Short Link') }}
-								</button>
+					</div>
+
+					<div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
+						{{ __('To send texts you should save Company Name and wait untill it will be verified. It may takes 15 minutes') }}
+					</div>
+
+					<div ng-show="user.company_status == 'verified' && ! companyChanged">
+						<div class="form-group">
+							<div class="chars-area" ng-class="{'danger': charsCount(message.text) > max_text_len}">
+								<label>{{ __('Message Text') }}</label>
+								<textarea id="messageText" class="form-control" placeholder="Message Text" ng-model="message.text" ng-change="charsCount(message.text)">
+								</textarea>
+								<span>
+									<span ng-show="charsCount(message.text) > maxOneText()">{{ __('3 messages') }} </span>
+									<span>@{{ charsCount(message.text) }}</span> /
+									<span>@{{ maxChars() }}</span>
+									<span class="fa fa-question-circle-o" uib-tooltip="You can go over @{{ maxOneText() }} characters and have @{{ maxChars() }}. This will cost 3 text credits." tooltip-placement="left"></span>
+								</span>
 							</div>
-							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-default" ng-click="insertMask('messageText', '[$FirstName]')">
-									<i class="fa fa-user"></i>
-									{{ __('First Name') }}
-								</button>
+							<div class="btn-group btn-group-justified move-top-pixel" ng-show="! longLink.show">
+								<div class="btn-group">
+									<button type="button" class="btn btn-sm btn-default" ng-click="longLink.show = ! longLink.show">
+										<i class="fa fa-link"></i>
+										{{ __('Short Link') }}
+									</button>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btn btn-sm btn-default" ng-click="insertMask('messageText', '[$FirstName]')">
+										<i class="fa fa-user"></i>
+										{{ __('First Name') }}
+									</button>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btn btn-sm btn-default" ng-click="insertMask('messageText', '[$LastName]')">
+										<i class="fa fa-user-o"></i>
+										{{ __('First Name') }}
+									</button>
+								</div>
 							</div>
-							<div class="btn-group">
-								<button type="button" class="btn btn-sm btn-default" ng-click="insertMask('messageText', '[$LastName]')">
-									<i class="fa fa-user-o"></i>
-									{{ __('First Name') }}
-								</button>
+							<div class="input-group short-url-box" ng-show="longLink.show">
+								<input class="form-control" type="text" placeholder="Add your link here" ng-model="longLink.input" />
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-sm btn-primary" ng-click="insertUrl()">
+										<i class="fa fa-refresh"></i>
+									</button>
+									<button type="button" class="btn btn-sm btn-default" ng-click="longLink.show = ! longLink.show">
+										<i class="fa fa-times"></i>
+									</button>
+								</div>
 							</div>
 						</div>
-						<div class="input-group short-url-box" ng-show="longLink.show">
-							<input class="form-control" type="text" placeholder="Add your link here" ng-model="longLink.input" />
-							<div class="input-group-btn">
-								<button type="button" class="btn btn-sm btn-primary" ng-click="insertUrl()">
-									<i class="fa fa-refresh"></i>
-								</button>
-								<button type="button" class="btn btn-sm btn-default" ng-click="longLink.show = ! longLink.show">
-									<i class="fa fa-times"></i>
-								</button>
+							
+						<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="0" >
+							<span>{{ __('Send Now') }}</span>
+						</label>
+						<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="1" >
+							<span>{{ __('Schedule') }}</span>
+						</label>
+						<div ng-show="message.schedule == '1'">
+							<div class="calendar-box">
+								<span class="input-group">
+									<input type="text" class="form-control" ng-model="seanceDate" uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup.popup_date" datepicker-options="dateOptions" close-text="Close" />
+									<span class="input-group-btn">
+										<button type="button" class="btn btn-default" ng-click="openDate()">
+											<i class="glyphicon glyphicon-calendar"></i>
+										</button>
+									</span>
+								</span>
+							</div>
+
+							<div class="time-box">
+								<div uib-timepicker ng-model="seanceTime" hour-step="1" minute-step="1" min="timeMin" max="timeMax" show-meridian="false"></div>
 							</div>
 						</div>
 					</div>
-					<div class="form-group">
-						<label>{{ __('Company Name') }}</label>
-						<div class="input-group">
-							<input type="text" class="form-control" maxlength="32" />
-							<span class="input-group-btn">
-								<button class="btn btn-default">{{ __('Save') }}</button>
-							</span>
-						</div>
-					</div>	
-					<!--<div upload></div>-->
-						
-					<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="0" >
-						<span>{{ __('Send Now') }}</span>
-					</label>
-					<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="1" >
-						<span>{{ __('Schedule') }}</span>
-					</label>
 				</div>
 			
 				<div class="col-lg-6 col-xs-12">
-					<div ng-show="message.schedule == '1'">
-						<div class="calendar-container">
+					
+						<!--<div class="calendar-container">
 							<div uib-datepicker ng-model="message.date" datepicker-options="dateOptions" role="application">
 							</div>
 						</div>
@@ -106,6 +130,7 @@
 									<input name="messagesSwitch" ng-model="message.switch" type="radio" value="1" />
 									<span>{{ __('on') }} @{{ message.date | date: 'MMMM d' }}@{{getSuffix(message.date | date: 'd')}}</span>
 								</label><br />
+
 								<label class="ui-radio">
 									<input name="messagesSwitch" ng-model="message.switch" type="radio" value="2" />
 								<span>{{ __('every Day') }}</span>
@@ -161,12 +186,11 @@
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
+						</div>-->
 				</div>
 			</div>
 			<div class="pull-right">
-				<button ng-click="saveMessage()" type="button" class="btn btn-sm btn-primary">{{ __('Next') }}</button>
+				<button ng-click="saveMessage()" ng-show="user.company_status == 'verified' && ! companyChanged" type="button" class="btn btn-sm btn-primary">{{ __('Next') }}</button>
 			</div>
 		</div>
 	</section>

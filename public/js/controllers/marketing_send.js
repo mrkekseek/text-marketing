@@ -12,10 +12,20 @@
 			'show': false
 		};
 
-		$scope.time = new Date();
-		$scope.minTime = $scope.time.setHours(9);
-		$scope.maxTime = $scope.time.setHours(20);
-		$scope.maxTime = $scope.time.setMinutes(59);
+		$scope.companyChanged = false;
+		$scope.oldCompany = angular.copy($scope.user.company_name);
+
+		var date = new Date();
+        $scope.seanceDate = date;
+
+        var date = new Date();
+        date.setHours(9, 0);
+        $scope.seanceTime = date;
+        $scope.timeMin = date;
+
+        var date = new Date();
+        date.setHours(21, 0);
+        $scope.timeMax = date;
 		
 		$scope.list = [];
         $scope.listsList = [];
@@ -23,39 +33,32 @@
         $scope.originList = {};
         $scope.originClient = {};
 
-        $scope.max_text_len = 140 - ' Txt STOP to OptOut'.length;
-        $scope.max_lms_text_len = 500 - ' Txt STOP to OptOut'.length;
-
 		$scope.message = {
 			'text': '',
 			'schedule': '0',
 			'switch': '1',
-			'date': new Date(),
-			'time': new Date(),
+			'time': [],
 			'day': '2',
 			'finish': new Date(),
 			'lists_id': []
-		};
+		};		
 
-		$scope.dateOptions = {
-			minDate: new Date()
-		};
+		$scope.companyChange = function () {
+            $scope.companyChanged = false;
+            if ($scope.oldCompany != $scope.user.company_name) {
+                $scope.companyChanged = true;
+            }
+        };
 
-		$scope.finishOptions = {
-			minDate: $scope.message.date,
-			dateFormat: 'yyyy-MMMM-dd',
-			dateDisabled: disabled
-		};
-
-		function disabled(data) {
-			var date = data.date;
-			switch ($scope.message.switch) {
-				case '3': return date.getDay() !== $scope.message.date.getDay();
-				case '4': return date.getDate() !== $scope.message.date.getDate();
-				case '5': return (date.getDate() + 1) %  $scope.message.day;
-				default: return false;
-			}
-		};
+        $scope.companySave = function () {
+            request.send('/users/company', {'company': $scope.user.company_name}, function (data) {
+                if (data) {
+                    $scope.user.company_status = data.status;
+                    $scope.companyChanged = false;
+                    $scope.checkCompany();
+                }
+            }, 'put');
+        };
 
 		$scope.saveMessage = function() {
 			var error = 1;
@@ -70,9 +73,7 @@
 			}
 
 			if (error) {
-				console.log($scope.message.lists_id);
 				for (var k in $scope.listsList) {
-					console.log($scope.message.lists_id.indexOf($scope.listsList[k].id));
 					if ($scope.message.lists_id.indexOf($scope.listsList[k].id) >= 0) {
 						
 						$scope.listsList[k].choosed = true;
@@ -105,12 +106,23 @@
         };
 
         $scope.confirm = function() {
+        	var time = {
+                'year': $scope.seanceDate.getFullYear(),
+                'month': $scope.seanceDate.getMonth() + 1,
+                'date': $scope.seanceDate.getDate(),
+                'hours': $scope.seanceTime.getHours(),
+                'minutes': $scope.seanceTime.getMinutes()
+            };
+
+            $scope.message.time = time;
+
         	for (var k in $scope.listsList) {
         		if ($scope.listsList[k].choosed && $scope.listsList[k].clients.length) {
         			$scope.message.lists_id.push($scope.listsList[k].id);
         		}
         	}
         	request.send('/messages/' + ( ! $scope.message.id ? 'create' : $scope.message.id), $scope.message, function (data) {
+        		$scope.message.lists_id = [];
 				$location.path('/marketing/outbox');
         	}, ( ! $scope.message.id ? 'put' : 'post'));
         }
@@ -287,8 +299,9 @@
             if (error) {
                 $scope.listsList[index].clients[clientIndex].lists_id = $scope.listsList[index].id;
                 $scope.activeEditable = $scope.listsList[index].clients[clientIndex].editable = false;
+                $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone; 
 
-                request.send('/clients/' + ( ! $scope.listsList[index].clients[clientIndex].id ? 'save' : $scope.listsList[index].clients[clientIndex].id), $scope.listsList[index].clients[clientIndex], function (data) {
+                request.send('/clients/' + ( ! $scope.listsList[index].clients[clientIndex].id ? '' : $scope.listsList[index].clients[clientIndex].id), $scope.listsList[index].clients[clientIndex], function (data) {
                     $scope.listsList[index].clients[clientIndex].id = data;
                     $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone;
                 }, ( ! $scope.listsList[index].clients[clientIndex].id ? 'put' : 'post'));
@@ -318,7 +331,6 @@
 				}
 			});
         };
-        
 
         $scope.insertAtCaret = function(areaId,text) {
             var txtarea = document.getElementById(areaId);
@@ -358,6 +370,14 @@
             }
             txtarea.scrollTop = scrollPos;
             $scope.message.text = txtarea.value;
+        };
+
+        $scope.maxChars = function() {
+        	return 500 - ' Txt STOP to OptOut'.length - ($scope.user.company_status == 'verified' ? $scope.user.company_name.length : 0);
+        };
+
+        $scope.maxOneText = function() {
+        	return 140 - ' Txt STOP to OptOut'.length - ($scope.user.company_status == 'verified' ? $scope.user.company_name.length : 0);
         };
 
         $scope.charsCount = function(text) {

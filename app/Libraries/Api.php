@@ -38,4 +38,11 @@ class Api
 		$block = false;
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block'));
 	}
+
+	static public function message($target_id, $clients, $message, $company)
+	{
+		$type = 'review';
+		$block = false;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block'));
+	}
 }
