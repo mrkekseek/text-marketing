@@ -11,9 +11,9 @@
 
     function SurveyCtrl($rootScope, $scope, $window, $location, request, validate, langs) {
         $scope.seance = {'show_reviews': false};
-        $scope.bed_answer = false;
-        $scope.show_thanks = false;
-        $scope.class = '';
+        $scope.questions = [];
+        $scope.thanks = false;
+        $scope.why = false;
         $scope.answers = [];
 
         const BUTTON_ID="redirectClick";
@@ -21,52 +21,46 @@
         const PLATFORM_IOS = 1;
         const PLATFORM_ANDROID = 2;
 
-        $scope.init = function(seance) {
+        $scope.init = function (seance, questions) {
             $scope.seance = seance;
-            $scope.bed_answer = $scope.seance.bed_answers;
-            $scope.class = $scope.seance.class;
-            $scope.seance.show_reviews = $scope.show_thanks = $scope.seance.show_reviews;
+            $scope.questions = questions;
+            $scope.thanks = $scope.questions == '0';
+            $scope.why = $scope.questions != '0' && $scope.questions.length == 1;
         };
 
-        $scope.repeatStars = function(key) {
+        $scope.range = function(key) {
             return new Array(key * 1);
         };
 
-        $scope.setAnswers = function(question) {
-            if (question.value == 5 && ! $scope.bed_answer) {
-                $scope.seance.show_reviews = $scope.show_thanks = true;
+        $scope.set = function(question) {
+            if (question.value == 5) {
                 $scope.answers.push({
-                    'users_id': $scope.seance.user.id,
-                    'clients_id': $scope.seance.clients_id,
-                    'seances_id': $scope.seance.id,
-                    'surveys_id': $scope.seance.surveys_id,
-                    'questions_id': question.id,
-                    'questions_type': question.type,
-                    'questions_text': question.text,
+                    'question_id': question.id,
                     'value': question.value
                 });
-                $scope.sendAnswers();
+
+                $scope.send();
             } else {
-                $scope.bed_answer = true;
+                $scope.why = true;
             }
         };
 
         $scope.save = function() {
             $scope.answers = [];
-            for (var k in $scope.seance.survey.questions) {
+            for (var k in $scope.questions) {
                 $scope.answers.push({
-                    'users_id': $scope.seance.user.id,
-                    'clients_id': $scope.seance.clients_id,
-                    'seances_id': $scope.seance.id,
-                    'surveys_id': $scope.seance.surveys_id,
-                    'questions_id': $scope.seance.survey.questions[k].id,
-                    'questions_type': $scope.seance.survey.questions[k].type,
-                    'questions_text': $scope.seance.survey.questions[k].text,
-                    'value': $scope.seance.survey.questions[k].value
+                    'question_id': $scope.questions[k].id,
+                    'value': $scope.questions[k].value
                 });
             }
-            $scope.show_thanks = true;
-            $scope.sendAnswers();
+            $scope.send();
+        };
+
+        $scope.send = function () {
+            request.send('/answers/' + $scope.seance.id, {'answers': $scope.answers}, function (data) {
+                $scope.thanks = true;
+                $scope.why = false;
+            }, 'put');
         };
 
         $scope.socialSave = function(url) {
@@ -85,12 +79,6 @@
                 case 'Yelp': $scope.reviewYelp(url.social_id); break;
                 default: return;
             }
-        };
-
-        $scope.sendAnswers = function() {
-            request.send('/answers/save', {'answers': $scope.answers, 'seance': $scope.seance}, function(data) {
-
-            }, 'put');
         };
 
         $scope.reviewYelp = function(businessId) {

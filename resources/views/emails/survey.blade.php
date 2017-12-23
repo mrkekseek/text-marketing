@@ -12,27 +12,27 @@
 							&nbsp;
 						</td>
 						<td class="star" style="border: 0; vertical-align: middle; width: 12%; text-align: center;">
-							<a href="{{config('app.url')}}/email/answers/{{ $id }}/1" style="text-decoration: none; opacity: 0.2;">
+							<a href="{{config('app.url')}}/seances/{{ $id }}/1" style="text-decoration: none; opacity: 0.2;">
 								<img src="{{config('app.url')}}/img/star_hover.png" alt="1" style="width: 100%; vertical-align: middle;" />
 							</a>
 						</td>
 						<td class="star" style="border: 0; vertical-align: middle; width: 12%; text-align: center;">
-							<a href="{{config('app.url')}}/email/answers/{{ $id }}/2" style="text-decoration: none; opacity: 0.4;">
+							<a href="{{config('app.url')}}/seances/{{ $id }}/2" style="text-decoration: none; opacity: 0.4;">
 								<img src="{{config('app.url')}}/img/star_hover.png" alt="2" style="width: 100%; vertical-align: middle;" />
 							</a>
 						</td>
 						<td class="star" style="border: 0; vertical-align: middle; width: 12%; text-align: center;">
-							<a href="{{config('app.url')}}/email/answers/{{ $id }}/3" style="text-decoration: none; opacity: 0.6;">
+							<a href="{{config('app.url')}}/seances/{{ $id }}/3" style="text-decoration: none; opacity: 0.6;">
 								<img src="{{config('app.url')}}/img/star_hover.png" alt="3" style="width: 100%; vertical-align: middle;" />
 							</a>
 						</td>
 						<td class="star" style="border: 0; vertical-align: middle; width: 12%; text-align: center;">
-							<a href="{{config('app.url')}}/email/answers/{{ $id }}/4" style="text-decoration: none; opacity: 0.8;">
+							<a href="{{config('app.url')}}/seances/{{ $id }}/4" style="text-decoration: none; opacity: 0.8;">
 								<img src="{{config('app.url')}}/img/star_hover.png" alt="4" style="width: 100%; vertical-align: middle;" />
 							</a>
 						</td>
 						<td class="star" style="border: 0; vertical-align: middle; width: 12%; text-align: center;">
-							<a href="{{config('app.url')}}/email/answers/{{ $id }}/5" style="text-decoration: none; opacity: 1.0;">
+							<a href="{{config('app.url')}}/seances/{{ $id }}/5" style="text-decoration: none; opacity: 1.0;">
 								<img src="{{config('app.url')}}/img/star_hover.png" alt="5" style="width: 100%; vertical-align: middle;" />
 							</a>
 						</td>

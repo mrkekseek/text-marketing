@@ -15,9 +15,8 @@ class CreateSeancesTable extends Migration
     {
         Schema::create('seances', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->integer('review_id')->unsigned();
             $table->integer('client_id')->unsigned();
-            $table->integer('survey_id')->unsigned();
             $table->string('code');
             $table->string('url');
             $table->string('date');

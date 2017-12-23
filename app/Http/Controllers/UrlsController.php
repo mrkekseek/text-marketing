@@ -2,35 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\SocialUrl;
-use Illuminate\Http\Request;
 use File;
+use App\Url;
+use App\Http\Requests\UrlsCreateRequest;
 use App\Jobs\GetSocialIds;
+use Illuminate\Http\Request;
 
 class UrlsController extends Controller
 {
     public function all()
 	{
-		return SocialUrl::where('users_id', auth()->user()->id)->get();
+		return auth()->user()->urls()->get();
 	}
 
-	public function save(Request $request, $id = false)
+	public function create(UrlsCreateRequest $request)
 	{
-		$url = SocialUrl::firstOrNew(['id' => empty($id) ? 0 : $id]);
-		$url->users_id = auth()->user()->id;
-		$url->name = $request['name'];
-		$url->url = $request['url'];
-		$url->active = ! empty($request['active']) ? $request['active'] : 0;
-		$url->save();
-
-		$file = 'img/icon_url_'.$url->id.'.ico';
-		copy('https://www.google.com/s2/favicons?domain='.$url->url, $file);
-		$url->icon = $file;
-		$this->message(__('Social Profile Pages were successfully saved'), 'success');
-
+		$data = $request->only(['name', 'url', 'active']);
+		$data = array_filter($data, 'strlen');
+		$url = auth()->user()->urls()->create($data);
+		
 		$job = (new GetSocialIds($url))->onQueue('socials');
         $this->dispatch($job);
 
+		$this->message(__('Review Site was successfully saved'), 'success');
 		return $url;
 	}
 

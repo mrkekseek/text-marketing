@@ -13,9 +13,9 @@ class CreateSocialUrlsTable extends Migration
      */
     public function up()
     {
-        Schema::create('social_urls', function (Blueprint $table) {
+        Schema::create('urls', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('users_id')->unsigned()->default(0);
+            $table->integer('user_id')->unsigned()->default(0);
             $table->string('name')->default('');
             $table->string('url')->default('');
             $table->string('social_id')->default('');
@@ -32,6 +32,6 @@ class CreateSocialUrlsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('social_urls');
+        Schema::dropIfExists('urls');
     }
 }
