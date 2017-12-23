@@ -7,6 +7,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Support\Facades\Log;
 use App\Review;
 use App\Libraries\Api;
 
@@ -41,9 +42,6 @@ class SendText implements ShouldQueue
     {
         $response = Api::review($this->review->id, $this->clients, $this->text, $this->company);
 
-        if( ! file_exists('logs')) {
-            mkdir('logs', 0777);
-        }
-        file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').': RESPONSE'.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
+        Log::info('Response Job', ['data' => $response]);
     }
 }
