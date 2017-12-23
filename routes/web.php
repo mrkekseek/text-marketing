@@ -99,7 +99,7 @@ Route::get('seances/{id?}/{value?}', 'AnswersController@email');
 Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
 
 Route::any('company/push', 'ResponseController@company');
-Route::any('seance/push', 'SeancesController@push');
+Route::any('review/push/{id}', 'SeancesController@push');
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
