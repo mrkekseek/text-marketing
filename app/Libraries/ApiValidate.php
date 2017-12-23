@@ -13,7 +13,7 @@ class ApiValidate
 
     static public function companyExists($company)
     {
-        return auth()->user()->company_name == $request->company;
+        return auth()->user()->company_name == $company;
     }
 
     static public function companyVerified($company)
@@ -60,10 +60,10 @@ class ApiValidate
         if ( ! empty($block)) {
             $hour = Carbon::now()->hour;
             if ($hour <= self::SEND_FROM || $hour > self::SEND_TO) {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        return false;
     }
 }

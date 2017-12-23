@@ -7,11 +7,12 @@ use App\Survey;
 use App\User;
 use App\Question;
 use App\SocialUrl;
-use App\Libraries\Api;
+use App\Libraries\ApiValidate;
 use Bitly;
 use App\Http\Requests\SeancesCreateRequest;
 use App\Http\Services\SurveysService;
 use Illuminate\Http\Request;
+use App\Jobs\SendText;
 use App\Jobs\SendEmail;
 use Carbon\Carbon;
 
@@ -26,9 +27,11 @@ class SeancesController extends Controller
     {
         $this->surveySave($request);
 
+        $clients = $this->getClients($request);
+
         $canSave = true;
         if ( ! empty($request->text)) {
-            $canSave *= $this->textValidate($request);
+            $canSave *= $this->textValidate($request, $clients);
         }
 
         if ( ! empty($request->email)) {
@@ -36,23 +39,25 @@ class SeancesController extends Controller
         }
 
         if (empty($canSave)) {
-            return false;
+            return 0;
         }
+
+        $review = auth()->user()->reviews()->create([
+            'survey_id' => auth()->user()->surveys()->first()->id,
+        ]);
 
         $text = trim(auth()->user()->surveys()->first()->text);
 
-        foreach ($request->clients as $client) {
-            $code = $this->code($request->time);
+        foreach ($clients as $client) {
             $data = [
                 'client_id' => $client['id'],
-                'survey_id' => auth()->user()->surveys()->first()->id,
-                'code' => $code,
-                'url' => $this->url($code),
+                'code' => $client['code'],
+                'url' => $client['link'],
                 'date' => $this->getDate($request->schedule, $request->time),
                 'type' => $this->getType($request->text, $request->email),
             ];
 
-            $seance = auth()->user()->seances()->create($data);
+            $seance = $review->seances()->create($data);
             
             if ( ! empty($request->email)) {
                 $this->sendEmail($client, $seance, $request->survey, $data['date']);
@@ -60,13 +65,13 @@ class SeancesController extends Controller
         }
 
         if ( ! empty($request->text)) {
-            $this->sendText($request, $text);
+            $this->sendText($review, $clients, $text, $this->getDate($request->schedule, $request->time));
         }
 
         return $this->message('Review was successfully saved', 'success');
     }
 
-    private function textValidate($request)
+    private function textValidate($request, $clients)
     {
         if ( ! ApiValidate::companyExists($request->company)) {
             return $this->message('This Company Name isn\'t verified');
@@ -81,14 +86,13 @@ class SeancesController extends Controller
             return $this->message('SMS Text contains forbidden characters');
         }
 
-        $clients = $this->getClients($request, $text);
         $length = true;
         $phones = true;
         foreach ($clients as $client) {
             $message = $text;
 
             if ( ! empty($client['link'])) {
-                $message = str_replace('[$Link]', $client['firstname'], $message);
+                $message = str_replace('[$Link]', $client['link'], $message);
             }
 
             if ( ! empty($client['firstname'])) {
@@ -116,7 +120,7 @@ class SeancesController extends Controller
             return $this->message('Some client\'s phone numbers have wrong format');
         }
 
-        if (ApiValidate::underBlocking()) {
+        if (ApiValidate::underBlocking(false)) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 
@@ -128,14 +132,30 @@ class SeancesController extends Controller
         return true;
     }
 
-    private function getClients($request, $text)
+    private function getClients($request)
     {
         $clients = [];
         foreach ($request->clients as $client) {
+            $client['code'] = $this->code($request->time);
+            $client['link'] = $this->url($client['code']);
+
+            $clients[] = $client;
+        }
+
+        return $clients;
+    }
+
+    private function sendClients($clients, $text)
+    {
+        $result = [];
+        foreach ($clients as $client) {
             $row = [
                 'phone' => $client['phone'],
-                'link' => $data['url']
             ];
+
+            if (strpos($text, '[$Link]') !== false) {
+                $row['link'] = $client['link'];
+            }
 
             if (strpos($text, '[$FirstName]') !== false) {
                 $row['firstname'] = $client['firstname'];
@@ -145,16 +165,16 @@ class SeancesController extends Controller
                 $row['lastname'] = $client['lastname'];
             }
 
-            $clients[] = $row;
+            $result[] = $row;
         }
+
+        return $result;
     }
 
-    public function sendText($request, $text)
+    public function sendText($review, $clients, $text, $date)
     {
-        $response = Api::survey($this->getClients($request, $text), $text, auth()->user()->company_name);
-        if ($response['code'] == 200) {
-            // save Receiveers
-        }
+        $delay = Carbon::now()->diffInSeconds($date);
+        SendText::dispatch($review, $this->sendClients($clients, $text), $text, auth()->user()->company_name)->onQueue('texts')->delay($delay);
     }
 
     public function sendEmail($client, $seance, $survey, $date)

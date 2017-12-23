@@ -59,9 +59,9 @@ class User extends Authenticatable
         return $this->hasOne('App\Survey', 'user_id');
     }
 
-    public function seances()
+    public function reviews()
     {
-        return $this->hasOne('App\Seance', 'user_id');
+        return $this->hasOne('App\Review', 'user_id');
     }
 
     public function urls()
