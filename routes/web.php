@@ -63,10 +63,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 
 	Route::get('urls', 'UrlsController@all');
 	Route::put('urls', 'UrlsController@create');
-	Route::post('urls/{id}', 'UrlsController@update');
-	Route::delete('urls/{id}', 'UrlsController@remove');
+	Route::post('urls/{url}', 'UrlsController@update');
+	Route::delete('urls/{url}', 'UrlsController@remove');
 
 	Route::put('seances', 'SeancesController@create');
+	Route::put('seances/{seance}/tap', 'SeancesController@tap');
 
 	Route::put('answers/{id}', 'AnswersController@save');
 
@@ -93,8 +94,8 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
-Route::get('survey/{param?}', 'SeancesController@getSeance');
-Route::get('seances/{id?}/{value?}', 'AnswersController@email');
+Route::get('seances/{code}', 'AnswersController@text');
+Route::get('seances/{id}/{value}', 'AnswersController@email');
 
 Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
 

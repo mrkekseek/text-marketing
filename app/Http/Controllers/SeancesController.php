@@ -207,20 +207,11 @@ class SeancesController extends Controller
         SurveysService::save($data);
     }
 
-    public function getSeance($param)
+    public function tap(Request $request, Seance $seance)
     {
-        $seance = Seance::where('code', $param)->first();
-        $seance['user'] = User::where('id', $seance['users_id'])->first();
-        $seance['user']['urls'] = SocialUrl::where('users_id', $seance['users_id'])->get();
-        $seance['survey'] = Survey::where('id', $seance['surveys_id'])->first();
-        $seance['survey']['questions'] = Question::all();
-        return view('survey')->with(['seance' => $seance]);
-    }
-
-    public function socialSave($id = false, $post = [])
-    {
-        $seance = Seance::find($id);
-        $seance->update(['social_tap' => $post['name']]);
+        $seance->update([
+            'url_id' => $request->url_id,
+        ]);
     }
 
     public function getDate($schedule, $time)

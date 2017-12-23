@@ -59,14 +59,11 @@
         $scope.send = function () {
             request.send('/answers/' + $scope.seance.id, {'answers': $scope.answers}, function (data) {
                 $scope.thanks = true;
-                $scope.why = false;
             }, 'put');
         };
 
-        $scope.socialSave = function(url) {
-            request.send('/seances/' + $scope.seance.id + '/socialSave/', url, function(data) {
-
-            }, 'put');
+        $scope.urlClick = function(url) {
+            request.send('/seances/' + $scope.seance.id + '/tap', {'url_id': url.id}, false, 'put');
             
             if ( ! url.social_id) {
                 $scope.redirect(url.url);
@@ -84,16 +81,24 @@
         $scope.reviewYelp = function(businessId) {
             const browserLink = 'https://www.yelp.com/writeareview/biz/' + businessId + '?return_url=%2Fbiz%2F' + businessId;
             switch ($scope.getPlatform()) {
-                case PLATFORM_ANDROID: $scope.redirect($scope.getEncodeAndroidIntent(browserLink)); break;
-                case PLATFORM_IOS: $scope.redirect($scope.getEncodeIOSLink(browserLink)); break;
-                default: $scope.redirect(browserLink); break;
+                case PLATFORM_ANDROID:
+                    $scope.redirect($scope.getEncodeAndroidIntent(browserLink));
+                    break;
+                case PLATFORM_IOS:
+                    $scope.redirect($scope.getEncodeIOSLink(browserLink));
+                    break;
+                default:
+                    $scope.redirect(browserLink);
+                    break;
             }
         }
 
         $scope.reviewFacebook = function(pageId) {
             const browserLink = "https://www.facebook.com/pg/"+pageId+"/reviews/";
             switch ($scope.getPlatform()){
-                case PLATFORM_ANDROID: $scope.redirect($scope.getEncodeAndroidIntent(browserLink)); break;
+                case PLATFORM_ANDROID:
+                    $scope.redirect($scope.getEncodeAndroidIntent(browserLink));
+                    break;
                 case PLATFORM_IOS:
                     $scope.redirect($scope.getEncodeIOSLink(browserLink));
                     break;
@@ -125,7 +130,7 @@
         }
 
         $scope.redirect = function(link) {
-            document.getElementById(BUTTON_ID).href=link;
+            document.getElementById(BUTTON_ID).href = link;
             document.getElementById(BUTTON_ID).click();
         }
 
@@ -134,7 +139,7 @@
             if(urlParts.length > 1) {
                 scheme = scheme || urlParts.shift();
                 url = url || urlParts.join('');
-                return scheme+"://"+url;
+                return scheme + "://" + url;
             }
             return fallbackUrl;
         }
@@ -145,7 +150,7 @@
                 scheme = scheme || urlParts.shift();
                 url = url || urlParts.join('');
             }
-            return "intent://"+url+"#Intent;action=android.intent.action.VIEW;scheme="+scheme+";S.browser_fallback_url="+fallbackUrl+";end"
+            return "intent://" + url + "#Intent;action=android.intent.action.VIEW;scheme=" + scheme + ";S.browser_fallback_url=" + fallbackUrl + ";end"
         }
     };
 })();
