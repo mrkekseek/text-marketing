@@ -90,6 +90,7 @@ class SeancesController extends Controller
 
         $length = true;
         $phones = true;
+        $limit = true;
         foreach ($clients as $client) {
             $message = $text;
 
@@ -112,20 +113,28 @@ class SeancesController extends Controller
             if ( ! ApiValidate::phoneFormat($client['phone'])) {
                 $phones = false;
             }
+
+            if (ApiValidate::underLimit($client['phone'])) {
+                $limit = false;
+            }
         }
 
         if (empty($length)) {
-            return $this->message('SMS Text is too long');
+            return $this->message('SMS Text is too long. Text will not be send');
         }
 
         if (empty($phones)) {
-            return $this->message('Some client\'s phone numbers have wrong format');
+            return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
+        }
+
+        if (empty($limit)) {
+            return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
         }
 
         if (ApiValidate::underBlocking(false)) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
-
+        return false;
         return true;
     }
 
