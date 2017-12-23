@@ -40,5 +40,10 @@ class SendText implements ShouldQueue
     public function handle()
     {
         $response = Api::review($this->review->id, $this->clients, $this->text, $this->company);
+
+        if( ! file_exists('logs')) {
+            mkdir('logs', 0777);
+        }
+        file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').': RESPONSE'.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 }
