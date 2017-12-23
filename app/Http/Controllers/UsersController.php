@@ -10,6 +10,7 @@ use App\Http\Services\LinksService;
 use App\Http\Requests\UsersCreateRequest;
 use App\Http\Requests\UsersPasswordRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UsersController extends Controller
 {
@@ -114,4 +115,11 @@ class UsersController extends Controller
 	{
 		return ['status' => auth()->user()->company_status];
 	}
+
+	public function push(Request $request)
+    {
+    	$data = $request->json()->all();
+
+    	Log::info('Company Push', ['data' => $data]);
+    }
 }
