@@ -247,8 +247,8 @@ class SeancesController extends Controller
 
     public function push(Request $request, Review $review)
     {
-        $data = $request->all();
+        $data = $request->json()->all();
 
-        Log::info('Seance Push', ['data' => $data, 'review' => $review]);
+        Log::info('Seance Push', ['data' => $data, 'review' => $review->toArray()]);
     }
 }
