@@ -1792,8 +1792,10 @@ body.surveys {
 	font-weight: bold;
 }
 
-.questions-answers .form-control {
-	max-width: 320px;
+@media (max-width: 768) {
+	.questions-answers .form-control {
+		max-width: 320px;
+	}
 }
 
 .surveys-prev-next {

@@ -7,11 +7,12 @@ use App\Survey;
 use App\User;
 use App\Question;
 use App\SocialUrl;
-use App\Libraries\Api;
+use App\Libraries\ApiValidate;
 use Bitly;
 use App\Http\Requests\SeancesCreateRequest;
 use App\Http\Services\SurveysService;
 use Illuminate\Http\Request;
+use App\Jobs\SendText;
 use App\Jobs\SendEmail;
 use Carbon\Carbon;
 
@@ -26,64 +27,154 @@ class SeancesController extends Controller
     {
         $this->surveySave($request);
 
+        $clients = $this->getClients($request);
+
+        $canSave = true;
         if ( ! empty($request->text)) {
-            if (auth()->user()->company_name == $request->company) {
-                if (auth()->user()->company_status != 'verified') {
-                    return $this->message('Company Name must be verified');
-                }
-            } else {
-                return $this->message('This Company Name isn\'t verified');
-            }
+            $canSave *= $this->textValidate($request, $clients);
         }
 
-        $text = auth()->user()->surveys()->first()->text; 
-        $clients = [];
+        if ( ! empty($request->email)) {
+            $canSave *= $this->emailValidate($request);
+        }
 
-    	foreach ($request->clients as $client) {
-            $code = $this->code($request->time);
+        if (empty($canSave)) {
+            return 0;
+        }
+
+        $review = auth()->user()->reviews()->create([
+            'survey_id' => auth()->user()->surveys()->first()->id,
+        ]);
+
+        $text = trim(auth()->user()->surveys()->first()->text);
+
+        foreach ($clients as $client) {
             $data = [
                 'client_id' => $client['id'],
-                'survey_id' => auth()->user()->surveys()->first()->id,
-                'code' => $code,
-                'url' => $this->url($code),
+                'code' => $client['code'],
+                'url' => $client['link'],
                 'date' => $this->getDate($request->schedule, $request->time),
                 'type' => $this->getType($request->text, $request->email),
             ];
 
-            $seance = auth()->user()->seances()->create($data);
-
-            if ( ! empty($request->text)) {
-                $row = [
-                    'phone' => $client['phone'],
-                    'link' => $seance->url
-                ];
-
-                if (strpos($text, '[$FirstName]') !== false) {
-                    $row['firstname'] = $client['firstname'];
-                }
-
-                if (strpos($text, '[$LastName]') !== false) {
-                    $row['lastname'] = $client['lastname'];
-                }
-
-                $clients[] = $row;
-            }
-
+            $seance = $review->seances()->create($data);
+            
             if ( ! empty($request->email)) {
                 $this->sendEmail($client, $seance, $request->survey, $data['date']);
             }
-    	}
+        }
 
         if ( ! empty($request->text)) {
-            $this->sendText($clients, $text);
+            $this->sendText($review, $clients, $text, $this->getDate($request->schedule, $request->time));
         }
-        
-    	return $this->message('Review was successfully saved', 'success');
+
+        return $this->message('Review was successfully saved', 'success');
     }
 
-    public function sendText($clients, $text)
+    private function textValidate($request, $clients)
     {
-        $data = Api::survey($clients, $text, auth()->user()->company_name);
+        if ( ! ApiValidate::companyExists($request->company)) {
+            return $this->message('This Company Name isn\'t verified');
+        }
+
+        if ( ! ApiValidate::companyVerified($request->company)) {
+            return $this->message('Company Name must be verified');
+        }
+
+        $text = trim(auth()->user()->surveys()->first()->text);
+        if ( ! ApiValidate::messageSymbols($text)) {
+            return $this->message('SMS Text contains forbidden characters');
+        }
+
+        $length = true;
+        $phones = true;
+        foreach ($clients as $client) {
+            $message = $text;
+
+            if ( ! empty($client['link'])) {
+                $message = str_replace('[$Link]', $client['link'], $message);
+            }
+
+            if ( ! empty($client['firstname'])) {
+                $message = str_replace('[$FirstName]', $client['firstname'], $message);
+            }
+
+            if ( ! empty($client['lastname'])) {
+                $message = str_replace('[$LastName]', $client['lastname'], $message);
+            }
+
+            if ( ! ApiValidate::messageLength($message, $request->company)) {
+                $length = false;
+            }
+
+            if ( ! ApiValidate::phoneFormat($client['phone'])) {
+                $phones = false;
+            }
+        }
+
+        if (empty($length)) {
+            return $this->message('SMS Text is too long');
+        }
+
+        if (empty($phones)) {
+            return $this->message('Some client\'s phone numbers have wrong format');
+        }
+
+        if (ApiValidate::underBlocking(false)) {
+            return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
+        }
+
+        return true;
+    }
+
+    private function emailValidate($request)
+    {
+        return true;
+    }
+
+    private function getClients($request)
+    {
+        $clients = [];
+        foreach ($request->clients as $client) {
+            $client['code'] = $this->code($request->time);
+            $client['link'] = $this->url($client['code']);
+
+            $clients[] = $client;
+        }
+
+        return $clients;
+    }
+
+    private function sendClients($clients, $text)
+    {
+        $result = [];
+        foreach ($clients as $client) {
+            $row = [
+                'phone' => $client['phone'],
+            ];
+
+            if (strpos($text, '[$Link]') !== false) {
+                $row['link'] = $client['link'];
+            }
+
+            if (strpos($text, '[$FirstName]') !== false) {
+                $row['firstname'] = $client['firstname'];
+            }
+
+            if (strpos($text, '[$LastName]') !== false) {
+                $row['lastname'] = $client['lastname'];
+            }
+
+            $result[] = $row;
+        }
+
+        return $result;
+    }
+
+    public function sendText($review, $clients, $text, $date)
+    {
+        $delay = Carbon::now()->diffInSeconds($date);
+        SendText::dispatch($review, $this->sendClients($clients, $text), $text, auth()->user()->company_name)->onQueue('texts')->delay($delay);
     }
 
     public function sendEmail($client, $seance, $survey, $date)

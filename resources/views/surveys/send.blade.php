@@ -116,7 +116,7 @@
 									</div>
 
 									<div class="time-box">
-										<div uib-timepicker ng-model="seanceTime" hour-step="1" minute-step="1" min="timeMin" max="timeMax" show-meridian="false"></div>
+										<div uib-timepicker ng-model="seanceTime" hour-step="1" minute-step="1" show-meridian="false"></div>
 									</div>
 								</div>
 							</div>

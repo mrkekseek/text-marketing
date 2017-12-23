@@ -34,65 +34,41 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ReviewsSettingsCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', 'logger', ReviewsSettingsCtrl]);
+    angular.module('app').controller('ReviewsSettingsCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', 'logger', 'validate', ReviewsSettingsCtrl]);
 
-    function ReviewsSettingsCtrl($rootScope, $scope, $uibModal, request, langs, logger) {
+    function ReviewsSettingsCtrl($rootScope, $scope, $uibModal, request, langs, logger, validate) {
         $scope.inputs = [''];
         $scope.list = [];
         $scope.origin_input = {};
 
         $scope.init = function() {
+            $scope.get();
+        };
+
+        $scope.get = function () {
             request.send('/urls', {}, function (data) {
-                $scope.inputs = [];
-                for (var k in data) {
-                    if (data[k].default) {
-                        $scope.list.push({
-                            'id': data[k].id,
-                            'name': data[k].name,
-                            'url': data[k].url,
-                            'default': data[k].default,
-                            'active': data[k].active == 1 ? true : false
-                        });
-                    } else {
-                        $scope.inputs.push({
-                            'id': data[k].id,
-                            'name': data[k].name,
-                            'url': data[k].url,
-                            'default': data[k].default,
-                            'active': data[k].active == 1 ? true : false
-                        });
-                    }
+                if (data) {
+                    $scope.inputs = data;
+                    $scope.inputs.push({'editable': true});
                 }
-                $scope.inputs.push({'editable': true});
             }, 'get');
         };
 
         $scope.save = function (input) {
             var error = 1;
-            if (! input.url || input.url == '') {
-                logger.logError(langs.get('Url is empty.'));
-                error = 0;
-            }
-
-            if (! input.name || input.name == '') {
-                logger.logError(langs.get('Name is empty.'));
-                error = 0;
-            }
+            error *= validate.check($scope.form.name, 'Name');
+            error *= validate.check($scope.form.url, 'Url');
 
             if (error) {
-                input.editable = false;
-                if (input.id) {
-                    request.send('/urls/' + input.id, input, function (data) {
-                        input.icon = data.icon;
-                    });
-                } else {
-                    console.log(input);
-                    request.send('/urls/save', input, function (data) {
-                        input.id = data.id;
-                        input.icon = data.icon;
-                    }, 'put');
-                    $scope.inputs.push({'editable': true});
-                }
+                request.send('/urls/' + (input.id ? input.id : ''), input, function (data) {
+                    if (data) {
+                        input.editable = false;
+                        if ( ! input.id) {
+                            $scope.inputs.push({'editable': true});
+                        }
+                        input = data;
+                    }
+                }, (input.id ? 'post' : 'put'));
             }
         };
 

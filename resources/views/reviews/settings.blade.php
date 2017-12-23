@@ -10,90 +10,73 @@
 				<div class="panel-body">
 					<form name="form">
 						<div class="divider"></div>
-						<div class="form-horizontal" ng-repeat="url in list">
-							<div class="form-group">
-								<label class="col-sm-3 control-label">
-									<span class="pull-left">
-										<i class="fa fa-@{{ url.name.toLowerCase() }} reviews-icons" aria-hidden="true"></i>@{{ url.name }}</span>
-									</label>
-								<div class="col-sm-6">
-									<div ng-class="{'input-group': url.name == 'Facebook'}">
-										<input name="@{{ url.name }}" type="text" class="form-control" ng-model="url.url" />
-										<span class="input-group-btn" ng-show="url.name == 'Facebook'">
-											<button type="button" class="btn btn-default">
-												<span class="">{{ __('Login') }}</span>
-											</button>
-										</span>
-									</div>
-								</div>
-								<div class="col-sm-3">
-									<label class="ui-switch ui-switch-success ui-switch-sm">
-										<input type="checkbox" ng-model="url.active" ng-click="changeActive(url)" />
-										<i></i>
-									</label>
-									<span ng-show="url.active" class="team-leader">{{ __('Active') }}</span>
-									<span ng-show="!url.active">&nbsp;</span>
-								</div>
-							</div>
-							<div class="divider divider-dashed divider-lg pull-in"></div>
-						</div>
 
 						<div class="form-group">
 							<div class="row">
 								<div class="col-sm-3">
 									<label>{{ __('Name') }}</label>
 								</div>
+
 								<div class="col-sm-6">
 									<label>{{ __('Url') }}</label>
 								</div>
+
 								<div class="col-sm-3">
 									<label>{{ __('Enabled') }}</label>
 								</div>
 							</div>
 						</div>
 
-						<div class="form-group url-block" ng-repeat="input in inputs track by $index">
+						<div class="form-group url-block" ng-repeat="input in inputs">
 							<div class="row">
 								<div class="col-sm-3">
-									<div class="span-url" ng-show="! inputs[$index].editable">
-										<img src="/img/icon_url_@{{ inputs[$index].id }}.ico" />
-										<strong>@{{ inputs[$index].name }}</strong>
+									<div class="span-url" ng-show=" ! input.editable">
+										<img src="/img/icon_url_@{{ input.id }}.ico" alt="" />
+										<strong>@{{ input.name }}</strong>
 									</div>
-									<div ng-show="inputs[$index].editable">
-										<input type="text" class="form-control" ng-model="inputs[$index].name"  />
+
+									<div ng-show="input.editable">
+										<input type="text" name="name" class="form-control" ng-model="input.name"  />
 									</div>
 								</div>
+
 								<div class="col-sm-6">
-									<div class="span-url" ng-show="! inputs[$index].editable">
-										<a href="@{{ inputs[$index].url }}" target="_blank"><strong>@{{ inputs[$index].url }}</strong></a>
+									<div class="span-url" ng-show=" ! input.editable">
+										<a href="@{{ input.url }}" target="_blank"><strong>@{{ input.url }}</strong></a>
 									</div>
-									<div ng-show="inputs[$index].editable">
-										<input type="text" class="form-control" ng-model="inputs[$index].url" />
+
+									<div ng-show="input.editable">
+										<input type="text" name="url" class="form-control" ng-model="input.url" />
 									</div>
 								</div>
+
 								<div class="col-sm-1">
 									<div class="switch-cell">
 										<label class="ui-switch ui-switch-success ui-switch-sm url-switch">
-											<input type="checkbox" ng-model="inputs[$index].active" ng-click="changeActive(inputs[$index])" />
+											<input type="checkbox" ng-model="input.active" ng-click="changeActive(input)" />
 											<i></i>
 										</label>
 									</div>
 								</div>
+
 								<div class="col-sm-2">
-									<button type="button" class="btn btn-primary" ng-click="save(inputs[$index])" ng-if="$index == inputs.length - 1">
+									<button type="button" class="btn btn-primary" ng-click="save(input)" ng-show="$index == (inputs.length - 1)">
 										{{ __('Add') }}
 									</button>
-									<div class="icon-cell" ng-show="$index < inputs.length - 1 && ! inputs[$index].editable">
+
+									<div class="icon-cell" ng-show="$index < (inputs.length - 1) && ! input.editable">
 										<div>
-											<i class="fa fa-pencil text-success" ng-click="edit(inputs[$index])" aria-hidden="true"></i>
+											<i class="fa fa-pencil text-success" ng-click="edit(input)" aria-hidden="true"></i>
 										</div>
+
 										<div>
-											<i class="fa fa-trash text-danger" ng-click="removeInput(inputs[$index], $index)" aria-hidden="true"></i>
+											<i class="fa fa-trash text-danger" ng-click="remove(input, $index)" aria-hidden="true"></i>
 										</div>
 									</div>
-									<div class="btn-group" role="group" ng-show="inputs[$index].editable && $index != inputs.length - 1">
+
+									<div class="btn-group" role="group" ng-show="input.editable && $index != inputs.length - 1">
 										<button type="button" ng-click="cancel($index)" class="btn btn-default">{{ __('Cancel') }}</button>
-										<button type="button" class="btn btn-primary" ng-click="save(inputs[$index])">{{ __('Save') }}</button>
+										<button type="button" class="btn btn-primary" ng-click="save(input)">{{ __('Save') }}</button>
 									</div>
 								</div>
 							</div>

@@ -32,10 +32,10 @@ class Api
 		return self::send('company/name', ['name' => $name]);
 	}
 
-	static public function survey($clients, $message, $company)
+	static public function review($target_id, $clients, $message, $company)
 	{
-		$type = 'survey';
-		$block = true;
-		return self::send('message/send', compact('clients', 'message', 'company', 'type', 'block'));
+		$type = 'review';
+		$block = false;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block'));
 	}
 }

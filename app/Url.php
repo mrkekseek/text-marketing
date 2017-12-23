@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SocialUrl extends Model
+class Url extends Model
 {
 	protected $guarded = [];
 }
