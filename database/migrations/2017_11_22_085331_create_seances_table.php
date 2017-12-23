@@ -15,15 +15,18 @@ class CreateSeancesTable extends Migration
     {
         Schema::create('seances', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('review_id')->unsigned();
-            $table->integer('client_id')->unsigned();
+            $table->integer('review_id')->unsigned()->default(0);
+            $table->integer('client_id')->unsigned()->default(0);
+            $table->integer('url_id')->unsigned()->default(0);
             $table->string('code');
             $table->string('url');
             $table->string('date');
-            $table->integer('completed')->unsigned()->default(0);
-            $table->integer('show')->unsigned()->default(0);
-            $table->string('tap')->default('');
+            $table->tinyInteger('completed')->unsigned()->default(0);
+            $table->tinyInteger('show')->unsigned()->default(0);
             $table->string('type');
+            $table->tinyInteger('finish')->unsigned()->default(0);
+            $table->tinyInteger('success')->unsigned()->default(0);
+            $table->text('message');
             $table->timestamps();
         });
     }
