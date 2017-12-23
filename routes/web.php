@@ -98,7 +98,7 @@ Route::get('seances/{id?}/{value?}', 'AnswersController@email');
 
 Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
 
-Route::any('company/push', 'ResponseController@company');
+Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');
 
 Route::any('{catchall}', function() {
