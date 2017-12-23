@@ -21,7 +21,7 @@ class SurveysService
                 $seance->update([
                     'finish' => $client['finish'],
                     'success' => $client['success'],
-                    'message' => $client['message'],
+                    'message' => ! empty($client['message']) ? $client['message'] : '',
                 ]);
             }
         }
