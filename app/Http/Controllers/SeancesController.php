@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Seance;
+use App\Review;
 use App\Survey;
 use App\User;
 use App\Question;
-use App\SocialUrl;
 use App\Libraries\ApiValidate;
 use Bitly;
 use App\Http\Requests\SeancesCreateRequest;
@@ -244,9 +244,10 @@ class SeancesController extends Controller
 		return Bitly::getUrl(config('app.url').'/survey/'.$code);
 	}
 
-    public function push(Request $request)
+    public function push(Request $request, Review $review)
     {
         $data = $request->all();
+        $data['review'] = $review;
         if( ! file_exists('logs')) {
             mkdir('logs', 0777);
         }
