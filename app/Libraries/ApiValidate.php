@@ -49,7 +49,7 @@ class ApiValidate
             return false;
         }
 
-        if (strpos($phone, '1') || strpos($phone, '0')) {
+        if (strpos($phone, '1') === 0 || strpos($phone, '0') === 0) {
             return false;
         }
 
@@ -60,7 +60,7 @@ class ApiValidate
     {
         if ( ! empty($block)) {
             $hour = Carbon::now()->hour;
-            if ($hour <= self::SEND_FROM || $hour > self::SEND_TO) {
+            if ($hour < self::SEND_FROM || $hour >= self::SEND_TO) {
                 return true;
             }
         }
