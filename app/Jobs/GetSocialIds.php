@@ -34,8 +34,6 @@ class GetSocialIds implements ShouldQueue
      */
     public function handle()
     {
-        $this->getIcon($this->url);
-
         if (strpos($this->url->url, 'facebook') !== false) {
             $this->getFacebookId($this->url);
         }
@@ -48,13 +46,7 @@ class GetSocialIds implements ShouldQueue
             $this->getYelpId($this->url);
         }
     }
-
-    public function getIcon($url)
-	{
-		$file = 'img/icon_url_'.$url->id.'.ico';
-		copy('https://www.google.com/s2/favicons?domain='.$url->url, $file);
-	}
-
+    
     public function getFacebookId($url)
     {
         $part = explode('/', $url->url);

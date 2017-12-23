@@ -12,4 +12,14 @@ class Review extends Model
     {
         return $this->hasMany('App\Seance', 'review_id');
     }
+
+    public function survey()
+    {
+        return $this->belongsTo('App\Survey');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

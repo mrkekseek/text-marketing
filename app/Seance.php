@@ -18,9 +18,9 @@ class Seance extends Model
         return $this->belongsTo('App\Client', 'client_id');
     }
 
-    public function surveys()
+    public function review()
     {
-        return $this->belongsTo('App\Survey', 'survey_id');
+        return $this->belongsTo('App\Review', 'review_id');
     }
 
     public function answers()
