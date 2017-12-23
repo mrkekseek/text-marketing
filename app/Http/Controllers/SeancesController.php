@@ -56,6 +56,7 @@ class SeancesController extends Controller
                 'url' => $client['link'],
                 'date' => $this->getDate($request->schedule, $request->time),
                 'type' => $this->getType($request->text, $request->email),
+                'message' => ''
             ];
 
             $seance = $review->seances()->create($data);
@@ -248,7 +249,11 @@ class SeancesController extends Controller
     public function push(Request $request, Review $review)
     {
         $data = $request->json()->all();
+        $clients = [];
+        foreach ($data as $client) {
+            $clients[$client['phone']] = $client;
+        }
 
-        Log::info('Seance Push', ['data' => $data, 'review' => $review->toArray()]);
+        SurveysService::seance($review, $clients);
     }
 }

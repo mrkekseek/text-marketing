@@ -10,6 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Log;
 use App\Review;
 use App\Libraries\Api;
+use App\Http\Services\SurveysService;
 
 class SendText implements ShouldQueue
 {
@@ -41,7 +42,9 @@ class SendText implements ShouldQueue
     public function handle()
     {
         $response = Api::review($this->review->id, $this->clients, $this->text, $this->company);
-
         Log::info('Response Job', ['data' => $response]);
+        if ($response['code'] == 200) {
+            SurveysService::seance($this->review, $response['data']);
+        }
     }
 }
