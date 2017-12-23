@@ -245,7 +245,7 @@ class SeancesController extends Controller
 		return Bitly::getUrl(config('app.url').'/survey/'.$code);
 	}
 
-    public function push(Request $request)
+    public function push(Request $request, Review $review)
     {
         $data = $request->json()->all();
 
