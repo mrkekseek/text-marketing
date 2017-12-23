@@ -12,6 +12,7 @@ use Bitly;
 use App\Http\Requests\SeancesCreateRequest;
 use App\Http\Services\SurveysService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use App\Jobs\SendText;
 use App\Jobs\SendEmail;
 use Carbon\Carbon;
@@ -247,10 +248,7 @@ class SeancesController extends Controller
     public function push(Request $request, Review $review)
     {
         $data = $request->all();
-        $data['review'] = $review;
-        if( ! file_exists('logs')) {
-            mkdir('logs', 0777);
-        }
-        file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').': PUSH'.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
+
+        Log::info('Seance Push', ['data' => $data, 'review' => $review]);
     }
 }
