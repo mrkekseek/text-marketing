@@ -40,7 +40,7 @@
 		<div class="questions-box" ng-show=" ! thanks">
 			<div class="container">
 				<div class="row">
-					<div class="questions-item col-sm-4 col-sm-offset-4 col-xs-12" ng-repeat="question in questions" ng-show="question.type == 'star' || why">
+					<div class="col-sm-4 col-sm-offset-4 col-xs-12" ng-repeat="question in questions" ng-show="question.type == 'star' || why">
 						<div class="questions-text">
 							<span>@{{ question.text }}</span>
 						</div>

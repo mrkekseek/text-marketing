@@ -243,7 +243,7 @@ class SeancesController extends Controller
 
 	public function url($code)
 	{
-        list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/survey/'.$code));
+        list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/seances/'.$code));
 		return $url;
 	}
 
