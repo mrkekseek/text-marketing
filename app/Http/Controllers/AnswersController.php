@@ -38,7 +38,7 @@ class AnswersController extends Controller
 
     public function email($id, $value)
     {
-        $seance = Seance::where('id', $id)->with(['users.urls', 'surveys'])->first();
+        $seance = Seance::where('id', $id)->with(['review.survey', 'review.user.urls'])->first();
         if ($value == 5) {
             $seance->update([
                 'completed' => true,
@@ -61,6 +61,14 @@ class AnswersController extends Controller
             $this->sendAlerts($seance['survey'], $value);
         }*/
         
+        return view('survey')->with(compact('seance', 'questions'));
+    }
+
+    public function text($code)
+    {
+        $seance = Seance::where('code', $code)->with(['review.survey', 'review.user.urls'])->first();
+        $questions = Question::all();
+
         return view('survey')->with(compact('seance', 'questions'));
     }
 

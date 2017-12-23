@@ -31,7 +31,7 @@
 							<div class="row">
 								<div class="col-sm-3">
 									<div class="span-url" ng-show=" ! input.editable">
-										<img src="/img/icon_url_@{{ input.id }}.ico" alt="" />
+										<img src="https://www.google.com/s2/favicons?domain=@{{ input.url }}" alt="" />
 										<strong>@{{ input.name }}</strong>
 									</div>
 
@@ -41,11 +41,11 @@
 								</div>
 
 								<div class="col-sm-6">
-									<div class="span-url" ng-show=" ! input.editable">
+									<div class="span-url" ng-show=" ! input.editable || input.id">
 										<a href="@{{ input.url }}" target="_blank"><strong>@{{ input.url }}</strong></a>
 									</div>
 
-									<div ng-show="input.editable">
+									<div  ng-show="input.editable && ! input.id">
 										<input type="text" name="url" class="form-control" ng-model="input.url" />
 									</div>
 								</div>
@@ -53,7 +53,7 @@
 								<div class="col-sm-1">
 									<div class="switch-cell">
 										<label class="ui-switch ui-switch-success ui-switch-sm url-switch">
-											<input type="checkbox" ng-model="input.active" ng-click="changeActive(input)" />
+											<input type="checkbox" ng-model="input.active" ng-change="active(input)" ng-true-value="1" ng-false-value="0" />
 											<i></i>
 										</label>
 									</div>

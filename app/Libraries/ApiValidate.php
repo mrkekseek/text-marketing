@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 use Carbon\Carbon;
+use App\Seance;
 
 class ApiValidate
 {
@@ -48,7 +49,7 @@ class ApiValidate
             return false;
         }
 
-        if (strpos($phone, '1') || strpos($phone, '0')) {
+        if (strpos($phone, '1') === 0 || strpos($phone, '0') === 0) {
             return false;
         }
 
@@ -59,11 +60,25 @@ class ApiValidate
     {
         if ( ! empty($block)) {
             $hour = Carbon::now()->hour;
-            if ($hour <= self::SEND_FROM || $hour > self::SEND_TO) {
+            if ($hour < self::SEND_FROM || $hour >= self::SEND_TO) {
                 return true;
             }
         }
 
+        return false;
+    }
+
+    static public function underLimit($phone)
+    {
+        $seances = Seance::where('date', '>=', Carbon::now()->addHours(-24))->withCount(['clients' => function($query) use($phone) {
+            return $query->where('phone', $phone);
+        }])->get();
+
+        foreach ($seances as $seance) {
+            if ($seance->clients_count > 0) {
+                return true;
+            }
+        }
         return false;
     }
 }

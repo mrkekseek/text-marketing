@@ -35,7 +35,7 @@ class Api
 	static public function review($target_id, $clients, $message, $company)
 	{
 		$type = 'review';
-		$block = false;
+		$block = true;
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block'));
 	}
 

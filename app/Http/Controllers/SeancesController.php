@@ -90,6 +90,7 @@ class SeancesController extends Controller
 
         $length = true;
         $phones = true;
+        $limit = true;
         foreach ($clients as $client) {
             $message = $text;
 
@@ -112,17 +113,25 @@ class SeancesController extends Controller
             if ( ! ApiValidate::phoneFormat($client['phone'])) {
                 $phones = false;
             }
+
+            if (ApiValidate::underLimit($client['phone'])) {
+                $limit = false;
+            }
         }
 
         if (empty($length)) {
-            return $this->message('SMS Text is too long');
+            return $this->message('SMS Text is too long. Text will not be send');
         }
 
         if (empty($phones)) {
-            return $this->message('Some client\'s phone numbers have wrong format');
+            return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
         }
 
-        if (ApiValidate::underBlocking(false)) {
+        if (empty($limit)) {
+            return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
+        }
+
+        if (ApiValidate::underBlocking()) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 
@@ -198,20 +207,11 @@ class SeancesController extends Controller
         SurveysService::save($data);
     }
 
-    public function getSeance($param)
+    public function tap(Request $request, Seance $seance)
     {
-        $seance = Seance::where('code', $param)->first();
-        $seance['user'] = User::where('id', $seance['users_id'])->first();
-        $seance['user']['urls'] = SocialUrl::where('users_id', $seance['users_id'])->get();
-        $seance['survey'] = Survey::where('id', $seance['surveys_id'])->first();
-        $seance['survey']['questions'] = Question::all();
-        return view('survey')->with(['seance' => $seance]);
-    }
-
-    public function socialSave($id = false, $post = [])
-    {
-        $seance = Seance::find($id);
-        $seance->update(['social_tap' => $post['name']]);
+        $seance->update([
+            'url_id' => $request->url_id,
+        ]);
     }
 
     public function getDate($schedule, $time)
@@ -243,7 +243,7 @@ class SeancesController extends Controller
 
 	public function url($code)
 	{
-        list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/survey/'.$code));
+        list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/seances/'.$code));
 		return $url;
 	}
 

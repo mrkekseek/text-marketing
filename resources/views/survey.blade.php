@@ -18,7 +18,7 @@
 		<div class="surveys-header">
 			<div class="surveys_title">
 				<div class="container">
-					<h3>{{ empty($seance->users->company_name) ? $seance->users->teams->name : $seance->users->company_name }}</h3>
+					<h3>{{ empty($seance->review->user->company_name) ? $seance->review->user->teams->name : $seance->review->user->company_name }}</h3>
 				</div>
 			</div>
 		</div>
@@ -30,9 +30,9 @@
 				<b>{{ __('Thanks so much!') }}</b>
 			</div>
 
-			<div class="form-group url-btn-box">
-				<div class="form-group" ng-repeat="url in seance.users.urls">
-					<a href="" class="btn btn-default btn-@{{ url.name.toLowerCase() }}" ng-click="socialSave(url)">@{{ url.name }}</a>
+			<div class="form-group url-btn-box" ng-show=" ! why">
+				<div class="form-group" ng-repeat="url in seance.review.user.urls">
+					<a href="javascript:;" ng-if="url.active" class="btn btn-default btn-@{{ url.name.toLowerCase() }}" ng-click="urlClick(url)">@{{ url.name }}</a>
 				</div>
 			</div>
 		</div>
@@ -40,7 +40,7 @@
 		<div class="questions-box" ng-show=" ! thanks">
 			<div class="container">
 				<div class="row">
-					<div class="questions-item col-sm-4 col-sm-offset-4 col-xs-12" ng-repeat="question in questions" ng-show="question.type == 'stars' || why">
+					<div class="col-sm-4 col-sm-offset-4 col-xs-12" ng-repeat="question in questions" ng-show="question.type == 'star' || why">
 						<div class="questions-text">
 							<span>@{{ question.text }}</span>
 						</div>
