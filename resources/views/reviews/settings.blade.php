@@ -41,11 +41,11 @@
 								</div>
 
 								<div class="col-sm-6">
-									<div class="span-url">
+									<div class="span-url" ng-show=" ! input.editable || input.id">
 										<a href="@{{ input.url }}" target="_blank"><strong>@{{ input.url }}</strong></a>
 									</div>
 
-									<div ng-show="false">
+									<div  ng-show="input.editable && ! input.id">
 										<input type="text" name="url" class="form-control" ng-model="input.url" />
 									</div>
 								</div>
