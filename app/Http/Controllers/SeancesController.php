@@ -131,10 +131,10 @@ class SeancesController extends Controller
             return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
         }
 
-        if (ApiValidate::underBlocking(false)) {
+        if (ApiValidate::underBlocking()) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
-        return false;
+
         return true;
     }
 
