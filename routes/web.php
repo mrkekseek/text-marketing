@@ -36,6 +36,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::get('users/status', 'UsersController@status');
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
+	Route::post('users/saveSettings', 'UsersController@saveSettings');
 	Route::get('users', 'UsersController@all');
 	Route::put('users', 'UsersController@create');
 	Route::post('users/{id}', 'UsersController@update');

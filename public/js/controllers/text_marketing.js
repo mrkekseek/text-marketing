@@ -90,8 +90,14 @@
         $scope.inputs = [''];
 
         $scope.init = function() {
-            if ( ! $scope.user.additional_phones) {
-                console.log($scope.user);
+
+            if ($scope.user.additional_phones) {
+                var temp = $scope.user.additional_phones.split(',');
+                $scope.inputs = [];
+                for (var k in temp) {
+                    $scope.inputs.push(temp[k]);
+                }
+
             }
         };
 
@@ -105,11 +111,10 @@
 
         $scope.saveSettings = function() {
             var post_mas = {
-                'users_id': $scope.user.id,
+                'company_name': $scope.user.company_name,
                 'additional_phones': $scope.inputs
             };
-            console.log(post_mas);
-            request.send('/users/saveSettings/', post_mas, function (data) {
+            request.send('/users/saveSettings', post_mas, function (data) {
                 
             }, 'post');
         };

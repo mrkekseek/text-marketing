@@ -122,4 +122,15 @@ class UsersController extends Controller
 
     	Log::info('Company Push', ['data' => $data]);
     }
+
+    public function saveSettings(Request $request)
+    {
+    	$data = $request->all();
+    	auth()->user()->update([
+			'company_name' => $data['company_name'],
+			'additional_phones' => implode(',', $data['additional_phones']),
+		]);
+
+		return $this->message('Settings was successfully saved.', 'success');
+    }
 }
