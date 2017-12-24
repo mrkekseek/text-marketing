@@ -75,6 +75,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::delete('messages/{id}', 'MessagesController@remove');
 	Route::get('messages', 'MessagesController@all');
 	Route::get('messages/{id}', 'MessagesController@info');
+	Route::post('messages/textValidate', 'MessagesController@textValidate');
 
 	Route::get('lists', 'ListsController@all');
 	Route::put('lists/save', 'ListsController@save');

@@ -50,7 +50,7 @@
 						<div class="form-group">
 							<div class="chars-area" ng-class="{'danger': charsCount(message.text) > max_text_len}">
 								<label>{{ __('Message Text') }}</label>
-								<textarea id="messageText" class="form-control" placeholder="Message Text" ng-model="message.text" ng-change="charsCount(message.text)">
+								<textarea id="messageText" class="form-control" placeholder="Message Text" ng-model="message.text" ng-change="charsCount(message.text)" maxlength="@{{ maxChars() }}">
 								</textarea>
 								<span>
 									<span ng-show="charsCount(message.text) > maxOneText()">{{ __('3 messages') }} </span>
@@ -196,6 +196,7 @@
 	</section>
 
 	<section class="panel panel-default table-dynamic" ng-show="step == '2'">
+
 		<div class="panel-body">
 			<h3 class="inside-panel">
 				{{ __('Lists') }}						
@@ -203,10 +204,11 @@
 					<button type="button" class="btn btn-default" ng-click="create()"><i class="fa fa-plus-circle"></i> {{ __('Create New List') }}</button>
 				</div>
 			</h3>
+
 			<div ng-show="listsList.length">
-				<div ng-repeat="(k, item) in listsList track by $index" class="list-repeat">
+				<div ng-repeat="(k, item) in listsList track by $index" class="item-repeat">
 					<i class="choose-list fa fa-circle-o" ng-class="item.choosed ? 'fa-check-circle-o selected' : 'fa-circle-o'" ng-click="item.choosed = !item.choosed"></i>
-					<div class="item-panel" ng-class="{'active': selectedList.id == item.id}">
+					<div class="item-panel add" ng-class="{'active': selectedList.id == item.id}">
 						<div class="action-div list-actions" ng-click="choose($index)">
 						</div>
 
@@ -233,7 +235,7 @@
 							<a href="javascript:;" ng-show="!item.editable" class="a-icon text-danger" ng-click="remove(item.id, $index)">
 								<i class="fa fa-trash"></i>
 							</a>
-							<span ng-show="!item.editable" class="small-italic a-icon">{{ __('Click to see numbers') }}</span>
+							<span ng-show="!item.editable" class="small-italic a-icon" ng-click="choose($index)">{{ __('Click to see numbers') }}</span>
 						</div>
 
 						<div ng-show="selectedList.id == item.id">
@@ -345,10 +347,11 @@
 					</div>
 				</div>
 			</div>
+
 			<div class="pull-right next-step-button">
 				<div class="btn-group">
 					<div class="btn-group">
-						<button type="button" class="btn btn-sm btn-default" ng-click="step = 1">{{ __('Back') }}</button>
+						<button type="button" class="btn btn-sm btn-default" ng-click="backToMessage()">{{ __('Back') }}</button>
 					</div>
 					<div class="btn-group">
 						<button type="button" class="btn btn-sm btn-primary" ng-click="goToConfirm()">{{ __('Next') }}</button>

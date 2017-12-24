@@ -7,16 +7,17 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App\Message;
+use App\Text;
 use App\Libraries\Api;
+use App\Http\Services\MessagesService;
 
 class SendMarketingText implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $message;
-    protected $clients;
     protected $text;
+    protected $clients;
+    protected $message;
     protected $company;
 
     /**
@@ -24,11 +25,11 @@ class SendMarketingText implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Message $message, $clients, $text, $company)
+    public function __construct(Text $text, $clients, $message, $company)
     {
-        $this->review = $message;
-        $this->clients = $clients;
         $this->text = $text;
+        $this->clients = $clients;
+        $this->message = $message;
         $this->company = $company;
     }
 
@@ -39,6 +40,11 @@ class SendMarketingText implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::message($this->message->id, $this->clients, $this->text, $this->company);
+        $response = Api::message($this->text->id, $this->clients, $this->message, $this->company);
+        if ($response['code'] == 200) {
+            MessagesService::receivers($this->text, $response['data']);
+        } else {
+            $this->text->update(['message' => ! empty($response['message']) ? $response['message'] : '']);
+        }
     }
 }

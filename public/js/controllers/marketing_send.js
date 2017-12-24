@@ -67,11 +67,6 @@
 				error = 0;
 			}
 
-			if ($scope.charsCount($scope.message.text) > $scope.max_lms_text_len) {
-				logger.logError('The body of your SMS message must not exceed ' + $scope.max_lms_text_len + ' characters.');
-				error = 0;
-			}
-
 			if (error) {
 				for (var k in $scope.listsList) {
 					if ($scope.message.lists_id.indexOf($scope.listsList[k].id) >= 0) {
@@ -79,10 +74,16 @@
 						$scope.listsList[k].choosed = true;
 					}
 				}
-				if ($scope.charsCount($scope.message.text) > $scope.max_text_len) {
-					logger.log('will be cost 3 messages.');
-				}
-				$scope.step++;
+
+                var post_mas = {
+                    'company': $scope.user.company_name,
+                    'text': $scope.message.text};
+
+                request.send('/messages/textValidate', post_mas, function (data) {
+                    if (data) {
+                        $scope.step++;
+                    }
+                });
 			}
 		};
 
@@ -102,7 +103,39 @@
         	if ( ! $scope.checkLists()) {
         		return;
         	}
-        	$scope.step = 3;
+
+            var post_mas = {
+                'company': $scope.user.company_name,
+                'text': $scope.message.text,
+                'clients': $scope.getClientsInLists()};
+
+            request.send('/messages/textValidate', post_mas, function (data) {
+                if (data) {
+                    $scope.step++;
+                }
+            });
+        };
+
+        $scope.backToMessage = function() {
+            $scope.getContacts();
+            $scope.step--;
+        };
+
+        $scope.getClientsInLists = function() {
+            var clients = [];
+            for (var k in $scope.listsList) {
+                if ($scope.listsList[k].choosed && $scope.listsList[k].clients.length) {
+                    for (var j in $scope.listsList[k].clients) {
+                        function findClient(client) {
+                            return client.id == $scope.listsList[k].clients[j].id;
+                        };
+                        if ( ! clients.find(findClient)) {
+                           clients.push($scope.listsList[k].clients[j]); 
+                       }
+                    }
+                }
+            }
+            return clients;
         };
 
         $scope.confirm = function() {
@@ -386,13 +419,26 @@
                 var firstname = 0;
                 var lastname = 0;
                 if (text.indexOf('[$FirstName]') + 1) {
-                	firstname = $scope.user.firstname.length - '[$FirstName]'.length;
-                }
-                if (text.indexOf('[$LastName]') + 1) {
-                	firstname = $scope.user.lastname.length - '[$LastName]'.length;
+                    var count = 0;
+                    for (var k in $scope.list) {
+                        if ($scope.list[k].firstname.length > count) {
+                            count = $scope.list[k].firstname.length;
+                        }
+                    }
+                	firstname = count - '[$FirstName]'.length;
                 }
 
-                return ($scope.user.company_name ? $scope.user.company_name.length : 0) + ': '.length + text.length + firstname + lastname;
+                if (text.indexOf('[$LastName]') + 1) {
+                    var count = 0;
+                	for (var k in $scope.list) {
+                        if ($scope.list[k].lastname.length > count) {
+                            count = $scope.list[k].lastname.length;
+                        }
+                    }
+                    lastname = count - '[$LastName]'.length;
+                }
+
+                return text.length + firstname + lastname;
             }
             return 0;
         };
