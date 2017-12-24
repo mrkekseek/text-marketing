@@ -8,9 +8,10 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Mail;
+use App\User;
 use App\Mail\AlertSend;
 
-class SendAlert implements ShouldQueue
+class SendAlertNow implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -22,7 +23,7 @@ class SendAlert implements ShouldQueue
      *
      * @return void
      */
-    public function __construct($user, $value)
+    public function __construct(User $user, $value)
     {
         $this->user = $user;
         $this->value = $value;
@@ -35,6 +36,15 @@ class SendAlert implements ShouldQueue
      */
     public function handle()
     {
-        Mail::to($this->user)->send(new AlertSend($this->value));
+        $emails = [];
+        if ( ! empty($this->user->surveys->alerts_emails)) {
+            $emails = explode(',', $this->user->surveys->alerts_emails);
+        }
+        $emails[] = $this->user->email;
+        $emails = array_unique($emails);
+
+        foreach ($emails as $email) {
+            Mail::to($email)->send(new AlertSend($this->value));
+        }
     }
 }

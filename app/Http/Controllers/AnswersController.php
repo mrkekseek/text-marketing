@@ -9,7 +9,11 @@ use App\SocialUrl;
 use App\User;
 use App\Survey;
 use Illuminate\Http\Request;
-use App\Jobs\SendAlert;
+use App\Http\Services\SurveysService;
+use App\Jobs\SendAlertNow;
+use App\Jobs\SendAlertDelay;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\AlertDelaySend;
 
 class AnswersController extends Controller
 {
@@ -28,12 +32,10 @@ class AnswersController extends Controller
         $seance->update([
             'completed' => true,
             'show' => $show,
+            'alert' => false,
         ]);
 
-        /*if ( ! empty($survey->alerts_emails)) {
-            $answer = Answer::where('seances_id', $request['seance']['id'])->where('questions_type', 'star')->first();
-            $this->sendAlerts($survey, $answer->value);
-        }*/
+        $this->alert($seance, $seance->answers()->where('question_id', 1)->first()->value);
     }
 
     public function email($id, $value)
@@ -43,6 +45,7 @@ class AnswersController extends Controller
             $seance->update([
                 'completed' => true,
                 'show' => true,
+                'alert' => false,
             ]);
         }
 
@@ -57,9 +60,7 @@ class AnswersController extends Controller
             $questions = Question::where('id', 2)->get();
         }
 
-        /*if ( ! empty($seance['survey']->alerts_emails)) {
-            $this->sendAlerts($seance['survey'], $value);
-        }*/
+        $this->alert($seance, $value);
         
         return view('survey')->with(compact('seance', 'questions'));
     }
@@ -72,12 +73,19 @@ class AnswersController extends Controller
         return view('survey')->with(compact('seance', 'questions'));
     }
 
-    public function sendAlerts($survey, $value)
+    public function alert($seance, $value)
     {
+        $survey = $seance->review->survey;
         if ($survey->alerts_stars >= $value) {
-            $user = User::find($survey->users_id);
-            $job = (new SendAlert($user, $value))->onQueue('emails');
-            $this->dispatch($job);
+            if (empty($survey->alerts_often)) {
+                $seance->update([
+                    'alert' => true,
+                ]);
+                SendAlertNow::dispatch($seance->review->user, $value)->onQueue('emails');
+            } else {
+                $delay = SurveysService::alertsDelay($survey->alerts_often);
+                SendAlertDelay::dispatch($seance->review->user)->onQueue('emails')->delay($delay);
+            }
         }
     }
 }

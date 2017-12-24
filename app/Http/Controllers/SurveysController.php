@@ -11,6 +11,22 @@ class SurveysController extends Controller
 {
     public function info()
     {
+        /*$this->user = auth()->user();
+        $alerts = [];
+        foreach ($this->user->reviews as $review) {
+            $seances = $review->seances()->alerts($this->user->surveys->alerts_stars, $this->user->surveys->alerts_often)->with([
+                'answers' => function($q) {
+                    $q->where('question_id', 1);
+                }
+            ])->get();
+
+            foreach ($seances as $seance) {
+                $alerts[] = $seance;
+            }
+        }
+        print_r($alerts);
+        exit;*/
+
     	$survey = auth()->user()->surveys;
     	if (empty($survey)) {
     		$survey = Survey::findDefault();
@@ -33,19 +49,11 @@ class SurveysController extends Controller
         return $this->message('Email and Subject were saved', 'success');
     }
 
-    public function save(Request $request, $id = false)
+    public function save(Request $request)
     {
-    	$survey = Survey::firstOrNew(['user_id' => auth()->user()->id]);
-        $survey->user_id = auth()->user()->id;
-        $survey->text = $request['text'];
-        $survey->email = $request['email'];
-        $survey->subject = $request['subject'];
-        $survey->sender = $request['sender'];
-        $survey->alerts_often = $request['alerts_often'];
-        $survey->alerts_stars = $request['alerts_stars'];
-        $survey->alerts_emails = ! empty($request['alerts_emails']) ? $request['alerts_emails'] : '';
-        $survey->save();
-
-        $this->message('Settings was successfully saved', 'success');
+        $data = $request->only(['text', 'sender', 'subject', 'email', 'alerts_emails', 'alerts_stars', 'alerts_often']);
+        $data['alerts_emails'] = empty($data['alerts_emails']) ? '' : $data['alerts_emails'];
+        SurveysService::save($data);
+        return $this->message('Alert settings was successfully saved', 'success');
     }
 }

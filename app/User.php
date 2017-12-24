@@ -61,7 +61,7 @@ class User extends Authenticatable
 
     public function reviews()
     {
-        return $this->hasOne('App\Review', 'user_id');
+        return $this->hasMany('App\Review', 'user_id');
     }
 
     public function urls()

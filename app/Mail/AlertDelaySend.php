@@ -7,20 +7,20 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class AlertSend extends Mailable
+class AlertDelaySend extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $value;
+    public $alerts;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($value)
+    public function __construct($alerts)
     {
-        $this->value = $value;
+        $this->alerts = $alerts;
     }
 
     /**
@@ -30,6 +30,6 @@ class AlertSend extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.alert')->subject('Alert: '.$this->value.' Star(s) Received');
+        return $this->markdown('emails.alert_delay')->subject('New Alerts Received');
     }
 }
