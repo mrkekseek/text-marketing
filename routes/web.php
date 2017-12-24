@@ -68,6 +68,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::get('urls', 'UrlsController@all');
 	Route::put('urls', 'UrlsController@create');
 	Route::post('urls/{url}', 'UrlsController@update');
+	Route::post('urls/bulk/{user}', 'UrlsController@bulkUpdate');
 	Route::delete('urls/{url}', 'UrlsController@remove');
 
 	Route::put('seances/{user?}', 'SeancesController@create');

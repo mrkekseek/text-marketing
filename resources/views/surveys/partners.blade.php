@@ -126,7 +126,7 @@
 					</div>
 
 					<div ng-show="selectedClients.length">
-						<div>
+						<div class="form-group">
 							<div ng-show="partners.length" class="btn-group" uib-dropdown dropdown-append-to-body>
 								<button id="btn-append-to-body" type="button" class="btn btn-default" uib-dropdown-toggle>
 									<span ng-show="partner.id">@{{ partner.firstname + ' ' + partner.lastname }}</span>
@@ -148,6 +148,38 @@
 
 							<button type="button" class="btn btn-primary" ng-click="addPartner()">{{ __('Create New Partner') }}</button>
 						</div>
+
+						<form name="form" ng-show="partner.id">
+							<div class="divider divider-dashed"></div>
+
+							<div class="form-group url-block" ng-repeat="input in partner.urls">
+								<div class="row" ng-show="input.default">
+									<div class="col-sm-3">
+										<div class="span-url">
+											<img src="https://www.google.com/s2/favicons?domain=@{{ input.default == '1' ? ('http://' + input.name + '.com') : input.url }}" alt="" />
+											<strong>@{{ input.name }}</strong>
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<input type="text" name="url" class="form-control" ng-model="input.url" />
+									</div>
+
+									<div class="col-sm-3">
+										<div class="switch-cell">
+											<label class="ui-switch ui-switch-success ui-switch-sm url-switch">
+												<input type="checkbox" ng-model="input.active" ng-change="activeUrl(input)" ng-true-value="1" ng-false-value="0" />
+												<i></i>
+											</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div>
+								<button type="button" class="btn btn-primary" ng-click="saveUrls()">{{ _('Save Review Sites') }}</button>
+							</div>
+						</form>
 
 						<div class="divider divider-dashed"></div>
 

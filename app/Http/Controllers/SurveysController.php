@@ -12,7 +12,6 @@ class SurveysController extends Controller
     public function info(User $user = null)
     {
         $user = empty($user) ? auth()->user() : $user;
-        
     	$survey = $user->surveys;
     	if (empty($survey)) {
     		$survey = Survey::findDefault();

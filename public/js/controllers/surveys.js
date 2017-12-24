@@ -273,6 +273,14 @@
             });
         };
 
+        $scope.saveUrls = function () {
+            request.send('/urls/bulk/' + $scope.partner.id, {'urls' : $scope.partner.urls});
+        };
+
+        $scope.activeUrl = function (input) {
+            request.send('/urls/' + input.id, input, false);
+        };
+
         $scope.send = function() {
             var user = $scope.partner.id ? $scope.partner : $scope.user;
             var error = 1;

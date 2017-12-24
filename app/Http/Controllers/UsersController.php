@@ -27,7 +27,7 @@ class UsersController extends Controller
 
 	public function partners()
 	{
-		return auth()->user()->partners()->get();
+		return auth()->user()->partners()->with('urls')->get();
 	}
 
 	public function create(UsersCreateRequest $request)
