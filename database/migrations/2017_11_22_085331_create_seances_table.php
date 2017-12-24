@@ -27,6 +27,7 @@ class CreateSeancesTable extends Migration
             $table->tinyInteger('finish')->unsigned()->default(0);
             $table->tinyInteger('success')->unsigned()->default(0);
             $table->text('message');
+            $table->tinyInteger('alert')->unsigned()->default(0);
             $table->timestamps();
         });
     }

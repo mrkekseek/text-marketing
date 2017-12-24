@@ -3,6 +3,7 @@
 		{{ __('Alerts') }}
 		<i class="fa fa-question-circle-o help-icon" uib-tooltip="Here you can enter your email to be alerted when new Star Ratings come in. You can set it so you are alerted when a 5 star comes in, or a 1 star, or however you want. You can also set it so you are sent an email right away, or once a day, or however you want." tooltip-placement="right" aria-hidden="true"></i>
 	</h2>
+
 	<div class="row">
 		<div class="col-sm-8 col-xs-12">
 			<div class="panel panel-default">
@@ -12,17 +13,19 @@
 							<div class="col-sm-3">
 								<strong>{{ __('Email Addresses') }}</strong>
 							</div>
+
 							<div class="col-sm-9">
-								<div class="form-group" ng-repeat="item in inputs track by $index">
+								<div class="form-group" ng-repeat="input in inputs track by $index">
 									<div class="input-group">
 										<input type="text" class="form-control" ng-model="inputs[$index]" placeholder="{{ __('Enter email here...') }}" />
-										<span class="input-group-btn" ng-if="$index == inputs.length - 1">
-											<button class="btn btn-default" type="button" ng-click="addInput(input);">
+										<span class="input-group-btn" ng-if="$index == (inputs.length - 1)">
+											<button class="btn btn-default" type="button" ng-click="add();">
 												<i class="fa fa-plus" aria-hidden="true"></i>
 											</button>
 										</span>
-										<span class="input-group-btn" ng-if="$index < inputs.length - 1">
-											<button class="btn btn-default" type="button" ng-click="removeInput($index);">
+
+										<span class="input-group-btn" ng-if="$index < (inputs.length - 1)">
+											<button class="btn btn-default" type="button" ng-click="remove($index);">
 												<i class="fa fa-minus" aria-hidden="true"></i>
 											</button>
 										</span>
@@ -37,7 +40,8 @@
 							<div class="form-group">
 					    		<label class="col-sm-3 control-label">
 					    			<span class="pull-left">{{ __('Get email when') }}</span>
-				    			</label>
+								</label>
+								
 					    		<div class="col-sm-9">
 						    		<select class="form-control" ng-model="survey.alerts_stars">
 						    			<option value="1">{{ __('1 star Overall review comes in') }}</option>
@@ -53,7 +57,8 @@
 				    		<div class="form-group">
 					    		<label class="col-sm-3 control-label">
 					    			<span class="pull-left">{{ __('How often') }}</span>
-				    			</label>
+								</label>
+								
 					    		<div class="col-sm-9">
 						    		<select class="form-control" ng-model="survey.alerts_often">
 						    			<option value="0">{{ __('Receive alerts as they come') }}</option>
