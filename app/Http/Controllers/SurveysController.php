@@ -11,22 +11,6 @@ class SurveysController extends Controller
 {
     public function info()
     {
-        /*$this->user = auth()->user();
-        $alerts = [];
-        foreach ($this->user->reviews as $review) {
-            $seances = $review->seances()->alerts($this->user->surveys->alerts_stars, $this->user->surveys->alerts_often)->with([
-                'answers' => function($q) {
-                    $q->where('question_id', 1);
-                }
-            ])->get();
-
-            foreach ($seances as $seance) {
-                $alerts[] = $seance;
-            }
-        }
-        print_r($alerts);
-        exit;*/
-
     	$survey = auth()->user()->surveys;
     	if (empty($survey)) {
     		$survey = Survey::findDefault();
