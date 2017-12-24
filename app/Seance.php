@@ -27,4 +27,11 @@ class Seance extends Model
     {
         return $this->hasMany('App\Answer', 'seance_id');
     }
+
+    public function scopeAlerts($query, $value, $often)
+    {
+        return $query->whereHas('answers', function($q) use ($value, $often) {
+            $q->where('answers.value', '<=', $value)->where('answers.updated_at', '>=', \Carbon\Carbon::now()->subHours($often));
+        })->where('alert', false);
+    }
 }

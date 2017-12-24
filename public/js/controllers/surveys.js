@@ -260,7 +260,6 @@
                     'hours': $scope.seanceTime.getHours(),
                     'minutes': $scope.seanceTime.getMinutes()
                 };
-                console.log(time);
 
                 var data = {
                     'clients': $scope.selectedClients,
