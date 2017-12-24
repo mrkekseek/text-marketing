@@ -24,15 +24,16 @@ class SeancesController extends Controller
 		return Seance::find($id);
 	}
 
-    public function create(SeancesCreateRequest $request)
+    public function create(SeancesCreateRequest $request, User $user = null)
     {
-        $this->surveySave($request);
+        $user = empty($user) ? auth()->user() : $user;
+        $this->surveySave($request, $user);
 
         $clients = $this->getClients($request);
 
         $canSave = true;
         if ( ! empty($request->text)) {
-            $canSave *= $this->textValidate($request, $clients);
+            $canSave *= $this->textValidate($request, $clients, $user);
         }
 
         if ( ! empty($request->email)) {
@@ -43,11 +44,11 @@ class SeancesController extends Controller
             return 0;
         }
 
-        $review = auth()->user()->reviews()->create([
-            'survey_id' => auth()->user()->surveys()->first()->id,
+        $review = $user->reviews()->create([
+            'survey_id' => $user->surveys()->first()->id,
         ]);
 
-        $text = trim(auth()->user()->surveys()->first()->text);
+        $text = trim($user->surveys()->first()->text);
 
         foreach ($clients as $client) {
             $data = [
@@ -73,17 +74,17 @@ class SeancesController extends Controller
         return $this->message('Review was successfully saved', 'success');
     }
 
-    private function textValidate($request, $clients)
+    private function textValidate($request, $clients, $user)
     {
-        if ( ! ApiValidate::companyExists($request->company)) {
+        if ( ! ApiValidate::companyExists($request->company, $user)) {
             return $this->message('This Company Name isn\'t verified');
         }
 
-        if ( ! ApiValidate::companyVerified($request->company)) {
+        if ( ! ApiValidate::companyVerified($request->company, $user)) {
             return $this->message('Company Name must be verified');
         }
 
-        $text = trim(auth()->user()->surveys()->first()->text);
+        $text = trim($user->surveys()->first()->text);
         if ( ! ApiValidate::messageSymbols($text)) {
             return $this->message('SMS Text contains forbidden characters');
         }
@@ -196,7 +197,7 @@ class SeancesController extends Controller
         $this->dispatch($job);
     }
 
-    private function surveySave($request)
+    private function surveySave($request, $user)
     {
         $data = [
             'text' => $request->survey['text'],
@@ -204,7 +205,7 @@ class SeancesController extends Controller
             'subject' => $request->survey['subject'],
             'email' => $request->survey['email'],
         ];
-        SurveysService::save($data);
+        SurveysService::save($data, $user);
     }
 
     public function tap(Request $request, Seance $seance)

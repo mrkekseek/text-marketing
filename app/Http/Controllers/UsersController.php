@@ -9,6 +9,7 @@ use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
 use App\Http\Requests\UsersCreateRequest;
 use App\Http\Requests\UsersPasswordRequest;
+use App\Http\Requests\PartnersCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -24,6 +25,11 @@ class UsersController extends Controller
 		return User::allUsers();
 	}
 
+	public function partners()
+	{
+		return auth()->user()->partners()->get();
+	}
+
 	public function create(UsersCreateRequest $request)
 	{
 		$data = $request->only(['plans_id', 'firstname', 'lastname', 'email', 'password', 'view_phone']);
@@ -36,7 +42,6 @@ class UsersController extends Controller
 		$data = array_filter($data, 'strlen');
 
 		$user = User::create($data);
-		$user->defaultUrls();
 		LinksService::create($user);
 
 		return $this->message('Teammate was successfully saved', 'success');
@@ -52,6 +57,45 @@ class UsersController extends Controller
 		$user = User::find($id)->update($data);
 
 		return $this->message('Teammate was successfully saved', 'success');
+	}
+
+	public function partnersCreate(PartnersCreateRequest $request)
+	{
+		$data = $request->only(['firstname', 'lastname', 'email', 'view_phone']);
+		$data['type'] = 2;
+		$data['teams_leader'] = false;
+		$data['active'] = true;
+		$data['password'] = UsersService::password(config('app.name'));
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['teams_id'] = auth()->user()->teams_id;
+		$data['plans_id'] = auth()->user()->plans_id;
+		$data = array_filter($data, 'strlen');
+
+		$user = User::create($data);
+		LinksService::create($user);
+
+		$this->message('Partner was successfully saved', 'success');
+		return $user;
+	}
+
+	public function partnersUpdate(PartnersCreateRequest $request, User $user)
+	{
+		$data = $request->only(['firstname', 'lastname', 'email', 'view_phone']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data = array_filter($data, 'strlen');
+
+		$user->update($data);
+
+		$this->message('Teammate was successfully saved', 'success');
+		return $user;
+	}
+
+	public function partnersRemove(User $user)
+	{
+		$user->links()->delete();
+
+		$user->delete();
+		return $this->message('Partner was successfully removed', 'success');
 	}
 
 	public function profile(UsersCreateRequest $request)
@@ -95,15 +139,16 @@ class UsersController extends Controller
 		return $this->message('Old Password is incorrect');
 	}
 
-	public function company(Request $request)
+	public function company(Request $request, User $user = null)
 	{
+		$user = empty($user) ? auth()->user() : $user;
 		$status = 'pending';
 		$data = Api::company($request->company);
 		if ($data['code'] == 200) {
 			$status = $data['data'];
 		}
 
-		auth()->user()->update([
+		$user->update([
 			'company_name' => $request->company,
 			'company_status' => $status,
 		]);
@@ -111,9 +156,10 @@ class UsersController extends Controller
 		return ['status' => $status];
 	}
 
-	public function status()
+	public function status(User $user)
 	{
-		return ['status' => auth()->user()->company_status];
+		$user = empty($user) ? auth()->user() : $user;
+		return ['status' => $user->company_status];
 	}
 
 	public function push(Request $request)

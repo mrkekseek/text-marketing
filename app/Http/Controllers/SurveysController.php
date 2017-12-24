@@ -9,27 +9,29 @@ use Illuminate\Http\Request;
 
 class SurveysController extends Controller
 {
-    public function info()
+    public function info(User $user = null)
     {
-    	$survey = auth()->user()->surveys;
+        $user = empty($user) ? auth()->user() : $user;
+        
+    	$survey = $user->surveys;
     	if (empty($survey)) {
     		$survey = Survey::findDefault();
         }
-        $survey->sender = str_replace('[$myFirstName]', auth()->user()->firstname, $survey->sender);
+        $survey->sender = str_replace('[$myFirstName]', $user->firstname, $survey->sender);
     	return $survey;
     }
 
-    public function text(Request $request)
+    public function text(Request $request, User $user = null)
     {
         $data = $request->only(['text', 'sender', 'subject', 'email']);
-        SurveysService::save($data);
+        SurveysService::save($data, $user);
         return $this->message('SMS Text was saved', 'success');
     }
 
-    public function email(Request $request)
+    public function email(Request $request, User $user = null)
     {
         $data = $request->only(['text', 'sender', 'subject', 'email']);
-        SurveysService::save($data);
+        SurveysService::save($data, $user);
         return $this->message('Email and Subject were saved', 'success');
     }
 

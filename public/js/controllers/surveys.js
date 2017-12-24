@@ -6,6 +6,8 @@
     function SurveysCtrl($rootScope, $scope, $uibModal, $filter, $location, $timeout, request, langs, validate, logger) {
         $scope.clients = [];
         $scope.client = {};
+        $scope.partners = [];
+        $scope.partner = {};
         $scope.survey = {};
         $scope.open_edit = false;
         $scope.selectedClients = [];
@@ -35,14 +37,34 @@
             $scope.checkCompany();
         };
 
+        $scope.initPartners = function () {
+            $scope.getClients();
+            $scope.getPartners();
+        };
+
         $scope.getClients = function() {
             request.send('/clients', false, function (data) {
                 $scope.clients = data;
             }, 'get');
         };
 
-        $scope.getSurvey = function() {
-            request.send('/surveys', false, function (data) {
+        $scope.getPartners = function (partner_id) {
+            partner_id = partner_id || false;
+            request.send('/users/partners', false, function (data) {
+                $scope.partners = data;
+                if (partner_id) {
+                    for (var k in $scope.partners) {
+                        if ($scope.partners[k].id == partner_id) {
+                            $scope.setPartner($scope.partners[k]);
+                        }
+                    }
+                }
+            }, 'get');
+        };
+
+        $scope.getSurvey = function(user_id) {
+            user_id = user_id || false;
+            request.send('/surveys/' + (user_id ? user_id : ''), false, function (data) {
                 $scope.survey = data;
                 $scope.oldText = angular.copy($scope.survey.text);
                 $scope.oldSender = angular.copy($scope.survey.sender);
@@ -81,6 +103,54 @@
                 request.send('/clients/' + client_id, {}, function (data) {
                     $scope.open_edit = false;
                     $scope.getClients();
+                }, 'delete');
+            }
+        };
+
+        $scope.addPartner = function(partner_id) {
+            partner_id = partner_id || false;
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'PartnersCreate.html',
+                controller: 'ModalPartnersCreateCtrl',
+                resolve: {
+                    items: function () {
+                        return { 'partner': $scope.by_id(partner_id) };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (response) {
+                $scope.getPartners(response.id);
+            }, function () {
+
+            });
+        };
+
+        $scope.by_id = function (partner_id) {
+            for (var k in $scope.partners) {
+                if ($scope.partners[k].id == partner_id) {
+                    return $scope.partners[k];
+                }
+            }
+
+            return {};
+        };
+
+        $scope.setPartner = function (partner) {
+            $scope.partner = partner;
+
+            if ($scope.partner.id) {
+                $scope.getSurvey($scope.partner.id);
+            }
+        };
+
+        $scope.removePartner = function (partner_id) {
+            if (confirm(langs.get('Do you realy want to remove this partner?'))) {
+                request.send('/users/partners/' + partner_id, {}, function (data) {
+                    $scope.setPartner({});
+                    $scope.getPartners();
                 }, 'delete');
             }
         };
@@ -132,9 +202,10 @@
         };
 
         $scope.companySave = function () {
-            request.send('/users/company', {'company': $scope.user.company_name}, function (data) {
+            var user = $scope.partner.id ? $scope.partner : $scope.user;
+            request.send('/users/company' + ($scope.partner.id ? '/' + $scope.partner.id : ''), {'company': user.company_name}, function (data) {
                 if (data) {
-                    $scope.user.company_status = data.status;
+                    user.company_status = data.status;
                     $scope.companyChanged = false;
                     $scope.checkCompany();
                 }
@@ -142,12 +213,13 @@
         };
 
         $scope.checkCompany = function () {
+            var user = $scope.partner.id ? $scope.partner : $scope.user;
             $timeout.cancel($scope.timer);
             if ($scope.user.company_status == 'pending') {
                 $scope.timer = $timeout(function () {
-                    request.send('/users/status', {}, function (data) {
+                    request.send('/users/status' + ($scope.partner.id ? '/' + $scope.partner.id : ''), {}, function (data) {
                         if (data) {
-                            $scope.user.company_status = data.status;
+                            user.company_status = data.status;
                         }
                         $scope.checkCompany();
                     }, 'get');
@@ -186,22 +258,23 @@
         };
 
         $scope.saveSurveyText = function () {
-            request.send('/surveys/text', $scope.survey, function (data) {
+            request.send('/surveys/text' + ($scope.partner.id ? '/' + $scope.partner.id : ''), $scope.survey, function (data) {
                 $scope.oldText = angular.copy($scope.survey.text);
                 $scope.textChanged = false;
             }, 'post');
         };
 
         $scope.saveSurveyEmail = function () {
-            request.send('/surveys/email', $scope.survey, function (data) {
+            request.send('/surveys/email' + ($scope.partner.id ? '/' + $scope.partner.id : ''), $scope.survey, function (data) {
                 $scope.oldSender = angular.copy($scope.survey.sender);
                 $scope.oldSubject = angular.copy($scope.survey.subject);
                 $scope.oldEmail = angular.copy($scope.survey.email);
                 $scope.emailChanged = false;
-            }, 'post');
+            });
         };
 
         $scope.send = function() {
+            var user = $scope.partner.id ? $scope.partner : $scope.user;
             var error = 1;
             if ( ! $scope.selectedClients.length) {
                 logger.logError(langs.get('Choose clients from the list at the left'));
@@ -224,11 +297,11 @@
                     }
                 }
 
-                if ($scope.user.company_name == '') {
+                if (user.company_name == '') {
                     logger.logError(langs.get('Company Name is required'));
                     error = 0;
                 } else {
-                    if ($scope.user.company_status != 'verified' || $scope.companyChanged) {
+                    if (user.company_status != 'verified' || $scope.companyChanged) {
                         logger.logError(langs.get('Company Name must be verified'));
                         error = 0;
                     } 
@@ -268,10 +341,10 @@
                     'schedule': $scope.surveySchedule,
                     'time': time,
                     'survey': $scope.survey,
-                    'company': $scope.user.company_name
+                    'company': user.company_name
                 };
                 
-                request.send('/seances', data, function (data) {
+                request.send('/seances' + ($scope.partner.id ? '/' + $scope.partner.id : ''), data, function (data) {
                     $scope.oldText = angular.copy($scope.survey.text);
                     $scope.textChanged = false;
 
@@ -281,6 +354,37 @@
                     $scope.emailChanged = false;
                 }, 'put');
             }
+        };
+    };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalPartnersCreateCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalPartnersCreateCtrl]);
+
+    function ModalPartnersCreateCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
+        $scope.partner = angular.copy(items.partner);
+
+        $scope.save = function () {
+            var error = 1;
+            error *= validate.check($scope.form_partner.firstname, 'Name');
+            error *= validate.check($scope.form_partner.email, 'Email');
+            error *= validate.phone($scope.form_partner.view_phone, 'Phone');
+
+            if (error) {
+                request.send('/users/partners/' + ($scope.partner.id ? $scope.partner.id : ''), $scope.partner, function (data) {
+                    if (data) {
+                        $uibModalInstance.close(data);
+                    }
+                }, (!$scope.partner.id ? 'put' : 'post'));
+            }
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
         };
     };
 })();

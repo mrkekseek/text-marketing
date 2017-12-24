@@ -31,7 +31,7 @@
 							<div class="row">
 								<div class="col-sm-3">
 									<div class="span-url" ng-show=" ! input.editable">
-										<img src="https://www.google.com/s2/favicons?domain=@{{ input.url }}" alt="" />
+										<img src="https://www.google.com/s2/favicons?domain=@{{ input.default == '1' ? ('http://' + input.name + '.com') : input.url }}" alt="" />
 										<strong>@{{ input.name }}</strong>
 									</div>
 
@@ -41,11 +41,11 @@
 								</div>
 
 								<div class="col-sm-6">
-									<div class="span-url" ng-show=" ! input.editable || input.id">
+									<div class="span-url" ng-show="( ! input.editable || input.id) && ! input.default">
 										<a href="@{{ input.url }}" target="_blank"><strong>@{{ input.url }}</strong></a>
 									</div>
 
-									<div  ng-show="input.editable && ! input.id">
+									<div  ng-show="input.editable && ! input.id || input.default">
 										<input type="text" name="url" class="form-control" ng-model="input.url" />
 									</div>
 								</div>
@@ -59,7 +59,13 @@
 									</div>
 								</div>
 
-								<div class="col-sm-2">
+								<div class="col-sm-2" ng-show="input.default">
+									<button type="button" class="btn btn-default" ng-click="save(input)">
+										{{ __('Save') }}
+									</button>
+								</div>
+
+								<div class="col-sm-2" ng-show=" ! input.default">
 									<button type="button" class="btn btn-primary" ng-click="save(input)" ng-show="$index == (inputs.length - 1)">
 										{{ __('Add') }}
 									</button>
