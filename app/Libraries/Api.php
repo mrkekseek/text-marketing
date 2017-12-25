@@ -32,17 +32,17 @@ class Api
 		return self::send('company/name', ['name' => $name]);
 	}
 
-	static public function review($target_id, $clients, $message, $company)
+	static public function review($target_id, $clients, $message, $company, $offset)
 	{
 		$type = 'review';
 		$block = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block'));
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
 	}
 
-	static public function message($target_id, $clients, $message, $company)
+	static public function message($target_id, $clients, $message, $company, $offset)
 	{
 		$type = 'message';
 		$block = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block'));
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
 	}
 }
