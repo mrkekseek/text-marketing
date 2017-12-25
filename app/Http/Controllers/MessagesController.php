@@ -106,13 +106,12 @@ class MessagesController extends Controller
 
     public function textValidate(Request $request)
     {
-
         $data = $request->all();
-        if ( ! ApiValidate::companyExists($data['company'])) {
+        if ( ! ApiValidate::companyExists($data['company'], auth()->user())) {
             return $this->message('This Company Name isn\'t verified');
         }
 
-        if ( ! ApiValidate::companyVerified($data['company'])) {
+        if ( ! ApiValidate::companyVerified($data['company'], auth()->user())) {
             return $this->message('Company Name must be verified');
         }
 
