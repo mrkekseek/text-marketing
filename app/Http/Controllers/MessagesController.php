@@ -31,7 +31,7 @@ class MessagesController extends Controller
             $data['lists_id'] = implode(',', $data['lists_id']);
             $data['date'] = $this->getDate($request->schedule, $request->time, auth()->user());
             $data['active'] = true;
-            
+
             $message = auth()->user()->messages()->create($data);
             $this->sendText($message);
             return $this->message('Message was successfully saved', 'success');
@@ -101,12 +101,18 @@ class MessagesController extends Controller
         return $this->message(__('Message was successfully removed'), 'success');
     }
 
-    public function getDate($schedule, $time)
+    public function getDate($schedule, $time, $user, $validate = false)
     {
+        $date = Carbon::now()->subHours($user->offset);
         if ( ! empty($schedule)) {
-            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
         }
-        return Carbon::now();
+
+        if (empty($validate)) {
+            $date->addHours($user->offset);
+        }
+
+        return $date;
     }
 
     public function textValidate(Request $request)
@@ -166,7 +172,7 @@ class MessagesController extends Controller
             }*/
         }
 
-        if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time))) {
+        if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, auth()->user(), true))) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 

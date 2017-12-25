@@ -132,7 +132,7 @@ class SeancesController extends Controller
             return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
         }*/
 
-        if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time))) {
+        if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, $user, true))) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 
@@ -215,17 +215,17 @@ class SeancesController extends Controller
         ]);
     }
 
-    public function getDate($schedule, $time, $user = null)
+    public function getDate($schedule, $time, $user, $validate = false)
     {
-        $date = Carbon::now();
+        $date = Carbon::now()->subHours($user->offset);
         if ( ! empty($schedule)) {
             $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
         }
 
-        if ( ! empty($user)) {
+        if (empty($validate)) {
             $date->addHours($user->offset);
         }
-        
+
         return $date;
     }
 
