@@ -13,14 +13,14 @@ class ApiValidate
 	const MAX_LENGTH = 500;
     const SUPPORTED_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!“#$%&‘()*+,-.?/:;<=> ';
 
-    static public function companyExists($company)
+    static public function companyExists($company, $user)
     {
-        return auth()->user()->company_name == $company;
+        return $user->company_name == $company;
     }
 
-    static public function companyVerified($company)
+    static public function companyVerified($company, $user)
     {
-        return self::companyExists($company) && auth()->user()->company_status == 'verified';
+        return self::companyExists($company, $user) && $user->company_status == 'verified';
     }
 
     static public function messageSymbols($text)
@@ -71,7 +71,7 @@ class ApiValidate
 
     static public function underLimit($phone)
     {
-        $seances = Seance::where('date', '>=', Carbon::now()->addHours(-24))->withCount(['clients' => function($query) use($phone) {
+        $seances = Seance::where('date', '>=', Carbon::now()->subHours(24))->withCount(['clients' => function($query) use($phone) {
             return $query->where('phone', $phone);
         }])->get();
 

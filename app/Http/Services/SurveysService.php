@@ -3,15 +3,17 @@
 namespace App\Http\Services;
 
 use Carbon\Carbon;
+use App\User;
 
 class SurveysService
 {
-	static public function save($data)
+	static public function save($data, $user)
 	{
-        if (auth()->user()->surveys()->count()) {
-            auth()->user()->surveys()->update($data);
+        $user = empty($user) ? auth()->user() : $user;
+        if ($user->surveys()->count()) {
+            $user->surveys()->update($data);
         } else {
-            auth()->user()->surveys()->create($data);
+            $user->surveys()->create($data);
         }
     }
 

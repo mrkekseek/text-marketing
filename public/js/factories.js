@@ -92,7 +92,7 @@
             send: function (adrress, post_mas, callback, method) {
                 callback = callback || false;
                 method = method || 'post';
-                
+
                 $http[method](api_url + adrress, post_mas).then(function (response) {
                     var data = logger.check(response.data);
                     if (callback) {
