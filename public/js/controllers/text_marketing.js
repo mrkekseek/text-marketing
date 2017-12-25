@@ -90,14 +90,12 @@
         $scope.inputs = [''];
 
         $scope.init = function() {
-
             if ($scope.user.additional_phones) {
                 var temp = $scope.user.additional_phones.split(',');
                 $scope.inputs = [];
                 for (var k in temp) {
                     $scope.inputs.push(temp[k]);
                 }
-
             }
         };
 
