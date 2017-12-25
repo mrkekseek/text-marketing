@@ -161,7 +161,7 @@ class MessagesController extends Controller
             }
         }
 
-        if (ApiValidate::underBlocking()) {
+        if (ApiValidate::underBlocking(true, $data['send_time']['hours'])) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 

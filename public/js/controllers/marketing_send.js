@@ -11,6 +11,7 @@
 			'input': '',
 			'show': false
 		};
+        $scope.popup = {};
 
 		$scope.companyChanged = false;
 		$scope.oldCompany = angular.copy($scope.user.company_name);
@@ -77,7 +78,11 @@
 
                 var post_mas = {
                     'company': $scope.user.company_name,
-                    'text': $scope.message.text};
+                    'text': $scope.message.text,
+                    'send_time': {
+                        'hours': $scope.message.schedule == '1' ? $scope.seanceTime.getHours() : '',
+                    }
+                };
 
                 request.send('/messages/textValidate', post_mas, function (data) {
                     if (data) {
@@ -114,6 +119,10 @@
                     $scope.step++;
                 }
             });
+        };
+
+        $scope.openDate = function() {
+            $scope.popup.popup_date = ! $scope.popup.popup_date;
         };
 
         $scope.backToMessage = function() {

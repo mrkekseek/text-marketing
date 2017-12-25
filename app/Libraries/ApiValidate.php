@@ -57,10 +57,10 @@ class ApiValidate
         return is_numeric($phone);
     }
 
-    static public function underBlocking($block = true)
+    static public function underBlocking($block = true, $hour = '')
     {
         if ( ! empty($block)) {
-            $hour = Carbon::now()->hour;
+            $hour = ! empty($hour) ? $hour : Carbon::now()->hour;
             if ($hour < self::SEND_FROM || $hour >= self::SEND_TO) {
                 return true;
             }
