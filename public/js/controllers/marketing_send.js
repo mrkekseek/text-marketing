@@ -41,7 +41,8 @@
 			'time': [],
 			'day': '2',
 			'finish': new Date(),
-			'lists_id': []
+			'lists_id': [],
+            'company': $scope.user.company_name
 		};		
 
 		$scope.companyChange = function () {
@@ -61,6 +62,21 @@
             }, 'put');
         };
 
+        $scope.checkCompany = function () {
+            var user = $scope.partner.id ? $scope.partner : $scope.user;
+            $timeout.cancel($scope.timer);
+            if ($scope.user.company_status == 'pending') {
+                $scope.timer = $timeout(function () {
+                    request.send('/users/status' + ($scope.partner.id ? '/' + $scope.partner.id : ''), {}, function (data) {
+                        if (data) {
+                            user.company_status = data.status;
+                        }
+                        $scope.checkCompany();
+                    }, 'get');
+                }, 5000);
+            }
+        };
+
 		$scope.saveMessage = function() {
 			var error = 1;
 			if ( ! $scope.message.text || $scope.message.text == '') {
@@ -76,15 +92,7 @@
 					}
 				}
 
-                var post_mas = {
-                    'company': $scope.user.company_name,
-                    'text': $scope.message.text,
-                    'send_time': {
-                        'hours': $scope.message.schedule == '1' ? $scope.seanceTime.getHours() : '',
-                    }
-                };
-
-                request.send('/messages/textValidate', post_mas, function (data) {
+                request.send('/messages/textValidate', $scope.message, function (data) {
                     if (data) {
                         $scope.step++;
                     }
