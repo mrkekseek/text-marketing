@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 use Carbon\Carbon;
 use App\Seance;
+use App\Text;
 
 class ApiValidate
 {
@@ -56,10 +57,10 @@ class ApiValidate
         return is_numeric($phone);
     }
 
-    static public function underBlocking($block = true)
+    static public function underBlocking($block = true, $hour = '')
     {
         if ( ! empty($block)) {
-            $hour = Carbon::now()->hour;
+            $hour = ! empty($hour) ? $hour : Carbon::now()->hour;
             if ($hour < self::SEND_FROM || $hour >= self::SEND_TO) {
                 return true;
             }
@@ -76,6 +77,20 @@ class ApiValidate
 
         foreach ($seances as $seance) {
             if ($seance->clients_count > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static public function underLimitMarketing($client_id)
+    {
+        $texts = Text::where('send_at', '>=', Carbon::now()->addHours(-24))->withCount(['receivers' => function($query) use($client_id) {
+            return $query->where('client_id', $client_id);
+        }])->get();
+
+        foreach ($texts as $text) {
+            if ($text->receivers_count > 0) {
                 return true;
             }
         }

@@ -40,6 +40,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::delete('users/partners/{user}', 'UsersController@partnersRemove');
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
+	Route::post('users/saveSettings', 'UsersController@saveSettings');
 	Route::get('users', 'UsersController@all');
 	Route::put('users', 'UsersController@create');
 	Route::post('users/{id}', 'UsersController@update');
@@ -80,6 +81,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::delete('messages/{id}', 'MessagesController@remove');
 	Route::get('messages', 'MessagesController@all');
 	Route::get('messages/{id}', 'MessagesController@info');
+	Route::post('messages/textValidate', 'MessagesController@textValidate');
 
 	Route::get('lists', 'ListsController@all');
 	Route::put('lists/save', 'ListsController@save');

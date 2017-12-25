@@ -28,7 +28,7 @@
 		<div class="col-md-8 col-sm-12">
 			<h2>
 				<div class="pull-right">
-					<button type="button" class="btn btn-default" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> Create New List</span></button>
+					<button type="button" class="btn btn-default" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New List') }}</span></button>
 				</div>
 				{{ __('Contact Lists') }}
 			</h2>
@@ -64,7 +64,7 @@
 									<a href="javascript:;" ng-show="!item.editable" class="a-icon text-danger" ng-click="remove(item.id, $index)">
 										<i class="fa fa-trash"></i>
 									</a>
-									<span ng-show="!item.editable" class="small-italic a-icon">{{ __('Click to see numbers') }}</span>
+									<span ng-show="!item.editable" class="small-italic a-icon" ng-click="choose($index)">{{ __('Click to see numbers') }}</span>
 								</div>
 
 								<div ng-show="selectedList.id == item.id">

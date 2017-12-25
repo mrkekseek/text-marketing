@@ -38,7 +38,8 @@ class ClientsController extends Controller
 		$data = array_filter($data, 'strlen');
 		$client = Client::create($data);
 
-		return $this->message('Client was successfully saved', 'success');
+		$this->message('Client was successfully saved', 'success');
+		return $client->id;
 	}
 
 	public function update(ClientCreateRequest $request, $id)
