@@ -11,9 +11,6 @@
         $scope.sent = false;
         $scope.inputs = [''];
 
-        $scope.max_text_len = 140 - ' Txt STOP to OptOut'.length;
-        $scope.max_lms_text_len = 500 - ' Txt STOP to OptOut'.length;
-
     	$scope.init = function() {
             $scope.get();
         };
@@ -29,28 +26,38 @@
         $scope.get = function() {
             request.send('/dialogs', {}, function (data) {
                 $scope.dialogs = data;
-                var temp = $location.path().split('/');
-                if (temp[3]) {
-                    $scope.activeClient.clients_id = temp[3];
-                } else if ($scope.dialogs.length) {
-                    $scope.activeClient.clients_id = $scope.dialogs[0].clients_id;
+                if ($scope.dialogs.length) {
+                    var temp = $location.path().split('/');
+                    if (temp[3]) {
+                        $scope.activeClient.id = temp[3];
+                    } else if ($scope.dialogs.length) {
+                        $scope.activeClient.id = $scope.dialogs[0].clients.id;
+                    }
+                    $scope.setClient($scope.activeClient);
                 }
-                $scope.setClient($scope.activeClient);
 
             }, 'get');
         };
 
         $scope.setClient = function(client) {
-            $location.path('/marketing/inbox/' + client.clients_id, false);
-            $scope.activeClient.clients_id = client.clients_id;
-            request.send('/dialogs/' + client.clients_id, {}, function (data) {
+            $location.path('/marketing/inbox/' + client.id, false);
+            $scope.activeClient.id = client.id;
+            request.send('/dialogs/' + client.id, {}, function (data) {
                 $scope.messages = data;
             }, 'get');
         };
 
+        $scope.maxChars = function() {
+            return 500 - ' Txt STOP to OptOut'.length - ($scope.user.company_status == 'verified' ? $scope.user.company_name.length + 2 : 0);
+        };
+
+        $scope.maxOneText = function() {
+            return 140 - ' Txt STOP to OptOut'.length - ($scope.user.company_status == 'verified' ? $scope.user.company_name.length + 2 : 0);
+        };
+
         $scope.charsCount = function(text) {
             if (text) {
-                return ($scope.user.company_name ? $scope.user.company_name.length : 0) + ': '.length + text.length;
+                return text.length;
             }
             return 0;
         };
@@ -60,13 +67,16 @@
                 logger.logError(langs.get('Text is empty.'));
                 return;
             }
+            
             var post_mas = {
                 'text': $scope.messages_text,
-                'client': $scope.activeClient
             };
+
             $scope.sent = true;
-            request.send('/dialogs/save', post_mas, function (data) {
-                $scope.messages.push(data);
+            request.send('/dialogs/create/' + $scope.activeClient.id, post_mas, function (data) {
+                if (data) {
+                    $scope.messages.push(data); 
+                }
                 $scope.sent = false;
             }, 'put');
         };
@@ -217,10 +227,13 @@
             
             if (error) {
                 $scope.listsList[index].clients[clientIndex].lists_id = $scope.listsList[index].id;
-                $scope.activeEditable = $scope.listsList[index].clients[clientIndex].editable = false;
+                $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone;
 
-                request.send('/clients/' + ( ! $scope.listsList[index].clients[clientIndex].id ? 'save' : $scope.listsList[index].clients[clientIndex].id), $scope.listsList[index].clients[clientIndex], function (data) {
-                    $scope.listsList[index].clients[clientIndex].id = data;
+                request.send('/clients/' + ( ! $scope.listsList[index].clients[clientIndex].id ? 'createForList/' + $scope.listsList[index].id : 'updateForList/' + $scope.listsList[index].id + '/' + $scope.listsList[index].clients[clientIndex].id), $scope.listsList[index].clients[clientIndex], function (data) {
+                    if (data) {
+                        $scope.activeEditable = $scope.listsList[index].clients[clientIndex].editable = false;
+                        $scope.listsList[index].clients[clientIndex].id = data;
+                    }
                 }, ( ! $scope.listsList[index].clients[clientIndex].id ? 'put' : 'post'));
             }
         };
@@ -230,6 +243,7 @@
                 $scope.listsList[index].clients.unshift({
                     'editable': true,
                     'phone': '',
+                    'view_phone': '',
                     'email': '',
                     'firstname': '',
                     'lastname': '',
@@ -239,12 +253,20 @@
             }
         };
 
-        $scope.cancelClient = function(client, index) {
+        $scope.removeClient = function(client, index, clientIndex) {
+            request.send('/clients/removeFromList/' + $scope.listsList[index].id + '/' + $scope.listsList[index].clients[clientIndex].id, {}, function (data) {
+                $scope.listsList[index].clients.splice(clientIndex, 1);
+            }, 'delete');
+        };
+
+        $scope.cancelClient = function(i, index) {
             if ( ! $scope.originClient.id) {
                 $scope.listsList[index].clients.shift();
             }
-            
-            $scope.activeEditable = client.editable = false;
+
+            $scope.listsList[index].clients[i].editable = false;
+            $scope.listsList[index].clients[i] = angular.copy($scope.originClient);
+            $scope.activeEditable = false;
         };
 
         $scope.editClient = function(client) {

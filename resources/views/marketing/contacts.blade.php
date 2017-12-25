@@ -118,13 +118,13 @@
 														<i class="phone-icon fa fa-phone"></i> 
 														@{{ client.view_phone + ' ' + client.firstname + ' ' + client.lastname }}
 													</span>
-													<div class="row edit-child-container" ng-show="client.editable">
+													<form name="form" class="row edit-child-container" ng-show="client.editable">
 														<div class="col-sm-12 col-md-8">
 															<div class="row">
 																<div class="col-sm-12 col-md-6">
 																	<div class="form-group search-group">
 																		<i class="fa fa-phone search-icon" aria-hidden="true"></i>
-																		<input class="form-control" type="text" placeholder="Phone Number" ng-model="client.phone" />
+																		<input name="phone" class="form-control" type="text" placeholder="Phone Number" ng-model="client.phone" />
 																	</div>
 																</div>
 																<div class="col-sm-12 col-md-6">
@@ -151,7 +151,7 @@
 															<div class="form-group">
 																<div class="btn-group btn-group-justified">
 																	<div class="btn-group">
-																		<button type="button" class="btn btn-default" ng-click="cancelClient(client, k)">{{ __('Cancel') }}</button>
+																		<button type="button" class="btn btn-default" ng-click="cancelClient(i, k)">{{ __('Cancel') }}</button>
 																	</div>
 																	<div class="btn-group">
 																		<button type="button" class="btn btn-primary" ng-click="saveClient(i, k, client)">{{ __('Save') }}</button>
@@ -159,7 +159,7 @@
 																</div>
 															</div>
 														</div>
-													</div>
+													</form>
 													<a href="javascript:;" ng-show="! client.editable" class="a-icon text-success" ng-click="editClient(client)">
 														<i class="fa fa-pencil"></i>
 													</a>

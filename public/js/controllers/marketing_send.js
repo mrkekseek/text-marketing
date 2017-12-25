@@ -309,11 +309,14 @@
             });
         };
 
-        $scope.cancelClient = function(client, index) {
+        $scope.cancelClient = function(i, index) {
             if ( ! $scope.originClient.id) {
                 $scope.listsList[index].clients.shift();
             }
-            $scope.activeEditable = client.editable = false;
+
+            $scope.listsList[index].clients[i].editable = false;
+            $scope.listsList[index].clients[i] = angular.copy($scope.originClient);
+            $scope.activeEditable = false;
         };
 
         $scope.editClient = function(client) {
@@ -340,21 +343,21 @@
             
             if (error) {
                 $scope.listsList[index].clients[clientIndex].lists_id = $scope.listsList[index].id;
-                $scope.activeEditable = $scope.listsList[index].clients[clientIndex].editable = false;
-                $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone; 
+                $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone;
 
-                request.send('/clients/' + ( ! $scope.listsList[index].clients[clientIndex].id ? '' : $scope.listsList[index].clients[clientIndex].id), $scope.listsList[index].clients[clientIndex], function (data) {
-                    $scope.listsList[index].clients[clientIndex].id = data;
-                    $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone;
+                request.send('/clients/' + ( ! $scope.listsList[index].clients[clientIndex].id ? 'createForList/' + $scope.listsList[index].id : 'updateForList/' + $scope.listsList[index].id + '/' + $scope.listsList[index].clients[clientIndex].id), $scope.listsList[index].clients[clientIndex], function (data) {
+                    if (data) {
+                        $scope.activeEditable = $scope.listsList[index].clients[clientIndex].editable = false;
+                        $scope.listsList[index].clients[clientIndex].id = data;
+                    }
                 }, ( ! $scope.listsList[index].clients[clientIndex].id ? 'put' : 'post'));
             }
         };
 
         $scope.removeClient = function(client, index, clientIndex) {
-        	$scope.listsList[index].clients.splice(clientIndex, 1);
-        	request.send('/clients/removeFromList/' + $scope.listsList[index].id, $scope.listsList[index].clients, function (data) {
-
-            });
+            request.send('/clients/removeFromList/' + $scope.listsList[index].id + '/' + $scope.listsList[index].clients[clientIndex].id, {}, function (data) {
+                $scope.listsList[index].clients.splice(clientIndex, 1);
+            }, 'delete');
         };
 
         $scope.insertMask = function(textarea, mask) {

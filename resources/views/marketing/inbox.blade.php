@@ -14,18 +14,18 @@
 					</div>
 				</div>
 			</div>
-			<div ng-repeat="(key, client) in dialogs | filter: search">
+			<div ng-repeat="(key, dialog) in dialogs | filter: search">
 				<div class="divider divider-dashed"></div>
-				<div class="phones" ng-click="setClient(client)" ng-class="{'active': client.clients_id == activeClient.clients_id}">
+				<div class="phones" ng-click="setClient(dialog.clients)" ng-class="{'active': dialog.clients.id == activeClient.id}">
 					<div class="row">
 						<div class="col-sm-10">
 							<div>
-								<strong>@{{ client.view_phone }}</strong>
-								<span class="small-italic">{{ __("from") }} @{{ client.source }}</span>
+								<strong>@{{ dialog.clients.view_phone }}</strong>
+								<span class="small-italic">{{ __("from") }} @{{ dialog.clients.source }}</span>
 							</div>
 							<div class="phone-name">
-								@{{ client.firstname }}
-								@{{ client.lastname }}
+								@{{ dialog.clients.firstname }}
+								@{{ dialog.clients.lastname }}
 							</div>
 						</div>
 						<div class="col-sm-2 text-right">
@@ -56,13 +56,12 @@
 			</div>
 			<div class="send-group">
 				<form name="form_chat">
-					<div class="chat-text chars-area" ng-class="{'danger': charsCount(messages_text) > max_text_len}">
+					<div class="chat-text chars-area">
 						<textarea name="messages_text" class="form-control area-resize" ng-model="messages_text" placeholder="{{ __("Enter your text here...") }}" required="required"></textarea>
 						<span>
-							<span ng-show="charsCount(messages_text) > max_text_len">{{ __('3 messages') }} </span>
+							<span ng-show="charsCount(messages_text) > maxOneText()">{{ __('3 messages') }} </span>
 							<span ng-bind="charsCount(messages_text)">0</span> / 
-							<span ng-show="charsCount(messages_text) <= max_text_len" ng-bind="max_text_len">140</span>
-							<span ng-show="charsCount(messages_text) > max_text_len" ng-bind="max_lms_text_len">140</span>
+							<span ng-bind="maxChars()">140</span>
 						</span>
 					</div>
 					<div class="chat-button">
