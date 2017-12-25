@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Message extends Model
 {
     protected $guarded = [];
+
+    public function texts()
+    {
+    	return $this->hasMany('App\Text', 'message_id');
+    }
 }

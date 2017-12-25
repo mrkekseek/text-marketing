@@ -26,10 +26,12 @@
 
 								<div class="row-info">
 									<span class="messages-info-send">
-										<span>Will be sent on @{{ item.sendDate | date: 'MMMM d' }}th at @{{ item.sendDate | date: 'h:mm a' }}</span>
+										<span ng-show="item.lastText.send_at == item.lastText.created_at">{{ __('Sent') }} @{{ item.lastText.send_at | date: 'MMMM d' }}@{{ getSuffix(item.lastText.send_at | date: 'd') }}</span>
+										<span ng-show="item.lastText.send_at > item.lastText.created_at">{{ __('Will be sent on') }} @{{ item.lastText.send_at | date: 'MMMM d' }}@{{ getSuffix(item.lastText.send_at | date: 'd') }}</span>
+										<span>at @{{ item.lastText.send_at | date: 'h:mm a' }}</span>
 									</span>
 
-									<span>0 lists / 0 numbers.</span>
+									<span>@{{ item.countList }} {{ __('lists') }} / @{{ item.lastText.receivers.length }} {{ __('numbers') }}.</span>
 									
 									<div class="row-info-item pull-right">
 										<label class="ui-switch ui-switch-success ui-switch-sm">
@@ -39,10 +41,15 @@
 										<span class="team-leader">{{ __('Active Message') }}</span>
 									</div>
 								</div>
-
-								<div ng-show="selected == $index && ! item.isSended" class="alert-info alert" role="alert">
-									<div>
-										This message wasn't sent yet
+								<div ng-show="item.id == selectedMessage.id">
+									<div class="item-panel panel-child">
+										<div class="phones-details-wrap small-italic">
+											<div ng-repeat="receiver in item.lastText.receivers">
+												<i ng-show=" ! receiver.success" class="fa fa-exclamation-triangle text-orange"></i>
+												<i ng-show="receiver.success" class="fa fa-check-circle-o text-success"></i>
+												<strong>@{{ clients[receiver.client_id].view_phone }}: </strong> @{{ receiver.message }}
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

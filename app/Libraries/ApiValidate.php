@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 use Carbon\Carbon;
 use App\Seance;
+use App\Text;
 
 class ApiValidate
 {
@@ -12,14 +13,14 @@ class ApiValidate
 	const MAX_LENGTH = 500;
     const SUPPORTED_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!“#$%&‘()*+,-.?/:;<=> ';
 
-    static public function companyExists($company)
+    static public function companyExists($company, $user)
     {
-        return auth()->user()->company_name == $company;
+        return $user->company_name == $company;
     }
 
-    static public function companyVerified($company)
+    static public function companyVerified($company, $user)
     {
-        return self::companyExists($company) && auth()->user()->company_status == 'verified';
+        return self::companyExists($company, $user) && $user->company_status == 'verified';
     }
 
     static public function messageSymbols($text)
@@ -56,10 +57,10 @@ class ApiValidate
         return is_numeric($phone);
     }
 
-    static public function underBlocking($block = true)
+    static public function underBlocking($block = true, $hour = '')
     {
         if ( ! empty($block)) {
-            $hour = Carbon::now()->hour;
+            $hour = ! empty($hour) ? $hour : Carbon::now()->hour;
             if ($hour < self::SEND_FROM || $hour >= self::SEND_TO) {
                 return true;
             }
@@ -70,12 +71,26 @@ class ApiValidate
 
     static public function underLimit($phone)
     {
-        $seances = Seance::where('date', '>=', Carbon::now()->addHours(-24))->withCount(['clients' => function($query) use($phone) {
+        $seances = Seance::where('date', '>=', Carbon::now()->subHours(24))->withCount(['clients' => function($query) use($phone) {
             return $query->where('phone', $phone);
         }])->get();
 
         foreach ($seances as $seance) {
             if ($seance->clients_count > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static public function underLimitMarketing($client_id)
+    {
+        $texts = Text::where('send_at', '>=', Carbon::now()->addHours(-24))->withCount(['receivers' => function($query) use($client_id) {
+            return $query->where('client_id', $client_id);
+        }])->get();
+
+        foreach ($texts as $text) {
+            if ($text->receivers_count > 0) {
                 return true;
             }
         }

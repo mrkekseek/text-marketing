@@ -131,7 +131,7 @@ hr {
 }
 
 .phones-details-wrap {
-	padding-left: 43px;
+	
 }
 
 .card-content label > span {
@@ -927,7 +927,7 @@ li.toggle-provider {
 }
 
 .item-panel.active {
-	z-index: 2;
+	z-index: 10;
 }
 
 .dropdown-menu {
@@ -2638,6 +2638,10 @@ div.item-panel {
 	z-index: 1;
 }
 
+div.item-panel.add {
+	margin-left: 30px;
+}
+
 div.item-panel.archived {
 	opacity: 0.5;
 }
@@ -2646,6 +2650,7 @@ div.item-panel.active {
 	background: #fbfbfb;
 	border-color: #e9e9e9;
 	box-shadow: 0 0 3px rgba(0,0,0,.1);
+	z-index: 10;
 }
 
 div.item-panel:hover {
@@ -2664,10 +2669,6 @@ div.item-panel.panel-child:hover .handle {
 
 div.item-panel.panel-child:hover .position {
 	display: none;
-}
-
-div.panel-child {
-	margin-top: 10px;
 }
 
 .handle {
@@ -2959,6 +2960,7 @@ div.chars-area.danger span {
 .dropable-phones-outer {
 	position: relative;
 	z-index: 10;
+    display: inline-block;
 }
 
 .dropable-phones {

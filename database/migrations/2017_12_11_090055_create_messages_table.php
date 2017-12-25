@@ -22,9 +22,6 @@ class CreateMessagesTable extends Migration
             $table->tinyInteger('schedule')->unsigned()->default(0);
             $table->tinyInteger('switch')->unsigned()->default(0);
             $table->string('date')->default('');
-            $table->string('finish')->default('');
-            $table->tinyInteger('send')->unsigned()->default(0);
-            $table->tinyInteger('status')->unsigned()->default(0);
             $table->tinyInteger('active')->unsigned()->default(0);
             $table->timestamps();
         });

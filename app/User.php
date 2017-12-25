@@ -74,6 +74,19 @@ class User extends Authenticatable
         return $this->hasMany('App\Message', 'user_id');
     }
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function($user) {
+            $user->defaultUrls();
+        });
+
+        static::deleting(function($user) {
+            //
+        });
+    }
+
     public function defaultUrls()
     {
         $urls = [
@@ -89,8 +102,13 @@ class User extends Authenticatable
             ]
         ];
 
-        foreach ($urls as $row) {
-            $this->urls()->create($row);
+        foreach ($urls as $url) {
+            $this->urls()->create($url);
         }
+    }
+
+    public function scopePartners($query)
+    {
+        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false);
     }
 }
