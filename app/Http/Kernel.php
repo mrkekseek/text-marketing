@@ -60,5 +60,6 @@ class Kernel extends HttpKernel
 
         'auth.views' => \App\Http\Middleware\CheckAuthViews::class,
         'messages' => \App\Http\Middleware\Messages::class,
+        'timezone' => \App\Http\Middleware\Timezone::class,
     ];
 }

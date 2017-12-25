@@ -40,7 +40,7 @@ class SendMarketingText implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::message($this->text->id, $this->clients, $this->message, $this->company);
+        $response = Api::message($this->text->id, $this->clients, $this->message, $this->company, $this->text->message->user->offset);
         if ($response['code'] == 200) {
             MessagesService::receivers($this->text, $response['data']);
         } else {
