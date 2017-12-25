@@ -20,7 +20,7 @@ Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = ''
 	return view($view);
 })->middleware('auth.views');
 
-Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], function() {
 	//Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
 
 	Route::post('auth/support', 'AuthController@support');

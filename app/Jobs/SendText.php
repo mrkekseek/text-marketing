@@ -41,7 +41,7 @@ class SendText implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::review($this->review->id, $this->clients, $this->text, $this->company);
+        $response = Api::review($this->review->id, $this->clients, $this->text, $this->company, $this->review->user->offset);
         if ($response['code'] == 200) {
             SurveysService::seance($this->review, $response['data']);
         }

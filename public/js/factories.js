@@ -89,11 +89,28 @@
     function request($http, $rootScope, Upload, logger) {
         var api_url = '/api/v1';
         return {
-            send: function (adrress, post_mas, callback, method) {
-                callback = callback || false;
-                method = method || 'post';
+            send: function (address, data, callback, method) {
+                var requestObject = {
+                    'method': method || 'post',
+                    'url': api_url + address,
+                    'headers': {
+                        'X-Local-Time': (new Date()).getTimezoneOffset()
+                    },
+                    'data': data
+                };
 
-                $http[method](api_url + adrress, post_mas).then(function (response) {
+                $http(requestObject).then(function (response) {
+                    var data = logger.check(response.data);
+                    if (callback = (callback || false)) {
+                        (callback)(data);
+                    }
+                }, function (reason) {
+                    for (var k in reason.data.errors) {
+                        logger.logError(reason.data.errors[k]);
+                    }
+                });
+
+                /*$http[method](api_url + adrress, post_mas).then(function (response) {
                     var data = logger.check(response.data);
                     if (callback) {
                         (callback)(data);
@@ -102,7 +119,7 @@
                     for (var k in reason.data.errors) {
                         logger.logError(reason.data.errors[k]);
                     }
-                });
+                });*/
             },
 
             sendWithFiles: function (adrress, post_mas, callback, percentsCallback, method) {

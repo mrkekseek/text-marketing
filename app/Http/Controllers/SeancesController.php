@@ -55,7 +55,7 @@ class SeancesController extends Controller
                 'client_id' => $client['id'],
                 'code' => $client['code'],
                 'url' => $client['link'],
-                'date' => $this->getDate($request->schedule, $request->time),
+                'date' => $this->getDate($request->schedule, $request->time, $user),
                 'type' => $this->getType($request->text, $request->email),
                 'message' => ''
             ];
@@ -68,7 +68,7 @@ class SeancesController extends Controller
         }
 
         if ( ! empty($request->text)) {
-            $this->sendText($review, $clients, $text, $this->getDate($request->schedule, $request->time));
+            $this->sendText($review, $clients, $text, $this->getDate($request->schedule, $request->time, $user));
         }
 
         return $this->message('Review was successfully saved', 'success');
@@ -128,11 +128,11 @@ class SeancesController extends Controller
             return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
         }
 
-        if (empty($limit)) {
+        /*if (empty($limit)) {
             return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
-        }
+        }*/
 
-        if (ApiValidate::underBlocking()) {
+        if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, $user, true))) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 
@@ -215,12 +215,18 @@ class SeancesController extends Controller
         ]);
     }
 
-    public function getDate($schedule, $time)
+    public function getDate($schedule, $time, $user, $validate = false)
     {
+        $date = Carbon::now()->subHours($user->offset);
         if ( ! empty($schedule)) {
-            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
         }
-    	return Carbon::now();
+
+        if (empty($validate)) {
+            $date->addHours($user->offset);
+        }
+
+        return $date;
     }
 
     public function getType($text, $email)
