@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use File;
 use App\Url;
+use App\User;
 use App\Http\Requests\UrlsCreateRequest;
 use App\Jobs\GetSocialIds;
 use Illuminate\Http\Request;
@@ -17,9 +18,10 @@ class UrlsController extends Controller
 
 	public function create(UrlsCreateRequest $request)
 	{
+		$user = empty($user) ? auth()->user() : $user;
 		$data = $request->only(['name', 'url', 'active']);
 		$data = array_filter($data, 'strlen');
-		$url = auth()->user()->urls()->create($data);
+		$url = $user->urls()->create($data);
 		
 		GetSocialIds::dispatch($url)->onQueue('socials');
 
@@ -35,6 +37,18 @@ class UrlsController extends Controller
 
 		$this->message('Review Site was successfully saved', 'success');
 		return $url;
+	}
+
+	public function bulkUpdate(Request $request, User $user)
+	{
+		foreach ($request->urls as $url) {
+			Url::find($url['id'])->update([
+				'url' => empty($url['url']) ? '' : $url['url'],
+				'active' => $url['active'],
+			]);
+		}
+
+		return $this->message('Review Sites were successfully saved', 'success');
 	}
 
 	public function remove(Url $url)
