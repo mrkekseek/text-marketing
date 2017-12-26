@@ -92,11 +92,13 @@
 					}
 				}
 
+                var date = new Date()
+
                 var time = {
                     'year': $scope.seanceDate.getFullYear(),
                     'month': $scope.seanceDate.getMonth() + 1,
                     'date': $scope.seanceDate.getDate(),
-                    'hours': $scope.seanceTime.getHours(),
+                    'hours': $scope.message.schedule == '1' ? $scope.seanceTime.getHours() : date.getHours(),
                     'minutes': $scope.seanceTime.getMinutes()
                 };
 
