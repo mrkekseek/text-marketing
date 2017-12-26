@@ -64,7 +64,7 @@
 
         $scope.getSurvey = function(user_id) {
             user_id = user_id || false;
-            request.send('/surveys/' + (user_id ? user_id : ''), false, function (data) {
+            request.send('/surveys' + (user_id ? '/' + user_id : ''), false, function (data) {
                 $scope.survey = data;
                 $scope.oldText = angular.copy($scope.survey.text);
                 $scope.oldSender = angular.copy($scope.survey.sender);

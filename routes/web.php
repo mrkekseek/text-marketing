@@ -20,7 +20,7 @@ Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = ''
 	return view($view);
 })->middleware('auth.views');
 
-Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
+Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], function() {
 	//Route::any('{sunit}/{sid?}/{smethod?}', 'ApiController@run')->middleware('messages');
 
 	Route::post('auth/support', 'AuthController@support');
@@ -61,6 +61,10 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::post('clients/{id}', 'ClientsController@update');
 	Route::delete('clients/{id}', 'ClientsController@remove');
 
+	Route::put('clients/createForList/{list}', 'ClientsController@createForList');
+	Route::post('clients/updateForList/{list}/{client}', 'ClientsController@updateForList');
+	Route::delete('clients/removeFromList/{list}/{client}', 'ClientsController@removeFromList');
+
 	Route::put('surveys', 'SurveysController@save');
 	Route::post('surveys/text/{user?}', 'SurveysController@text');
 	Route::post('surveys/email/{user?}', 'SurveysController@email');
@@ -87,6 +91,10 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'messages'], function() {
 	Route::put('lists/save', 'ListsController@save');
 	Route::post('lists/{id}', 'ListsController@save');
 	Route::delete('lists/{id}', 'ListsController@remove');
+
+	Route::get('dialogs', 'DialogsController@all');
+	Route::get('dialogs/{id}', 'DialogsController@info');
+	Route::put('dialogs/create/{client}', 'DialogsController@create');
 });
 
 Route::get('signup/{type?}', function($type = false) {

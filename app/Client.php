@@ -12,4 +12,9 @@ class Client extends Model
     {
     	return $this->belongsToMany('App\ContactList', 'list_clients', 'clients_id', 'lists_id')->withTimestamps();
     }
+
+    public function dialogs()
+    {
+    	return $this->hasMany('App\Dialog', 'clients_id');
+    }
 }

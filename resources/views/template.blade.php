@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="app" data-ng-controller="AppCtrl" data-ng-init="init()">
+<html data-ng-app="app" data-ng-controller="AppCtrl" data-ng-init="init({{ auth()->user() }})">
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />

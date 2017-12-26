@@ -26,13 +26,18 @@ class MessagesController extends Controller
 
     public function create(MessageCreateRequest $request)
     {
-        $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch']);
-        $data['lists_id'] = implode(',', $data['lists_id']);
-        $data['date'] = $this->getDate($request->schedule, $request->time);
-        $data['active'] = true;
-        $message = auth()->user()->messages()->create($data);
-        $this->sendText($message);
-        return $this->message('Message was successfully saved', 'success');
+        if ($this->textValidate($request)) {
+            $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch']);
+            $data['lists_id'] = implode(',', $data['lists_id']);
+            $data['date'] = $this->getDate($request->schedule, $request->time, auth()->user());
+            $data['active'] = true;
+
+            $message = auth()->user()->messages()->create($data);
+            $this->sendText($message);
+            return $this->message('Message was successfully saved', 'success');
+        }
+
+        return false;
     }
 
     public function sendText($message)
@@ -41,7 +46,7 @@ class MessagesController extends Controller
         $text = $message->texts()->create([
             'phones' => count($clients),
             'message' => '',
-            'send_at' => $message->date,
+            'send_at' => $message->date->subHours(auth()->user()->offset),
         ]);
 
         $phones = [];
@@ -96,22 +101,28 @@ class MessagesController extends Controller
         return $this->message(__('Message was successfully removed'), 'success');
     }
 
-    public function getDate($schedule, $time)
+    public function getDate($schedule, $time, $user, $validate = false)
     {
+        $date = Carbon::now()->subHours($user->offset);
         if ( ! empty($schedule)) {
-            return Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
         }
-        return Carbon::now();
+
+        if (empty($validate)) {
+            $date->addHours($user->offset);
+        }
+
+        return $date;
     }
 
     public function textValidate(Request $request)
     {
         $data = $request->all();
-        if ( ! ApiValidate::companyExists($data['company'], auth()->user())) {
+        if ( ! ApiValidate::companyExists(auth()->user()->company_name, auth()->user())) {
             return $this->message('This Company Name isn\'t verified');
         }
 
-        if ( ! ApiValidate::companyVerified($data['company'], auth()->user())) {
+        if ( ! ApiValidate::companyVerified(auth()->user()->company_name, auth()->user())) {
             return $this->message('Company Name must be verified');
         }
 
@@ -156,12 +167,12 @@ class MessagesController extends Controller
                 return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
             }
 
-            if (empty($limit)) {
+            /*if (empty($limit)) {
                 return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
-            }
+            }*/
         }
 
-        if (ApiValidate::underBlocking(true, $data['send_time']['hours'])) {
+        if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, auth()->user(), true))) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 

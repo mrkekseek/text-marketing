@@ -39,6 +39,7 @@ class UsersController extends Controller
 		$data['password'] = UsersService::password($data['password']);
 		$data['phone'] = UsersService::phoneToNumber($data);
 		$data['teams_id'] = UsersService::createTeam($data);
+		$data['offset'] = config('app.offset');
 		$data = array_filter($data, 'strlen');
 
 		$user = User::create($data);
@@ -69,6 +70,7 @@ class UsersController extends Controller
 		$data['phone'] = UsersService::phoneToNumber($data);
 		$data['teams_id'] = auth()->user()->teams_id;
 		$data['plans_id'] = auth()->user()->plans_id;
+		$data['offset'] = config('app.offset');
 		$data = array_filter($data, 'strlen');
 
 		$user = User::create($data);
@@ -102,6 +104,7 @@ class UsersController extends Controller
 	{
 		$data = $request->only(['firstname', 'lastname', 'email', 'view_phone']);
 		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['offset'] = config('app.offset');
 		$data = array_filter($data, 'strlen');
 
 		$user = auth()->user()->update($data);
