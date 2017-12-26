@@ -92,6 +92,16 @@
 					}
 				}
 
+                var time = {
+                    'year': $scope.seanceDate.getFullYear(),
+                    'month': $scope.seanceDate.getMonth() + 1,
+                    'date': $scope.seanceDate.getDate(),
+                    'hours': $scope.seanceTime.getHours(),
+                    'minutes': $scope.seanceTime.getMinutes()
+                };
+
+                $scope.message.time = time;
+
                 request.send('/messages/textValidate', $scope.message, function (data) {
                     if (data) {
                         $scope.step++;
