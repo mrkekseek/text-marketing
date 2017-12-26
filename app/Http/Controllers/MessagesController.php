@@ -11,6 +11,7 @@ use App\Http\Requests\MessageCreateRequest;
 use Carbon\Carbon;
 use App\Jobs\SendMarketingText;
 use App\Libraries\ApiValidate;
+use App\Http\Services\MessagesService;
 
 class MessagesController extends Controller
 {
@@ -177,5 +178,16 @@ class MessagesController extends Controller
         }
 
         return 1;
+    }
+
+    public function push(Request $request, Text $text)
+    {
+        $data = $request->json()->all();
+        $clients = [];
+        foreach ($data as $client) {
+            $clients[$client['phone']] = $client;
+        }
+
+        MessagesService::receivers($this->text, $clients);
     }
 }
