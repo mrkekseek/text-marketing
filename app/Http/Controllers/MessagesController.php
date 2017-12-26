@@ -71,8 +71,8 @@ class MessagesController extends Controller
                 'message' => '',
             ]);
         }
-
-        $delay = Carbon::now()->diffInSeconds($message->date);
+        
+        $delay = Carbon::now()->diffInSeconds($message->date->addHours(auth()->user()->offset));
         SendMarketingText::dispatch($text, $phones, $message->text, auth()->user()->company_name)->onQueue('texts')->delay($delay);
     }
 
