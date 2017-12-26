@@ -47,7 +47,10 @@
 											<div ng-repeat="receiver in item.lastText.receivers">
 												<i ng-show=" ! receiver.success" class="fa fa-exclamation-triangle text-orange"></i>
 												<i ng-show="receiver.success" class="fa fa-check-circle-o text-success"></i>
-												<strong>@{{ clients[receiver.client_id].view_phone }}: </strong> @{{ receiver.message }}
+												<strong>@{{ clients[receiver.client_id].view_phone }}: </strong> 
+												<span ng-show="receiver.message">@{{ receiver.message }}</span>
+												<span ng-show="! receiver.message && receiver.success">Messsage successfully sent.</span>
+												<span ng-show="! receiver.message && ! receiver.success">Wait for report.</span>
 											</div>
 										</div>
 									</div>
