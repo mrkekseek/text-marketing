@@ -188,6 +188,6 @@ class MessagesController extends Controller
             $clients[$client['phone']] = $client;
         }
 
-        MessagesService::receivers($this->text, $clients);
+        MessagesService::receivers($text, $clients);
     }
 }
