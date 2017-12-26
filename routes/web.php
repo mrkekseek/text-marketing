@@ -116,6 +116,7 @@ Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
 
 Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');
+Route::any('message/push/{text}', 'MessagesController@push');
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
