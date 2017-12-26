@@ -111,9 +111,10 @@ angular.module('app').filter('capitalize', function() {
             }, 'get');
         };
 
-        $scope.init = function() {
+        $scope.init = function(user) {
+            $scope.user = user;
             $scope.menu();
-            $scope.get();
+            //$scope.get();
         };
 
         $scope.get = function() {

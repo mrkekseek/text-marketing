@@ -6,6 +6,7 @@ use App\Client;
 use App\User;
 use App\Seance;
 use App\ListClient;
+use App\ContactList;
 use App\Http\Services\UsersService;
 use App\Http\Requests\ClientCreateRequest;
 use Illuminate\Http\Request;
@@ -42,6 +43,32 @@ class ClientsController extends Controller
 		return $client->id;
 	}
 
+	public function createForList(ClientCreateRequest $request, ContactList $list)
+	{
+		$data = $request->only(['firstname', 'lastname', 'view_phone', 'email']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['team_id'] = auth()->user()->teams_id;
+		$data = array_filter($data, 'strlen');
+		$client = Client::create($data);
+
+		$list->clients()->syncWithoutDetaching([$client->id]);
+		$this->message('Client was successfully saved', 'success');
+		return $client->id;
+	}
+
+	public function updateForList(ClientCreateRequest $request, ContactList $list, Client $client)
+	{
+		$data = $request->only(['firstname', 'lastname', 'view_phone', 'email']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['team_id'] = auth()->user()->teams_id;
+		$data = array_filter($data, 'strlen');
+		$client->update($data);
+
+		$list->clients()->syncWithoutDetaching([$client->id]);
+		$this->message('Client was successfully saved', 'success');
+		return $client->id;
+	}
+
 	public function update(ClientCreateRequest $request, $id)
 	{
 		$data = $request->only(['firstname', 'lastname', 'view_phone', 'email']);
@@ -50,6 +77,11 @@ class ClientsController extends Controller
 		$client = Client::find($id)->update($data);
 
 		return $this->message('Client was successfully saved', 'success');
+	}
+
+	public function removeFromList(ContactList $list, Client $client)
+	{
+		$list->clients()->detach([$client->id]);
 	}
 
 	public function remove($id)

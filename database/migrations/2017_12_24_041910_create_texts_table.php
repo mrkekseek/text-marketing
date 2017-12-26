@@ -19,7 +19,7 @@ class CreateTextsTable extends Migration
             $table->integer('phones')->unsigned()->default(0);
             $table->tinyInteger('finish')->unsigned()->default(0);
             $table->string('message')->default('');
-            $table->timestamps('send_at');
+            $table->timestamp('send_at');
             $table->timestamps();
         });
     }
