@@ -13,8 +13,8 @@ class Text extends Model
     	return $this->hasMany('App\Receiver', 'text_id');
     }
 
-    public function message()
+    public function messages()
     {
-        return $this->belongsTo('App\Message');
+        return $this->belongsTo('App\Message', 'message_id');
     }
 }
