@@ -26,8 +26,8 @@
 
 								<div class="row-info">
 									<span class="messages-info-send">
-										<span ng-show="item.lastText.send_at == item.lastText.created_at">{{ __('Sent') }} @{{ item.lastText.send_at | date: 'MMMM d' }}@{{ getSuffix(item.lastText.send_at | date: 'd') }}</span>
-										<span ng-show="item.lastText.send_at > item.lastText.created_at">{{ __('Will be sent on') }} @{{ item.lastText.send_at | date: 'MMMM d' }}@{{ getSuffix(item.lastText.send_at | date: 'd') }}</span>
+										<span ng-show="item.lastText.send_at < item.lastText.created_at">{{ __('Sent on') }} @{{ item.lastText.send_at | date: 'MMMM d' }}@{{ getSuffix(item.lastText.send_at | date: 'd') }}</span>
+										<span ng-show="item.lastText.send_at >= item.lastText.created_at">{{ __('Will be sent on') }} @{{ item.lastText.send_at | date: 'MMMM d' }}@{{ getSuffix(item.lastText.send_at | date: 'd') }}</span>
 										<span>at @{{ item.lastText.send_at | date: 'h:mm a' }}</span>
 									</span>
 

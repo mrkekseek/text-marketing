@@ -23,7 +23,7 @@
                 	$scope.list[k].lastText = $scope.list[k].texts[$scope.list[k].texts.length - 1];
                 	var send_at = new Date($scope.list[k].lastText.send_at);
                 	$scope.list[k].lastText.send_at = send_at.getTime();
-                	var created_at = new Date($scope.list[k].lastText.created_at);
+                	var created_at = new Date();
                 	$scope.list[k].lastText.created_at = created_at.getTime();
                 }
             }, 'get');
