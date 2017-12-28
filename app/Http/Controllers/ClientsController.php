@@ -82,6 +82,7 @@ class ClientsController extends Controller
 	public function removeFromList(ContactList $list, Client $client)
 	{
 		$list->clients()->detach([$client->id]);
+		return $this->message(__('Client was successfully removed from list.'), 'success');
 	}
 
 	public function remove($id)
