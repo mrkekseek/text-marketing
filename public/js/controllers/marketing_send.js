@@ -385,11 +385,6 @@
                 logger.logError('Name is required');
                 error = 0;
             }
-
-            if ( ! client.email) {
-                logger.logError('Email is required');
-                error = 0;
-            }
             
             if (error) {
                 $scope.listsList[index].clients[clientIndex].lists_id = $scope.listsList[index].id;
