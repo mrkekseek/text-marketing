@@ -98,22 +98,6 @@
 						<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="1" >
 							<span>{{ __('Schedule') }}</span>
 						</label>
-						<!--<div ng-show="message.schedule == '1'">
-							<div class="calendar-box">
-								<span class="input-group">
-									<input type="text" class="form-control" ng-model="seanceDate" uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup.popup_date" datepicker-options="dateOptions" close-text="Close" />
-									<span class="input-group-btn">
-										<button type="button" class="btn btn-default" ng-click="openDate()">
-											<i class="glyphicon glyphicon-calendar"></i>
-										</button>
-									</span>
-								</span>
-							</div>
-
-							<div class="time-box">
-								<div uib-timepicker ng-model="seanceTime" hour-step="1" minute-step="1" min="timeMin" max="timeMax" show-meridian="false"></div>
-							</div>
-						</div>-->
 					</div>
 				</div>
 			
@@ -298,7 +282,7 @@
 														<div class="col-sm-12 col-md-6">
 															<div class="form-group search-group">
 																<i class="fa fa-phone search-icon" aria-hidden="true"></i>
-																<input class="form-control" type="text" placeholder="Phone Number" ng-model="client.phone" />
+																<input class="form-control" type="text" ng-readonly="client.id" placeholder="Phone Number" ng-model="client.phone" />
 															</div>
 														</div>
 														<div class="col-sm-12 col-md-6">

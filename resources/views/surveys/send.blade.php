@@ -30,7 +30,7 @@
 										<i class="fa fa-phone search-icon" aria-hidden="true"></i>
 										<div class="input-group">
 											<span class="input-group-addon" id="basic-addon1">+1</span>
-											<input type="text" name="phone" ng-model="client.view_phone" class="form-control" placeholder="{{ __('Phone Number') }}" required="required" />
+											<input type="text" name="phone" ng-model="client.view_phone" ng-readonly="client.id" class="form-control" placeholder="{{ __('Phone Number') }}" required="required" />
 										</div>
 									</div>
 

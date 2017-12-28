@@ -124,7 +124,7 @@
 																<div class="col-sm-12 col-md-6">
 																	<div class="form-group search-group">
 																		<i class="fa fa-phone search-icon" aria-hidden="true"></i>
-																		<input name="phone" class="form-control" type="text" placeholder="Phone Number" ng-model="client.phone" />
+																		<input name="phone" class="form-control" type="text" placeholder="Phone Number" ng-readonly="client.id" ng-model="client.phone" />
 																	</div>
 																</div>
 																<div class="col-sm-12 col-md-6">
