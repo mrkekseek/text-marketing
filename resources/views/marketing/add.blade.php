@@ -98,7 +98,7 @@
 						<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="1" >
 							<span>{{ __('Schedule') }}</span>
 						</label>
-						<div ng-show="message.schedule == '1'">
+						<!--<div ng-show="message.schedule == '1'">
 							<div class="calendar-box">
 								<span class="input-group">
 									<input type="text" class="form-control" ng-model="seanceDate" uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup.popup_date" datepicker-options="dateOptions" close-text="Close" />
@@ -113,22 +113,22 @@
 							<div class="time-box">
 								<div uib-timepicker ng-model="seanceTime" hour-step="1" minute-step="1" min="timeMin" max="timeMax" show-meridian="false"></div>
 							</div>
-						</div>
+						</div>-->
 					</div>
 				</div>
 			
 				<div class="col-lg-6 col-xs-12">
-					
-						<!--<div class="calendar-container">
-							<div uib-datepicker ng-model="message.date" datepicker-options="dateOptions" role="application">
+					<div ng-show="message.schedule == '1'">
+						<div class="calendar-container">
+							<div uib-datepicker ng-model="seanceDate" datepicker-options="dateOptions" role="application">
 							</div>
 						</div>
-						<div ng-show="message.date" class="vertical-magin-container">
+						<div class="vertical-magin-container">
 							<div class="interval-container">
 								<label>{{ __('Send') }}</label><br />
 								<label class="ui-radio">
 									<input name="messagesSwitch" ng-model="message.switch" type="radio" value="1" />
-									<span>{{ __('on') }} @{{ message.date | date: 'MMMM d' }}@{{getSuffix(message.date | date: 'd')}}</span>
+									<span>{{ __('on') }} @{{ seanceDate | date: 'MMMM d' }}@{{getSuffix(seanceDate | date: 'd')}}</span>
 								</label><br />
 
 								<label class="ui-radio">
@@ -137,16 +137,16 @@
 								</label><br />
 								<label class="ui-radio">
 									<input name="messagesSwitch" ng-model="message.switch" type="radio" value="3" />
-									<span>{{ __('every') }} @{{ message.date | date: 'EEEE' }}</span>
+									<span>{{ __('every') }} @{{ seanceDate | date: 'EEEE' }}</span>
 								</label><br />
 								<label class="ui-radio">
 									<input name="messagesSwitch" ng-model="message.switch" type="radio" value="4" />
-									<span>{{ __('every') }} @{{ message.date | date: 'd'  }}@{{getSuffix(message.date | date: 'd')}} </span>
+									<span>{{ __('every') }} @{{ seanceDate | date: 'd'  }}@{{getSuffix(seanceDate | date: 'd')}} </span>
 								</label><br />
 								<label class="ui-radio">
 									<input name="messagesSwitch" ng-model="message.switch" type="radio" value="5" />
 									<span>{{ __('every') }}</span>
-									<select ng-model="message.day" >
+									<select ng-model="message.x_day" >
 										<option value="2">{{ __('2nd') }}</option>
 										<option value="3">{{ __('3rd') }}</option>
 										<option value="4">{{ __('4th') }}</option>
@@ -157,7 +157,9 @@
 								</label>
 								<div class="time-container">
 									<span>{{ __('at') }}</span>
-									<div uib-timepicker ng-model="message.time" show-meridian="ismeridian" min="minTime" max="maxTime"></div>
+									<div class="time-box">
+										<div uib-timepicker ng-model="seanceTime" hour-step="1" minute-step="1" min="timeMin" max="timeMax" show-meridian="true"></div>
+									</div>
 								</div>
 								<div class="stop-container" ng-show="message.switch > 1">
 									<div class="row">
@@ -167,13 +169,13 @@
 													{{ __('Stop at:') }}
 												</label>
 												<div class="input-group">
-													<input type="text" class="form-control" uib-datepicker-popup ng-model="message.finish" datepicker-options="finishOptions" close-text="Close" popup-placement="bottom" is-open="open">
+													<input type="text" class="form-control" uib-datepicker-popup ng-model="seanceFinish" datepicker-options="finishOptions" close-text="Close" is-open="open">
 													<span class="input-group-btn">
 														<button type="button" class="btn btn-default" ng-click="open = ! open"><i class="glyphicon glyphicon-calendar"></i></button>
 													</span>
 												</div>
 											</div>
-											<div class="alert alert-info">
+											<!--<div class="alert alert-info">
 												{{ __('Message will be send from') }} @{{ message.date | date: 'MMMM d' }} {{ __('every') }} 
 												<span ng-show="message.switch == 2">day</span>
 												<span ng-show="message.switch == 3" >@{{ message.date | date: 'EEEE' }}</span>
@@ -181,12 +183,13 @@
 												<span ng-show="message.switch == 5" >@{{ message.day }}@{{getSuffix(message.day)}} {{ __('day') }}</span>
 												<span ng-show="message.finish" >and stop at @{{ message.finish | date : 'MMMM d' }}@{{ getSuffix(message.finish | date : 'd') }}</span>
 												<span ng-show="message.finish" >(message will be send @{{ countTimes() }} times)</span>
-											</div>
+											</div>-->
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>-->
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="pull-right">
@@ -277,10 +280,10 @@
 									</div>
 								</div>
 							</span>
-							<button type="button" class="btn btn-default" ng-click="openImport()">
+							<!--<button type="button" class="btn btn-default" ng-click="openImport()">
 								<i class="fa fa-upload"></i>
 								{{ __('Import from CSV file') }}
-							</button>
+							</button>-->
 							<div ng-show="item.clients.length">
 								<div ng-repeat="(i, client) in item.clients">
 									<div class="item-panel panel-child" ng-class="{'active': client.editable}">
@@ -322,7 +325,7 @@
 													<div class="form-group">
 														<div class="btn-group btn-group-justified">
 															<div class="btn-group">
-																<button type="button" class="btn btn-default" ng-click="cancelClient(client, k)">{{ __('Cancel') }}</button>
+																<button type="button" class="btn btn-default" ng-click="cancelClient(i, k)">{{ __('Cancel') }}</button>
 															</div>
 															<div class="btn-group">
 																<button type="button" class="btn btn-primary" ng-click="saveClient(i, k, client)">{{ __('Save') }}</button>

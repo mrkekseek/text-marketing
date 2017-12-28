@@ -28,9 +28,11 @@ class MessagesController extends Controller
     public function create(MessageCreateRequest $request)
     {
         if ($this->textValidate($request)) {
-            $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch']);
+            $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch', 'x_day']);
             $data['lists_id'] = implode(',', $data['lists_id']);
             $data['date'] = $this->getDate($request->schedule, $request->time, auth()->user());
+            $data['finish_date'] = $this->getFinishDate($request->finish_date, auth()->user());
+            $data['token'] = $data['date'];
             $data['active'] = true;
 
             $message = auth()->user()->messages()->create($data);
@@ -43,12 +45,9 @@ class MessagesController extends Controller
 
     public function sendText($message)
     {
-        $clients = $this->sendClients($message->lists_id, $message->text);
-        $text = $message->texts()->create([
-            'phones' => count($clients),
-            'message' => '',
-            'send_at' => $message->date->subHours(auth()->user()->offset),
-        ]);
+        $clients = $this->sendClients($message->lists_id);
+
+        $text = MessagesService::createText($message, $clients);
 
         $phones = [];
 
@@ -67,17 +66,14 @@ class MessagesController extends Controller
 
             $phones[] = $row;
 
-            $text->receivers()->create([
-                'client_id' => $client->id,
-                'message' => '',
-            ]);
+            MessagesService::createReceiver($text, $client);
         }
         
-        $delay = Carbon::now()->diffInSeconds($message->date->addHours(auth()->user()->offset));
-        SendMarketingText::dispatch($text, $phones, $message->text, auth()->user()->company_name)->onQueue('texts')->delay($delay);
+        $delay = Carbon::now()->diffInSeconds($message->date);
+        SendMarketingText::dispatch($text, $phones, $message, auth()->user()->company_name, $message->token->toDateTimeString())->onQueue('texts')->delay($delay);
     }
 
-    public function sendClients($list_ids, $text)
+    public function sendClients($list_ids)
     {
         $result = [];
         $exists = [];
@@ -113,6 +109,13 @@ class MessagesController extends Controller
             $date->addHours($user->offset);
         }
 
+        return $date;
+    }
+
+    public function getFinishDate($time, $user)
+    {
+        $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+        $date->addHours($user->offset);
         return $date;
     }
 
@@ -168,9 +171,9 @@ class MessagesController extends Controller
                 return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
             }
 
-            /*if (empty($limit)) {
-                return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
-            }*/
+            if (empty($limit)) {
+                $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
+            }
         }
 
         if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, auth()->user(), true))) {

@@ -233,6 +233,7 @@
                     if (data) {
                         $scope.activeEditable = $scope.listsList[index].clients[clientIndex].editable = false;
                         $scope.listsList[index].clients[clientIndex].id = data;
+                        $scope.get();
                     }
                 }, ( ! $scope.listsList[index].clients[clientIndex].id ? 'put' : 'post'));
             }
@@ -262,14 +263,15 @@
         $scope.cancelClient = function(i, index) {
             if ( ! $scope.originClient.id) {
                 $scope.listsList[index].clients.shift();
+            } else {
+                $scope.listsList[index].clients[i] = angular.copy($scope.originClient);
+                $scope.originClient = {};
             }
-
-            $scope.listsList[index].clients[i].editable = false;
-            $scope.listsList[index].clients[i] = angular.copy($scope.originClient);
             $scope.activeEditable = false;
         };
 
         $scope.editClient = function(client) {
+            $scope.activeEditable = true;
             $scope.originClient = angular.copy(client);
             client.editable = true;
         };
@@ -277,7 +279,16 @@
         $scope.saveSelectedPhones = function(index) {
             for (var k in $scope.list) {
                 if ($scope.list[k].selected) {
-                    $scope.listsList[index].clients.push($scope.list[k]);
+                    var check = false;
+                    for (var j in $scope.listsList[index].clients) {
+                        if ($scope.listsList[index].clients[j].id == $scope.list[k].id) {
+                            check = true;
+                        }
+                    }
+                    if (! check) {
+                        $scope.listsList[index].clients.push($scope.list[k]);
+                    }
+                    
                     $scope.list[k].selected = false;
                 }
             }
