@@ -31,7 +31,7 @@
                 	$scope.list[k].lastText.created_at = created_at.getTime();
 
                 	for (var j in $scope.list[k].texts) {
-                		var send_at = new Date();
+                		var send_at = new Date($scope.list[k].texts[j].send_at);
                 		$scope.list[k].texts[j].send_at = send_at;
                 	}
                 }
