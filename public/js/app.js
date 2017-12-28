@@ -166,7 +166,6 @@ angular.module('app').filter('capitalize', function() {
         };
 
         $scope.changePage = function (page) {
-            console.log();
             $scope.open[page.code] = 1 - $scope.open[page.code];
 
             if ($scope.open[page.code]) {

@@ -41,6 +41,7 @@
 										<span class="team-leader">{{ __('Active Message') }}</span>
 									</div>
 								</div>
+
 								<div ng-show="item.id == selectedMessage.id">
 									<div class="item-panel panel-child">
 										<div class="phones-details-wrap small-italic">
@@ -49,8 +50,30 @@
 												<i ng-show="receiver.success" class="fa fa-check-circle-o text-success"></i>
 												<strong>@{{ clients[receiver.client_id].view_phone }}: </strong> 
 												<span ng-show="receiver.message">@{{ receiver.message }}</span>
-												<span ng-show="! receiver.message && receiver.success">Messsage successfully sent.</span>
-												<span ng-show="! receiver.message && ! receiver.success">Wait for report.</span>
+												<span ng-show="! receiver.message && receiver.success">{{ __('Messsage successfully sent.') }}</span>
+												<span ng-show="! receiver.message && ! receiver.success">{{ __('Wait for report.') }}</span>
+											</div>
+										</div>
+									</div>
+									<div ng-show="item.texts.length">
+										<div class="prev-title" ng-click="textsToggle($index)">
+											{{ __('Previous messages') }}
+											<span class="small-italic a-icon">{{ __('Click to see report') }}</span>
+										</div>
+										<div ng-repeat="texts in item.texts" class="prev-text" ng-show="item.id == selectedTexts.id">
+											{{ __('Sent on ') }} @{{ texts.send_at | date: 'MMMM d' }}@{{ getSuffix(texts.send_at | date: 'd') }}
+											<span>at @{{ texts.send_at | date: 'h:mm a' }}</span>
+											<div class="item-panel panel-child">
+												<div class="phones-details-wrap small-italic">
+													<div ng-repeat="other in texts.receivers">
+														<i ng-show=" ! other.success" class="fa fa-exclamation-triangle text-orange"></i>
+														<i ng-show="other.success" class="fa fa-check-circle-o text-success"></i>
+														<strong>@{{ clients[other.client_id].view_phone }}: </strong> 
+														<span ng-show="other.message">@{{ other.message }}</span>
+														<span ng-show="! other.message && other.success">{{ __('Messsage successfully sent.') }}</span>
+														<span ng-show="! other.message && ! other.success">{{ __('Wait for report.') }}</span>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>

@@ -24,10 +24,25 @@ hr {
 	margin: 0px;
 }
 
+.prev-text {
+    padding: 15px;
+    border-color: #e9e9e9;
+    box-shadow: 0 0 3px rgba(0 ,0, 0, 0.1);
+    background: #fff;
+}
+
+.prev-title {
+	cursor: pointer;
+}
+
 .url-switch {
 	vertical-align: bottom;
     margin-left: 10px;
     margin-top: 5px;
+}
+
+.uib-time.am-pm {
+	padding: 0px 4px;
 }
 
 .span-url {
