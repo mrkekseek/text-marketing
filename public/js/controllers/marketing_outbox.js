@@ -1,14 +1,15 @@
 (function () {
 	'use strict';
 
-	angular.module('app').controller('MarketingOutboxCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', MarketingOutboxCtrl]);
+	angular.module('app').controller('MarketingOutboxCtrl', ['$rootScope', '$scope', '$uibModal', '$timeout', '$location', 'request', 'langs', MarketingOutboxCtrl]);
 
-	function MarketingOutboxCtrl($rootScope, $scope, $uibModal, request, langs) {
+	function MarketingOutboxCtrl($rootScope, $scope, $uibModal, $timeout, $location, request, langs) {
 		$scope.list = [];
 		$scope.selectedMessage = {};
 		$scope.countList = 0;
 		$scope.clients = {};
 		$scope.selectedTexts = {};
+		$scope.timer = false;
 
 		$scope.init = function() {
 			$scope.get();
@@ -34,7 +35,13 @@
                 		$scope.list[k].texts[j].send_at = send_at;
                 	}
                 }
-                console.log($scope.list);
+                
+                $timeout.cancel($scope.timer);
+                if ($location.path() == '/marketing/outbox/') {
+                	$scope.timer = $timeout(function () {
+	                    $scope.get();
+	                }, 5000);
+                }
             }, 'get');
 		};
 
@@ -84,7 +91,6 @@
                 }, 'delete');
             }
         };
-
 	};
 
 	})();
