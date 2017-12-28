@@ -27,7 +27,7 @@ class ClientCreateRequest extends FormRequest
             'firstname' => 'required',
             'view_phone' => 'required',
             'phone' => 'required|digits:10|unique:clients,phone,'.(empty($this->id) ? 'null' : $this->id).',id,team_id,'.(auth()->user()->teams_id),
-            'email' => 'required|email|unique:clients,email,'.(empty($this->id) ? 'null' : $this->id).',id,team_id,'.(auth()->user()->teams_id),
+            'email' => 'unique:clients,email,'.(empty($this->id) ? 'null' : $this->id).',id,team_id,'.(auth()->user()->teams_id),
         ];
     }
 }

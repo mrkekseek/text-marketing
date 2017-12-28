@@ -82,7 +82,6 @@
             var error = 1;
             error *= validate.check($scope.form_client.firstname, 'First Name');
             error *= validate.phone($scope.form_client.phone, 'Phone');
-            error *= validate.check($scope.form_client.email, 'Email');
 
             if (error) {
                 $scope.client.phone = validate.phoneToNumber($scope.client.view_phone);
