@@ -49,9 +49,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('plans', 'PlansController@all');
 
+	Route::get('homeadvisor', 'HomeadvisorController@info');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
-	Route::get('homeadvisor/info', 'HomeadvisorController@info');
-	Route::post('homeadvisor/{id}', 'HomeadvisorController@save');
+	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');
+	Route::put('homeadvisor/', 'HomeadvisorController@create');
+	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
 
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
 	Route::get('clients/leads', 'ClientsController@leads');
@@ -112,7 +114,7 @@ Route::get('recovery', function() {
 Route::get('seances/{code}', 'AnswersController@text');
 Route::get('seances/{id}/{value}', 'AnswersController@email');
 
-Route::any('home-advisor/{code?}', 'HomeadvisorController@saveLead');
+Route::any('home-advisor/{code?}', 'HomeadvisorController@lead');
 
 Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');

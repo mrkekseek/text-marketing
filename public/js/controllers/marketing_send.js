@@ -139,7 +139,10 @@
             var post_mas = {
                 'company': $scope.user.company_name,
                 'text': $scope.message.text,
-                'clients': $scope.getClientsInLists()};
+                'clients': $scope.getClientsInLists(),
+                'time': $scope.message.time,
+                'schedule': $scope.message.schedule
+            };
 
             request.send('/messages/textValidate', post_mas, function (data) {
                 if (data) {

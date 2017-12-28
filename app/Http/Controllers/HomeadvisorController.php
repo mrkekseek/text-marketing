@@ -10,126 +10,191 @@ use App\Client;
 use App\Dialog;
 use Bitly;
 use App\Events\FirstLead;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\ActivateHa;
+use App\Jobs\SendHAEmail;
+use App\Http\Requests\HACreateRequest;
+use App\Jobs\SendLeadText;
 
 class HomeadvisorController extends Controller
 {
-	public function info($id = false, $post = [])
+	public function info()
 	{
-		return Homeadvisor::where('users_id', auth()->user()->id)->first();
+		return auth()->user()->homeadvisors;
 	}
 
-	public function save($id = false, $post = [])
+	public function create(HACreateRequest $request)
 	{
-		$homeadvisor = Homeadvisor::find($id);
-		$homeadvisor->users_id = auth()->user()->id;
-		$homeadvisor->text = ! empty($post['text']) ? $post['text'] : '';
-		$homeadvisor->additional_phones = ! empty($post['additional_phones']) ? $post['additional_phones'] : '';
-		$homeadvisor->active = ! empty($post['active']) ? $post['active'] : 0;
-		$homeadvisor->save();
+		$data = $request->only(['ha', 'user']);
 
-		$user = User::find(auth()->user()->id);
-		$user->update([
-            'company_name' => ! empty($post['company_name']) ? $post['company_name'] : '',
-            'phone' => ! empty($post['phone']) ? $post['phone'] : ''
-        ]);
+		auth()->user()->update([
+			'phone' => $data['user']['phone'],
+		]);
 
-		return $this->message(__('Settings are successfully saved.'), 'success');
+		auth()->user()->homeadvisor()->create([
+			'text' => $data['ha']['text'],
+			'additional_phones' => $data['ha']['additional_phones'],
+			'active' => $data['ha']['active'],
+		]);
+
+		return $this->message('Settings are successfully saved.', 'success');
+	}
+
+	public function update(HACreateRequest $request, Homeadvisor $homeadvisor)
+	{
+		$data = $request->only(['ha', 'user']);
+
+		auth()->user()->update([
+			'phone' => $data['user']['phone'],
+		]);
+
+		$homeadvisor->update([
+			'text' => $data['ha']['text'],
+			'additional_phones' => empty($data['ha']['additional_phones']) ? '' : $data['ha']['additional_phones'],
+			'active' => $data['ha']['active'],
+		]);
+
+		return $this->message('Settings are successfully saved.', 'success');
 	}
 
     public function activate()
     {
-    	$homeadvisor = Homeadvisor::firstOrNew(['users_id' => auth()->user()->id]);
-    	$homeadvisor->send_request = 1;
-    	$homeadvisor->text = '';
-    	$homeadvisor->save();
+		auth()->user()->homeadvisors()->create([
+			'send_request' => true,
+			'text' => '',
+		]);
 
     	$this->sendActivateEmail();
 
-    	return $this->message(__('Your request successfully sent.'), 'success');
+    	return $this->message('Your request successfully sent.', 'success');
+	}
+	
+	public function enable(Homeadvisor $homeadvisor)
+    {
+		auth()->user()->homeadvisors()->update([
+			'active' => ! auth()->user()->homeadvisors->active,
+		]);
+
+    	return $this->message('HomeAdvisor settings were saved', 'success');
     }
 
     public function sendActivateEmail()
     {
-    	$owner = User::where('owner', 1)->first();
-    	$user = auth()->user();
-    	$homeadvisor = Homeadvisor::where('users_id', $user->id)->first();
-    	$user->ha_rep = $homeadvisor->rep;
-    	$link = Link::where('users_id', $user->id)->first();
-    	$user->link = $link->url;
-    	$user->success = $link->success;
-
-    	Mail::to($owner)->send(new ActivateHa($user));
+    	$owner = User::where('owner', true)->first();
+		$user = auth()->user();
+		$ha = auth()->user()->homeadvisors;
+		$link = auth()->user()->links;
+		
+		SendHAEmail::dispatch($user, $owner, $ha, $link)->onQueue('emails');
     }
 
-    public function saveLead(Request $request, $code = '')
+    public function lead(Request $request, $code)
     {
-    	$data = $request->all();
+		$data = $request->json()->all();
+		if (empty($data)) {
+			$data = $request->all();
+		}
+
     	if ( ! empty($data)) {
     		$link = Link::where('code', $code)->first();
-
 	    	if ( ! empty($link)) {
-	    		$phone = $this->findPhone($data);
-	    		$client = Client::firstOrNew(['phone' => $phone, 'users_id' => $link->users_id]);
-	    		$new = ! $client->exists;
-	    		$client->firstname = ! empty($data['firstName']) ? $data['firstName'] : ! empty($data['first_name']) ? $data['first_name'] : '';
-	    		$client->lastname = ! empty($data['lastName']) ? $data['lastName'] : ! empty($data['first_name']) ? $data['last_name'] : '';
-	    		$client->phone = $phone;
-	    		$client->view_phone = $phone;
-	    		$client->email = ! empty($data['email']) ? $data['email'] : '';
-	    		$client->source = 'HomeAdvisor';
-	    		$client->save();
+				$phone = $this->phone($data);
 
-	    		$count = Client::where('users_id', $link->users_id)->where('source', 'HomeAdvisor')->count();
-	    		$homeadvisor = Homeadvisor::where('users_id', $link->users_id)->first();
-	    		$user = User::find($link->users_id);
-	    		if ($new && $count == 1) {
-	    			$owner = User::where('owner', 1)->first();
-            		$user->rep = $homeadvisor->rep;
-	    			event(new FirstLead($user, $owner));
-	    		}
-	    		if ( ! empty($homeadvisor->active) && ! empty($homeadvisor->text)) {
-	    			$this->sendToLead($user, $client, $homeadvisor);
-	    		}
-	    	}
+				$lead = [
+					'firstname' => $this->firstName($data),
+					'lastname' => $this->lastName($data),
+					'phone' => $phone,
+					'view_phone' => $phone,
+					'email' => $this->email($data),
+					'source' => 'HomeAdvisor',
+				];
 
-			http_response_code(200);
-			echo '<success>User '.$code.'</success>';
+				$client = $link->user->teams->clients()->where('phone', $phone)->first();
+				if ( ! empty($client)) {
+					$client->update($lead);
+				} else {
+					$client = $link->user->teams->clients()->create($lead);
+				}
+
+				if ($link->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1) {
+					$owner = User::where('owner', true)->first();
+					event(new FirstLead($link->user, $owner, $link->user->homeadvisors));
+				}
+
+				$ha = $link->user->homeadvisors;
+				if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($phone)) {
+
+					$this->textToLead($link->user, $client, $ha);
+				}
+
+				http_response_code(200);
+				echo '<success>User '.$code.'</success>';
+				exit;
+			}
+			
+			http_response_code(500);
+			echo '<error>Bad request</error>';
 			exit;
     	}
 
     	http_response_code(500);
-		echo '<error>JSON POST data required</error>';
+		echo '<error>Data required</error>';
 		exit;
     }
 
-    public function sendToLead($user, $client, $homeadvisor)
+    public function textToLead($user, $client, $ha)
     {
-    	$dialog = new Dialog();
-    	$dialog->users_id = $user->id;
-    	$dialog->clients_id = $client->id;
-    	$dialog->text = $this->createText($homeadvisor, $client, $user);
-    	$dialog->my = 1;
-    	$dialog->status = 2;
-    	$dialog->save();
+		$dialog = $user->dialogs()->create([
+			'clients_id' => $client->id,
+			'text' => $this->createText($user, $client, $ha),
+			'my' => true,
+			'status' => 2,
+		]);
+
+		$row = [
+            'phone' => $client->phone,
+        ];
+
+        if (strpos($dialog->text, '[$FirstName]') !== false) {
+            $row['firstname'] = $client->firstname;
+        }
+
+        if (strpos($dialog->text, '[$LastName]') !== false) {
+            $row['lastname'] = $client->lastname;
+        }
+
+        $phones[] = $row;
+        SendLeadText::dispatch($dialog, $phones, $dialog->text, $user)->onQueue('texts');
     }
 
-    public function createText($homeadvisor, $client, $user)
+    public function createText($user, $client, $ha)
     {
-    	$text = $homeadvisor->text;
+    	$text = $ha->text;
     	$linkPos = strpos($text, 'bit.ly/');
     	if ($linkPos !== false) {
     		$originLink = substr($text, $linkPos, 14);
     		$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$client->id.'/'.$originLink);
     		$fakeLink = str_replace('http://', '', $fakeLink);
-    		$text = str_replace($originLink, $fakeLink, $homeadvisor->text);
+    		$text = str_replace($originLink, $fakeLink, $ha->text);
     	}
-    	return $user->company_name.': '.$text.' Txt STOP to OptOut';
-    }
+    	return $user->company_name.': '.$text;
+	}
+	
+	public function firstName($data)
+	{
+		return ! empty($data['firstName']) ? $data['firstName'] : ! empty($data['first_name']) ? $data['first_name'] : '';
+	}
 
-    public function findPhone($data)
+	public function lastName($data)
+	{
+		return ! empty($data['lastName']) ? $data['lastName'] : ! empty($data['last_name']) ? $data['last_name'] : '';
+	}
+
+    public function phone($data)
     {
-    	return ! empty($data['phonePrimary']) ? $data['phonePrimary'] : (! empty($data['primaryPhone']) ? $data['primaryPhone'] : (! empty($data['phone_primary']) ? $data['phone_primary'] : false));
-    }
+    	return ! empty($data['phonePrimary']) ? $data['phonePrimary'] : ( ! empty($data['primaryPhone']) ? $data['primaryPhone'] : ( ! empty($data['phone_primary']) ? $data['phone_primary'] : false));
+	}
+	
+	public function email($data)
+	{
+		return ! empty($data['email']) ? $data['email'] : '';
+	}
 }

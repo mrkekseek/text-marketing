@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Message', 'user_id');
     }
 
+    public function dialogs()
+    {
+        return $this->hasMany('App\Dialog', 'users_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

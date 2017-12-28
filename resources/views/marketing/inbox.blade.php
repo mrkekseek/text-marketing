@@ -18,7 +18,7 @@
 				<div class="divider divider-dashed"></div>
 				<div class="phones" ng-click="setClient(dialog.clients)" ng-class="{'active': dialog.clients.id == activeClient.id}">
 					<div class="row">
-						<div class="col-sm-10">
+						<div class="col-sm-12">
 							<div>
 								<strong>@{{ dialog.clients.view_phone }}</strong>
 								<span class="small-italic">{{ __("from") }} @{{ dialog.clients.source }}</span>

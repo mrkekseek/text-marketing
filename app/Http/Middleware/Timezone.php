@@ -18,7 +18,7 @@ class Timezone
         $diffInHours = \Carbon\Carbon::createFromTimestamp($request->header('X-Local-Time'))->timestamp / 60 - 5;
         config(['app.offset' => $diffInHours]);
         
-        if (auth()->check()) {
+        if (auth()->check() && empty(auth()->user()->admins_id)) {
             auth()->user()->update([
                 'offset' => $diffInHours,
             ]);

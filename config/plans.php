@@ -8,6 +8,6 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'free', 'text', 'home-advisor'
+    'free', 'text', 'home-advisor', 'star-rating'
 
 ];
