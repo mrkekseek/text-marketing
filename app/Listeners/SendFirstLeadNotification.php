@@ -2,12 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Events\FirstLead;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Support\Facades\Notification;
-use App\Notifications\SendFirstLeadForAdmin;
-use App\Notifications\SendFirstLeadForUser;
+use App\Events\FirstLead;
+use App\Jobs\SendFirstLead;
 
 class SendFirstLeadNotification
 {
@@ -29,7 +27,6 @@ class SendFirstLeadNotification
      */
     public function handle(FirstLead $event)
     {
-        Notification::send($event->owner, new SendFirstLeadForAdmin($event->user));
-        Notification::send($event->user, new SendFirstLeadForUser($event->user));
+        SendFirstLead::dispatch($event->user, $event->owner, $event->ha)->onQueue('emails');
     }
 }

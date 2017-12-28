@@ -21,7 +21,7 @@ class ClientsController extends Controller
 
 	public function leads()
 	{
-		return Client::where('users_id', auth()->user()->id)->where('source', 'HomeAdvisor')->get();
+		return auth()->user()->teams->clients()->where('source', 'HomeAdvisor')->get();
 	}
 
 	public function info(Request $request, $id = false)
