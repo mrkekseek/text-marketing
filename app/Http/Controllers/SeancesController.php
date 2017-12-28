@@ -76,6 +76,12 @@ class SeancesController extends Controller
 
     private function textValidate($request, $clients, $user)
     {
+        $date = '';
+        if ( ! empty($request['schedule'])){
+            $time = $request['time'];
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+        }
+
         if ( ! ApiValidate::companyExists($request->company, $user)) {
             return $this->message('This Company Name isn\'t verified');
         }
@@ -115,7 +121,7 @@ class SeancesController extends Controller
                 $phones = false;
             }
 
-            if (ApiValidate::underLimit($client['phone'])) {
+            if (ApiValidate::underLimit($client['phone'], $date)) {
                 $limit = false;
             }
         }
@@ -128,9 +134,9 @@ class SeancesController extends Controller
             return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
         }
 
-        /*if (empty($limit)) {
-            return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
-        }*/
+        if (empty($limit)) {
+            $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
+        }
 
         if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, $user, true))) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');

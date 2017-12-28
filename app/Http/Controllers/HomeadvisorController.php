@@ -12,6 +12,7 @@ use Bitly;
 use App\Events\FirstLead;
 use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
+use App\Jobs\SendLeadText;
 
 class HomeadvisorController extends Controller
 {
@@ -120,6 +121,7 @@ class HomeadvisorController extends Controller
 
 				$ha = $link->user->homeadvisors;
 				if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($phone)) {
+
 					$this->textToLead($link->user, $client, $ha);
 				}
 
@@ -146,6 +148,21 @@ class HomeadvisorController extends Controller
 			'my' => true,
 			'status' => 2,
 		]);
+
+		$row = [
+            'phone' => $client->phone,
+        ];
+
+        if (strpos($dialog->text, '[$FirstName]') !== false) {
+            $row['firstname'] = $client->firstname;
+        }
+
+        if (strpos($dialog->text, '[$LastName]') !== false) {
+            $row['lastname'] = $client->lastname;
+        }
+
+        $phones[] = $row;
+        SendLeadText::dispatch($dialog, $phones, $dialog->text, $user)->onQueue('texts');
     }
 
     public function createText($user, $client, $ha)

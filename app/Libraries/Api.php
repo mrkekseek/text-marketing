@@ -45,4 +45,11 @@ class Api
 		$block = true;
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
 	}
+
+	static public function dialog($target_id, $clients, $message, $company, $offset)
+	{
+		$type = 'dialog';
+		$block = false;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
+	}
 }

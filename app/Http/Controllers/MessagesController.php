@@ -122,6 +122,12 @@ class MessagesController extends Controller
     public function textValidate(Request $request)
     {
         $data = $request->all();
+        $date = '';
+        if ( ! empty($data['schedule'])) {
+            $time = $data['time'];
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+        }
+
         if ( ! ApiValidate::companyExists(auth()->user()->company_name, auth()->user())) {
             return $this->message('This Company Name isn\'t verified');
         }
@@ -157,8 +163,8 @@ class MessagesController extends Controller
                 if ( ! ApiValidate::phoneFormat($client['phone'])) {
                     $phones = false;
                 }
-
-                if (ApiValidate::underLimitMarketing($client['id'])) {
+                
+                if (ApiValidate::underLimitMarketing($client['id'], $date)) {
                     $limit = false;
                 }
             }

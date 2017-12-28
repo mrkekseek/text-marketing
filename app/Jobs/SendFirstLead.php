@@ -10,6 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\SendFirstLeadForAdmin;
 use App\Notifications\SendFirstLeadForUser;
+use App\User;
+use App\Homeadvisor;
 
 class SendFirstLead implements ShouldQueue
 {
