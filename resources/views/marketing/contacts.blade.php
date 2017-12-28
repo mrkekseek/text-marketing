@@ -67,7 +67,7 @@
 									<span ng-show="!item.editable" class="small-italic a-icon" ng-click="choose($index)">{{ __('Click to see numbers') }}</span>
 								</div>
 
-								<div ng-show="selectedList.id == item.id">
+								<div ng-show="selectedList.id == item.id  && item.id">
 									<button type="button" class="btn btn-default" ng-click="createClient($index)">
 										<i class="fa fa-plus-circle"></i>{{ __(' Add Number Manually') }}
 									</button>
