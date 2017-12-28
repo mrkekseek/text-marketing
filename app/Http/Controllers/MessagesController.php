@@ -171,9 +171,9 @@ class MessagesController extends Controller
                 return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
             }
 
-            /*if (empty($limit)) {
-                return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
-            }*/
+            if (empty($limit)) {
+                $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
+            }
         }
 
         if (ApiValidate::underBlocking($this->getDate($request->schedule, $request->time, auth()->user(), true))) {
