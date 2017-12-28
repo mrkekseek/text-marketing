@@ -30,7 +30,20 @@
         $scope.getLeads = function() {
             request.send('/clients/leads', {}, function (data) {
                 $scope.list = data;
+                for (var k in $scope.list) {
+                    var date = new Date($scope.list[k].created_at);
+                    $scope.list[k].created_at = date;
+                }
             }, 'get');
+        };
+
+        $scope.getSuffix = function(day) {
+            switch (day) {
+                case '1': return 'st';
+                case '2': return 'nd';
+                case '3': return 'rd';
+                default: return  'th';
+            }
         };
 
         $scope.activate = function() {

@@ -30,8 +30,6 @@ class SendLeadText implements ShouldQueue
         $this->clients = $clients;
         $this->text = $text;
         $this->user = $user;
-        $response = Api::dialog($this->dialog->id, $this->clients, $this->text, $this->user->company, $this->user->offset);
-        print_r($response);
     }
 
     /**
@@ -41,9 +39,9 @@ class SendLeadText implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::dialog($this->dialog->id, $this->clients, $this->text, $this->company, $this->review->user->offset);
+        $response = Api::dialog($this->dialog->id, $this->clients, $this->text, $this->user->company_name, $this->user->offset);
         if ($response['code'] == 200) {
-            $dialog->update(['status' => $response['finish']]);
+            $this->dialog->update(['status' => 1]);
         }
     }
 }

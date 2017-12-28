@@ -105,7 +105,7 @@
 							<div class="pull-left">
 								<div>
 									<strong>@{{ item.view_phone }}</strong>
-									<span class="small-italic">(@{{ item.created_at }})</span>
+									<span class="small-italic">(@{{ item.created_at | date: 'MMMM d' }}@{{ getSuffix(item.created_at | date: 'd') }} @{{ item.created_at | date: 'h:mm a' }})</span>
 								</div>
 								<div>
 									@{{ item.firstname }}
