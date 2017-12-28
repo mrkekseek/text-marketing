@@ -12,15 +12,17 @@ class SendFirstLeadForAdmin extends Notification
     use Queueable;
 
     public $user;
+    public $ha;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $ha)
     {
         $this->user = $user;
+        $this->ha = $ha;
     }
 
     /**
@@ -44,7 +46,10 @@ class SendFirstLeadForAdmin extends Notification
     {
         return (new MailMessage)
                     ->subject($this->user['firstname'].' is Ready to Go Live.')
-                    ->markdown('emails.first_lead_for_admin', ['user' => $this->user]);
+                    ->markdown('emails.first_lead_for_admin', [
+                        'user' => $this->user,
+                        'ha' => $this->ha,
+                    ]);
     }
 
     /**

@@ -10,23 +10,26 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\User;
+use App\Homeadvisor;
 
 class FirstLead
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
     public $user;
     public $owner;
-    public $homeadvisor;
+    public $ha;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, User $owner)
+    public function __construct(User $user, User $owner, Homeadvisor $ha)
     {
         $this->owner = $owner;
         $this->user = $user;
+        $this->ha = $ha;
     }
 
     /**
