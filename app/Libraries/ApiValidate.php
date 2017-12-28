@@ -69,9 +69,10 @@ class ApiValidate
         return false;
     }
 
-    static public function underLimit($phone)
+    static public function underLimit($phone, $date = '')
     {
-        $seances = Seance::where('date', '>=', Carbon::now()->subHours(24))->withCount(['clients' => function($query) use($phone) {
+        $date = ! empty($date) ? $date : Carbon::now();
+        $seances = Seance::where('date', '>=', $date->subHours(24))->withCount(['clients' => function($query) use($phone) {
             return $query->where('phone', $phone);
         }])->get();
 
@@ -83,9 +84,10 @@ class ApiValidate
         return false;
     }
 
-    static public function underLimitMarketing($client_id)
+    static public function underLimitMarketing($client_id, $date = '')
     {
-        $texts = Text::where('send_at', '>=', Carbon::now()->addHours(-24))->withCount(['receivers' => function($query) use($client_id) {
+        $date = ! empty($date) ? $date : Carbon::now();
+        $texts = Text::where('send_at', '>=', $date->subHours(24))->withCount(['receivers' => function($query) use($client_id) {
             return $query->where('client_id', $client_id);
         }])->get();
 

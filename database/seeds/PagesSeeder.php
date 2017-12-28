@@ -389,6 +389,14 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-surveys',
+            'parents_code' => '',
+            'plans' => 'star-rating-contractortexter',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
             'pages_code' => 'surveys-send',
             'parents_code' => 'surveys-surveys',
             'plans' => 'none',
@@ -408,6 +416,14 @@ class PagesSeeder extends Seeder
             'pages_code' => 'surveys-send',
             'parents_code' => 'surveys-surveys',
             'plans' => 'text-contractortexter',
+            'main' => 1,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-send',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'star-rating-contractortexter',
             'main' => 1,
             'pos' => 1,
         ]);
@@ -437,6 +453,14 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'surveys-partners',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'star-rating-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        /*DB::table('pages_menu')->insert([
             'pages_code' => 'analysis-main',
             'parents_code' => 'surveys-surveys',
             'plans' => 'none',
@@ -461,6 +485,14 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'analysis-main',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'star-rating-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);*/
+
+        DB::table('pages_menu')->insert([
             'pages_code' => 'settings-alerts',
             'parents_code' => 'surveys-surveys',
             'plans' => 'none',
@@ -480,6 +512,14 @@ class PagesSeeder extends Seeder
             'pages_code' => 'settings-alerts',
             'parents_code' => 'surveys-surveys',
             'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-alerts',
+            'parents_code' => 'surveys-surveys',
+            'plans' => 'star-rating-contractortexter',
             'main' => 0,
             'pos' => 3,
         ]);
@@ -509,6 +549,14 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_menu')->insert([
+            'pages_code' => 'online-reviews',
+            'parents_code' => '',
+            'plans' => 'star-rating-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        /*DB::table('pages_menu')->insert([
             'pages_code' => 'settings-analysis',
             'parents_code' => 'online-reviews',
             'plans' => 'none',
@@ -530,7 +578,7 @@ class PagesSeeder extends Seeder
             'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 1,
-        ]);
+        ]);*/
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'settings-reviews',
@@ -552,6 +600,14 @@ class PagesSeeder extends Seeder
             'pages_code' => 'settings-reviews',
             'parents_code' => 'online-reviews',
             'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 2,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-reviews',
+            'parents_code' => 'online-reviews',
+            'plans' => 'star-rating-contractortexter',
             'main' => 0,
             'pos' => 2,
         ]);
@@ -665,6 +721,14 @@ class PagesSeeder extends Seeder
             'pages_code' => 'ha-user',
             'parents_code' => '',
             'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'ha-user',
+            'parents_code' => '',
+            'plans' => 'star-rating-contractortexter',
             'main' => 0,
             'pos' => 4,
         ]);
