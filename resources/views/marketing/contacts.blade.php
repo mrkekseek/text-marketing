@@ -106,10 +106,10 @@
 											</div>
 										</div>
 									</span>
-									<button type="button" class="btn btn-default" ng-click="openImport()">
+									<!--<button type="button" class="btn btn-default" ng-click="openImport()">
 										<i class="fa fa-upload"></i>
 										{{ __('Import from CSV file') }}
-									</button>
+									</button>-->
 									<div ng-show="item.clients.length">
 										<div ng-repeat="(i, client) in item.clients">
 											<div class="item-panel panel-child" ng-class="{'active': client.editable}">

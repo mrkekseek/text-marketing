@@ -8,6 +8,7 @@
 		$scope.selectedMessage = {};
 		$scope.countList = 0;
 		$scope.clients = {};
+		$scope.selectedTexts = {};
 
 		$scope.init = function() {
 			$scope.get();
@@ -21,11 +22,19 @@
                 	$scope.list[k].active = $scope.list[k].active == 1 ? true : false;
                 	$scope.list[k].countList = $scope.getCountList($scope.list[k].lists_id);
                 	$scope.list[k].lastText = $scope.list[k].texts[$scope.list[k].texts.length - 1];
+                	$scope.list[k].texts.splice(-1, 1);
+
                 	var send_at = new Date($scope.list[k].lastText.send_at);
                 	$scope.list[k].lastText.send_at = send_at.getTime();
                 	var created_at = new Date();
                 	$scope.list[k].lastText.created_at = created_at.getTime();
+
+                	for (var j in $scope.list[k].texts) {
+                		var send_at = new Date();
+                		$scope.list[k].texts[j].send_at = send_at;
+                	}
                 }
+                console.log($scope.list);
             }, 'get');
 		};
 
@@ -40,7 +49,7 @@
 		};
 
 		$scope.getSuffix = function(num) {
-			switch(num.slice(-1)) {
+			switch(num.slice(num.length - 1)) {
 				case '1': return 'st';
 				case '2': return 'nd';
 				case '3': return 'rd';
@@ -58,6 +67,14 @@
 			} else {
 				$scope.selectedMessage = {};
 			}
+        };
+
+        $scope.textsToggle = function(index) {
+        	if ( ! $scope.selectedTexts.id) {
+        		$scope.selectedTexts = $scope.list[index];
+        	} else {
+        		$scope.selectedTexts = {};
+        	}
         };
 
         $scope.remove = function(index) {

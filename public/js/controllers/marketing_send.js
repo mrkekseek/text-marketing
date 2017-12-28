@@ -27,6 +27,9 @@
         var date = new Date();
         date.setHours(21, 0);
         $scope.timeMax = date;
+
+        var date = new Date();
+        $scope.seanceFinish = date;
 		
 		$scope.list = [];
         $scope.listsList = [];
@@ -39,11 +42,15 @@
 			'schedule': '0',
 			'switch': '1',
 			'time': [],
-			'day': '2',
-			'finish': new Date(),
+            'finish_date': [],
+			'x_day': '2',
 			'lists_id': [],
             'company': $scope.user.company_name
-		};		
+		};
+
+        $scope.dateOptions = {
+            minDate: new Date()
+        };
 
 		$scope.companyChange = function () {
             $scope.companyChanged = false;
@@ -176,7 +183,16 @@
                 'minutes': $scope.seanceTime.getMinutes()
             };
 
+            var finish_time = {
+                'year': $scope.seanceFinish.getFullYear(),
+                'month': $scope.seanceFinish.getMonth() + 1,
+                'date': $scope.seanceFinish.getDate(),
+                'hours': $scope.seanceTime.getHours(),
+                'minutes': $scope.seanceTime.getMinutes()
+            };
+
             $scope.message.time = time;
+            $scope.message.finish_date = finish_time;
 
         	for (var k in $scope.listsList) {
         		if ($scope.listsList[k].choosed && $scope.listsList[k].clients.length) {
@@ -199,7 +215,7 @@
         	return false;
         }
 
-		$scope.countTimes = function() {
+		/*$scope.countTimes = function() {
 			var from = $scope.message.date.getTime();
 			var to = $scope.message.finish.getTime();
 			switch ($scope.message.switch) {
@@ -208,7 +224,7 @@
 				case '4': return ($scope.message.finish.getMonth() + (($scope.message.finish.getFullYear() - $scope.message.date.getFullYear()) * 12) - $scope.message.date.getMonth()) + 1;
 				case '5': return Math.floor(((to - from) / 60 / 60 / 24 / 1000 + 1) / $scope.message.day + 1);
 			}
-		};
+		};*/
 
 		$scope.totalCount = function() {
 			var count = 0;
@@ -320,10 +336,20 @@
 		$scope.saveSelectedPhones = function(index) {
             for (var k in $scope.list) {
                 if ($scope.list[k].selected) {
-                    $scope.listsList[index].clients.push($scope.list[k]);
+                    var check = false;
+                    for (var j in $scope.listsList[index].clients) {
+                        if ($scope.listsList[index].clients[j].id == $scope.list[k].id) {
+                            check = true;
+                        }
+                    }
+                    if (! check) {
+                        $scope.listsList[index].clients.push($scope.list[k]);
+                    }
+                    
                     $scope.list[k].selected = false;
                 }
             }
+            
             request.send('/clients/addToList/' + $scope.listsList[index].id, $scope.listsList[index].clients, function (data) {
 
             });
@@ -332,14 +358,15 @@
         $scope.cancelClient = function(i, index) {
             if ( ! $scope.originClient.id) {
                 $scope.listsList[index].clients.shift();
+            } else {
+                $scope.listsList[index].clients[i] = angular.copy($scope.originClient);
+                $scope.originClient = {};
             }
-
-            $scope.listsList[index].clients[i].editable = false;
-            $scope.listsList[index].clients[i] = angular.copy($scope.originClient);
             $scope.activeEditable = false;
         };
 
         $scope.editClient = function(client) {
+            $scope.activeEditable = true;
             $scope.originClient = angular.copy(client);
             client.editable = true;
         };
