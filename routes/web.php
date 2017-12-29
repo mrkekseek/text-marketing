@@ -88,6 +88,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('messages', 'MessagesController@all');
 	Route::get('messages/{id}', 'MessagesController@info');
 	Route::post('messages/textValidate', 'MessagesController@textValidate');
+	Route::post('messages/changeActive/{message}', 'MessagesController@changeActive');
 
 	Route::get('lists', 'ListsController@all');
 	Route::put('lists/save', 'ListsController@save');

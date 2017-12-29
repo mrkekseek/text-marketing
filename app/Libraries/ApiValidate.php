@@ -5,6 +5,7 @@ namespace App\Libraries;
 use Carbon\Carbon;
 use App\Seance;
 use App\Text;
+use App\Dialog;
 
 class ApiValidate
 {
@@ -97,5 +98,14 @@ class ApiValidate
             }
         }
         return false;
+    }
+
+    static public function underLimitDialog($client_id)
+    {
+        $dialog = Dialog::where('created_at', '>=', Carbon::now()->subHours(24))->where('clients_id', $client_id)->get();
+        if ($dialog->isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }

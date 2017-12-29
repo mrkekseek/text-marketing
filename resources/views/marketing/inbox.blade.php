@@ -47,7 +47,7 @@
 							<div class="message-body">
 								@{{ message.text }}
 								<div class="text-right">
-									<span class="small-italic">@{{ message.created_at }}</span>
+									<span class="small-italic">@{{ message.created_at | date: 'MMMM d' }}@{{ getSuffix(message.created_at | date: 'd') }} @{{ message.created_at | date: 'h:mm a' }}</span>
 								</div>
 							</div>
 						</div>

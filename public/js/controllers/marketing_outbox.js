@@ -55,6 +55,12 @@
             }, 'get');
 		};
 
+		$scope.changeActive = function(item) {
+			request.send('/messages/changeActive/' + item.id, item, function (data) {
+                
+            });
+		};
+
 		$scope.getSuffix = function(num) {
 			switch(num.slice(num.length - 1)) {
 				case '1': return 'st';
