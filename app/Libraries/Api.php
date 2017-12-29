@@ -52,4 +52,14 @@ class Api
 		$block = false;
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
 	}
+
+	static public function sendFake($uri, $data, $method = 'POST')
+    {
+        $client = new Guzzle(['base_uri' => config('app.url')]);
+        $response = $client->request($method, $uri, [
+			'http_errors' => false,
+			'json' => $data,
+		]);
+        return self::response($response);
+	}
 }

@@ -49,10 +49,15 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('plans', 'PlansController@all');
 
+	Route::get('links', 'LinksController@all');
+
+	Route::get('teams', 'TeamsController@all');
+
 	Route::get('homeadvisor', 'HomeadvisorController@info');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
 	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');
 	Route::put('homeadvisor/', 'HomeadvisorController@create');
+	Route::post('homeadvisor/fake', 'HomeadvisorController@sendFake');
 	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
 
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');

@@ -10,7 +10,7 @@
 
         $scope.init = function () {
             $scope.get();
-            $scope.teams();
+            //$scope.teams();
         };
 
         $scope.get = function () {
@@ -45,6 +45,19 @@
                     $scope.get();
                 }, 'delete');
             }
+        };
+
+        $scope.sendModal = function(links_code) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'SendModal.html',
+                controller: 'ModalSendFakeCtrl',
+                resolve: {
+                    items: function () {
+                        return {'code': links_code};                    
+                    }
+                }
+            });
         };
         
         $scope.create = function (links_id) {
@@ -102,6 +115,35 @@
                     }
                 }, ($scope.link.id ? 'post' : 'put'));
             }
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalSendFakeCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalSendFakeCtrl]);
+    function ModalSendFakeCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
+        $scope.fake = {'code': items.code};
+        $scope.send = function () {
+            var error = 1;
+            error *= validate.check($scope.form.firstname, 'Firstname');
+            error *= validate.check($scope.form.phone, 'Phone');
+            
+            if (error) {
+                request.send('/homeadvisor/fake', $scope.fake, function (data) {
+                    if (data) {
+                        $uibModalInstance.close();
+                    }
+                });
+            }
+            
         };
 
         $scope.cancel = function () {
