@@ -107,6 +107,7 @@ class DialogsController extends Controller
         $dialog->text = $data['CONTENTS'];
         $dialog->new = true;
         $dialog->status = 1;
+        $dialog->my = false;
         $dialog->save();
     }
 }
