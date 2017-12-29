@@ -30,7 +30,7 @@ class HomeadvisorController extends Controller
 			'phone' => $data['user']['phone'],
 		]);
 
-		auth()->user()->homeadvisor()->create([
+		auth()->user()->homeadvisors()->create([
 			'text' => $data['ha']['text'],
 			'additional_phones' => $data['ha']['additional_phones'],
 			'active' => $data['ha']['active'],
