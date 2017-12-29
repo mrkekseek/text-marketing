@@ -16,7 +16,7 @@ class DialogsController extends Controller
 {
     public function all()
 	{
-		return Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->get()->unique('clients_id')->toArray();
+		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->get()->unique('clients_id')->toArray());
 	}
 
 	public function info($id = false)
