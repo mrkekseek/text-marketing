@@ -9,7 +9,7 @@ class LinksController extends Controller
 {
     public function all()
 	{
-		return Link::with('teams')->get();
+		return Link::with('user.homeadvisors')->get();
     }
     
     public function save($id = false, $post = [])
