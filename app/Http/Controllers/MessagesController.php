@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Message;
+use App\Dialog;
 use App\Text;
 use App\Receiver;
 use App\ContactList;
@@ -204,5 +205,33 @@ class MessagesController extends Controller
         }
 
         MessagesService::receivers($text, $clients);
+    }
+
+    public function inbox(Request $request, Message $message)
+    {
+        $data = $request->only(['CONTENTS', 'PHONENUMBER']);
+
+        $dialog = [
+            'users_id' => $message->user_id,
+            'clients_id' => $this->clientId($message->lists_id, $data['PHONENUMBER']),
+            'text' =>  $data['CONTENTS'],
+            'new' => true,
+            'status' => 1
+        ];
+        Dialog::create($dialog);
+    }
+
+    public function clientId($list_ids, $phone)
+    {
+        $list_ids = explode(',', $list_ids);
+        $lists = ContactList::whereIn('id', $list_ids)->with('clients')->get();
+
+        foreach ($lists as $list) {
+            foreach ($list->clients as $client) {
+                if ($client->phone == $phone) {
+                    return $client->id;
+                }
+            }
+        }
     }
 }
