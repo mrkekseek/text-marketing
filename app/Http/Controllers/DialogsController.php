@@ -102,14 +102,11 @@ class DialogsController extends Controller
 
     public function inbox(Request $request, Dialog $dialog)
     {
-        $data = $request->all();
-        Log::info('REQUEST: ', ['data' => $dialog]);
-        Log::info('DIALOG', ['data' => $data]);
-        /*$dialog = auth()->user()->dialogs()->create([
-            'clients_id' => $client->id,
-            'text' => $data['text'],
-            'new' => true,
-            'status' => 1,
-        ]);*/
+        $data = $request->only(['CONTENTS']);
+        $dialog = $dialog->replicate();
+        $dialog->text = $data['CONTENTS'];
+        $dialog->new = true;
+        $dialog->status = 1;
+        $dialog->save();
     }
 }

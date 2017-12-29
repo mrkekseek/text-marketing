@@ -13,6 +13,7 @@ use App\Events\FirstLead;
 use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
+use App\Libraries\Api;
 
 class HomeadvisorController extends Controller
 {
@@ -89,11 +90,13 @@ class HomeadvisorController extends Controller
     public function lead(Request $request, $code)
     {
 		$data = $request->json()->all();
+
 		if (empty($data)) {
 			$data = $request->all();
 		}
 
     	if ( ! empty($data)) {
+
     		$link = Link::where('code', $code)->first();
 	    	if ( ! empty($link)) {
 				$phone = $this->phone($data);
@@ -177,15 +180,28 @@ class HomeadvisorController extends Controller
     	}
     	return $text;
 	}
+
+	public function sendFake(Request $request)
+	{
+		$data = $request->only(['firstname', 'lastname', 'phone', 'code']);
+		$data['lastname'] = ! empty($data['lastname']) ? $data['lastname'] : '';
+		$post = '{"firstName":"'.$data['firstname'].'","lastName":"'.$data['lastname'].'","address1":"3103 avenue i","city":"Brooklyn","state":"NY","postalCode":"11210","phonePrimary":"'.$data['phone'].'","phoneSecondary":"6465300170","email":"rabbinturk@gmail.com","srOid":94357914,"leadOid":249583859,"taskOid":2102382,"fee":70.49,"taskName":"Closet - Build","comments":"Customer did not provide additional comments.  Please contact the customer to discuss the details of this project.","interview":"Location of Closet:Master Bedroom; Closet Features:Built-in shelves; Part of a larger home remodel?:No; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; What kind of location is this?:Home/Residence; Historical Work:No; Property Owner:Yes;","matchType":"exact","leadDescription":"Exact Match","spEntityId":65021820,"spCompanyName":"TB Carpentry","subject":"Closet - Build","zip":"11210","name":"tester tester","primary_phone":"508617135","lead_id":249583859}';
+		$post = json_decode($post, true);
+		$uri = '/home-advisor/'.$data['code'];
+		$response = Api::sendFake($uri, $post);
+		if ($response['code'] == 200) {
+			return $this->message('HomeAdvisor Lead was created', 'success');
+		}
+	}
 	
 	public function firstName($data)
 	{
-		return ! empty($data['firstName']) ? $data['firstName'] : ! empty($data['first_name']) ? $data['first_name'] : '';
+		return ! empty($data['firstName']) ? $data['firstName'] : (! empty($data['first_name']) ? $data['first_name'] : '');
 	}
 
 	public function lastName($data)
 	{
-		return ! empty($data['lastName']) ? $data['lastName'] : ! empty($data['last_name']) ? $data['last_name'] : '';
+		return ! empty($data['lastName']) ? $data['lastName'] : ( ! empty($data['last_name']) ? $data['last_name'] : '');
 	}
 
     public function phone($data)
