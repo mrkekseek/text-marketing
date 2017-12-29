@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Dialog;
 use App\Client;
+use Carbon\Carbon;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
+use App\Jobs\SendLeadText;
 
 
 class DialogsController extends Controller
@@ -23,21 +25,26 @@ class DialogsController extends Controller
 
 	public function create(Request $request, Client $client)
 	{
-		$data = $request->only(['text']);
-		if ($this->textValidate($data['text'], $client)) {
-			$data['users_id'] = auth()->user()->id;
-			$data['clients_id'] = $client->id; 
-			$data['text'] = auth()->user()->company_name.': '.$data['text'];
-			$data['my'] = 1;
-			$data['status'] = 2;
-			$dialog = Dialog::create($data);
+		$data = $request->only(['text', 'time']);
+
+		if ($this->textValidate($data, $client, $request)) {
+            $dialog = auth()->user()->dialogs()->create([
+                'clients_id' => $client->id,
+                'text' => $data['text'],
+                'my' => true,
+                'status' => 2,
+            ]);
+            $phones = [];
+            $phones[] = ['phone' => $client->phone];
+
+            SendLeadText::dispatch($dialog, $phones, $dialog->text, auth()->user())->onQueue('texts');
 
 			$this->message(__('Message was send'), 'success');
 			return $dialog;
 		}
 	}
 
-	public function textValidate($text, $client)
+	public function textValidate($data, $client)
     {
         if ( ! ApiValidate::companyExists(auth()->user()->company_name, auth()->user())) {
             return $this->message('This Company Name isn\'t verified');
@@ -47,27 +54,27 @@ class DialogsController extends Controller
             return $this->message('Company Name must be verified');
         }
 
-        $text = trim($text);
+        $text = trim($data['text']);
         if ( ! ApiValidate::messageSymbols($text)) {
             return $this->message('SMS Text contains forbidden characters');
         }
 
-        if ( ! empty($clients)) {
+        if ( ! empty($client)) {
             $length = true;
             $phones = true;
             $limit = true;
             
             $message = $text;
 
-            if ( ! ApiValidate::messageLength($message, $data['company'])) {
+            if ( ! ApiValidate::messageLength($message, auth()->user()->company_name)) {
                 $length = false;
             }
 
-            if ( ! ApiValidate::phoneFormat($client['phone'])) {
+            if ( ! ApiValidate::phoneFormat($client->phone)) {
                 $phones = false;
             }
 
-            if (ApiValidate::underLimitMarketing($client['id'])) {
+            if (ApiValidate::underLimitDialog($client->id)) {
                 $limit = false;
             }
 
@@ -84,7 +91,8 @@ class DialogsController extends Controller
             }
         }
 
-        if (ApiValidate::underBlocking()) {
+        $date = (object)$data['time'];
+        if (ApiValidate::underBlocking($date)) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 

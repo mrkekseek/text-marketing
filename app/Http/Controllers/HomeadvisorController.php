@@ -175,7 +175,7 @@ class HomeadvisorController extends Controller
     		$fakeLink = str_replace('http://', '', $fakeLink);
     		$text = str_replace($originLink, $fakeLink, $ha->text);
     	}
-    	return $user->company_name.': '.$text;
+    	return $text;
 	}
 	
 	public function firstName($data)

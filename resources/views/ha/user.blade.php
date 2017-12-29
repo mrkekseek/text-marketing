@@ -99,8 +99,8 @@
 					<div ng-repeat="item in list">
 						<div class="leads-list">
 							<div class="pull-left message-icon">
-								<i class="fa fa-envelope-o" aria-hidden="true" uib-tooltip="{{ __('You haven\'t new message') }}"></i>
-								<a href="/marketing/inbox/@{{item.id}}/" class="fa fa-envelope-o text-primary" aria-hidden="true" uib-tooltip="{{ __('You have new message(s)') }}"></a>
+								<i ng-show="item.count == 0" class="fa fa-envelope-o" aria-hidden="true" uib-tooltip="{{ __('You haven\'t new message') }}"></i>
+								<a ng-show="item.count > 0" href="/marketing/inbox/@{{item.id}}/" class="fa fa-envelope-o text-primary" aria-hidden="true" uib-tooltip="{{ __('You have new message(s)') }}"></a>
 							</div>
 							<div class="pull-left">
 								<div>

@@ -44,7 +44,20 @@
             $scope.activeClient.id = client.id;
             request.send('/dialogs/' + client.id, {}, function (data) {
                 $scope.messages = data;
+                for (var k in $scope.messages) {
+                    var date = new Date($scope.messages[k].created_at);
+                    $scope.messages[k].created_at = date;
+                }
             }, 'get');
+        };
+
+        $scope.getSuffix = function(day) {
+            switch (day) {
+                case '1': return 'st';
+                case '2': return 'nd';
+                case '3': return 'rd';
+                default: return  'th';
+            }
         };
 
         $scope.maxChars = function() {
@@ -68,14 +81,19 @@
                 return;
             }
             
+            var date = new Date();
             var post_mas = {
                 'text': $scope.messages_text,
+                'time': {
+                    'hour': date.getHours()
+                }
             };
 
             $scope.sent = true;
             request.send('/dialogs/create/' + $scope.activeClient.id, post_mas, function (data) {
                 if (data) {
-                    $scope.messages.push(data); 
+                    $scope.messages.push(data);
+                    $scope.messages_text = '';
                 }
                 $scope.sent = false;
             }, 'put');
