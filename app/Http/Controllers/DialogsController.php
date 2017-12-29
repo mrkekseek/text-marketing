@@ -98,4 +98,17 @@ class DialogsController extends Controller
 
         return 1;
     }
+
+    public function inbox(Request $request, Dialog $dialog)
+    {
+        $data = $request->all();
+        print_r($data);
+        print_r($dialog);
+        /*$dialog = auth()->user()->dialogs()->create([
+            'clients_id' => $client->id,
+            'text' => $data['text'],
+            'new' => true,
+            'status' => 1,
+        ]);*/
+    }
 }
