@@ -21,7 +21,7 @@
 						<div class="col-sm-12">
 							<div>
 								<strong>@{{ dialog.clients.view_phone }}</strong>
-								<span class="small-italic">{{ __("from") }} @{{ dialog.clients.source }}</span>
+								<span ng-show="dialog.clients.source" class="small-italic">{{ __("from") }} @{{ dialog.clients.source }}</span>
 							</div>
 							<div class="phone-name">
 								@{{ dialog.clients.firstname }}

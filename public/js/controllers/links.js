@@ -134,8 +134,7 @@
         $scope.send = function () {
             var error = 1;
             error *= validate.check($scope.form.firstname, 'Firstname');
-            error *= validate.check($scope.form.phone, 'Phone');
-            
+            error *= validate.phone($scope.form.phone, 'Phone');
             if (error) {
                 request.send('/homeadvisor/fake', $scope.fake, function (data) {
                     if (data) {
