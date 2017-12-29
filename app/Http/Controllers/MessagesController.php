@@ -22,7 +22,7 @@ class MessagesController extends Controller
 
     public function all()
     {
-        return auth()->user()->messages()->orderBy('updated_at', 'desc')->with(['texts.receivers'])->get();
+        return auth()->user()->messages()->orderBy('created_at', 'desc')->with(['texts.receivers'])->get();
     } 
 
     public function create(MessageCreateRequest $request)
@@ -187,6 +187,12 @@ class MessagesController extends Controller
         }
 
         return 1;
+    }
+
+    public function changeActive(Request $request, Message $message)
+    {
+        $data = $request->only('active');
+        $message->update($data);
     }
 
     public function push(Request $request, Text $text)
