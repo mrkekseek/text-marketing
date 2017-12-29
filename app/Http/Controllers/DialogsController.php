@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
 use App\Jobs\SendLeadText;
+use Illuminate\Support\Facades\Log;
 
 
 class DialogsController extends Controller
@@ -102,8 +103,8 @@ class DialogsController extends Controller
     public function inbox(Request $request, Dialog $dialog)
     {
         $data = $request->all();
-        print_r($data);
-        print_r($dialog);
+        Log::info('REQUEST: ', ['data' => $dialog]);
+        Log::info('DIALOG', ['data' => $data]);
         /*$dialog = auth()->user()->dialogs()->create([
             'clients_id' => $client->id,
             'text' => $data['text'],
