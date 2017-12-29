@@ -33,6 +33,10 @@
                 for (var k in $scope.list) {
                     var date = new Date($scope.list[k].created_at);
                     $scope.list[k].created_at = date;
+                    $scope.list[k].count = 0;
+                    for (var j in $scope.list[k].dialogs) {
+                        $scope.list[k].count += $scope.list[k].dialogs[j].new;
+                    }
                 }
             }, 'get');
         };

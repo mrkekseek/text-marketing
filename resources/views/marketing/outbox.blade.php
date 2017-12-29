@@ -35,7 +35,7 @@
 									
 									<div class="row-info-item pull-right">
 										<label class="ui-switch ui-switch-success ui-switch-sm">
-											<input type="checkbox" ng-model="item.active">
+											<input type="checkbox" ng-model="item.active" ng-click="changeActive(item)">
 											<i></i>
 										</label>
 										<span class="team-leader">{{ __('Active Message') }}</span>
