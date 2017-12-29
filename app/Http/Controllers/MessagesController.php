@@ -216,8 +216,10 @@ class MessagesController extends Controller
             'clients_id' => $this->clientId($message->lists_id, $data['PHONENUMBER']),
             'text' =>  $data['CONTENTS'],
             'new' => true,
-            'status' => 1
+            'status' => 1,
+            'my' => false
         ];
+        
         Dialog::create($dialog);
     }
 
