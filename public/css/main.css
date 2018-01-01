@@ -669,6 +669,11 @@ li.toggle-provider {
 	right: 40px;
 }
 
+.icon-client.icon-report {
+	right: 66px;
+    bottom: 9px;
+}
+
 .team-leader {
 	vertical-align: top;
 	font-weight: normal;

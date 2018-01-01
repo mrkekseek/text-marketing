@@ -61,6 +61,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
 
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
+	Route::get('clients/reports/{client}', 'ClientsController@reportsReviews');
 	Route::get('clients/leads', 'ClientsController@leads');
 	Route::get('clients/{id}', 'ClientsController@info');
 	Route::get('clients', 'ClientsController@all');

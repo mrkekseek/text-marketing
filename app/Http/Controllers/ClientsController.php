@@ -31,6 +31,11 @@ class ClientsController extends Controller
 		return $data;
 	}
 
+	public function reportsReviews(Client $client)
+	{
+		return $client->seances;
+	}
+
 	public function create(ClientCreateRequest $request)
 	{
 		$data = $request->only(['firstname', 'lastname', 'view_phone', 'email']);
