@@ -88,7 +88,7 @@ class UsersController extends Controller
 				$survey = new Survey();
 				$survey->user_id = $user->id;
 				$survey->text = ! empty($row['surveys']['text']) ? $row['surveys']['text'] : '';
-				$survey->email = $row['surveys']['email'];
+				$survey->email = ! empty($row['surveys']['email']) ? $row['surveys']['email'] : '';
 				$survey->subject = $row['surveys']['subject'];
 				$survey->sender = $row['surveys']['sender'];
 				$survey->alerts_emails = $row['surveys']['alerts_emails'];
