@@ -21,7 +21,7 @@ class CreateSeancesTable extends Migration
             $table->string('code');
             $table->string('url');
             $table->string('date');
-            $table->tinyInteger('completed')->unsigned()->default(0);
+            $table->timestamp('completed')->nullable();
             $table->tinyInteger('show')->unsigned()->default(0);
             $table->string('type');
             $table->tinyInteger('finish')->unsigned()->default(0);

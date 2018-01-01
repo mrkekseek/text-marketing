@@ -8,6 +8,7 @@ use App\Question;
 use App\SocialUrl;
 use App\User;
 use App\Survey;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Services\SurveysService;
 use App\Jobs\SendAlertNow;
@@ -30,7 +31,7 @@ class AnswersController extends Controller
         }
 
         $seance->update([
-            'completed' => true,
+            'completed' => Carbon::now()->subHours($seance->review->user->offset),
             'show' => $show,
             'alert' => false,
         ]);
@@ -43,7 +44,7 @@ class AnswersController extends Controller
         $seance = Seance::where('id', $id)->with(['review.survey', 'review.user.urls'])->first();
         if ($value == 5) {
             $seance->update([
-                'completed' => true,
+                'completed' => Carbon::now()->subHours($seance->review->user->offset),
                 'show' => true,
                 'alert' => false,
             ]);
