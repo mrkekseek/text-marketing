@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
-    var $salt = 'eEZue4JfUvJJKn9N';
+    public $salt = 'eEZue4JfUvJJKn9N';
 
     public function info()
     {
@@ -24,7 +24,7 @@ class AuthController extends Controller
     
     public function signin(SignInRequest $request)
     {
-        $old_pass = hash_hmac('sha1', $pass, $this->salt);
+        $old_pass = hash_hmac('sha1', $request->password, $this->salt);
         $users = User::where('password', $old_pass)->get();
         foreach ($users as $user) {
             $user->update([
