@@ -159,7 +159,7 @@ class UsersController extends Controller
 		return ['status' => $status];
 	}
 
-	public function status(User $user)
+	public function status(User $user = null)
 	{
 		$user = empty($user) ? auth()->user() : $user;
 		return ['status' => $user->company_status];
@@ -168,8 +168,11 @@ class UsersController extends Controller
 	public function push(Request $request)
     {
     	$data = $request->json()->all();
+    	$users = User::where('company_name', $data['name'])->get();
 
-    	Log::info('Company Push', ['data' => $data]);
+    	foreach ($users as $user) {
+    		$user->update(['company_status' => $data['status']]);
+    	}
     }
 
     public function saveSettings(Request $request)

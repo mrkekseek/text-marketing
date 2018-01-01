@@ -17,4 +17,9 @@ class Client extends Model
     {
     	return $this->hasMany('App\Dialog', 'clients_id');
     }
+
+    public function seances()
+    {
+    	return $this->hasMany('App\Seance')->with('answers');
+    }
 }

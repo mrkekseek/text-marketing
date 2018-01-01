@@ -58,15 +58,21 @@
 
 									<div class="client-item">
 										<strong>@{{ client.view_phone }}</strong>
-										<span class="small-italic pull-right" ng-show="client.email">email: @{{ client.email }}</span>
+										<span class="small-italic pull-right" ng-show="client.email">@{{ client.email }}</span>
 										<br />
 										@{{ client.firstname }}
 										@{{ client.lastname }}
 									</div>
 								</div>
-
-								<a href="javascript:;" class="a-icon text-success icon-client icon-edit" ng-click="editClient(client)"><i class="fa fa-pencil"></i></a>
-								<a href="javascript:;" class="a-icon text-danger icon-client icon-remove" ng-click="removeClient(client.id)"><i class="fa fa-trash"></i></a>
+								<a href="javascript:;" class="a-icon text-info icon-client icon-report" ng-click="reportClient(client.id)" uib-tooltip="See reports">
+									<i class="fa fa-list-alt" aria-hidden="true"></i>
+								</a>
+								<a href="javascript:;" class="a-icon text-success icon-client icon-edit" ng-click="editClient(client)" uib-tooltip="Edit">
+									<i class="fa fa-pencil"></i>
+								</a>
+								<a href="javascript:;" class="a-icon text-danger icon-client icon-remove" ng-click="removeClient(client.id)" uib-tooltip="Remove">
+									<i class="fa fa-trash"></i>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -235,4 +241,42 @@
 <script type="text/ng-template" id="sendTooltip.html">
 	<span>{{ __("Here is an example of how the text will look, with your and your client's names of course.") }}</span>
 	<img src="/img/survey_send_help.png" class="img-responsive" />
+</script>
+
+<script type="text/ng-template" id="ReportsReviews.html">
+	<form name="form_partner" method="post" novalidate="novalidate">
+		<div class="modal-header">
+			<button type="button" class="close" ng-click="cancel()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<h4 class="modal-title">{{ __("Reviews") }}</h4>
+		</div>
+
+		<div class="modal-body">
+			<table class="table table-striped">
+				<tr>
+					<th>{{ __('Created at') }}</th>
+					<th>{{ __('Date for review') }}</th>
+					<th>{{ __('Completed') }}</th>
+					<th>{{ __('Type') }}</th>
+					<th>{{ __('Score') }}</th>
+				</tr>
+				<tr ng-repeat="report in reports">
+					<td>@{{ report.created_at | date: 'MMM d h:mm a' }}</td>
+					<td>@{{ report.date | date: 'MMM d h:mm a' }}</td>
+					<td>
+						@{{ report.completed | date: 'MMM d h:mm a' }}
+						<span ng-show="! report.completed">{{ __('Not complete yet.') }}</span>
+					</td>
+					<td>@{{ report.type }}</td>
+					<td>
+						<i ng-repeat="k in getStars(report.value) track by $index" class="fa fa-star surveys-stars" aria-hidden="true"></i>
+						<span ng-show="! getStars(report.value).length">N/A</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
+		</div>
+	</form>
 </script>

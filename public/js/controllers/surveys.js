@@ -106,6 +106,29 @@
             }
         };
 
+        $scope.reportClient = function(client_id) {
+            request.send('/clients/reports/' + client_id, {}, function (data) {
+                if (data) {
+                    $scope.reportsModal(data);
+                }
+            }, 'get');
+        };
+
+        $scope.reportsModal = function(reports) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'lg',
+                templateUrl: 'ReportsReviews.html',
+                controller: 'ReportsReviewsCtrl',
+                backdrop: true,
+                resolve: {
+                    items: function () {
+                        return {'reports': reports, 'user': $scope.user};
+                    }
+                }
+            });
+        };
+
         $scope.addPartner = function(partner_id) {
             partner_id = partner_id || false;
 
@@ -392,6 +415,48 @@
 
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
+        };
+    };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ReportsReviewsCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ReportsReviewsCtrl]);
+
+    function ReportsReviewsCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
+        $scope.reports = angular.copy(items.reports);
+        $scope.user = angular.copy(items.user);
+
+        $scope.getDate = function(date) {
+            date = new Date($scope.reports[k].date);
+            return date.setHours(date.getHours() - $scope.user.offset);
+        };
+
+        for (var k in $scope.reports) {
+            $scope.reports[k].created_at = $scope.getDate($scope.reports[k].created_at);
+            $scope.reports[k].date = $scope.getDate($scope.reports[k].date);
+            $scope.reports[k].type = $scope.reports[k].type.toUpperCase().replace(',', ' / ');
+            if ($scope.reports[k].completed) {
+                var date = new Date($scope.reports[k].completed);
+                $scope.reports[k].completed = date;
+                for (var j in $scope.reports[k].answers) {
+                    if ($scope.reports[k].answers[j].question_id == 1) {
+                        $scope.reports[k].value = $scope.reports[k].answers[j].value;
+                    }
+                }
+            }
+        }
+
+        $scope.getStars = function(num) {
+            num = num | 0;
+            return Array(num * 1);
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.close();
         };
     };
 })();
