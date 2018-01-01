@@ -28,7 +28,7 @@ class AuthController extends Controller
         $users = User::where('password', $old_pass)->get();
         foreach ($users as $user) {
             $user->update([
-                'password' => UsersService::password($request->password);
+                'password' => UsersService::password($request->password)
             ]);
         }
 
