@@ -11,6 +11,8 @@
 |
 */
 
+Route::post('migrate', 'UsersController@migrate');
+
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
 	if (empty($view)) {
@@ -118,6 +120,8 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
+
+
 Route::get('seances/{code}', 'AnswersController@text');
 Route::get('seances/{id}/{value}', 'AnswersController@email');
 
@@ -129,6 +133,8 @@ Route::any('message/push/{text}', 'MessagesController@push');
 
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');
+
+
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
