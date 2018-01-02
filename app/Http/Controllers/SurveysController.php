@@ -23,6 +23,7 @@ class SurveysController extends Controller
     public function text(Request $request, User $user = null)
     {
         $data = $request->only(['text', 'sender', 'subject', 'email']);
+        $data['email'] = ! empty($data['email']) ? $data['email'] : '';
         SurveysService::save($data, $user);
         return $this->message('SMS Text was saved', 'success');
     }
@@ -30,6 +31,7 @@ class SurveysController extends Controller
     public function email(Request $request, User $user = null)
     {
         $data = $request->only(['text', 'sender', 'subject', 'email']);
+        $data['email'] = ! empty($data['email']) ? $data['email'] : '';
         SurveysService::save($data, $user);
         return $this->message('Email and Subject were saved', 'success');
     }
