@@ -23,6 +23,12 @@ class SurveysController extends Controller
     public function text(Request $request, User $user = null)
     {
         $data = $request->only(['text', 'sender', 'subject', 'email']);
+        $data['alerts_emails'] = empty($data['alerts_emails']) ? '' : $data['alerts_emails'];
+        $data['alerts_stars'] = empty($data['alerts_stars']) ? 0 : $data['alerts_stars'];
+        $data['alerts_often'] = empty($data['alerts_often']) ? 0 : $data['alerts_often'];
+        $data['text'] = ! empty($data['text']) ? $data['text'] : '';
+        $data['sender'] = ! empty($data['sender']) ? $data['sender'] : '';
+        $data['subject'] = ! empty($data['subject']) ? $data['subject'] : '';
         $data['email'] = ! empty($data['email']) ? $data['email'] : '';
         SurveysService::save($data, $user);
         return $this->message('SMS Text was saved', 'success');
@@ -31,6 +37,12 @@ class SurveysController extends Controller
     public function email(Request $request, User $user = null)
     {
         $data = $request->only(['text', 'sender', 'subject', 'email']);
+        $data['alerts_emails'] = empty($data['alerts_emails']) ? '' : $data['alerts_emails'];
+        $data['alerts_stars'] = empty($data['alerts_stars']) ? 0 : $data['alerts_stars'];
+        $data['alerts_often'] = empty($data['alerts_often']) ? 0 : $data['alerts_often'];
+        $data['text'] = ! empty($data['text']) ? $data['text'] : '';
+        $data['sender'] = ! empty($data['sender']) ? $data['sender'] : '';
+        $data['subject'] = ! empty($data['subject']) ? $data['subject'] : '';
         $data['email'] = ! empty($data['email']) ? $data['email'] : '';
         SurveysService::save($data, $user);
         return $this->message('Email and Subject were saved', 'success');
@@ -40,6 +52,12 @@ class SurveysController extends Controller
     {
         $data = $request->only(['text', 'sender', 'subject', 'email', 'alerts_emails', 'alerts_stars', 'alerts_often']);
         $data['alerts_emails'] = empty($data['alerts_emails']) ? '' : $data['alerts_emails'];
+        $data['alerts_stars'] = empty($data['alerts_stars']) ? 0 : $data['alerts_stars'];
+        $data['alerts_often'] = empty($data['alerts_often']) ? 0 : $data['alerts_often'];
+        $data['text'] = ! empty($data['text']) ? $data['text'] : '';
+        $data['sender'] = ! empty($data['sender']) ? $data['sender'] : '';
+        $data['subject'] = ! empty($data['subject']) ? $data['subject'] : '';
+        $data['email'] = ! empty($data['email']) ? $data['email'] : '';
         SurveysService::save($data);
         return $this->message('Alert settings was successfully saved', 'success');
     }
