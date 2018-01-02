@@ -206,10 +206,10 @@ class SeancesController extends Controller
     private function surveySave($request, $user)
     {
         $data = [
-            'text' => $request->survey['text'],
-            'sender' => $request->survey['sender'],
-            'subject' => $request->survey['subject'],
-            'email' => $request->survey['email'],
+            'text' => ! empty($request->survey['text']) ? $request->survey['text'] : '',
+            'sender' => ! empty($request->survey['sender']) ? $request->survey['sender'] : '',
+            'subject' => ! empty($request->survey['subject']) ? $request->survey['subject'] : '',
+            'email' => ! empty($request->survey['email']) ? $request->survey['email'] : '',
         ];
         SurveysService::save($data, $user);
     }
