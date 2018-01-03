@@ -30,6 +30,38 @@ use Carbon\Carbon;
 
 class UsersController extends Controller
 {
+	public function migratePhones(Request $request)
+	{
+		$data = $request->json()->all();
+
+		foreach ($data as $phone) {
+			$team_id = $this->getTeamId($phone['user_email']);
+			if ( ! empty($team_id)) {
+				$client = new Client();
+				$client->team_id = $team_id;
+				$client->firstname = $phone['phones_firstname'];
+				$client->lastname = ! empty($phone['phones_lastname']) ? $phone['phones_lastname'] : '';
+				$client->phone = $phone['phones_number'];
+				$client->view_phone = $phone['phones_number'];
+				$client->email = '';
+				$client->source = $phone['phones_source'];
+				$client->created_at = $phone['phones_add'];
+				$client->updated_at = $phone['phones_add'];
+				$client->save();
+			}
+			
+		}
+	}
+
+	public function getTeamId($user_email = '')
+	{
+		if ( ! empty($user_email)) {
+			$user = User::where('email', $user_email)->first();
+			return $user->teams_id;
+		}
+		return false;
+	}
+
 	public function migrate(Request $request)
 	{
 		$data = $request->json()->all();
