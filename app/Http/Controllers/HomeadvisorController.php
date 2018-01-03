@@ -109,7 +109,7 @@ class HomeadvisorController extends Controller
 					'email' => $this->email($data),
 					'source' => 'HomeAdvisor',
 				];
-
+				
 				$client = $link->user->teams->clients()->where('phone', $phone)->first();
 				if ( ! empty($client)) {
 					$client->update($lead);
