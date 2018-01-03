@@ -42,6 +42,7 @@
 	                    $scope.get();
 	                }, 5000);
                 }
+                console.log($scope.list);
             }, 'get');
 		};
 

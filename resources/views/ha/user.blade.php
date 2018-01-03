@@ -12,11 +12,11 @@
 						{{ __("To get started, click the 'Activate HomeAdvisor' button. We will then speak to your HomeAdvisor rep to get you connected and we will alert you when we are done. Then you can customize the text you want your leads to receive. We recommend putting in the link to your booking site and your number and letting them know that they can reply by text as well. This gives the lead 3 ways to engage. On the right side of the page you will see a list of all of your leads. Leads who click the link will have a green check next to their name, while a blue check signifies that they texted a reply.") }}
 					</div>
 
-					<div uib-alert class="alert-info" ng-show="ha.send_request">
+					<div uib-alert class="alert-info" ng-show="ha.send_request && ! list.length">
 						{{ __("Your request was sent to HomeAdvisor. We will inform you when it will be processed") }}
 					</div>
 
-					<div uib-alert class="alert-success" ng-show="false">
+					<div uib-alert class="alert-success" ng-show="list.length">
 						{{ __('Your request was approved by HomeAdvisor') }}
 					</div>
 
@@ -54,7 +54,7 @@
 
 						<form name="form_ha" novalidate="novalidate" ng-show="user.company_status == 'verified' && ! companyChanged">
 							<div class="form-group">
-								<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" lms="true"></char-set>
+								<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-shortlink="true" lms="true"></char-set>
 							</div>
 
 							<div class="form-group">
