@@ -21,6 +21,28 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			$scope.lastnameTag = '[$LastName]';
 			$scope.linkTag = '[$Link]';
 			$scope.size = 0;
+			$scope.showMessageTextUrl = false;
+			$scope.shortLinkMessageText = '';
+
+			$scope.toggleUrl = function() {
+				$scope.showMessageTextUrl = ! $scope.showMessageTextUrl;
+			};
+
+			$scope.insertShortLink = function(longLink) {
+				$scope.toggleUrl();
+				getShortUrl.getLink(longLink, function(shortUrl) {
+					if (shortUrl) {
+						shortUrl = shortUrl.replace('http://', '');
+						$scope.insert(shortUrl);
+						$scope.shortLinkMessageText = '';
+						$scope.showMessageTextUrl = ! $scope.showMessageTextUrl;
+						document.getElementById('refresh').click();
+						$scope.charCount();
+					} else {
+						logger.logError('Inccorect link');
+					}
+				});
+			};
 
 			$scope.charCount = function () {
 				$scope.size = 0;

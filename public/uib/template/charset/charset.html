@@ -9,7 +9,7 @@
 		</span>
 	</div>
 
-	<div class="btn-group btn-group-justified move-top-pixel">
+	<div class="btn-group btn-group-justified move-top-pixel" ng-show="! showMessageTextUrl">
 		<div class="btn-group" ng-if="firstname">
 			<button ng-click="insert(firstnameTag)" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-user"></i> First Name
@@ -29,7 +29,7 @@
 		</div>
 
 		<div class="btn-group" ng-if="shortlink">
-			<button ng-click="chooseButtonFunc(button.type, options.id, button.mask)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="toggleUrl()" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-link"></i> Short Link
 			</button>
 		</div>
@@ -40,7 +40,7 @@
 		<div class="input-group-btn">
 			<button ng-click="insertShortLink(shortLinkMessageText)" type="button" class="btn btn-sm btn-primary"><i class="fa fa-refresh"></i>
 			</button>
-			<button ng-click="showMessageTextUrl  = false" type="button" class="btn btn-sm btn-default"><i class="fa fa-times"></i></button>
+			<button id="refresh" ng-click="toggleUrl()" type="button" class="btn btn-sm btn-default"><i class="fa fa-times"></i></button>
 		</div>
 	</div>
 </div>
