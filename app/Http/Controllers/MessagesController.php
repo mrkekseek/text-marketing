@@ -44,6 +44,26 @@ class MessagesController extends Controller
         return false;
     }
 
+    public function update(MessageCreateRequest $request, $id = false)
+    {
+        if ($this->textValidate($request)) {
+            $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch', 'x_day']);
+            $data['lists_id'] = implode(',', $data['lists_id']);
+            $data['date'] = $this->getDate($request->schedule, $request->time, auth()->user());
+            $data['finish_date'] = $this->getFinishDate($request->finish_date, auth()->user());
+            $data['token'] = $data['date'];
+            $data['active'] = true;
+            $data['file'] = '';
+
+            $message = Message::find($id);
+            $message->update($data);
+            $this->sendText($message);
+            return $this->message('Message was successfully saved', 'success');
+        }
+
+        return false;
+    }
+
     public function sendText($message)
     {
         $clients = $this->sendClients($message->lists_id);
@@ -122,7 +142,7 @@ class MessagesController extends Controller
 
     public function textValidate(Request $request)
     {
-        $data = $request->all();
+        $data = $request->all(); 
         $date = '';
         if ( ! empty($data['schedule'])) {
             $time = $data['time'];

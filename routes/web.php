@@ -93,10 +93,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('answers/{id}', 'AnswersController@save');
 
 	Route::put('messages/create', 'MessagesController@create');
+	Route::post('messages/textValidate', 'MessagesController@textValidate');
+	Route::post('messages/{id}', 'MessagesController@update');
 	Route::delete('messages/{id}', 'MessagesController@remove');
 	Route::get('messages', 'MessagesController@all');
 	Route::get('messages/{id}', 'MessagesController@info');
-	Route::post('messages/textValidate', 'MessagesController@textValidate');
 	Route::post('messages/changeActive/{message}', 'MessagesController@changeActive');
 
 	Route::get('lists', 'ListsController@all');
