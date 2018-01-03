@@ -13,6 +13,7 @@
 
 Route::post('migrate', 'UsersController@migrate');
 Route::post('migrate/phones', 'UsersController@migratePhones');
+Route::post('migrate/dialogs', 'UsersController@migrateDialogs');
 
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);

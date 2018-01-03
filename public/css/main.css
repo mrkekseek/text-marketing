@@ -487,6 +487,7 @@ li.toggle-provider {
 	display: table;
 	width: 100%;
 	margin-top: 15px;
+	position: relative;
 }
 
 .message-body {
@@ -513,10 +514,10 @@ li.toggle-provider {
 
 .message-avatar {
 	border-radius: 5px;
-	float: left;
-	position: relative;
+	position: absolute;
 	z-index: 0;
 	padding: 15px 0px;
+	bottom: 0;
 }
 
 .search-icon {
