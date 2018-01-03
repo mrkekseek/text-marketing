@@ -30,6 +30,29 @@ use Carbon\Carbon;
 
 class UsersController extends Controller
 {
+
+	public function migrateDialogs(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $item) {
+			$user_id = $this->getUserId($item['user_email']);
+			$client_id = $this->getClientId($item['phone']);
+			
+			if (! empty($user_id) && ! empty($client_id) && ! empty($item['text'])) {
+				$dialog = new Dialog();
+				$dialog->users_id = $user_id;
+				$dialog->clients_id = $client_id;
+				$dialog->text = $item['text'];
+				$dialog->my = $item['my'];
+				$dialog->new = $item['new'];
+				$dialog->status = $item['status'];
+				$dialog->created_at = $item['created_at'];
+				$dialog->updated_at = $item['updated_at'];
+				$dialog->save();
+			}
+		}
+	}
+
 	public function migratePhones(Request $request)
 	{
 		$data = $request->json()->all();
@@ -51,6 +74,26 @@ class UsersController extends Controller
 			}
 			
 		}
+	}
+
+	public function getClientId($phone = '')
+	{
+		if ( ! empty($phone)) {
+			$client = Client::where('phone', $phone)->first();
+			if ( ! empty($client)) {
+				return $client->id;
+			}
+		}
+		return false;
+	}
+
+	public function getUserId($user_email = '')
+	{
+		if ( ! empty($user_email)) {
+			$user = User::where('email', $user_email)->first();
+			return $user->id;
+		}
+		return false;
 	}
 
 	public function getTeamId($user_email = '')

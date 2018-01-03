@@ -124,9 +124,9 @@ class HomeadvisorController extends Controller
 
 				$ha = $link->user->homeadvisors;
 				if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($phone)) {
-
 					$this->textToLead($link->user, $client, $ha);
 				}
+
 
 				http_response_code(200);
 				echo '<success>User '.$code.'</success>';
