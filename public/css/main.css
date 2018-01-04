@@ -24,6 +24,11 @@ hr {
 	margin: 0px;
 }
 
+.preview-mms {
+	width: 80px;
+	height: 80px;
+}
+
 .prev-text {
     padding: 15px;
     border-color: #e9e9e9;

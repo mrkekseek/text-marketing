@@ -2,9 +2,9 @@
 (function () {
 	'use strict';
 
-	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', '$location', 'logger', 'getShortUrl', MarketingSendCtrl]);
+	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', '$location', 'logger', 'getShortUrl', 'fileUpload', '$http', MarketingSendCtrl]);
 
-	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger, getShortUrl) {
+	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger, getShortUrl, fileUpload, $http) {
 		$scope.step = 1;
 		$scope.open = false;
 		$scope.longLink =  {
@@ -15,6 +15,8 @@
 
 		$scope.companyChanged = false;
 		$scope.oldCompany = angular.copy($scope.user.company_name);
+
+        $scope.file = {};
 
 		var date = new Date();
         $scope.seanceDate = date;
@@ -45,7 +47,8 @@
             'finish_date': [],
 			'x_day': '2',
 			'lists_id': [],
-            'company': $scope.user.company_name
+            'company': $scope.user.company_name,
+            'file': ''
 		};
 
         $scope.dateOptions = {
@@ -498,6 +501,22 @@
                 return text.length + firstname + lastname;
             }
             return 0;
+        };
+
+        $scope.uploadFile = function(file) {
+            $scope.file.name = file.name;
+            var fd = new FormData();
+            fd.append('file', file);
+            console.log(fd);
+
+            $http.post('/api/v1/upload/file', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(response){
+                $scope.message.file = response.data.data;
+                $scope.file.url = 'http://app.contractortexter.da/' + response.data.data;
+                console.log($scope.message);
+            });
         };
 
 		$scope.openImport = function() {
