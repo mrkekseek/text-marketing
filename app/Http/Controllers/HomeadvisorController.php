@@ -14,6 +14,7 @@ use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
 use App\Libraries\Api;
+use App\Libraries\ApiValidate;
 
 class HomeadvisorController extends Controller
 {
@@ -29,6 +30,13 @@ class HomeadvisorController extends Controller
 		auth()->user()->update([
 			'phone' => $data['user']['phone'],
 		]);
+
+		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
+		//$data['ha']['text'] = str_replace("'", "‘", $data['ha']['text']);
+
+		if ( ! ApiValidate::messageSymbols($data['ha']['text'])) {
+			return $this->message('Text containes forbidden characters');
+		}
 
 		auth()->user()->homeadvisors()->create([
 			'text' => $data['ha']['text'],
@@ -46,6 +54,13 @@ class HomeadvisorController extends Controller
 		auth()->user()->update([
 			'phone' => $data['user']['phone'],
 		]);
+
+		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
+		//$data['ha']['text'] = str_replace("'", "‘", $data['ha']['text']);
+
+		if ( ! ApiValidate::messageSymbols($data['ha']['text'])) {
+			return $this->message('Text containes forbidden characters');
+		}
 
 		$homeadvisor->update([
 			'text' => $data['ha']['text'],
@@ -164,8 +179,9 @@ class HomeadvisorController extends Controller
             $row['lastname'] = $client->lastname;
         }
 
-        $phones[] = $row;
-        SendLeadText::dispatch($dialog, $phones, $dialog->text, $user)->onQueue('texts');
+		$phones[] = $row;
+
+        SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
     }
 
     public function createText($user, $client, $ha)

@@ -110,6 +110,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('dialogs', 'DialogsController@all');
 	Route::get('dialogs/{id}', 'DialogsController@info');
 	Route::put('dialogs/create/{client}', 'DialogsController@create');
+
+	Route::post('upload/file', 'UploadController@save');
 });
 
 Route::get('signup/{type?}', function($type = false) {

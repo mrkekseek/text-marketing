@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Libraries\Api;
 use App\Dialog;
+use App\User;
 
 class SendLeadText implements ShouldQueue
 {
@@ -16,7 +17,6 @@ class SendLeadText implements ShouldQueue
 
     protected $dialog;
     protected $clients;
-    protected $text;
     protected $user;
 
     /**
@@ -24,11 +24,10 @@ class SendLeadText implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Dialog $dialog, $clients, $text, $user)
+    public function __construct(Dialog $dialog, $clients, User $user)
     {
         $this->dialog = $dialog;
         $this->clients = $clients;
-        $this->text = $text;
         $this->user = $user;
     }
 
@@ -39,7 +38,7 @@ class SendLeadText implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::dialog($this->dialog->id, $this->clients, $this->text, $this->user->company_name, $this->user->offset);
+        $response = Api::dialog($this->dialog->id, $this->clients, $this->dialog->text, $this->user->company_name, $this->user->offset);
         if ($response['code'] == 200) {
             $this->dialog->update(['status' => 1]);
         }

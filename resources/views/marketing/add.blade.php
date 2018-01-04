@@ -91,7 +91,24 @@
 								</div>
 							</div>
 						</div>
-							
+
+						<!--<div class="form-group">
+							<span class="upload-button-box">
+								<button type="button" class="btn btn-sm btn-default">
+									<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+								</button>
+								<input onchange="angular.element(this).scope().uploadFile(event.target.files[0])" type="file" />
+							</span>
+
+							<span class="upload-tooltip" uib-tooltip="{{ __('Image size limit is 500 KB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP Video size limit is 3 MB; supported video file types include .AVI, .MP4, .WMV, and .MOV') }}">
+								<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+							</span>
+						</div>
+						<div class="form-group">
+							<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
+							<span ng-show="file.name">@{{ file.name }}</span>
+						</div>-->
+						
 						<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="0" >
 							<span>{{ __('Send Now') }}</span>
 						</label>
