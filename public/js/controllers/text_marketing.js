@@ -45,6 +45,7 @@
             $scope.activeClient.id = client.id;
             request.send('/dialogs/' + client.id, {}, function (data) {
                 $scope.messages = data;
+                console.log($scope.messages);
                 for (var k in $scope.messages) {
                     var date = new Date($scope.messages[k].created_at);
                     $scope.messages[k].created_at = date;
