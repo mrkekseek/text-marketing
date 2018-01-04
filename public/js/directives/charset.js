@@ -29,15 +29,12 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			};
 
 			$scope.insertShortLink = function(longLink) {
-				$scope.toggleUrl();
 				getShortUrl.getLink(longLink, function(shortUrl) {
 					if (shortUrl) {
 						shortUrl = shortUrl.replace('http://', '');
 						$scope.insert(shortUrl);
 						$scope.shortLinkMessageText = '';
-						$scope.showMessageTextUrl = ! $scope.showMessageTextUrl;
 						document.getElementById('refresh').click();
-						$scope.charCount();
 					} else {
 						logger.logError('Inccorect link');
 					}
@@ -48,15 +45,16 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 				$scope.size = 0;
 				if ($scope.result && $scope.result != '' && $scope.company && $scope.company != '') {
 					$scope.size = $scope.result.length + $scope.company.length + 2;
-					if ($scope.result.indexOf($scope.firstnameTag)) {
+					if ($scope.result.indexOf($scope.firstnameTag) + 1) {
 						$scope.size += $scope.maxFirstname - $scope.firstnameTag.length;
 					}
 
-					if ($scope.result.indexOf($scope.lastnameTag)) {
+					if ($scope.result.indexOf($scope.lastnameTag) + 1) {
 						$scope.size += $scope.maxLastname - $scope.lastnameTag.length;
 					}
 
-					if ($scope.result.indexOf($scope.linkTag)) {
+					if ($scope.result.indexOf($scope.linkTag) + 1) {
+						console.log('789');
 						$scope.size += 14 - $scope.linkTag.length;
 					}
 				}

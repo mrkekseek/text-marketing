@@ -53,6 +53,17 @@ class UsersController extends Controller
 		}
 	}
 
+	public function migrateClicked(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $item) {
+			$client = Client::where('phone', trim($item['phones_number']))->where('source', 'HomeAdvisor')->first();
+			if ( ! empty($client)) {
+				$client->update(['clicked' => 1]);
+			}
+		}
+	}
+
 	public function migratePhones(Request $request)
 	{
 		$data = $request->json()->all();
