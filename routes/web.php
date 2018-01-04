@@ -14,6 +14,7 @@
 Route::post('migrate', 'UsersController@migrate');
 Route::post('migrate/phones', 'UsersController@migratePhones');
 Route::post('migrate/dialogs', 'UsersController@migrateDialogs');
+Route::post('migrate/clicked', 'UsersController@migrateClicked');
 
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
@@ -123,7 +124,7 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
-
+Route::get('magic/{client}/bit.ly/{bitly}', 'HomeadvisorController@magic');
 
 Route::get('seances/{code}', 'AnswersController@text');
 Route::get('seances/{id}/{value}', 'AnswersController@email');

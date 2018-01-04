@@ -110,9 +110,9 @@
 								<div>
 									@{{ item.firstname }}
 									@{{ item.lastname }}
-									<!--<i class="fa fa-check-circle-o text-success" aria-hidden="true" uib-tooltip="Lead texted a reply"></i>
+									<i ng-show="item.inbox" class="fa fa-check-circle-o text-success" aria-hidden="true" uib-tooltip="Lead texted a reply"></i>
 									<span> </span>
-									<i class="fa fa-check-circle-o text-info" aria-hidden="true" uib-tooltip="Link clicked"></i>-->
+									<i ng-show="item.clicked" class="fa fa-check-circle-o text-info" aria-hidden="true" uib-tooltip="Link clicked"></i>
 								</div>
 							</div>
 							<div class="pull-right">

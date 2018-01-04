@@ -193,6 +193,12 @@ class HomeadvisorController extends Controller
 			return $this->message('HomeAdvisor Lead was created', 'success');
 		}
 	}
+
+	public function magic(Client $client, $bitly)
+	{
+		$client->update(['clicked' => true]);
+		return redirect('http://bit.ly/'.$bitly);
+	}
 	
 	public function firstName($data)
 	{
