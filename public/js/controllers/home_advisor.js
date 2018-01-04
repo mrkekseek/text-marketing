@@ -35,9 +35,14 @@
                     $scope.list[k].created_at = date;
                     $scope.list[k].count = 0;
                     for (var j in $scope.list[k].dialogs) {
+                        
                         $scope.list[k].count += $scope.list[k].dialogs[j].new;
+                        if ($scope.list[k].dialogs[j].my == 0) {
+                            $scope.list[k].inbox = true;
+                        }
                     }
                 }
+                console.log($scope.list);
             }, 'get');
         };
 
