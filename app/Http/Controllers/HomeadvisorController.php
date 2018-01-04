@@ -115,6 +115,7 @@ class HomeadvisorController extends Controller
     		$link = Link::where('code', $code)->first();
 	    	if ( ! empty($link)) {
 				$phone = $this->phone($data);
+				$phone = str_replace(['-', '(', ')', ' ', '.', '_'], '', $phone);
 
 				$lead = [
 					'firstname' => $this->firstName($data),
