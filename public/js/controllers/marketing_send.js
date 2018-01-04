@@ -507,15 +507,13 @@
             $scope.file.name = file.name;
             var fd = new FormData();
             fd.append('file', file);
-            console.log(fd);
 
             $http.post('/api/v1/upload/file', fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             }).then(function(response){
                 $scope.message.file = response.data.data;
-                $scope.file.url = 'http://app.contractortexter.da/' + response.data.data;
-                console.log($scope.message);
+                $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + response.data.data;
             });
         };
 
