@@ -12,7 +12,7 @@ class ApiValidate
     const SEND_FROM = 9;
     const SEND_TO = 21;
 	const MAX_LENGTH = 500;
-    const SUPPORTED_CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!“#$%&‘()*+,-.?/:;<=> ';
+    const SUPPORTED_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@!“#$%&‘'()*+,-.?/:;<=> ";
 
     static public function companyExists($company, $user)
     {
