@@ -92,7 +92,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!--<div class="form-group">
 							<span class="upload-button-box">
 								<button type="button" class="btn btn-sm btn-default">
 									<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
@@ -107,7 +107,7 @@
 						<div class="form-group">
 							<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
 							<span ng-show="file.name">@{{ file.name }}</span>
-						</div>
+						</div>-->
 						
 						<label class="ui-radio"><input name="messagesSchedule" type="radio" ng-model="message.schedule" value="0" >
 							<span>{{ __('Send Now') }}</span>
