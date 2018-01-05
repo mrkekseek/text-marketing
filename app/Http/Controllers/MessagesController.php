@@ -23,7 +23,7 @@ class MessagesController extends Controller
 
     public function all()
     {
-        return auth()->user()->messages()->orderBy('created_at', 'desc')->with(['texts.receivers'])->get();
+        return auth()->user()->messages()->orderBy('created_at', 'desc')->with(['texts.receivers'])->get()->toArray();
     } 
 
     public function create(MessageCreateRequest $request)
