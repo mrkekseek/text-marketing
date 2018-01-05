@@ -166,6 +166,8 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Cartalyst\Stripe\Laravel\StripeServiceProvider::class,
         Shivella\Bitly\BitlyServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Wilgucki\Csv\CsvServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -233,5 +235,8 @@ return [
         'Bitly' => Shivella\Bitly\Facade\Bitly::class,
         'Htmldom' => Yangqi\Htmldom\Htmldom::class,
         'Guzzle' => GuzzleHttp\Client::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'CsvReader' => Wilgucki\Csv\Facades\Reader::class,
+        'CsvWriter' => Wilgucki\Csv\Facades\Writer::class,
     ],
 ];

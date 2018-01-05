@@ -281,10 +281,12 @@
 									</div>
 								</div>
 							</span>
-							<!--<button type="button" class="btn btn-default" ng-click="openImport()">
+
+							<!--<button type="button" class="btn btn-default" ng-click="openImport(k)">
 								<i class="fa fa-upload"></i>
 								{{ __('Import from CSV file') }}
 							</button>-->
+
 							<div ng-show="item.clients.length">
 								<div ng-repeat="(i, client) in item.clients">
 									<div class="item-panel panel-child" ng-class="{'active': client.editable}">
@@ -404,29 +406,26 @@
 <script type="text/ng-template" id="ImportFiles.html">
 	<form name="form" method="post" novalidate="novalidate">
 		<div class="modal-header">
-			<h4 class="modal-title">Import Numbers from CSV file</h4>
+			<h4 class="modal-title">{{ __('Import Numbers from CSV file') }}</h4>
 		</div>
 
 		<div class="modal-body">
 			<div class="form-horizontal">
 				<div class="form-group">
-					<label class="col-sm-3 control-label">CSV File</label>
+					<label class="col-sm-3 control-label">{{ __('CSV File') }}</label>
 					<div class="col-sm-9">
 						<span class="upload-button-box">
-							<button type="button" class="btn btn-sm btn-default"><i class="fa fa-picture-o"></i> Choose File</button>
-							<input custom-on-change="upload_csv" type="file" accept=".csv">
+							<button type="button" class="btn btn-sm btn-default"><i class="fa fa-picture-o"></i>{{ __(' Choose File') }}</button>
+							<input onchange="angular.element(this).scope().uploadCSV(event.target.files[0])" type="file" />
 						</span>
-						<div ng-show="csv.upload_csv != '' || upload_progress" class="upload-name-box">
-							<div class="upload-file-name"></div>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="modal-footer">
-			<button type="submit" class="btn btn-primary " ng-click="save()" ng-if=" ! view">Import</button>
-			<button type="button" class="btn btn-default " ng-click="cancel()" ng-if=" ! view">Cancel</button>
+			<button type="submit" class="btn btn-primary " ng-click="save()">{{ __('Import') }}</button>
+			<button type="button" class="btn btn-default " ng-click="cancel()">{{ __('Cancel') }}</button>
 		</div>
 	</form>
 </script>

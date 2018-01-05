@@ -13,6 +13,8 @@
 		};
         $scope.popup = {};
 
+        $scope.csvClients = [];
+
 		$scope.companyChanged = false;
 		$scope.oldCompany = angular.copy($scope.user.company_name);
 
@@ -361,6 +363,28 @@
             });
         };
 
+        $scope.saveFromCsv = function(data) {
+            console.log(data);
+            var mas = angular.copy(data);
+            console.log(mas.clients);
+            /*for (var k in $scope.csv_mas.clients) {
+                console.log($scope.csv_mas.clients[k]);
+                /*var check = false;
+                for (var j in $scope.listsList[index].clients) {
+                    if ($scope.listsList[index].clients[j].id == clients[k].id) {
+                        check = true;
+                    }
+                }
+                if (! check) {
+                    $scope.listsList[index].clients.push(clients[k]);
+                }
+            }
+            
+            /*request.send('/clients/addToList/' + $scope.listsList[index].id, $scope.listsList[index].clients, function (data) {
+
+            });*/
+        };
+
         $scope.cancelClient = function(i, index) {
             if ( ! $scope.originClient.id) {
                 $scope.listsList[index].clients.shift();
@@ -517,14 +541,25 @@
             });
         };
 
-		$scope.openImport = function() {
+		$scope.openImport = function(index) {
 			var modalInstance = $uibModal.open({
 				animation: true,
 				templateUrl: 'ImportFiles.html',
-				controller: 'ImportFileCtrl'
+				controller: 'ImportFileCtrl',
+                resolve: {
+                    items: function () {
+                        return {'index': index};
+                    }
+                }
 			});
 
 			modalInstance.result.then(function(response) {
+                console.log(response);
+                console.log(response.clients);
+
+                var data = angular.copy(response);
+                
+                //$scope.saveFromCsv(data);
 			}, function () {
 
 			});
@@ -537,85 +572,43 @@
 (function () {
 	'use strict';
 
-	angular.module('app').controller('ImportFilesCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'langs', 'logger', ImportFilesCtrl]);
+	angular.module('app').controller('ImportFileCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'langs', 'logger', '$http', 'items', ImportFileCtrl]);
 
-	function ImportFilesCtrl($rootScope, $scope, $uibModalInstance, request, langs, logger) {
+	function ImportFileCtrl($rootScope, $scope, $uibModalInstance, request, langs, logger, $http, items) {
+		$scope.csv = {};
+        $scope.fd = false;
+        $scope.index = angular.copy(items.index);
+        
+		$scope.uploadCSV = function(file) {
+            $scope.csv.name = file.name;
+            var fd = new FormData();
+            fd.append('file', file);
+            $scope.fd = fd;
+        };
 
-		$scope.csv = {'phones_firstname': 1,
-		'phones_lastname': 2,
-		'phones_number': 3,
-		'phones_email': "",
-		'starts_from': "0",
-		'upload_csv': false};
+        $scope.save = function() {
+            if ( ! $scope.fd) {
+                logger.logError('Please choose file');
+                return;
+            }
+            var index = $scope.index;
+            $http.post('/api/v1/upload/csv', $scope.fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(response) {
+                var data = logger.check(response.data);
+                var mas = {
+                    'clients': data,
+                    'index': index
+                };
 
-		$scope.upload_progress = false;
-		$scope.upload_percent = 100;
+                $uibModalInstance.close(mas);
+            });
+        };
 
-		$scope.save = function() {
-			var error = 1;
-			if (! $scope.csv.upload_csv)
-			{
-				logger.logError('Please choose file');
-				return;
-			}
-
-			if (error)
-			{
-				request.send('/phones/csv/', $scope.csv, function(data) {
-					if (data)
-					{
-						$uibModalInstance.close(data);
-					}
-				});
-			}
-		};
-
-		$scope.cancel = function() {
-			$uibModalInstance.dismiss('cancel');
-		};
-
-		$scope.upload_csv = function(event) {
-			var files = event.target.files;
-			if (files.length)
-			{
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', '/api/pub/upload/', true);
-				xhr.onload = function(event)
-				{
-					if (this.status == 200)
-					{
-						var response = JSON.parse(this.response);
-						if (response.data) {
-							var part = response.data.split('/data/');
-							var ext = part[1].split('.');
-							$timeout(function() { $scope.csv.upload_csv = '/data/' + part[1]; });
-						}
-						$scope.upload_progress = false;
-					}
-				};
-
-				xhr.upload.onprogress = function(event)
-				{
-					if (event.lengthComputable)
-					{
-						$scope.upload_progress = true;
-						$scope.upload_percent = Math.round(event.loaded * 100 / event.total);
-					}
-				};
-
-				var fd = new FormData();
-				fd.append("file", files[0]);
-
-				xhr.send(fd);
-				$scope.upload_progress = true;
-			}
-		};
-
-		$scope.getFileName = function(path) {
-			if (!path || path == "") return '';
-			return path.replace(/^.*[\\\/]/, '')
-		};
-
+        $scope.cancel = function() {
+            $uibModalInstance.dismiss('cancel');
+        };
 	};
 })();
 

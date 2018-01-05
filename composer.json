@@ -13,8 +13,10 @@
         "laravel/cashier": "~7.0",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "maatwebsite/excel": "~2.1.0",
         "paquettg/string-encode": "^0.1.1",
         "shivella/laravel-bitly": "^1.0",
+        "wilgucki/csv": "^0.6.2",
         "yangqi/htmldom": "^1.0"
     },
     "require-dev": {
