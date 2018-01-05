@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngFileUpload', 'ngAnimate']);
+    angular.module('app', ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'ngAnimate']);
 })();
 
 ;
