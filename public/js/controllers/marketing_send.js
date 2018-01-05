@@ -2,9 +2,9 @@
 (function () {
 	'use strict';
 
-	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', '$location', 'logger', 'getShortUrl', 'fileUpload', '$http', MarketingSendCtrl]);
+	angular.module('app').controller('MarketingSendCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', '$location', 'logger', 'getShortUrl', '$http', MarketingSendCtrl]);
 
-	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger, getShortUrl, fileUpload, $http) {
+	function MarketingSendCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger, getShortUrl, $http) {
 		$scope.step = 1;
 		$scope.open = false;
 		$scope.longLink =  {
