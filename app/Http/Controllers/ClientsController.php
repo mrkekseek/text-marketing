@@ -21,7 +21,7 @@ class ClientsController extends Controller
 
 	public function leads()
 	{
-		return auth()->user()->teams->clients()->where('source', 'HomeAdvisor')->with('dialogs')->get();
+		return auth()->user()->teams->clients()->where('source', 'HomeAdvisor')->with('dialogs')->orderBy('updated_at', 'desc')->get();
 	}
 
 	public function info(Request $request, $id = false)
