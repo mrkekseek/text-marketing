@@ -112,6 +112,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('dialogs/create/{client}', 'DialogsController@create');
 
 	Route::post('upload/file', 'UploadController@save');
+	Route::post('upload/csv', 'UploadController@csv');
 });
 
 Route::get('signup/{type?}', function($type = false) {

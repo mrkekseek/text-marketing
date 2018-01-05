@@ -316,12 +316,15 @@
         $scope.openImport = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'ImportFile.html',
-                controller: 'ImportFileCtrl'
+                templateUrl: 'ImportFiles.html',
+                controller: 'ImportFilesCtrl'
             });
 
             modalInstance.result.then(function(response) {
-            }, function () {});
+                console.log(response);
+            }, function () {
+
+            });
         };
     };
 })();
@@ -331,84 +334,36 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ImportFileCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'langs', 'logger', ImportFileCtrl]);
+    angular.module('app').controller('ImportFilesCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'langs', 'logger', '$http', ImportFilesCtrl]);
 
-    function ImportFileCtrl($rootScope, $scope, $uibModalInstance, request, langs, logger) {
-        $scope.csv = {'phones_firstname': 1,
-                    'phones_lastname': 2,
-                    'phones_number': 3,
-                    'phones_email': "",
-                    'starts_from': "0",
-                    'upload_csv': false};
+    function ImportFilesCtrl($rootScope, $scope, $uibModalInstance, request, langs, logger, $http) {
+        $scope.csv = {};
+        $scope.fd = false;
 
-        $scope.upload_progress = false;
-        $scope.upload_percent = 100;
+        $scope.uploadCSV = function(file) {
+            $scope.csv.name = file.name;
+            var fd = new FormData();
+            fd.append('file', file);
+            $scope.fd = fd;
+        };
 
-       $scope.save = function() {
-            var error = 1;
-            if (! $scope.csv.upload_csv)
-            {
+        $scope.save = function() {
+            if ( ! $scope.fd) {
                 logger.logError('Please choose file');
                 return;
             }
-
-           if (error)
-            {
-                request.send('/phones/csv/', $scope.csv, function(data) {
-                    if (data)
-                    {
-                        $uibModalInstance.close(data);
-                    }
-                });
-            }
+            $http.post('/api/v1/upload/csv', $scope.fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(response) {
+                var data = logger.check(response.data);
+                $uibModalInstance.close(data);
+            });
         };
 
         $scope.cancel = function() {
             $uibModalInstance.dismiss('cancel');
         };
-
-        $scope.upload_csv = function(event) {
-            var files = event.target.files;
-            if (files.length)
-            {
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '/api/pub/upload/', true);
-                xhr.onload = function(event)
-                {
-                    if (this.status == 200)
-                    {
-                        var response = JSON.parse(this.response);
-                        if (response.data) {
-                            var part = response.data.split('/data/');
-                            var ext = part[1].split('.');
-                            $timeout(function() { $scope.csv.upload_csv = '/data/' + part[1]; });
-                        }
-                        $scope.upload_progress = false;
-                    }
-                };
-
-                xhr.upload.onprogress = function(event)
-                {
-                    if (event.lengthComputable)
-                    {
-                        $scope.upload_progress = true;
-                        $scope.upload_percent = Math.round(event.loaded * 100 / event.total);
-                    }
-                };
-
-                var fd = new FormData();
-                fd.append("file", files[0]);
-
-                xhr.send(fd);
-                $scope.upload_progress = true;
-            }
-        };
-
-        $scope.getFileName = function(path) {
-            if (!path || path == "") return '';
-            return path.replace(/^.*[\\\/]/, '')
-        };
-        
     };
 })();
 
