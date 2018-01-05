@@ -84,9 +84,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').factory('request', ['$http', '$rootScope', 'Upload', 'logger', request]);
+    angular.module('app').factory('request', ['$http', '$rootScope', 'logger', request]);
 
-    function request($http, $rootScope, Upload, logger) {
+    function request($http, $rootScope, logger) {
         var api_url = '/api/v1';
         return {
             send: function (address, data, callback, method) {
@@ -122,7 +122,7 @@
                 });*/
             },
 
-            sendWithFiles: function (adrress, post_mas, callback, percentsCallback, method) {
+            /*sendWithFiles: function (adrress, post_mas, callback, percentsCallback, method) {
                 callback = callback || false;
                 percentsCallback = percentsCallback || false;
                 method = method || 'post';
@@ -143,7 +143,7 @@
                         (percentsCallback)(progress);
                     }
                 });
-            }
+            }*/
         };
     };
 })();

@@ -69,7 +69,6 @@
 		
 		<script src="/js/libs/angular.js"></script>
 		<script src="/js/libs/ui.js"></script>
-		<script src="/js/libs/ng-file-upload.min.js"></script>
 		<script src="/js/survey.js"></script>
 		<script src="/js/factories.js"></script>
 	</body>
