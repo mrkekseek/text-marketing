@@ -62,12 +62,15 @@
 		};
 
 		$scope.getSuffix = function(num) {
+			var res = '';
+			num = num.toString();
 			switch(num.slice(num.length - 1)) {
-				case '1': return 'st';
-				case '2': return 'nd';
-				case '3': return 'rd';
-				default: return 'th';
+				case '1': res = 'st'; break;
+				case '2': res = 'nd'; break;
+				case '3': res = 'rd'; break;
+				default: res = 'th'; break;
 			}
+			return res;
 		};
 
 		$scope.getCountList = function(lists_id) {
