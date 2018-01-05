@@ -24,14 +24,15 @@
                 	$scope.list[k].countList = $scope.getCountList($scope.list[k].lists_id);
                 	$scope.list[k].lastText = $scope.list[k].texts[$scope.list[k].texts.length - 1];
                 	$scope.list[k].texts.splice(-1, 1);
-
-                	var send_at = new Date($scope.list[k].lastText.send_at);
+                	
+                	var send_at = new Date($scope.createDate($scope.list[k].lastText.send_at));
                 	$scope.list[k].lastText.send_at = send_at.getTime();
-                	var created_at = new Date($scope.list[k].lastText.created_at);
+
+                	var created_at = new Date($scope.createDate($scope.list[k].lastText.created_at));
                 	$scope.list[k].lastText.created_at = created_at.getTime();
 
                 	for (var j in $scope.list[k].texts) {
-                		var send_at = new Date($scope.list[k].texts[j].send_at);
+                		var send_at = new Date($scope.createDate($scope.list[k].texts[j].send_at));
                 		$scope.list[k].texts[j].send_at = send_at;
                 	}
                 }
@@ -43,6 +44,14 @@
 	                }, 5000);
                 }
             }, 'get');
+		};
+
+		$scope.createDate = function(string) {
+			var dateArr = string.split(' ');
+			var time = dateArr[1];
+			var date = dateArr[0].split('-');
+
+			return date[1] + '-' + date[2] + '-' + date[0] + ' ' + time;
 		};
 
 		$scope.getClients = function() {
@@ -62,14 +71,18 @@
 		};
 
 		$scope.getSuffix = function(num) {
+
 			var res = '';
-			num = num.toString();
-			switch(num.slice(num.length - 1)) {
-				case '1': res = 'st'; break;
-				case '2': res = 'nd'; break;
-				case '3': res = 'rd'; break;
-				default: res = 'th'; break;
+			if (num) {
+				num = num.toString();
+				switch(num.slice(num.length - 1)) {
+					case '1': res = 'st'; break;
+					case '2': res = 'nd'; break;
+					case '3': res = 'rd'; break;
+					default: res = 'th'; break;
+				}
 			}
+			
 			return res;
 		};
 
