@@ -120,30 +120,7 @@
                         logger.logError(reason.data.errors[k]);
                     }
                 });*/
-            },
-
-            /*sendWithFiles: function (adrress, post_mas, callback, percentsCallback, method) {
-                callback = callback || false;
-                percentsCallback = percentsCallback || false;
-                method = method || 'post';
-
-                Upload.upload({
-                    url: (api_url + adrress),
-                    data: post_mas
-                }).then(function (response) {
-                    var data = logger.check(response.data);
-                    if (callback) {
-                        (callback)(data);
-                    }
-                }, function (response) {
-                    
-                }, function (event) {
-                    var progress = parseInt(100.0 * event.loaded / event.total);
-                    if (percentsCallback) {
-                        (percentsCallback)(progress);
-                    }
-                });
-            }*/
+            }
         };
     };
 })();
