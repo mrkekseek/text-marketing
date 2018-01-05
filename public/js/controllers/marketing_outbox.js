@@ -47,11 +47,8 @@
 		};
 
 		$scope.createDate = function(string) {
-			var dateArr = string.split(' ');
-			var time = dateArr[1];
-			var date = dateArr[0].split('-');
-
-			return date[1] + '-' + date[2] + '-' + date[0] + ' ' + time;
+			string = string.replace(' ', 'T');
+			return string;
 		};
 
 		$scope.getClients = function() {
