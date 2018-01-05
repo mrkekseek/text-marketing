@@ -61,7 +61,7 @@
         <script src="/js/libs/angular.js"></script>
         <script src="/js/libs/jquery.js"></script>
         <script src="/js/libs/ui.js"></script>
-        <script src="/js/libs/ng-file-upload-all.min.js"></script>
+        <!--<script src="/js/libs/ng-file-upload-all.min.js"></script>-->
         <script src="/js/app.js"></script>
         <script src="/js/factories.js"></script>
         <script src="/js/controllers/auth.js"></script>
@@ -78,7 +78,6 @@
         <script src="/js/controllers/surveys.js"></script>
         <script src="/js/controllers/surveys_partners.js"></script>
         <script src="/js/directives/charset.js"></script>
-        <script src="/js/directives/upload.js"></script>
         <script src="/js/directives/scroll_bottom.js"></script>
     </body>
 </html>
