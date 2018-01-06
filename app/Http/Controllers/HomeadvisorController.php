@@ -111,7 +111,7 @@ class HomeadvisorController extends Controller
 		}
 
 		$this->saveLog($data, 'HomeAdvisor');
-		exit('123');
+		
     	if ( ! empty($data)) {
 
     		$link = Link::where('code', $code)->first();
