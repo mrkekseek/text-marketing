@@ -110,6 +110,8 @@ class HomeadvisorController extends Controller
 			$data = $request->all();
 		}
 
+		$this->saveLog($data, 'HomeAdvisor');
+		
     	if ( ! empty($data)) {
 
     		$link = Link::where('code', $code)->first();
@@ -157,6 +159,14 @@ class HomeadvisorController extends Controller
     	http_response_code(500);
 		echo '<error>Data required</error>';
 		exit;
+    }
+
+    public function saveLog($data, $source)
+    {
+    	if ( ! file_exists('logs')) {
+			mkdir('logs', 0777);
+		}
+		file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').$source.': '.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
     public function textToLead($user, $client, $ha)
