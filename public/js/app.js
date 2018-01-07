@@ -118,18 +118,18 @@ angular.module('app').filter('capitalize', function() {
         };
 
         $scope.get = function() {
-           request.send('/auth/info/', {}, function(data) {
+           request.send('/auth/info', {}, function(data) {
                 $scope.user = data;
             }, 'get'); 
         };
 
         $scope.menu = function () {
-            request.send('/pages/menu/', {}, function(data) {
+            request.send('/pages/menu', {}, function(data) {
                 $scope.pages = data;
                 for (var k in $scope.pages) {
                     $scope.open[$scope.pages[k].code] = $scope.menuOpen($scope.pages[k]);
                 }
-            });
+            }, 'get');
         };
 
         $scope.menuOpen = function (page) {
