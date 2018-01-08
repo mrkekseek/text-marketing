@@ -47,12 +47,6 @@
                     </a>
                 </li>
 
-                <li class="dropdown" uib-dropdown ng-show="user.type > 1">
-                    <a href="/tutorial/" class="dropdown-toggle">
-                        <i class="fa fa-question-circle-o" ng-class="{'text-primary': new_inbox.count}" uib-tooltip="Help" tooltip-placement="left"></i>
-                    </a>
-                </li>
-
                 <li class="dropdown text-normal nav-profile" uib-dropdown>
                     <a href="javascript:;" class="dropdown-toggle users-top-avatar" uib-dropdown-toggle>
                         <img data-ng-show="user.users_avatar && user.users_avatar != ''" src="@{{ user.users_avatar }}" alt="@{{ user.users_name }}" class="img-circle img30_30" />

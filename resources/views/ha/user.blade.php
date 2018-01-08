@@ -115,12 +115,6 @@
 									<i ng-show="item.clicked" class="fa fa-check-circle-o text-info" aria-hidden="true" uib-tooltip="Link clicked"></i>
 								</div>
 							</div>
-							<div class="pull-right">
-								<a href="/marketing/inbox/@{{item.id}}/" class="btn btn-default">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-									<span>{{ __('Respond') }}</span>
-								</a>
-							</div>
 						</div>
 						<div class="divider divider-dashed divider-sm pull-in">
 						</div>
