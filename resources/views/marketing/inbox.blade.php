@@ -26,6 +26,7 @@
 							<div class="phone-name">
 								@{{ dialog.clients.firstname }}
 								@{{ dialog.clients.lastname }}
+								<span class="small-italic">(@{{ dialog.clients.created_at | date: 'MMMM d' }}@{{ getSuffix(dialog.clients.created_at | date: 'd') }} @{{ dialog.clients.created_at | date: 'h:mm a' }})</span>
 							</div>
 						</div>
 						<div class="col-sm-2 text-right">
@@ -47,6 +48,8 @@
 							<div class="message-body">
 								@{{ message.text }}
 								<div class="text-right">
+									<i ng-show="message.status == 1 && message.my" class="fa fa-check text-danger" aria-hidden="true"></i>
+									<i ng-show="message.status == 0 && message.my" class="fa fa-times text-danger" aria-hidden="true"></i>
 									<span class="small-italic">@{{ message.created_at | date: 'MMMM d' }}@{{ getSuffix(message.created_at | date: 'd') }} @{{ message.created_at | date: 'h:mm a' }}</span>
 								</div>
 							</div>

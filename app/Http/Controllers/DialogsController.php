@@ -16,7 +16,7 @@ class DialogsController extends Controller
 {
     public function all()
 	{
-		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->get()->unique('clients_id')->toArray());
+		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->orderBy('created_at', 'desc')->get()->unique('clients_id')->toArray());
 	}
 
 	public function info($id = false)
@@ -99,6 +99,21 @@ class DialogsController extends Controller
         }
 
         return 1;
+    }
+
+    public function push(Request $request, Dialog $dialog)
+    {
+        $data = $request->json()->all();
+        $status = 0;
+        foreach ($data as $client) {
+            if ( ! empty($client['success'])) {
+                $status = 1; 
+            }
+        }
+
+        $dialog->update([
+            'status' => $status
+        ]);
     }
 
     public function inbox(Request $request, Dialog $dialog)
