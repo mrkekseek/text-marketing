@@ -39,8 +39,14 @@ class SendLeadText implements ShouldQueue
     public function handle()
     {
         $response = Api::dialog($this->dialog->id, $this->clients, $this->dialog->text, $this->user->company_name, $this->user->offset);
-        if ($response['code'] == 200) {
-            $this->dialog->update(['status' => 1]);
+        if ($response['code'] != 200) {
+            $this->dialog->update(['status' => 0]);
+        }
+
+        foreach ($response['data'] as $client) {
+            if ( ! empty($client['finish'])) {
+                $this->dialog->update(['status' => 0]);
+            }
         }
     }
 }

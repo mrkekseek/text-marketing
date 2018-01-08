@@ -104,10 +104,13 @@ class DialogsController extends Controller
     public function push(Request $request, Dialog $dialog)
     {
         $data = $request->json()->all();
-        $status = 0;
+        $status = 2;
         foreach ($data as $client) {
-            if ( ! empty($client['success'])) {
-                $status = 1; 
+            if ( ! empty($client['finish'])) {
+                $status = 0;
+                if ( ! empty($client['success'])) {
+                    $status = 1;
+                }
             }
         }
 
