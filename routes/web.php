@@ -137,6 +137,7 @@ Route::any('home-advisor/{code?}', 'HomeadvisorController@lead');
 Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');
 Route::any('message/push/{text}', 'MessagesController@push');
+Route::any('dialog/push/{dialog}', 'DialogsController@push');
 
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');
