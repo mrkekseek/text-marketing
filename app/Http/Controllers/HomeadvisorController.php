@@ -15,6 +15,7 @@ use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
+use Illuminate\Support\Facades\Storage;
 
 class HomeadvisorController extends Controller
 {
@@ -26,6 +27,7 @@ class HomeadvisorController extends Controller
 	public function create(HACreateRequest $request)
 	{
 		$data = $request->only(['ha', 'user']);
+		$file = '';
 
 		auth()->user()->update([
 			'phone' => $data['user']['phone'],
@@ -38,10 +40,18 @@ class HomeadvisorController extends Controller
 			return $this->message('Text containes forbidden characters');
 		}
 
+		if ( ! empty($data['ha']['file'])) {
+			$temp = explode('.', $data['ha']['file']);
+			$name = auth()->user()->id.'.'.$temp[1];
+			Storage::move(str_replace('storage', 'public', $data['ha']['file']), 'public/upload/homeadvisor/'.auth()->user()->id.'/'.$name);
+			$file = 'storage/upload/homeadvisor/'.auth()->user()->id.'/'.$name;
+		}
+
 		auth()->user()->homeadvisors()->create([
 			'text' => $data['ha']['text'],
 			'additional_phones' => $data['ha']['additional_phones'],
 			'active' => $data['ha']['active'],
+			'file' => $file,
 		]);
 
 		return $this->message('Settings are successfully saved.', 'success');
@@ -50,7 +60,7 @@ class HomeadvisorController extends Controller
 	public function update(HACreateRequest $request, Homeadvisor $homeadvisor)
 	{
 		$data = $request->only(['ha', 'user']);
-
+		$file = '';
 		auth()->user()->update([
 			'phone' => $data['user']['phone'],
 		]);
@@ -62,10 +72,23 @@ class HomeadvisorController extends Controller
 			return $this->message('Text containes forbidden characters');
 		}
 
+		if ( ! empty($data['ha']['file'])) {
+			$temp = explode('.', $data['ha']['file']);
+			$name = auth()->user()->id.'.'.$temp[1];
+			if (strpos($data['ha']['file'], 'temp') !== false) {
+				Storage::deleteDirectory('public/upload/homeadvisor/'.auth()->user()->id);
+				Storage::copy(str_replace('storage', 'public', $data['ha']['file']), 'public/upload/homeadvisor/'.auth()->user()->id.'/'.$name);
+			}
+			$file = 'storage/upload/homeadvisor/'.auth()->user()->id.'/'.$name;
+		} else {
+			Storage::deleteDirectory('public/upload/homeadvisor/'.auth()->user()->id);
+		}
+
 		$homeadvisor->update([
 			'text' => $data['ha']['text'],
 			'additional_phones' => empty($data['ha']['additional_phones']) ? '' : $data['ha']['additional_phones'],
 			'active' => $data['ha']['active'],
+			'file' => $file,
 		]);
 
 		return $this->message('Settings are successfully saved.', 'success');
@@ -80,6 +103,16 @@ class HomeadvisorController extends Controller
 
     	$this->sendActivateEmail();
 
+    	return $this->message('Your request successfully sent.', 'success');
+	}
+
+	public function activateUpdate(Homeadvisor $homeadvisor)
+	{
+		$homeadvisor->update([
+			'send_request' => true,
+		]);
+
+		$this->sendActivateEmail();
     	return $this->message('Your request successfully sent.', 'success');
 	}
 	
@@ -181,6 +214,7 @@ class HomeadvisorController extends Controller
 		$dialog = $user->dialogs()->create([
 			'clients_id' => $client->id,
 			'text' => $this->createText($user, $client, $ha),
+			'file' => ! empty($ha->file) ? $ha->file : '',
 			'my' => true,
 			'status' => 2,
 		]);
@@ -233,8 +267,6 @@ class HomeadvisorController extends Controller
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false) {
 			$client->update(['clicked' => true]);
 		}
-		
-		$this->saveLog($_SERVER, 'CLICKED');
 		return redirect('http://bit.ly/'.$bitly);
 	}
 	

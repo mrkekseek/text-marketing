@@ -58,6 +58,24 @@
 							</div>
 
 							<div class="form-group">
+								<span class="upload-button-box">
+									<button type="button" class="btn btn-sm btn-default">
+										<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+									</button>
+									<input onchange="angular.element(this).scope().uploadFile(event.target.files[0])" accept="image/jpeg,image/png,image/gif,image/bmp,video/avi,video/mp4,video/quicktime,video/x-ms-wmv" type="file" />
+								</span>
+
+								<span class="upload-tooltip" uib-tooltip="{{ __('Image size limit is 500 KB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP Video size limit is 3 MB; supported video file types include .AVI, .MP4, .WMV, and .MOV') }}">
+									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+								</span>
+							</div>
+							<div class="form-group">
+								<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
+								<i ng-show="file.url" ng-click="removeMMS()" class="fa fa-times mms-remove" aria-hidden="true"></i>
+								<i ng-show="request" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+							</div>
+
+							<div class="form-group">
 								<label>{{ __('My number for alerts') }}</label>
 								<input type="text" name="phone" class="form-control" ng-model="user.phone" required="required" />
 							</div>

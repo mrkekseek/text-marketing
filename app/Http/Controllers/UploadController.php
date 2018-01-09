@@ -10,6 +10,7 @@ use App\Http\Services\UsersService;
 use App\Client;
 use App\Libraries\ApiValidate;
 use App\Http\Requests\ClientCreateRequest;
+use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
@@ -17,7 +18,7 @@ class UploadController extends Controller
     {
     	$path = '';
 		if ($request->file) {
-			$path = $request->file->store('public/upload');
+			$path = $request->file->store('public/upload/temp');
 		}
 		return $path = str_replace('public', 'storage', $path);
     }
