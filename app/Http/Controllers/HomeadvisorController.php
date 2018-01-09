@@ -230,7 +230,10 @@ class HomeadvisorController extends Controller
 
 	public function magic(Client $client, $bitly)
 	{
-		$client->update(['clicked' => true]);
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false) {
+			$client->update(['clicked' => true]);
+		}
+		
 		$this->saveLog($_SERVER, 'CLICKED');
 		return redirect('http://bit.ly/'.$bitly);
 	}
