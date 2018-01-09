@@ -1,14 +1,16 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('HomeAdvisorCtrl', ['$rootScope', '$scope', '$timeout', 'request', 'langs', 'logger', 'validate', HomeAdvisorCtrl]);
+    angular.module('app').controller('HomeAdvisorCtrl', ['$rootScope', '$scope', '$timeout', '$http', '$location', 'request', 'langs', 'logger', 'validate', HomeAdvisorCtrl]);
 
-    function HomeAdvisorCtrl($rootScope, $scope, $timeout, request, langs, logger, validate) {
+    function HomeAdvisorCtrl($rootScope, $scope, $timeout, $http, $location, request, langs, logger, validate) {
         $scope.ha = {};
         $scope.inputs = [];
         $scope.list = [];
         $scope.companyChanged = false;
         $scope.oldCompany = angular.copy($scope.user.company_name);
+        $scope.file = {};
+        $scope.request = false;
 
         $scope.init = function() {
             $scope.get();
@@ -23,6 +25,9 @@
                         $scope.inputs = $scope.ha.additional_phones.split(',');
                     }
                     $scope.inputs.push('');
+                    if ($scope.ha.file) {
+                        $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + $scope.ha.file;
+                    }
                 }
             }, 'get');
         };
@@ -42,7 +47,6 @@
                         }
                     }
                 }
-                console.log($scope.list);
             }, 'get');
         };
 
@@ -56,9 +60,9 @@
         };
 
         $scope.activate = function() {
-            request.send('/homeadvisor/activate', {}, function (data) {
+            request.send('/homeadvisor/activate' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {}, function (data) {
                 $scope.ha.send_request = true;
-            }, 'put');
+            }, ($scope.ha.id ? 'post' : 'put'));
         };
 
         $scope.add = function() {
@@ -110,6 +114,31 @@
                 max = Math.max(max, $scope.list[k][field].length);
             }
             return max;
+        };
+
+        $scope.uploadFile = function(file) {
+            var size = file.size / 1024;
+            if (size > 500) {
+                logger.logError(langs.get('Image size limit is 500 KB'));
+                return;
+            }
+
+            $scope.file.name = file.name;
+            var fd = new FormData();
+            fd.append('file', file);
+
+            $http.post('/api/v1/upload/file', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(response) {
+                $scope.ha.file = response.data.data;
+                $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + response.data.data;
+                $scope.request = false;
+            });
+        };
+
+        $scope.removeMMS = function() {
+            $scope.ha.file = $scope.file.url = '';
         };
 
         $scope.companyChange = function () {

@@ -46,11 +46,11 @@ class Api
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
 	}
 
-	static public function dialog($target_id, $clients, $message, $company, $offset)
+	static public function dialog($target_id, $clients, $message, $company, $offset, $attachment = '')
 	{
 		$type = 'dialog';
 		$block = false;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment'));
 	}
 
 	static public function sendFake($uri, $data, $method = 'POST')
