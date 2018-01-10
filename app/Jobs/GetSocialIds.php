@@ -50,6 +50,7 @@ class GetSocialIds implements ShouldQueue
     public function getFacebookId($url)
     {
         $part = explode('/', $url->url);
+        $part = array_filter($part);
         $part = array_pop($part);
 
         if ( ! empty($part)) {

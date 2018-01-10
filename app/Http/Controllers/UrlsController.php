@@ -35,6 +35,8 @@ class UrlsController extends Controller
 		$data = array_filter($data, 'strlen');
 		$url->update($data);
 
+		GetSocialIds::dispatch($url)->onQueue('socials');
+		
 		$this->message('Review Site was successfully saved', 'success');
 		return $url;
 	}
