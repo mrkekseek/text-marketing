@@ -275,7 +275,7 @@ class HomeadvisorController extends Controller
 				$this->sendAlertClick($user, $homeadvisor, $client);
 			}
 		}
-		//return redirect('http://bit.ly/'.$bitly);
+		return redirect('http://bit.ly/'.$bitly);
 	}
 
 	public function sendAlertClick($user, $homeadvisor, $client)
