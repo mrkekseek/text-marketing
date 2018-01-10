@@ -8,11 +8,13 @@ use App\User;
 use App\Link;
 use App\Client;
 use App\Dialog;
+use App\Alert;
 use Bitly;
 use App\Events\FirstLead;
 use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
+use App\Jobs\SendAlertClick;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
 use Illuminate\Support\Facades\Storage;
@@ -266,8 +268,57 @@ class HomeadvisorController extends Controller
 	{
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false) {
 			$client->update(['clicked' => true]);
+			$user = $client->team->team_leader();
+			$homeadvisor = $client->team->team_leader()->homeadvisors;
+			
+			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) {
+				$this->sendAlertClick($user, $homeadvisor, $client);
+			}
 		}
-		return redirect('http://bit.ly/'.$bitly);
+		//return redirect('http://bit.ly/'.$bitly);
+	}
+
+	public function sendAlertClick($user, $homeadvisor, $client)
+	{
+		$phones = [];
+		$temp = [];
+		$link = Bitly::getUrl(config('app.url').'/ha/user/');
+		$link = str_replace('http://', '', $link);
+		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
+		$test = 'Hi '.$user->firstname .', a lead just texted you a reply. Please click '.$link.' to see it and reply if you like - thanks!';
+		
+		if ( ! empty($user->phone)) {
+			$phones[]['phone'] = $user->phone;
+		}
+
+		if ( ! empty($homeadvisor->additional_phones)) {
+			$numbers = explode(',', $homeadvisor->additional_phones);
+			foreach ($numbers as $number) {
+				$phone = $this->createPhone($number);
+				if ( ! empty($phone)) {
+					$phones[]['phone'] = $phone;
+					$temp[] = $phone;
+				}
+			}
+		}
+		if ( ! empty($phones)) {
+			$data = [
+				'user_id' => $user->id,
+				'phone' => implode(',', $temp),
+				'text' => $text,
+			];
+			$alert = Alert::create($data);
+			SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+		}
+	}
+
+	public function createPhone($number)
+	{
+		$phone = str_replace(['-', '(', ')', ' ', '.'], '', $number);
+		if (ApiValidate::phoneFormat($phone)) {
+			return $phone;
+		}
+		return false;
 	}
 	
 	public function firstName($data)

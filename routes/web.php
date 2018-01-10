@@ -143,8 +143,6 @@ Route::any('dialog/push/{dialog}', 'DialogsController@push');
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');
 
-
-
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');
