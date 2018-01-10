@@ -53,6 +53,13 @@ class Api
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment'));
 	}
 
+	static public function alert($target_id, $clients, $message, $company, $offset)
+	{
+		$type = 'alert';
+		$block = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
+	}
+
 	static public function sendFake($uri, $data, $method = 'POST')
     {
         $client = new Guzzle(['base_uri' => config('app.url')]);

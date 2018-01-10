@@ -12,4 +12,14 @@ class Team extends Model
     {
         return $this->hasMany('App\Client');
     }
+
+    public function users()
+    {
+    	return $this->hasMany('App\User', 'teams_id');
+    }
+
+    public function team_leader()
+    {
+    	return $this->users()->where('teams_leader', 1)->first();
+    }
 }

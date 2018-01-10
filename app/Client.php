@@ -22,4 +22,9 @@ class Client extends Model
     {
     	return $this->hasMany('App\Seance')->with('answers');
     }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Team');
+    }
 }
