@@ -15,6 +15,7 @@
         $scope.thanks = false;
         $scope.why = false;
         $scope.answers = [];
+        $scope.autoReview = false;
 
         const BUTTON_ID="redirectClick";
         const PLATFORM_OTHER = 0;
@@ -26,6 +27,20 @@
             $scope.questions = questions;
             $scope.thanks = $scope.questions == '0';
             $scope.why = $scope.questions != '0' && $scope.questions.length == 1;
+            var count = 0;
+            var activeGoogle = false;
+            for (var k in $scope.seance.review.user.urls) {
+                var url = $scope.seance.review.user.urls[k];
+                count += url.active;
+                if (url.name == 'Google' && url.active) {
+                    activeGoogle = url;
+                }
+                
+            }
+
+            if (activeGoogle && count == 1) {
+                $scope.autoReview = activeGoogle;
+            }
         };
 
         $scope.range = function(key) {
@@ -59,6 +74,10 @@
         $scope.send = function () {
             request.send('/answers/' + $scope.seance.id, {'answers': $scope.answers}, function (data) {
                 $scope.thanks = true;
+
+                if ($scope.autoReview && ! $scope.why) {
+                    $scope.urlClick($scope.autoReview);
+                }
             }, 'put');
         };
 
