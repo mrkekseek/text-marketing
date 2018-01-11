@@ -16,6 +16,7 @@ use App\Answer;
 use App\Link;
 use App\Url;
 use App\ContactList;
+use App\SocialReview;
 
 use App\Libraries\Api;
 use Illuminate\Support\Facades\Hash;
@@ -61,6 +62,14 @@ class UsersController extends Controller
 			if ( ! empty($client)) {
 				$client->update(['clicked' => 1]);
 			}
+		}
+	}
+
+	public function migrateToken(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $item) {
+			User::where('email', $item['email'])->update(['facebook_token' => $item['facebook_token']]);
 		}
 	}
 
@@ -523,5 +532,100 @@ class UsersController extends Controller
 		]);
 
 		return $this->message('Settings was successfully saved.', 'success');
+    }
+
+    public function facebookToken()
+    {
+    	$items = [];
+    	$users = User::facebookTokens();
+    	foreach ($users as $user) {
+    		$items[] = [
+				'users_token' => $user['facebook_token'],
+				'page_id' => $user['facebook_url']['social_id']
+			];
+    	}
+    	$data = json_encode(['data' => $items]);
+    	return $data;
+    }
+
+    public function facebookReviews(Request $request)
+    {
+    	$data = $request->json()->all();
+    	if (empty($data)) {
+    		$data = $request->all();
+    	}
+
+    	$this->saveLog($data, 'FACEBOOK REVIEWS');
+
+    	if ( ! empty($data)) {
+    		foreach ($data as $review)
+			{
+				$review = SocialReview::where('hash', md5($review['review_text']))->where('type', 'Facebook')->first();
+				if (empty($review)) {
+					$url = Url::where('social_id', $review['page_id'])->where('default', 1)->where('name', 'Facebook')->first();
+
+					$review = new SocialReview();
+					$review->user_id = $url->user_id;
+					$review->hash = md5($review['review_text']);
+					$review->text = $review['review_text'];
+					$review->author = $review['reviewerName'];
+					$review->rating = $review['rating'];
+					$review->date = $review['created_time'];
+					$review->type = 'Facebook';
+					$review->save();
+				}
+			}
+    	}
+    }
+
+    public function googlePlaceId()
+    {
+    	$items = [];
+    	$users = User::googlePlaceIds();
+    	foreach ($users as $user) {
+    		$items[] = [
+				'google_place' => $user['google_url']['url'],
+				'users_id' => $user['id']
+			];
+    	}
+    	$data = json_encode(['data' => $items]);
+		return $data;
+    }
+
+    public function googleReviews(Request $request)
+    {
+    	$data = $request->json()->all();
+    	if (empty($data)) {
+    		$data = $request->all();
+    	}
+
+    	$this->saveLog($data, 'GOOGLE REVIEWS');
+
+    	if ( ! empty($data)) {
+    		foreach ($data as $review) {
+    			$review = SocialReview::where('hash', md5($review['text']))->where('type', 'Google')->first();
+    			if (empty($review)) {
+    				$user = User::find($review['users_id']);
+
+    				$review = new SocialReview();
+					$review->user_id = $user->id;
+					$review->hash = md5($review['text']);
+					$review->text = $review['text'];
+					$review->author = $review['author_name'];
+					$review->rating = 0;
+					$review->date = $review['time'];
+					$review->type = 'Google';
+					$review->save();
+    			}
+    		}
+    	}
+    }
+
+    public function saveLog($data, $source)
+    {
+        if ( ! file_exists('logs')) {
+            mkdir('logs', 0777);
+        }
+        file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').$source.': '.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 }

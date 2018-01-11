@@ -89,7 +89,7 @@
 							</div>
 
 							<label>{{ __('Additional phones') }}</label>
-							<span class="fa fa-question-circle-o" uib-tooltip="‘You can add additional numbers that will be alerted." tooltip-placement="right"></span>
+							<span class="fa fa-question-circle-o" uib-tooltip="You can add additional numbers that will be alerted." tooltip-placement="right"></span>
 							<div class="form-group" ng-repeat="input in inputs track by $index">
 								<div class="input-group">
 									<input type="text" name="phone_@{{$index}}" class="form-control" ng-model="inputs[$index]" placeholder="{{ __('Enter phone here...') }}" />
