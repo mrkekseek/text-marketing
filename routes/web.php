@@ -128,7 +128,7 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
-Route::get('magic/{client}/bit.ly/{bitly}', 'HomeadvisorController@magic');
+Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
 
 Route::get('seances/{code}', 'AnswersController@text');
 Route::get('seances/{id}/{value}', 'AnswersController@email');
