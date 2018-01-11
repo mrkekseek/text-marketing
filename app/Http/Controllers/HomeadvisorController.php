@@ -10,14 +10,17 @@ use App\Client;
 use App\Dialog;
 use App\Alert;
 use Bitly;
+use Carbon\Carbon;
 use App\Events\FirstLead;
 use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
 use App\Jobs\SendAlertClick;
+use App\Jobs\SendFollowUpText;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Services\UsersService;
 
 class HomeadvisorController extends Controller
 {
@@ -31,8 +34,13 @@ class HomeadvisorController extends Controller
 		$data = $request->only(['ha', 'user']);
 		$file = '';
 
+		$phone = UsersService::phoneToNumber($data['user']);
+
+		ApiValidate::phoneFormat($phone);
+		
 		auth()->user()->update([
-			'phone' => $data['user']['phone'],
+			'view_phone' => $data['user']['view_phone'],
+			'phone' => $phone,
 		]);
 
 		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
@@ -63,8 +71,14 @@ class HomeadvisorController extends Controller
 	{
 		$data = $request->only(['ha', 'user']);
 		$file = '';
+		
+		$phone = UsersService::phoneToNumber($data['user']);
+
+		ApiValidate::phoneFormat($phone);
+		
 		auth()->user()->update([
-			'phone' => $data['user']['phone'],
+			'view_phone' => $data['user']['view_phone'],
+			'phone' => $phone,
 		]);
 
 		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
@@ -215,11 +229,14 @@ class HomeadvisorController extends Controller
     {
 		$dialog = $user->dialogs()->create([
 			'clients_id' => $client->id,
-			'text' => $this->createText($user, $client, $ha),
+			'text' => '',
 			'file' => ! empty($ha->file) ? $ha->file : '',
 			'my' => true,
 			'status' => 2,
 		]);
+
+		$text = $this->createText($user, $client, $ha, $dialog);
+		$dialog->update(['text' => $text]);
 
 		$row = [
             'phone' => $client->phone,
@@ -234,17 +251,20 @@ class HomeadvisorController extends Controller
         }
 
 		$phones[] = $row;
-
+		$date = Carbon::now()->addHour();
+		$delay = Carbon::now()->diffInSeconds($date);
+		
         SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
+        SendFollowUpText::dispatch($dialog, $phones, $user)->delay($delay)->onQueue('texts');
     }
 
-    public function createText($user, $client, $ha)
+    public function createText($user, $client, $ha, $dialog)
     {
     	$text = $ha->text;
     	$linkPos = strpos($text, 'bit.ly/');
     	if ($linkPos !== false) {
     		$originLink = substr($text, $linkPos, 14);
-    		$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$client->id.'/'.$originLink);
+    		$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
     		$fakeLink = str_replace('http://', '', $fakeLink);
     		$text = str_replace($originLink, $fakeLink, $ha->text);
     	}
@@ -264,9 +284,11 @@ class HomeadvisorController extends Controller
 		}
 	}
 
-	public function magic(Client $client, $bitly)
+	public function magic(Dialog $dialog, $bitly)
 	{
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false) {
+			$dialog->update(['clicked' => true]);
+			$client = $dialog->clients;
 			$client->update(['clicked' => true]);
 			$user = $client->team->team_leader();
 			$homeadvisor = $client->team->team_leader()->homeadvisors;
@@ -285,10 +307,10 @@ class HomeadvisorController extends Controller
 		$link = Bitly::getUrl(config('app.url').'/ha/user/');
 		$link = str_replace('http://', '', $link);
 		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
-		$test = 'Hi '.$user->firstname .', a lead just texted you a reply. Please click '.$link.' to see it and reply if you like - thanks!';
 		
 		if ( ! empty($user->phone)) {
 			$phones[]['phone'] = $user->phone;
+			$temp[] = $user->phone;
 		}
 
 		if ( ! empty($homeadvisor->additional_phones)) {

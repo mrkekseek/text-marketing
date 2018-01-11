@@ -11,6 +11,7 @@
         $scope.oldCompany = angular.copy($scope.user.company_name);
         $scope.file = {};
         $scope.request = false;
+        $scope.followupText = 'Last text - any interest in our service? Thanks!';
 
         $scope.init = function() {
             $scope.get();
