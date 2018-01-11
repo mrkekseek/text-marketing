@@ -15,6 +15,7 @@
 Route::post('migrate/phones', 'UsersController@migratePhones');
 Route::post('migrate/dialogs', 'UsersController@migrateDialogs');
 Route::post('migrate/clicked', 'UsersController@migrateClicked');*/
+Route::post('migrate/token', 'UsersController@migrateToken');
 
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
@@ -129,6 +130,12 @@ Route::get('recovery', function() {
 });
 
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
+
+Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_fb_token', 'UsersController@facebookToken');
+Route::any('save_fb_reviews', 'UsersController@facebookReviews');
+
+Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_google_place', 'UsersController@googlePlaceId');
+Route::any('save_google_reviews', 'UsersController@googleReviews');
 
 Route::get('seances/{code}', 'AnswersController@text');
 Route::get('seances/{id}/{value}', 'AnswersController@email');
