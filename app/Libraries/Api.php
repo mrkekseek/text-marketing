@@ -36,28 +36,40 @@ class Api
 	{
 		$type = 'review';
 		$block = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
+		$block_24 = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
 	}
 
 	static public function message($target_id, $clients, $message, $company, $offset)
 	{
 		$type = 'message';
 		$block = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
+		$block_24 = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
 	}
 
 	static public function dialog($target_id, $clients, $message, $company, $offset, $attachment = '')
 	{
 		$type = 'dialog';
 		$block = false;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment'));
+		$block_24 = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
+	}
+
+	static public function followUp($target_id, $clients, $message, $company, $offset)
+	{
+		$type = 'dialog';
+		$block = false;
+		$block_24 = false;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
 	}
 
 	static public function alert($target_id, $clients, $message, $company, $offset)
 	{
 		$type = 'alert';
 		$block = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset'));
+		$block_24 = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
 	}
 
 	static public function sendFake($uri, $data, $method = 'POST')

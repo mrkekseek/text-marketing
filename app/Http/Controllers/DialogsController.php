@@ -128,11 +128,14 @@ class DialogsController extends Controller
         $data = $request->only(['CONTENTS']);
         $this->saveLog($data, 'INBOX');
         $this->saveLog($dialog, 'INBOX DIALOG');
+        $dialog->update(['reply' => 1]);
         $dialog = $dialog->replicate();
         $dialog->text = $data['CONTENTS'];
         $dialog->new = true;
         $dialog->status = 1;
         $dialog->my = false;
+        $dialog->reply = 0;
+        $dialog->clicked = 0;
         $dialog->save();
 
         $user = User::find($dialog->users_id);
@@ -161,6 +164,7 @@ class DialogsController extends Controller
 
         if ( ! empty($user->phone)) {
             $phones[]['phone'] = $user->phone;
+            $temp[] = $user->phone;
         }
 
         if ( ! empty($user->homeadvisors->additional_phones)) {
