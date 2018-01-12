@@ -19,6 +19,7 @@ use App\ContactList;
 use App\SocialReview;
 
 use App\Libraries\Api;
+use App\Libraries\Jwt;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
@@ -31,6 +32,15 @@ use Carbon\Carbon;
 
 class UsersController extends Controller
 {
+	public $publickey = '-----BEGIN PUBLIC KEY-----
+						MIIBIDANBgkqhkiG9w0BAQEFAAOCAQ0AMIIBCAKCAQEA6ymkvlLl4cl/ya6a9WW3
+						gwDtwdViEFuFh6I/JZ7v9OsWv+v9iOtK07zCqZ73Ma0uf3dq6Mun0tFruFqbxqGd
+						EJZxxNfs0UEpFSfQIJEUNEjUfmsF+a9ewAzzsO334+4mptfql4234X1Q3d0vSPJw
+						Iw8oNc3/6Mk7Kkic5bQ/poHNSeu7G0Rf0RSyWSC1JNg5+JR9siEo8vm/dSQZJSdg
+						pOQh97re9idpVotDANjHKGEwpeihOV70xLG46lO+XgQUio/z8MGfNtNq8TQ3MXwz
+						d9x2hLp7Ww5FDp4VaiW94nKj6Gq+kTHo8mhI3pg7iE5myIE13/rPp3+CC8owwtt5
+						wQIBJQ==
+						-----END PUBLIC KEY-----';
 
 	public function migrateDialogs(Request $request)
 	{
@@ -560,7 +570,11 @@ class UsersController extends Controller
 			];
     	}
     	$data = json_encode(['data' => $items]);
-    	return $data;
+    	$encode = Jwt::encode($data, $this->publickey);
+    	
+    	//$decode = JWT::decode($encode, $this->publickey, array('HS256'));
+    	
+    	return $encode;
     }
 
     public function facebookReviews(Request $request)
