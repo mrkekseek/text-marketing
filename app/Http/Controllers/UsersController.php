@@ -117,6 +117,21 @@ class UsersController extends Controller
 		}
 	}
 
+	public function migrateSocials(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $key => $value) {
+			$id = $this->getUserId($key);
+			if ( ! empty($id)) {
+				foreach ($value as $item => $row) {
+					if (strlen($row) <= 191) {
+						$url = Url::where('user_id', $id)->where('name', $item)->where('url', '')->update(['url' => $row]);
+					}
+				}
+			}
+		}
+	}
+
 	public function getClientId($phone = '')
 	{
 		if ( ! empty($phone)) {
