@@ -286,8 +286,8 @@ class HomeadvisorController extends Controller
 
 	public function magic(Dialog $dialog, $bitly)
 	{
-		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false) {
-			$this->saveLog($_SERVER, 'MAGIC CLICK');
+		$this->saveLog($_SERVER, 'MAGIC CLICK');
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false && ! empty($_SERVER['HTTP_UPGRADE_INSECURE_REQUESTS'])) {
 			$dialog->update(['clicked' => true]);
 			$client = $dialog->clients;
 			$client->update(['clicked' => true]);
