@@ -330,8 +330,8 @@ class HomeadvisorController extends Controller
 				'phone' => implode(',', $temp),
 				'text' => $text,
 			];
-			$alert = Alert::create($data);
-			SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+			//$alert = Alert::create($data);
+			//SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
 		}
 	}
 
