@@ -67,8 +67,8 @@ class Api
 	static public function alert($target_id, $clients, $message, $company, $offset)
 	{
 		$type = 'alert';
-		$block = false;
-		$block_24 = false;
+		$block = true;
+		$block_24 = true;
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
 	}
 
