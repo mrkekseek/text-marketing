@@ -37,7 +37,32 @@
                     $scope.setClient($scope.activeClient);
                 }
 
+                for (var k in $scope.dialogs) {
+                    var date = new Date($scope.createDate($scope.dialogs[k].clients.created_at));
+                    $scope.dialogs[k].clients.created_at = date;
+                }
+
             }, 'get');
+        };
+
+        $scope.createDate = function(string) {
+            string = string.replace(' ', 'T');
+            return string;
+        };
+
+        $scope.getSuffix = function(num) {
+            var res = '';
+            if (num) {
+                num = num.toString();
+                switch(num.slice(num.length - 1)) {
+                    case '1': res = 'st'; break;
+                    case '2': res = 'nd'; break;
+                    case '3': res = 'rd'; break;
+                    default: res = 'th'; break;
+                }
+            }
+            
+            return res;
         };
 
         $scope.setClient = function(client) {

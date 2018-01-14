@@ -54,16 +54,42 @@
 
 						<form name="form_ha" novalidate="novalidate" ng-show="user.company_status == 'verified' && ! companyChanged">
 							<div class="form-group">
+								<label>{{ __('Instant Text') }}</label>
 								<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-shortlink="true" lms="true"></char-set>
 							</div>
 
 							<div class="form-group">
+								<label>{{ __('Follow-Up Text') }}</label>
+								<i class="fa fa-question-circle-o" uib-tooltip="Follow-Up Text goes out an hour after the Instant Text, if the Lead does not click on your link or does not text you back." tooltip-placement="right" aria-hidden="true"></i>
+								<input class="form-control" type="text" disabled="disabled" ng-model="followupText" />
+							</div>
+
+							<div class="form-group">
+								<span class="upload-button-box">
+									<button type="button" class="btn btn-sm btn-default">
+										<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+									</button>
+									<input onchange="angular.element(this).scope().uploadFile(event.target.files[0])" accept="image/jpeg,image/png,image/gif,image/bmp,video/avi,video/mp4,video/quicktime,video/x-ms-wmv" type="file" />
+								</span>
+
+								<span class="upload-tooltip" uib-tooltip="{{ __('Image size limit is 500 KB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP Video size limit is 3 MB; supported video file types include .AVI, .MP4, .WMV, and .MOV') }}">
+									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+								</span>
+							</div>
+							<div class="form-group">
+								<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
+								<i ng-show="file.url" ng-click="removeMMS()" class="fa fa-times mms-remove" aria-hidden="true"></i>
+								<i ng-show="request" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+							</div>
+
+							<div class="form-group">
 								<label>{{ __('My number for alerts') }}</label>
-								<input type="text" name="phone" class="form-control" ng-model="user.phone" required="required" />
+								<i class="fa fa-question-circle-o" uib-tooltip="If the Lead clicks your link or texts you back, the platform will send a text to this number alerting you." tooltip-placement="right" aria-hidden="true"></i>
+								<input type="text" name="phone" class="form-control" ng-model="user.view_phone" required="required" />
 							</div>
 
 							<label>{{ __('Additional phones') }}</label>
-							<span class="fa fa-question-circle-o" uib-tooltip="Insert your cell number here so if you get a text reply, we text your actual cell with the message you’ve received." tooltip-placement="right"></span>
+							<span class="fa fa-question-circle-o" uib-tooltip="You can add additional numbers that will be alerted." tooltip-placement="right"></span>
 							<div class="form-group" ng-repeat="input in inputs track by $index">
 								<div class="input-group">
 									<input type="text" name="phone_@{{$index}}" class="form-control" ng-model="inputs[$index]" placeholder="{{ __('Enter phone here...') }}" />
@@ -114,12 +140,6 @@
 									<span> </span>
 									<i ng-show="item.clicked" class="fa fa-check-circle-o text-info" aria-hidden="true" uib-tooltip="Link clicked"></i>
 								</div>
-							</div>
-							<div class="pull-right">
-								<a href="/marketing/inbox/@{{item.id}}/" class="btn btn-default">
-									<i class="fa fa-envelope-o" aria-hidden="true"></i>
-									<span>{{ __('Respond') }}</span>
-								</a>
 							</div>
 						</div>
 						<div class="divider divider-dashed divider-sm pull-in">

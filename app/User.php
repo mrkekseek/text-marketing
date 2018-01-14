@@ -69,6 +69,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Url', 'user_id');
     }
 
+    public function facebookUrl()
+    {
+        return $this->hasOne('App\Url', 'user_id')->where('default', 1)->where('name', 'Facebook');
+    }
+
+    public function googleUrl()
+    {
+        return $this->hasOne('App\Url', 'user_id')->where('default', 1)->where('name', 'Google')->where('url', '!=', '');
+    }
+
     public function messages()
     {
         return $this->hasMany('App\Message', 'user_id');
@@ -77,6 +87,16 @@ class User extends Authenticatable
     public function dialogs()
     {
         return $this->hasMany('App\Dialog', 'users_id');
+    }
+
+    static public function facebookTokens()
+    {
+        return self::where('type', '2')->where('facebook_token', '!=', '')->has('facebookUrl')->with('facebookUrl')->get()->toArray();
+    }
+
+    static public function googlePlaceIds()
+    {
+        return self::where('type', '2')->has('googleUrl')->with('googleUrl')->get()->toArray();
     }
 
     protected static function boot()

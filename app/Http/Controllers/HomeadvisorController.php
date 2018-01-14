@@ -8,13 +8,19 @@ use App\User;
 use App\Link;
 use App\Client;
 use App\Dialog;
+use App\Alert;
 use Bitly;
+use Carbon\Carbon;
 use App\Events\FirstLead;
 use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
+use App\Jobs\SendAlertClick;
+use App\Jobs\SendFollowUpText;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Services\UsersService;
 
 class HomeadvisorController extends Controller
 {
@@ -26,9 +32,15 @@ class HomeadvisorController extends Controller
 	public function create(HACreateRequest $request)
 	{
 		$data = $request->only(['ha', 'user']);
+		$file = '';
 
+		$phone = UsersService::phoneToNumber($data['user']);
+
+		ApiValidate::phoneFormat($phone);
+		
 		auth()->user()->update([
-			'phone' => $data['user']['phone'],
+			'view_phone' => $data['user']['view_phone'],
+			'phone' => $phone,
 		]);
 
 		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
@@ -38,10 +50,18 @@ class HomeadvisorController extends Controller
 			return $this->message('Text containes forbidden characters');
 		}
 
+		if ( ! empty($data['ha']['file'])) {
+			$temp = explode('.', $data['ha']['file']);
+			$name = auth()->user()->id.'.'.$temp[1];
+			Storage::move(str_replace('storage', 'public', $data['ha']['file']), 'public/upload/homeadvisor/'.auth()->user()->id.'/'.$name);
+			$file = 'storage/upload/homeadvisor/'.auth()->user()->id.'/'.$name;
+		}
+
 		auth()->user()->homeadvisors()->create([
 			'text' => $data['ha']['text'],
 			'additional_phones' => $data['ha']['additional_phones'],
 			'active' => $data['ha']['active'],
+			'file' => $file,
 		]);
 
 		return $this->message('Settings are successfully saved.', 'success');
@@ -50,9 +70,15 @@ class HomeadvisorController extends Controller
 	public function update(HACreateRequest $request, Homeadvisor $homeadvisor)
 	{
 		$data = $request->only(['ha', 'user']);
+		$file = '';
+		
+		$phone = UsersService::phoneToNumber($data['user']);
 
+		ApiValidate::phoneFormat($phone);
+		
 		auth()->user()->update([
-			'phone' => $data['user']['phone'],
+			'view_phone' => $data['user']['view_phone'],
+			'phone' => $phone,
 		]);
 
 		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
@@ -62,10 +88,23 @@ class HomeadvisorController extends Controller
 			return $this->message('Text containes forbidden characters');
 		}
 
+		if ( ! empty($data['ha']['file'])) {
+			$temp = explode('.', $data['ha']['file']);
+			$name = auth()->user()->id.'.'.$temp[1];
+			if (strpos($data['ha']['file'], 'temp') !== false) {
+				Storage::deleteDirectory('public/upload/homeadvisor/'.auth()->user()->id);
+				Storage::copy(str_replace('storage', 'public', $data['ha']['file']), 'public/upload/homeadvisor/'.auth()->user()->id.'/'.$name);
+			}
+			$file = 'storage/upload/homeadvisor/'.auth()->user()->id.'/'.$name;
+		} else {
+			Storage::deleteDirectory('public/upload/homeadvisor/'.auth()->user()->id);
+		}
+
 		$homeadvisor->update([
 			'text' => $data['ha']['text'],
 			'additional_phones' => empty($data['ha']['additional_phones']) ? '' : $data['ha']['additional_phones'],
 			'active' => $data['ha']['active'],
+			'file' => $file,
 		]);
 
 		return $this->message('Settings are successfully saved.', 'success');
@@ -80,6 +119,16 @@ class HomeadvisorController extends Controller
 
     	$this->sendActivateEmail();
 
+    	return $this->message('Your request successfully sent.', 'success');
+	}
+
+	public function activateUpdate(Homeadvisor $homeadvisor)
+	{
+		$homeadvisor->update([
+			'send_request' => true,
+		]);
+
+		$this->sendActivateEmail();
     	return $this->message('Your request successfully sent.', 'success');
 	}
 	
@@ -180,10 +229,14 @@ class HomeadvisorController extends Controller
     {
 		$dialog = $user->dialogs()->create([
 			'clients_id' => $client->id,
-			'text' => $this->createText($user, $client, $ha),
+			'text' => '',
+			'file' => ! empty($ha->file) ? $ha->file : '',
 			'my' => true,
 			'status' => 2,
 		]);
+
+		$text = $this->createText($user, $client, $ha, $dialog);
+		$dialog->update(['text' => $text]);
 
 		$row = [
             'phone' => $client->phone,
@@ -198,17 +251,20 @@ class HomeadvisorController extends Controller
         }
 
 		$phones[] = $row;
-
+		$date = Carbon::now()->addHour();
+		$delay = Carbon::now()->diffInSeconds($date);
+		
         SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
+        SendFollowUpText::dispatch($dialog, $phones, $user)->delay($delay)->onQueue('texts');
     }
 
-    public function createText($user, $client, $ha)
+    public function createText($user, $client, $ha, $dialog)
     {
     	$text = $ha->text;
     	$linkPos = strpos($text, 'bit.ly/');
     	if ($linkPos !== false) {
     		$originLink = substr($text, $linkPos, 14);
-    		$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$client->id.'/'.$originLink);
+    		$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
     		$fakeLink = str_replace('http://', '', $fakeLink);
     		$text = str_replace($originLink, $fakeLink, $ha->text);
     	}
@@ -228,10 +284,64 @@ class HomeadvisorController extends Controller
 		}
 	}
 
-	public function magic(Client $client, $bitly)
+	public function magic(Dialog $dialog, $bitly)
 	{
-		$client->update(['clicked' => true]);
+		$this->saveLog($_SERVER, 'MAGIC CLICK');
+		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'TweetmemeBot') === false) {
+			$dialog->update(['clicked' => true]);
+			$client = $dialog->clients;
+			$client->update(['clicked' => true]);
+			$user = $client->team->team_leader();
+			$homeadvisor = $client->team->team_leader()->homeadvisors;
+			
+			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) {
+				$this->sendAlertClick($user, $homeadvisor, $client);
+			}
+		}
 		return redirect('http://bit.ly/'.$bitly);
+	}
+
+	public function sendAlertClick($user, $homeadvisor, $client)
+	{
+		$phones = [];
+		$temp = [];
+		$link = Bitly::getUrl(config('app.url').'/ha/user/');
+		$link = str_replace('http://', '', $link);
+		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
+		
+		if ( ! empty($user->phone)) {
+			$phones[]['phone'] = $user->phone;
+			$temp[] = $user->phone;
+		}
+
+		if ( ! empty($homeadvisor->additional_phones)) {
+			$numbers = explode(',', $homeadvisor->additional_phones);
+			foreach ($numbers as $number) {
+				$phone = $this->createPhone($number);
+				if ( ! empty($phone)) {
+					$phones[]['phone'] = $phone;
+					$temp[] = $phone;
+				}
+			}
+		}
+		if ( ! empty($phones)) {
+			$data = [
+				'user_id' => $user->id,
+				'phone' => implode(',', $temp),
+				'text' => $text,
+			];
+			$alert = Alert::create($data);
+			SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+		}
+	}
+
+	public function createPhone($number)
+	{
+		$phone = str_replace(['-', '(', ')', ' ', '.'], '', $number);
+		if (ApiValidate::phoneFormat($phone)) {
+			return $phone;
+		}
+		return false;
 	}
 	
 	public function firstName($data)

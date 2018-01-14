@@ -18,6 +18,7 @@ class SendLeadText implements ShouldQueue
     protected $dialog;
     protected $clients;
     protected $user;
+    protected $attachment;
 
     /**
      * Create a new job instance.
@@ -29,8 +30,7 @@ class SendLeadText implements ShouldQueue
         $this->dialog = $dialog;
         $this->clients = $clients;
         $this->user = $user;
-        //$response = Api::dialog($this->dialog->id, $this->clients, $this->dialog->text, $this->user->company_name, $this->user->offset);
-        //dd($response);
+        $this->attachment = ! empty($this->dialog->file) ? config('app.url').'/'.$this->dialog->file : '';
     }
 
     /**
@@ -40,9 +40,15 @@ class SendLeadText implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::dialog($this->dialog->id, $this->clients, $this->dialog->text, $this->user->company_name, $this->user->offset);
-        if ($response['code'] == 200) {
-            $this->dialog->update(['status' => 1]);
+        $response = Api::dialog($this->dialog->id, $this->clients, $this->dialog->text, $this->user->company_name, $this->user->offset, $this->attachment);
+        if ($response['code'] != 200) {
+            $this->dialog->update(['status' => 0]);
+        }
+
+        foreach ($response['data'] as $client) {
+            if ( ! empty($client['finish'])) {
+                $this->dialog->update(['status' => 0]);
+            }
         }
     }
 }

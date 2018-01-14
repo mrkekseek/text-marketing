@@ -62,7 +62,20 @@ class AnswersController extends Controller
         }
 
         $this->alert($seance, $value);
-        
+        $count = 0;
+        $activeGoogle = false;
+        $url_id = false;
+        foreach ($seance->review->user->urls as $url) {
+            $count += $url->active;
+            if ($url->name == 'Google' && $url->active) {
+                $activeGoogle = "https://search.google.com/local/writereview?placeid=".$url->social_id;
+                $url_id = $url->id;
+            }
+        }
+        if ($activeGoogle && $count == 1) {
+            $seance->update(['url_id' => $url_id]);
+            return redirect($activeGoogle);
+        }
         return view('survey')->with(compact('seance', 'questions'));
     }
 

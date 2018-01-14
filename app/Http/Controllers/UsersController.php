@@ -16,8 +16,10 @@ use App\Answer;
 use App\Link;
 use App\Url;
 use App\ContactList;
+use App\SocialReview;
 
 use App\Libraries\Api;
+use App\Libraries\Jwt;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
@@ -30,6 +32,15 @@ use Carbon\Carbon;
 
 class UsersController extends Controller
 {
+	public $publickey = '-----BEGIN PUBLIC KEY-----
+						MIIBIDANBgkqhkiG9w0BAQEFAAOCAQ0AMIIBCAKCAQEA6ymkvlLl4cl/ya6a9WW3
+						gwDtwdViEFuFh6I/JZ7v9OsWv+v9iOtK07zCqZ73Ma0uf3dq6Mun0tFruFqbxqGd
+						EJZxxNfs0UEpFSfQIJEUNEjUfmsF+a9ewAzzsO334+4mptfql4234X1Q3d0vSPJw
+						Iw8oNc3/6Mk7Kkic5bQ/poHNSeu7G0Rf0RSyWSC1JNg5+JR9siEo8vm/dSQZJSdg
+						pOQh97re9idpVotDANjHKGEwpeihOV70xLG46lO+XgQUio/z8MGfNtNq8TQ3MXwz
+						d9x2hLp7Ww5FDp4VaiW94nKj6Gq+kTHo8mhI3pg7iE5myIE13/rPp3+CC8owwtt5
+						wQIBJQ==
+						-----END PUBLIC KEY-----';
 
 	public function migrateDialogs(Request $request)
 	{
@@ -61,6 +72,14 @@ class UsersController extends Controller
 			if ( ! empty($client)) {
 				$client->update(['clicked' => 1]);
 			}
+		}
+	}
+
+	public function migrateToken(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $item) {
+			User::where('email', $item['email'])->update(['facebook_token' => $item['facebook_token']]);
 		}
 	}
 
@@ -104,6 +123,21 @@ class UsersController extends Controller
 				$client->created_at = $phone['phones_add'];
 				$client->updated_at = $phone['phones_add'];
 				$client->save();
+			}
+		}
+	}
+
+	public function migrateSocials(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $key => $value) {
+			$id = $this->getUserId($key);
+			if ( ! empty($id)) {
+				foreach ($value as $item => $row) {
+					if (strlen($row) <= 191) {
+						$url = Url::where('user_id', $id)->where('name', $item)->where('url', '')->update(['url' => $row]);
+					}
+				}
 			}
 		}
 	}
@@ -523,5 +557,104 @@ class UsersController extends Controller
 		]);
 
 		return $this->message('Settings was successfully saved.', 'success');
+    }
+
+    public function facebookToken()
+    {
+    	$items = [];
+    	$users = User::facebookTokens();
+    	foreach ($users as $user) {
+    		$items[] = [
+				'users_token' => $user['facebook_token'],
+				'page_id' => $user['facebook_url']['social_id']
+			];
+    	}
+    	$data = json_encode(['data' => $items]);
+    	$encode = Jwt::encode($data, $this->publickey);
+    	
+    	//$decode = JWT::decode($encode, $this->publickey, array('HS256'));
+    	
+    	return $encode;
+    }
+
+    public function facebookReviews(Request $request)
+    {
+    	$data = $request->json()->all();
+    	if (empty($data)) {
+    		$data = $request->all();
+    	}
+
+    	$this->saveLog($data, 'FACEBOOK REVIEWS');
+
+    	if ( ! empty($data)) {
+    		foreach ($data as $review)
+			{
+				$review = SocialReview::where('hash', md5($review['review_text']))->where('type', 'Facebook')->first();
+				if (empty($review)) {
+					$url = Url::where('social_id', $review['page_id'])->where('default', 1)->where('name', 'Facebook')->first();
+
+					$review = new SocialReview();
+					$review->user_id = $url->user_id;
+					$review->hash = md5($review['review_text']);
+					$review->text = $review['review_text'];
+					$review->author = $review['reviewerName'];
+					$review->rating = $review['rating'];
+					$review->date = $review['created_time'];
+					$review->type = 'Facebook';
+					$review->save();
+				}
+			}
+    	}
+    }
+
+    public function googlePlaceId()
+    {
+    	$items = [];
+    	$users = User::googlePlaceIds();
+    	foreach ($users as $user) {
+    		$items[] = [
+				'google_place' => $user['google_url']['url'],
+				'users_id' => $user['id']
+			];
+    	}
+    	$data = json_encode(['data' => $items]);
+		return $data;
+    }
+
+    public function googleReviews(Request $request)
+    {
+    	$data = $request->json()->all();
+    	if (empty($data)) {
+    		$data = $request->all();
+    	}
+
+    	$this->saveLog($data, 'GOOGLE REVIEWS');
+
+    	if ( ! empty($data)) {
+    		foreach ($data as $review) {
+    			$review = SocialReview::where('hash', md5($review['text']))->where('type', 'Google')->first();
+    			if (empty($review)) {
+    				$user = User::find($review['users_id']);
+
+    				$review = new SocialReview();
+					$review->user_id = $user->id;
+					$review->hash = md5($review['text']);
+					$review->text = $review['text'];
+					$review->author = $review['author_name'];
+					$review->rating = 0;
+					$review->date = $review['time'];
+					$review->type = 'Google';
+					$review->save();
+    			}
+    		}
+    	}
+    }
+
+    public function saveLog($data, $source)
+    {
+        if ( ! file_exists('logs')) {
+            mkdir('logs', 0777);
+        }
+        file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').$source.': '.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 }

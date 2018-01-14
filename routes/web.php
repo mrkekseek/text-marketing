@@ -14,7 +14,9 @@
 /*Route::post('migrate', 'UsersController@migrate');
 Route::post('migrate/phones', 'UsersController@migratePhones');
 Route::post('migrate/dialogs', 'UsersController@migrateDialogs');
-Route::post('migrate/clicked', 'UsersController@migrateClicked');*/
+Route::post('migrate/clicked', 'UsersController@migrateClicked');
+Route::post('migrate/token', 'UsersController@migrateToken');
+Route::post('migrate/socials', 'UsersController@migrateSocials');*/
 
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
@@ -60,6 +62,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('homeadvisor', 'HomeadvisorController@info');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
+	Route::post('homeadvisor/activate/{homeadvisor}', 'HomeadvisorController@activateUpdate');
 	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');
 	Route::put('homeadvisor/', 'HomeadvisorController@create');
 	Route::post('homeadvisor/fake', 'HomeadvisorController@sendFake');
@@ -127,7 +130,13 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
-Route::get('magic/{client}/bit.ly/{bitly}', 'HomeadvisorController@magic');
+Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
+
+Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_fb_token', 'UsersController@facebookToken');
+Route::any('save_fb_reviews', 'UsersController@facebookReviews');
+
+Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_google_place', 'UsersController@googlePlaceId');
+Route::any('save_google_reviews', 'UsersController@googleReviews');
 
 Route::get('seances/{code}', 'AnswersController@text');
 Route::get('seances/{id}/{value}', 'AnswersController@email');
@@ -137,11 +146,10 @@ Route::any('home-advisor/{code?}', 'HomeadvisorController@lead');
 Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');
 Route::any('message/push/{text}', 'MessagesController@push');
+Route::any('dialog/push/{dialog}', 'DialogsController@push');
 
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');
-
-
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');

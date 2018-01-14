@@ -68,7 +68,6 @@
 		};
 
 		$scope.getSuffix = function(num) {
-
 			var res = '';
 			if (num) {
 				num = num.toString();
