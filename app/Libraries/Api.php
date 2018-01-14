@@ -22,6 +22,7 @@ class Api
 
 	static private function response($response)
 	{
+		//return $response->getBody()->getContents();
 		$data = json_decode($response->getBody(), true);
 		$data['code'] = $response->getStatusCode();
 		return $data;

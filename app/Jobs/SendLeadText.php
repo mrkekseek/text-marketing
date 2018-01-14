@@ -29,6 +29,8 @@ class SendLeadText implements ShouldQueue
         $this->dialog = $dialog;
         $this->clients = $clients;
         $this->user = $user;
+        //$response = Api::dialog($this->dialog->id, $this->clients, $this->dialog->text, $this->user->company_name, $this->user->offset);
+        //dd($response);
     }
 
     /**
