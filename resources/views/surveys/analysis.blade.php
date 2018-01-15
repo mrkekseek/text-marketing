@@ -1,87 +1,33 @@
-<div class="page page-table ng-scope" data-ng-controller="ReviewsAnalysisCtrl">
+<div class="page page-table" data-ng-controller="ReviewsAnalysisCtrl" data-ng-init="init()">
 	<div class="row">
 		<div class="col-sm-12 col-md-12">
 			<h2>
-				<span>Analysis</span>
+				<span>{{ __('Analysis') }}</span>
 				<i class="fa fa-question-circle-o help-icon" uib-tooltip="This is the Analysis page for the Star Rating Question. You can filter by date and see the Written Comments (for responses less than 5 stars). The Response Rate is the % of clients who answered the Star Rating Question. The Social Rate is the % that gave you 5 stars and also left an online review." tooltip-placement="right" aria-hidden="true"></i>
 			</h2>
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="text-center">
 						<h4>
-							<a href="#real" id="real" class="link-header">Real-Time</a>
-							&nbsp;•&nbsp;
-							<a ng-show="constants.project != 'EngagedER'" href="#calendar" class="link-header">Calendar</a>
-							<span ng-show="constants.project != 'EngagedER'" class="">&nbsp;•&nbsp;</span>
-							<a href="#written_comments" "="" class="link-header" du-smooth-scroll="" du-scrollspy="">Written Comments</a>
-							&nbsp;•&nbsp;
-							<a ng-show="(constants.project == 'FoodTexter' || constants.project == 'GymTexter') &amp;&amp; team.teams_providers == '1'" href="#providers" class="link-header ng-binding ng-hide" du-smooth-scroll="" du-scrollspy="">Employee</a>
-							<span ng-show="(constants.project == 'FoodTexter' || constants.project == 'GymTexter') &amp;&amp; team.teams_providers == '1'" class="ng-hide">&nbsp;•&nbsp;</span>
-							<a href="#response_rate" class="link-header" data-move="#rate">Response Rate</a>
+							<a href="#real" id="real" class="link-header">{{ __('Real-Time') }}</a>&nbsp;•&nbsp;
+							<a href="#calendar" class="link-header">{{ __('Calendar') }}</a>&nbsp;•&nbsp;
+							<a href="#written_comments" class="link-header">{{ __('Written Comments') }}</a>&nbsp;•&nbsp;
+							<a href="#response_rate" class="link-header">{{ __('Response Rate') }}</a>
 						</h4>
 
-						<div class="form-group">
-							<div class="btn-group timeframe" data-id="timeframe" role="group">
-								<a href="javascript:void(0);" ng-click="toggle_date('today')" ng-class="{'active': analysis.timeframe == 'today'}" data-value="today" class="btn btn-default btn-primary" style="">Today</a>
-								<a href="javascript:void(0);" ng-click="toggle_date('week')" ng-class="{'active': analysis.timeframe == 'week'}" data-value="week" class="btn btn-default btn-primary">Week</a>
-								<a href="javascript:void(0);" ng-click="toggle_date('month')" ng-class="{'active': analysis.timeframe == 'month'}" data-value="month" class="btn btn-default btn-primary" style="">Month</a>
-								<a href="javascript:void(0);" ng-click="toggle_date('year')" ng-class="{'active': analysis.timeframe == 'year'}" data-value="year" class="btn btn-default btn-primary">Year</a>
-								<a href="javascript:void(0);" ng-click="toggle_date('custom')" ng-class="{'active': open_period}" data-value="custom" class="btn btn-default btn-primary">Custom</a>
-							</div>
-						</div>
-
-						<div class="form-group ng-hide" ng-show="open_period">
-							<div class="row">
-								<div class="col-md-3 col-md-offset-3">
-									<div class="input-group">
-										<input type="text" class="form-control ng-pristine ng-untouched ng-isolate-scope ng-empty ng-invalid ng-invalid-date" ng-change="get_analysis()" uib-datepicker-popup="" ng-model="from" is-open="from.opened" placeholder="Date from"><div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" template-url="/uib/template/datepickerPopup/popup.html" class="ng-pristine ng-untouched ng-valid ng-scope ng-not-empty"><!-- ngIf: isOpen -->
-										</div>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-default" ng-click="custom_from()"><i class="glyphicon glyphicon-calendar"></i></button>
-										</span>
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="input-group">
-										<input type="text" class="form-control ng-pristine ng-untouched ng-isolate-scope ng-empty ng-invalid ng-invalid-date" ng-change="get_analysis()" uib-datepicker-popup="" ng-model="to" is-open="to.opened" placeholder="Date to">
-										<div uib-datepicker-popup-wrap="" ng-model="date" ng-change="dateSelection(date)" template-url="/uib/template/datepickerPopup/popup.html" class="ng-pristine ng-untouched ng-valid ng-scope ng-not-empty">
-										</div>
-										<span class="input-group-btn">
-											<button type="button" class="btn btn-default" ng-click="custom_to()"><i class="glyphicon glyphicon-calendar"></i></button>
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group ng-hide" >
-							<div class="btn-group sort" data-id="sort" role="group">
-								<a href="javascript:void(0);" ng-click="toggle_sort('wtb')" data-value="wtb" ng-class="{'active': analysis.sort == 'wtb'}" class="btn btn-default btn-primary active">Worst to Best</a>
-								<a href="javascript:void(0);" ng-click="toggle_sort('btw')" data-value="btw" ng-class="{'active': analysis.sort == 'btw'}" class="btn btn-default btn-primary">Best to Worst</a>
-							</div>
-						</div>
-
-						<div class="form-group more-space text-center">
-							<button type="button" class="btn btn-primary" ng-click="benchmark()" ng-class="{'active': analysis.benchmark == 1}" ng-show="analysis.teams_id == 0" data-id="benchmark" style="">Benchmark</button>
-							<button ng-show="false" ng-click="users_show()" type="button" class="btn btn-primary ng-hide" ng-class="{'active': analysis.users_show == '1'}">Users</button>
-							<a href="/analysis/corporate/" class="btn btn-primary ng-hide" ng-show="user.teams_leader == 1 &amp;&amp; team.groups_id != 0">Corporate</a>
-							<button ng-show="team.teams_diagnosis == 1" type="button" class="btn btn-primary ng-hide" ng-class="{'active': analysis.diagnosis_show == '1'}" data-target="diagnosis">Diagnosis</button>
-							<button ng-show="team.teams_providers == 1 &amp;&amp; providers.length" ng-click="providers_show()" type="button" class="btn btn-primary ng-binding ng-hide" ng-class="{'active': analysis.providers_show == '1'}">Employee</button>
-						</div>
-
 						<div class="row">
-							<div ng-class="{'col-xs-12': analysis.benchmark == 0, 'col-xs-6': analysis.benchmark == 1}">
+							<div class="col-xs-12">
 								<div class="form-group text-center">
-									<h4 class="overall-title " ng-show="constants.project != 'ContractorReviewer' &amp;&amp; constants.project != 'ContractorTexter' &amp;&amp; constants.project != 'ReviewMyRehab'">OVERALL</h4>
+									<h4 class="overall-title">{{ __('OVERALL') }}</h4>
 									<div class="question-stars">
 										<div class="question-stars-inner">
 										</div>
 										<img src="/img/stars.png" alt="">
 									</div>
-									<div class="question-score ng-binding">
+									<div class="question-score">
 										0
 									</div>
-									<a href="javascript:void(0);" class="link-results ng-binding" uib-popover-template="popover.templateUrl">0 Response</a>
+									<a href="javascript:;" class="link-results" uib-popover-template="popover.templateUrl"> {{ __('Response') }}</a>
 									
 									<script type="text/ng-template" id="popoverTemplate.html">
 										<div class="popover-content">

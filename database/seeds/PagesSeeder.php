@@ -460,7 +460,7 @@ class PagesSeeder extends Seeder
             'pos' => 2,
         ]);
 
-        /*DB::table('pages_menu')->insert([
+        DB::table('pages_menu')->insert([
             'pages_code' => 'analysis-main',
             'parents_code' => 'surveys-surveys',
             'plans' => 'none',
@@ -490,7 +490,7 @@ class PagesSeeder extends Seeder
             'plans' => 'star-rating-contractortexter',
             'main' => 0,
             'pos' => 4,
-        ]);*/
+        ]);
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'settings-alerts',
