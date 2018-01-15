@@ -95,6 +95,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('seances/{user?}', 'SeancesController@create');
 	Route::put('seances/{seance}/tap', 'SeancesController@tap');
 
+	Route::get('analysis', 'AnalysisController@all');
+
 	Route::put('answers/{id}', 'AnswersController@save');
 
 	Route::put('messages/create', 'MessagesController@create');
