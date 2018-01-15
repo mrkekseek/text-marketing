@@ -343,7 +343,7 @@ display: inline;
 	.dialogs-body {
 		position: absolute;
 		z-index: 0;
-	    top: 326px;
+	    top: 0;
 	    bottom: 0;
 	    right: 0;
 	    left: 0;
