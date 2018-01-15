@@ -20,14 +20,14 @@
 								<div class="form-group text-center">
 									<h4 class="overall-title">{{ __('OVERALL') }}</h4>
 									<div class="question-stars">
-										<div class="question-stars-inner">
+										<div class="question-stars-inner" style="width: @{{ analysis.rating * 100 / 5 }}%">
 										</div>
 										<img src="/img/stars.png" alt="">
 									</div>
 									<div class="question-score">
-										0
+										@{{ analysis.rating }}
 									</div>
-									<a href="javascript:;" class="link-results" uib-popover-template="popover.templateUrl"> {{ __('Response') }}</a>
+									<a href="javascript:;" class="link-results" uib-popover-template="popover.templateUrl">@{{ analysis.responses }} {{ __('Response') }}</a>
 									
 									<script type="text/ng-template" id="popoverTemplate.html">
 										<div class="popover-content">
@@ -35,14 +35,15 @@
 												<tbody>
 													<tr ng-repeat="r in [5, 4, 3, 2, 1]">
 														<td class="stars-cell">
-															<i class="fa fa-star"></i>
+															<i class="fa fa-star" ng-repeat="s in getStars(r) track by $index"></i>
 														</td>
-														<td class="results-cell"> Responses</td>
+														<td class="results-cell">@{{ responses[r] }} {{ __('Responses') }}</td>
 													</tr>
 												</tbody>
 											</table>
 										</div>
 									</script>
+
 								</div>
 							</div>
 						</div>
@@ -50,21 +51,35 @@
 						<div id="calendar">
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="panel-title">Calendar</h3>
+									<h3 class="panel-title">{{ __('Calendar') }}</h3>
 								</div>
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-sm-4">
-											<div class="ng-pristine ng-untouched ng-valid ng-isolate-scope uib-datepicker ng-not-empty ng-valid-date-disabled" ng-model="calendar_date" uib-datepicker >
-												<div class="uib-daypicker ng-scope" uib-daypicker ng-switch-when="day" tabindex="0">
-													
+											<div ng-model="calendarDate" uib-datepicker ng-change="getCalendar()" datepicker-options="calendarOptions">
+												<div uib-daypicker ng-switch-when="day" tabindex="0">
 												</div>
 											</div>
 										</div>
 										<div class="col-sm-8">
-											<div class="alert alert-info text-center" ng-show="! responses.length">
-												<p>Sorry, there is no data for this range</p>
+											<div ng-show="! calendarResponses.length" class="alert alert-info text-center">
+												<p>{{ __('Sorry, there is no data for this range') }}</p>
 											</div>
+											<uib-accordion ng-show="calendarResponses.length" close-others="true">
+												<div class="question-box" ng-repeat="item in calendarResponses">
+													<div uib-accordion-group class="panel-default">
+														<uib-accordion-heading>
+															<span>@{{ item.completed }}</span>
+															<span class="pull-right">@{{ item.value.toFixed(1) }}</span>
+														</uib-accordion-heading>
+														<div>
+															<div class="question-answer-item" ng-class="{'border-bottom': item.answers.length > 1}" ng-repeat="answer in item.answers track by $index">
+																<b>@{{ answer.answers_value }}</b> - @{{ answer.name }}
+															</div>
+														</div>
+													</div>
+												</div>
+											</uib-accordion>
 										</div>
 									</div>
 								</div>

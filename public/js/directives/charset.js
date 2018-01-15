@@ -54,7 +54,6 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 					}
 
 					if ($scope.result.indexOf($scope.linkTag) + 1) {
-						console.log('789');
 						$scope.size += 14 - $scope.linkTag.length;
 					}
 				}
