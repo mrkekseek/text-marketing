@@ -58,7 +58,7 @@ class SurveysController extends Controller
         $data['sender'] = ! empty($data['sender']) ? $data['sender'] : '';
         $data['subject'] = ! empty($data['subject']) ? $data['subject'] : '';
         $data['email'] = ! empty($data['email']) ? $data['email'] : '';
-        SurveysService::save($data);
+        SurveysService::save($data, auth()->user());
         return $this->message('Alert settings was successfully saved', 'success');
     }
 }
