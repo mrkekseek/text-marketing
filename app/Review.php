@@ -10,7 +10,7 @@ class Review extends Model
 
     public function seances()
     {
-        return $this->hasMany('App\Seance', 'review_id');
+        return $this->hasMany('App\Seance');
     }
 
     public function survey()

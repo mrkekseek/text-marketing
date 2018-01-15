@@ -26,7 +26,7 @@ class DialogsController extends Controller
 	public function info($id = false)
 	{
         Dialog::where('clients_id', $id)->where('users_id', auth()->user()->id)->update(['new' => 0]);
-		return Dialog::where('clients_id', $id)->where('users_id', auth()->user()->id)->get();
+		return Dialog::where('clients_id', $id)->where('users_id', auth()->user()->id)->orderBy('created_at', 'asc')->get();
 	}
 
 	public function create(Request $request, Client $client)
