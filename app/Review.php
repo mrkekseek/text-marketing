@@ -8,6 +8,8 @@ class Review extends Model
 {
     protected $guarded = [];
 
+    public $dates = ['created_at'];
+
     public function seances()
     {
         return $this->hasMany('App\Seance');

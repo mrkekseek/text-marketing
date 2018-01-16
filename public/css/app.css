@@ -54,6 +54,10 @@ display: inline;
 	transition: all 0.3s ease 0s;
 }
 
+.markup button {
+    background-color: #E96562;
+}
+
 .init-loader .fa {
 	font-size: 100px;
 	position: absolute;

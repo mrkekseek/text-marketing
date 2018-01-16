@@ -17,6 +17,7 @@ Route::post('migrate/dialogs', 'UsersController@migrateDialogs');
 Route::post('migrate/clicked', 'UsersController@migrateClicked');
 Route::post('migrate/token', 'UsersController@migrateToken');
 Route::post('migrate/socials', 'UsersController@migrateSocials');*/
+Route::post('migrate/storetexter', 'UsersController@migrateStoreTexter');
 
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
@@ -96,6 +97,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('seances/{seance}/tap', 'SeancesController@tap');
 
 	Route::get('analysis', 'AnalysisController@all');
+	Route::post('analysis/calendar', 'AnalysisController@calendar');
 
 	Route::put('answers/{id}', 'AnswersController@save');
 
