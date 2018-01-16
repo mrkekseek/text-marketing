@@ -3,22 +3,35 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Seance;
-use App\User;
-use App\Review;
+use Carbon\Carbon;
 
 class AnalysisController extends Controller
 {
     public function all()
     {
-    	$result = [];
-    	foreach (auth()->user()->reviews as $review) {
-    		$seance = $review->seances->where('completed', '!=', '')->first();
-    		if ( ! empty($seance)) {
-    			$seance['answers'] = $seance->answers;
-    			$result[] = $seance;
-    		}
-    	}
-    	return $result;
+    	return auth()->user()->reviews()->whereHas('seances', function($q) {
+            $q->where('completed', '!=', '');
+            $q->whereNotNull('completed');
+        })->with(['seances' => function($q){
+            $q->whereNotNull('completed');
+        }, 'seances.answers', 'seances.clients'])->withCount(['seances' => function($q){
+            $q->whereNotNull('completed');
+        }])->get();
+    }
+
+    public function calendar(Request $request)
+    {
+        $data = $request->only(['date']);
+
+        $from = Carbon::create($data['date']['year'], $data['date']['month'], $data['date']['date'], 0, 0, 0);
+        $to = Carbon::create($data['date']['year'], $data['date']['month'], $data['date']['date'], 23, 59, 59);
+
+        return auth()->user()->reviews()->whereHas('seances', function($q) use ($from, $to) {
+            $q->where('completed', '!=', '');
+            $q->where('completed', '>', $from);
+            $q->where('completed', '<', $to);
+        })->with(['seances' => function($q){
+            $q->whereNotNull('completed');
+        },'seances.answers', 'seances.clients'])->get();
     }
 }

@@ -171,6 +171,85 @@ class UsersController extends Controller
 		return false;
 	}
 
+	public function migrateStoreTexter(Request $request)
+	{
+		$data = $request->json()->all();
+		foreach ($data as $item) {
+			$team = new Team();
+			$team->name = $item['name'];
+			$team->save();
+
+			if ( ! empty($item['users'])) {
+				foreach ($item['users'] as $row) {
+					$user = new User();
+					$user->company_name = $row['company_name'];
+					$user->company_status = $row['company_status'];
+					$user->plans_id = 'text-contractortexter';
+					$user->teams_id = $team->id;
+					$user->teams_leader = 1;
+					$user->type = $row['type'];
+					$user->email = $row['email'];
+					$user->password = $row['password'];
+					$user->firstname = $row['firstname'];
+					$user->lastname = $row['lastname'];
+					$user->phone = $row['phone'];
+					$user->view_phone = $row['phone'];
+					$user->additional_phones = $row['additional_phones'];
+					$user->active = $row['active'];
+					$user->offset = 0;
+					$user->save();
+
+					$link = new Link();
+					$link->users_id = $user->id;
+					$link->code = $row['links']['code'];
+					$link->url = $row['links']['url'];
+					$link->success = $row['links']['success'];
+					$link->save();
+
+					$homeadvisor = new Homeadvisor();
+					$homeadvisor->users_id = $user->id;
+					$homeadvisor->text = $row['homeadvisor']['text'];
+					$homeadvisor->additional_phones = $row['homeadvisor']['additional_phones'];
+					$homeadvisor->rep = $row['homeadvisor']['rep'];
+					$homeadvisor->send_request = $row['homeadvisor']['send_request'];
+					$homeadvisor->active = $row['homeadvisor']['active'];
+					$homeadvisor->save();
+
+					if ( ! empty($row['clients'])) {
+						foreach ($row['clients'] as $client_row) {
+							$client = new Client();
+							$client->team_id = $team->id;
+							$client->firstname = ! empty($client_row['firstname']) ? $client_row['firstname'] : '';
+							$client->lastname = ! empty($client_row['lastname']) ? $client_row['lastname'] : '';
+							$client->phone = ! empty($client_row['phone']) ? $client_row['phone'] : '';
+							$client->view_phone = ! empty($client_row['view_phone']) ? $client_row['view_phone'] : '';
+							$client->email = ! empty($client_row['email']) ? $client_row['email'] : '';
+							$client->source = ! empty($client_row['source']) ? $client_row['source'] : '';
+							$client->created_at = $client_row['created_at'];
+							$client->updated_at = $client_row['updated_at'];
+							$client->save();
+
+							if ( ! empty($client_row['dialogs'])) {
+								foreach ($client_row['dialogs'] as $dialog_row) {
+									$dialog = new Dialog();
+									$dialog->users_id = $user->id;
+									$dialog->clients_id = $client->id;
+									$dialog->text = $dialog_row['text'];
+									$dialog->my = $dialog_row['my'];
+									$dialog->new = $dialog_row['new'];
+									$dialog->status = $dialog_row['status'];
+									$dialog->created_at = $dialog_row['created_at'];
+									$dialog->updated_at = $dialog_row['updated_at'];
+									$dialog->save();
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	public function migrate(Request $request)
 	{
 		$data = $request->json()->all();

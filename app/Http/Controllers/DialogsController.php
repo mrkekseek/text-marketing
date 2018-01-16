@@ -43,7 +43,7 @@ class DialogsController extends Controller
             $phones = [];
             $phones[] = ['phone' => $client->phone];
 
-            SendLeadText::dispatch($dialog, $phones, $dialog->text, auth()->user())->onQueue('texts');
+            SendLeadText::dispatch($dialog, $phones, auth()->user())->onQueue('texts');
 
 			$this->message(__('Message was send'), 'success');
 			return $dialog;
@@ -80,20 +80,12 @@ class DialogsController extends Controller
                 $phones = false;
             }
 
-            if (ApiValidate::underLimitDialog($client->id)) {
-                $limit = false;
-            }
-
             if (empty($length)) {
                 return $this->message('SMS Text is too long. Text will not be send');
             }
 
             if (empty($phones)) {
                 return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
-            }
-
-            if (empty($limit)) {
-                return $this->message('Some client\'s phone numbers already received texts during last 24h. Text will not be send');
             }
         }
 
