@@ -152,7 +152,7 @@
 						<form name="form" ng-show="partner.id">
 							<div class="divider divider-dashed"></div>
 
-							<div class="form-group url-block" ng-repeat="input in partner.urls">
+							<div class="form-group url-block" ng-repeat="input in partner.urls" ng-show="input.name == 'Google'">
 								<div class="row" ng-show="input.default">
 									<div class="col-sm-3">
 										<div class="span-url">
