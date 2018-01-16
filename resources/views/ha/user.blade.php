@@ -121,7 +121,7 @@
 				<div class="panel-heading">
 					<strong>{{ __('Leads') }}</strong>
 				</div>
-				<div class="panel-body">
+				<div class="panel-body leads">
 					<div ng-repeat="item in list">
 						<div class="leads-list">
 							<div class="pull-left message-icon">

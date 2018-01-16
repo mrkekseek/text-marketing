@@ -16,7 +16,7 @@
 			{{ __("You haven't any teammate yet.") }}
 			<a href="javascript:;" ng-click="create()">{{ __("Create New Teammate") }}</a> {{ __("now") }}
 		</div>
-
+		
 		<section class="panel panel-default table-dynamic table-responsive " ng-show="list.length">
 			<table class="table table-bordered table-striped table-middle">
 				<thead>

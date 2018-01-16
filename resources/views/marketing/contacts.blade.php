@@ -6,7 +6,7 @@
 				<span class="fa fa-question-circle-o help-icon" uib-tooltip="This is where you create Contact Lists to send texts to. You can enter Contacts manually one at a time or upload a CSV. The first row of the CSV needs to be the 'First Name', the second row needs to be the 'Last Name' and the third row needs to be their Phone Number." tooltip-placement="right" aria-hidden="true">
 				</span>
 			</h2>
-			<div class="panel panel-default">
+			<div class="panel panel-default leads">
 				<div class="panel-body">
 					<div ng-repeat="item in list" >
 						<strong >
