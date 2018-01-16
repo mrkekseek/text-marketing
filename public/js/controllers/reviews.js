@@ -4,7 +4,7 @@
     angular.module('app').controller('ReviewsAnalysisCtrl', ['$scope', 'request', 'langs', ReviewsAnalysisCtrl]);
 
     function ReviewsAnalysisCtrl($scope, request, langs) {
-        $scope.analysis = {'seances': [], 'comments': []};
+        $scope.analysis = {'seances': [], 'comments': [], 'rating': 0, 'responses': 0};
         $scope.calendarResponses = [];
         $scope.popover = {
             templateUrl: 'popoverTemplate.html'
@@ -35,7 +35,7 @@
 
         $scope.get = function() {
             request.send('/analysis', {}, function (data) {
-                if (data) {
+                if (data.length) {
                     var count = 0;
                     var rating = 0;
                     for (var k in data) {
@@ -56,7 +56,7 @@
                             $scope.analysis.comments.push(data[k].seances[j]);
                         }
                     }
-                    console.log($scope.analysis.comments);
+
                     $scope.analysis.responses = count;
                     $scope.analysis.rating = rating / count;
                     $scope.calendarDate = new Date();

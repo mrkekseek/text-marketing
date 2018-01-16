@@ -52,7 +52,7 @@ class Api
 	{
 		$type = 'dialog';
 		$block = false;
-		$block_24 = true;
+		$block_24 = false;
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
 	}
 

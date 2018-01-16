@@ -8,13 +8,6 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="text-center">
-						<h4>
-							<a href="#real" id="real" class="link-header">{{ __('Real-Time') }}</a>&nbsp;•&nbsp;
-							<a href="#calendar" class="link-header">{{ __('Calendar') }}</a>&nbsp;•&nbsp;
-							<a href="#written_comments" class="link-header">{{ __('Written Comments') }}</a>&nbsp;•&nbsp;
-							<a href="#response_rate" class="link-header">{{ __('Response Rate') }}</a>
-						</h4>
-
 						<div class="row">
 							<div class="col-xs-12">
 								<div class="form-group text-center">
@@ -27,7 +20,7 @@
 									<div class="question-score">
 										@{{ analysis.rating }}
 									</div>
-									<a href="javascript:;" class="link-results" uib-popover-template="popover.templateUrl">@{{ analysis.responses }} {{ __('Response') }}</a>
+									<a href="javascript:;" class="link-results" uib-popover-template="popover.templateUrl">@{{ analysis.responses }} {{ __('Response') }}@{{ analysis.responses > 1 ? 's' : '' }}</a>
 									
 									<script type="text/ng-template" id="popoverTemplate.html">
 										<div class="popover-content">
@@ -144,78 +137,6 @@
 								</div>
 							</div>
 						</div>
-
-						<div id="response_rate" class="panel panel-default panel-analysis">
-							<div class="panel-heading">
-								<h3 class="panel-title">
-									<b>{{ __('Response Rate') }}</b>
-								</h3>
-							</div>
-							<div class="panel-body table-responsive rates">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th class="text-center">{{ __('Sent Reviews') }}</th>
-											<th class="text-center">{{ __('Completed Reviews') }}</th>
-											<th class="text-center">{{ __('Response Rate') }}</th>
-											<th class="text-center">
-												{{ __('Uncompleted Text Reviews') }}
-												<i class="fa fa-question-circle text-primary" aria-hidden="true" uib-tooltip="Percentage of Client who got text and clicked link but did not fill out survey"></i>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>
-												<b>0</b>
-											</td>
-											<td>
-												<b>0</b>
-											</td>
-											<td>
-												<b>0 %</b>
-											</td>
-											<td>
-												<b>0 %</b>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-						<div class="panel panel-default panel-social">
-							<div class="panel-heading">
-								<h3 class="panel-title"><b>Social Rate</b></h3>
-							</div>
-							<div class="panel-body table-responsive rates">
-								<table class="table table-striped">
-									<thead>
-										<tr>
-											<th class="text-center">Shown the review sites
-												<i class="fa fa-question-circle text-primary" aria-hidden="true" uib-tooltip="Amount of Clients that were shown the Thank You page with the Review Sites"></i>
-											</th>
-											<th class="text-center">Clicked on review sites
-												<i class="fa fa-question-circle text-primary" aria-hidden="true" uib-tooltip="Percentage of Clients clicked on one of the review sites"></i>
-											</th>
-											<th class="text-center">Yelp</th>
-											<th class="text-center">Google</th>
-											<th class="text-center">Facebook</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><b class="ng-binding">0</b></td>
-											<td><b class="ng-binding">0 % (0)</b></td>
-											<td><b class="ng-binding">0 % (0)</b></td>
-											<td><b class="ng-binding">0 % (0)</b></td>
-											<td><b class="ng-binding">0 % (0)</b></td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
 					</div>
 				</div>
 			</div>
