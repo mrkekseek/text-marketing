@@ -24,6 +24,11 @@ hr {
 	margin: 0px;
 }
 
+.leads {
+	max-height: 703px;
+	overflow: auto;
+}
+
 .preview-mms {
 	max-height: 80px;
 }

@@ -153,12 +153,8 @@ class HomeadvisorController extends Controller
 
     public function lead(Request $request, $code)
     {
-    	$this->saveLog($_POST, 'HomeAdvisor POST');
-		$this->saveLog($_GET, 'HomeAdvisor GET');
 		$this->saveLog($request->all(), 'HomeAdvisor request->all()');
-		$this->saveLog($request->json()->all(), 'HomeAdvisor request->json()->all()');
-		$input = file_get_contents("php://input");
-		$this->saveLog($input, 'HomeAdvisor input');
+		$this->saveLog($code, 'HomeAdvisor CODE');
 
 		$data = $request->json()->all();
 
