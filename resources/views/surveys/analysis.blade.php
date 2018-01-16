@@ -43,7 +43,6 @@
 											</table>
 										</div>
 									</script>
-
 								</div>
 							</div>
 						</div>
@@ -69,12 +68,35 @@
 												<div class="question-box" ng-repeat="item in calendarResponses">
 													<div uib-accordion-group class="panel-default">
 														<uib-accordion-heading>
-															<span>@{{ item.completed }}</span>
+															<span>@{{ item.created_at | date: 'MMMM d' }}<span class="text-lowercase">@{{ getSuffix(item.created_at | date: 'd') }}</span> @{{ item.created_at | date: 'h:mm a' }}</span>
 															<span class="pull-right">@{{ item.value.toFixed(1) }}</span>
 														</uib-accordion-heading>
 														<div>
-															<div class="question-answer-item" ng-class="{'border-bottom': item.answers.length > 1}" ng-repeat="answer in item.answers track by $index">
-																<b>@{{ answer.answers_value }}</b> - @{{ answer.name }}
+															<div class="question-answer-item" ng-class="{'border-bottom': item.seances.length > 1}" ng-repeat="seance in item.seances track by $index">
+																<div class="row">
+																	<div class="col-sm-3">
+																		<b>@{{ seance.clients.firstname; seance.clients.lastname}}</b>
+																	</div>
+																	<div class="col-sm-3">
+																		<span ng-show="seance.value" class="stars-cell">
+																			<i class="fa fa-star" ng-repeat="s in getStars(seance.value) track by $index"></i>
+																		</span>
+																		<span ng-show="! seance.value">
+																			{{ __('N/A') }}
+																		</span>
+																	</div>
+																	<div class="col-sm-3">
+																		<span ng-show="seance.comments" class="small-italic prev-title" ng-click="seance.showComments = ! seance.showComments">{{ __('Click to see comments') }}</span>
+																	</div>
+																	<div class="col-sm-3">
+																		<span class="pull-right">
+																		  @{{ seance.completed | date: 'MMMM d' }}@{{ getSuffix(seance.completed | date: 'd') }} @{{ seance.completed | date: 'h:mm a' }}
+																		</span>
+																	</div>
+																</div>
+																<div ng-show="seance.showComments">
+																	@{{ seance.comments }}
+																</div>
 															</div>
 														</div>
 													</div>
@@ -89,41 +111,33 @@
 						<div id="written_comments" class="panel panel-default panel-analysis">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<b>Written Comments</b>
+									<b>{{ __('Written Comments') }}</b>
 								</h3>
 							</div>
 							<div class="panel-body rates">
 								<div class="row">
-									<div class="col-md-6 col-xs-12 form-group ng-hide">
-										<table width="100%" class="table-striped">
-											<tbody><tr>
-												<th colspan="4" class="text-center comments-stars">
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-													<i class="fa fa-star"></i>
-												</th>
-											</tr>
-											<tr>
-												<th class="text-center">Date</th>
-												<th class="text-center">Name</th>
-												<th class="text-center">Reason</th>
-											</tr>
-										</tbody></table>
-									</div>
-
-									<div class="col-xs-12 form-group col-md-6">
-										<table width="100%" class="table table-striped ng-scope">
+									<div class="col-xs-12">
+										<table width="100%" class="table table-striped">
 											<thead>	
 												<tr>
-													<th class="text-center">Date</th>
-													<th class="text-center">Name</th>
-													<th class="text-center">Stars</th>
-													<th class="text-center">Reason</th>
+													<th class="text-center">{{ __('Date') }}</th>
+													<th class="text-center">{{ __('Name') }}</th>
+													<th class="text-center">{{ __('Stars') }}</th>
+													<th class="text-center">{{ __('Reason') }}</th>
 												</tr>
 											</thead>
 											<tbody>
+												<tr ng-repeat="seance in analysis.comments track by $index" ng-show="seance.comments">
+													<td>@{{ seance.completed | date: 'MMMM d' }}@{{ getSuffix(seance.completed | date: 'd') }} @{{ seance.completed | date: 'h:mm a' }}</td>
+													<td>@{{ seance.clients.firstname; seance.clients.lastname }}</td>
+													<td>
+														<span ng-show="seance.value" class="stars-cell">
+															<i class="fa fa-star" ng-repeat="s in getStars(seance.value) track by $index"></i>
+														</span>
+														<span ng-show="! seance.value">{{ __('N/A') }}</span>
+													</td>
+													<td>@{{ seance.comments }}</td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -134,17 +148,18 @@
 						<div id="response_rate" class="panel panel-default panel-analysis">
 							<div class="panel-heading">
 								<h3 class="panel-title">
-									<b>Response Rate</b>
+									<b>{{ __('Response Rate') }}</b>
 								</h3>
 							</div>
 							<div class="panel-body table-responsive rates">
 								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th class="text-center">Sent Surveys</th>
-											<th class="text-center">Completed Surveys</th>
-											<th class="text-center">Response Rate</th>
-											<th class="text-center">Uncompleted Text Surveys
+											<th class="text-center">{{ __('Sent Reviews') }}</th>
+											<th class="text-center">{{ __('Completed Reviews') }}</th>
+											<th class="text-center">{{ __('Response Rate') }}</th>
+											<th class="text-center">
+												{{ __('Uncompleted Text Reviews') }}
 												<i class="fa fa-question-circle text-primary" aria-hidden="true" uib-tooltip="Percentage of Client who got text and clicked link but did not fill out survey"></i>
 											</th>
 										</tr>
@@ -152,16 +167,16 @@
 									<tbody>
 										<tr>
 											<td>
-												<b class="ng-binding">0</b>
+												<b>0</b>
 											</td>
 											<td>
-												<b class="ng-binding">0</b>
+												<b>0</b>
 											</td>
 											<td>
-												<b class="ng-binding">0 %</b>
+												<b>0 %</b>
 											</td>
 											<td>
-												<b class="ng-binding">0 %</b>
+												<b>0 %</b>
 											</td>
 										</tr>
 									</tbody>

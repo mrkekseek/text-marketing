@@ -11,7 +11,12 @@ class AnalysisController extends Controller
     {
     	return auth()->user()->reviews()->whereHas('seances', function($q) {
             $q->where('completed', '!=', '');
-        })->with('seances.answers')->withCount('seances')->get();
+            $q->whereNotNull('completed');
+        })->with(['seances' => function($q){
+            $q->whereNotNull('completed');
+        }, 'seances.answers', 'seances.clients'])->withCount(['seances' => function($q){
+            $q->whereNotNull('completed');
+        }])->get();
     }
 
     public function calendar(Request $request)
@@ -25,6 +30,8 @@ class AnalysisController extends Controller
             $q->where('completed', '!=', '');
             $q->where('completed', '>', $from);
             $q->where('completed', '<', $to);
-        })->with('seances.answers')->withCount('seances')->get();
+        })->with(['seances' => function($q){
+            $q->whereNotNull('completed');
+        },'seances.answers', 'seances.clients'])->get();
     }
 }
