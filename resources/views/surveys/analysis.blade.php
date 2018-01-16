@@ -69,6 +69,7 @@
 																<div class="row">
 																	<div class="col-sm-3">
 																		<b>@{{ seance.clients.firstname; seance.clients.lastname}}</b>
+																		<span ng-show="! seance.clients.firstname && ! seance.clients.firstname">{{ __('Anonymous') }}</span>
 																	</div>
 																	<div class="col-sm-3">
 																		<span ng-show="seance.value" class="stars-cell">
