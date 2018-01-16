@@ -46,27 +46,28 @@
 								</div>
 							</div>
 						</form>
+						<div class="leads">
+							<div ng-show=" ! open_edit" ng-repeat="(key, client) in clients" class="phones-list">
+								<div class="divider divider-dashed"></div>
 
-						<div ng-show=" ! open_edit" ng-repeat="(key, client) in clients" class="phones-list">
-							<div class="divider divider-dashed"></div>
+								<div class="relative" ng-class="{'active': active_client.id == client.id}">
+									<div class="phones" ng-click="selectClient(client);">
+										<div class="checker-client">
+											<i class="choose-list fa" ng-class="{'fa-check-circle-o selected': isSelected(client), 'fa-circle-o': ! isSelected(client)}"></i>
+										</div>
 
-							<div class="relative" ng-class="{'active': active_client.id == client.id}">
-								<div class="phones" ng-click="selectClient(client);">
-									<div class="checker-client">
-										<i class="choose-list fa" ng-class="{'fa-check-circle-o selected': isSelected(client), 'fa-circle-o': ! isSelected(client)}"></i>
+										<div class="client-item">
+											<strong>@{{ client.view_phone }}</strong>
+											<span class="small-italic pull-right" ng-show="client.email">email: @{{ client.email }}</span>
+											<br />
+											@{{ client.firstname }}
+											@{{ client.lastname }}
+										</div>
 									</div>
 
-									<div class="client-item">
-										<strong>@{{ client.view_phone }}</strong>
-										<span class="small-italic pull-right" ng-show="client.email">email: @{{ client.email }}</span>
-										<br />
-										@{{ client.firstname }}
-										@{{ client.lastname }}
-									</div>
+									<a href="javascript:;" class="a-icon text-success icon-client icon-edit" ng-click="editClient(client)"><i class="fa fa-pencil"></i></a>
+									<a href="javascript:;" class="a-icon text-danger icon-client icon-remove" ng-click="removeClient(client.id)"><i class="fa fa-trash"></i></a>
 								</div>
-
-								<a href="javascript:;" class="a-icon text-success icon-client icon-edit" ng-click="editClient(client)"><i class="fa fa-pencil"></i></a>
-								<a href="javascript:;" class="a-icon text-danger icon-client icon-remove" ng-click="removeClient(client.id)"><i class="fa fa-trash"></i></a>
 							</div>
 						</div>
 					</div>
