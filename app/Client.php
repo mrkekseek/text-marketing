@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Client extends Model
 {
@@ -26,5 +27,17 @@ class Client extends Model
     public function team()
     {
         return $this->belongsTo('App\Team');
+    }
+
+    public function dialogsClicked()
+    {
+        $date = Carbon::now()->subWeek();
+        return $this->hasMany('App\Dialog', 'clients_id')->where('clicked', 1)->where('created_at', '>', $date);
+    }
+
+    public function dialogsReply()
+    {
+        $date = Carbon::now()->subWeek();
+        return $this->hasMany('App\Dialog', 'clients_id')->where('reply', 1)->where('created_at', '>', $date);
     }
 }
