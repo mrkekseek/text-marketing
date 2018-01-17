@@ -74,7 +74,7 @@
 												<span class="input-group-addon">
 													<span class="fa fa-home"></span>
 												</span>
-												<input type="text" name="rep" class="form-control input-lg" placeholder="{{ __('HomeAdvisor Account #') }}" ng-model="signUp.rep" required="required" />
+												<input type="text" name="rep" class="form-control input-lg" placeholder="{{ __('HomeAdvisor Account #') }}" ng-model="signUp.rep" />
 											</div>
 										</div>
 
