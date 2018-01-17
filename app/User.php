@@ -102,7 +102,7 @@ class User extends Authenticatable
 
     static public function usersHomeAdvisor()
     {
-        return self::whereIn('email', ['jb@div-art.com', 'info@div-art.com'])->where('plans_id', 'home-advisor-contractortexter')->with(['teams' => function($q){
+        return self::where('type', '2')->where('plans_id', 'home-advisor-contractortexter')->with(['teams' => function($q){
             $q->with(['clients' => function($q){
                 $date = Carbon::now()->subWeek();
                 $q->where('source', 'HomeAdvisor');
