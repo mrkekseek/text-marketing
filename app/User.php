@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -97,6 +98,18 @@ class User extends Authenticatable
     static public function googlePlaceIds()
     {
         return self::where('type', '2')->has('googleUrl')->with('googleUrl')->get()->toArray();
+    }
+
+    static public function usersHomeAdvisor()
+    {
+        return self::where('type', '2')->where('plans_id', 'home-advisor-contractortexter')->with(['teams' => function($q){
+            $q->with(['clients' => function($q){
+                $date = Carbon::now()->subWeek();
+                $q->where('source', 'HomeAdvisor');
+                $q->where('created_at', '>', $date);
+                $q->withCount(['dialogsClicked', 'dialogsReply']);
+            }])->withCount('clients');
+        }])->limit(3)->get();
     }
 
     protected static function boot()
