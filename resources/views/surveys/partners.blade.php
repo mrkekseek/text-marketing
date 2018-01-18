@@ -84,7 +84,7 @@
 
 					<div ng-show="clients.length">
 						<div uib-alert class="alert-info" ng-show=" ! selectedClients.length">
-							{{ __('To send Review message select clients from the list at the right side') }}
+							{{ __('To send Review message select clients from the list at the left side') }}
 						</div>
 
 						<div ng-show="selectedClients.length">

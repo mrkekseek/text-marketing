@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Seance;
 use App\Text;
 use App\Dialog;
+use App\Appointment;
 
 class ApiValidate
 {
@@ -104,6 +105,15 @@ class ApiValidate
     {
         $dialog = Dialog::where('created_at', '>=', Carbon::now()->subHours(24))->where('clients_id', $client_id)->get();
         if ($dialog->isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    static public function underLimitAppointment($client_id)
+    {
+        $appointment = Appointment::where('created_at', '>=', Carbon::now()->subHours(24))->where('client_id', $client_id)->get();
+        if ($appointment->isEmpty()) {
             return false;
         }
         return true;
