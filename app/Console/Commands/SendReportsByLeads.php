@@ -41,6 +41,8 @@ class SendReportsByLeads extends Command
     public function handle()
     {
         $data = User::usersHomeAdvisor();
+        $owner = User::where('owner', true)->first();
+        
         foreach ($data as $user) {
             $result = [
                 'clients_count' => ! empty($user->teams->clients_count) ? $user->teams->clients_count : 0,
@@ -64,7 +66,8 @@ class SendReportsByLeads extends Command
             
             $result['reply_client'] = ! empty($result['reply_client']) ? implode(',', $result['reply_client']) : '';
             $result['clicked_client'] = ! empty($result['clicked_client']) ? implode(',', $result['clicked_client']) : '';
-            Notification::send($user, new WeeklyReportsByLeads($user->firstname, $result));
+            
+            Notification::send($owner, new WeeklyReportsByLeads($user->firstname, $result));
         }
     }
 }
