@@ -24,6 +24,7 @@ class SendMarketingText implements ShouldQueue
     protected $company;
     protected $date;
     protected $token;
+    protected $attachment;
 
     /**
      * Create a new job instance.
@@ -37,6 +38,7 @@ class SendMarketingText implements ShouldQueue
         $this->message = $message;
         $this->company = $company;
         $this->token = $token;
+        $this->attachment = ! empty($this->message->file) ? config('app.url').'/'.$this->message->file : '';
     }
 
     /**
@@ -60,7 +62,7 @@ class SendMarketingText implements ShouldQueue
                 ]);
             }
 
-            $response = Api::message($this->text->id, $this->clients, $this->message->text, $this->company, $this->message->user->offset);
+            $response = Api::message($this->text->id, $this->clients, $this->message->text, $this->company, $this->message->user->offset, $this->attachment);
             if ($response['code'] == 200) {
                 MessagesService::receivers($this->text, $response['data']);
             } else {

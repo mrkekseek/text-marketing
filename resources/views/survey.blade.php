@@ -50,7 +50,7 @@
 								<label>
 									<input type="radio" value="@{{ i }}" name="value" ng-model="question.value" ng-click="set(question)" />
 									<span>
-										<i class="fa fa-star surveys-stars" ng-repeat="s in range(i) track by $index"></i>
+										<div stars="@{{i}}"></div>
 										<span ng-show=" ! i">{{ __('N/A') }}</span>
 									</span>
 								</label>
@@ -71,5 +71,6 @@
 		<script src="/js/libs/ui.js"></script>
 		<script src="/js/survey.js"></script>
 		<script src="/js/factories.js"></script>
+		<script src="/js/directives/stars.js"></script>
 	</body>
 </html>
