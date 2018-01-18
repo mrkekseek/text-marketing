@@ -233,6 +233,16 @@ class PagesSeeder extends Seeder
             'public' => 0,
         ]);
 
+        DB::table('pages')->insert([
+            'code' => 'appointment-confirmation',
+            'folder' => 'appointment',
+            'file' => 'send',
+            'name' => 'Appointment Confirmation',
+            'icon' => 'fa fa-check-square-o',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
 
 
 
@@ -331,6 +341,11 @@ class PagesSeeder extends Seeder
 
         DB::table('pages_access')->insert([
             'code' => 'ha-user',
+            'users_type' => 1,
+        ]);
+
+        DB::table('pages_access')->insert([
+            'code' => 'appointment-confirmation',
             'users_type' => 1,
         ]);
 
@@ -617,7 +632,7 @@ class PagesSeeder extends Seeder
             'parents_code' => '',
             'plans' => 'none',
             'main' => 0,
-            'pos' => 3,
+            'pos' => 4,
         ]);
 
         DB::table('pages_menu')->insert([
@@ -625,7 +640,7 @@ class PagesSeeder extends Seeder
             'parents_code' => '',
             'plans' => 'text-contractortexter',
             'main' => 0,
-            'pos' => 3,
+            'pos' => 4,
         ]);
 
         DB::table('pages_menu')->insert([
@@ -714,7 +729,7 @@ class PagesSeeder extends Seeder
             'parents_code' => '',
             'plans' => 'none',
             'main' => 0,
-            'pos' => 4,
+            'pos' => 5,
         ]);
 
         DB::table('pages_menu')->insert([
@@ -722,7 +737,7 @@ class PagesSeeder extends Seeder
             'parents_code' => '',
             'plans' => 'text-contractortexter',
             'main' => 0,
-            'pos' => 4,
+            'pos' => 5,
         ]);
 
         DB::table('pages_menu')->insert([
@@ -747,6 +762,22 @@ class PagesSeeder extends Seeder
             'plans' => 'home-advisor-contractortexter',
             'main' => 0,
             'pos' => 5,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'appointment-confirmation',
+            'parents_code' => '',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 3,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'appointment-confirmation',
+            'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 3,
         ]);
     }
 }

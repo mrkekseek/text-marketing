@@ -16,8 +16,8 @@ Route::post('migrate/phones', 'UsersController@migratePhones');
 Route::post('migrate/dialogs', 'UsersController@migrateDialogs');
 Route::post('migrate/clicked', 'UsersController@migrateClicked');
 Route::post('migrate/token', 'UsersController@migrateToken');
-Route::post('migrate/socials', 'UsersController@migrateSocials');*/
-Route::post('migrate/storetexter', 'UsersController@migrateStoreTexter');
+Route::post('migrate/socials', 'UsersController@migrateSocials');
+Route::post('migrate/storetexter', 'UsersController@migrateStoreTexter');*/
 
 Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = '', $param = '') {
 	$view = $folder.(empty($file) ? '' : '.'.$file);
@@ -46,6 +46,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('users/partners', 'UsersController@partnersCreate');
 	Route::post('users/partners/{user}', 'UsersController@partnersUpdate');
 	Route::delete('users/partners/{user}', 'UsersController@partnersRemove');
+
+	Route::get('users/employees', 'UsersController@employees');
+	Route::put('users/employees', 'UsersController@employeesCreate');
+	Route::post('users/employees/{user}', 'UsersController@employeesUpdate');
+	Route::delete('users/employees/{user}', 'UsersController@employeesRemove');
+
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
 	Route::post('users/saveSettings', 'UsersController@saveSettings');
@@ -118,6 +124,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('dialogs/{id}', 'DialogsController@info');
 	Route::put('dialogs/create/{client}', 'DialogsController@create');
 
+	Route::put('appointment/{user}/{client}', 'AppointmentController@create');
+
 	Route::post('upload/file', 'UploadController@save');
 	Route::post('upload/csv', 'UploadController@csv');
 });
@@ -151,6 +159,7 @@ Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');
 Route::any('message/push/{text}', 'MessagesController@push');
 Route::any('dialog/push/{dialog}', 'DialogsController@push');
+Route::any('appointment/push/{appointment}', 'AppointmentController@push');
 
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');

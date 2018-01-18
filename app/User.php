@@ -90,6 +90,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Dialog', 'users_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Appointment');
+    }
+
     static public function facebookTokens()
     {
         return self::where('type', '2')->where('facebook_token', '!=', '')->has('facebookUrl')->with('facebookUrl')->get()->toArray();
@@ -147,6 +152,11 @@ class User extends Authenticatable
 
     public function scopePartners($query)
     {
-        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false);
+        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false)->where('employee', false);
+    }
+
+    public function scopeEmployees($query)
+    {
+        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false)->where('employee', true);
     }
 }

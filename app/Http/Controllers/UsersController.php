@@ -29,6 +29,7 @@ use App\Http\Requests\PartnersCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -482,6 +483,11 @@ class UsersController extends Controller
 		return auth()->user()->partners()->with('urls')->get();
 	}
 
+	public function employees()
+	{
+		return auth()->user()->employees()->get();
+	}
+
 	public function create(UsersCreateRequest $request)
 	{
 		$data = $request->only(['plans_id', 'firstname', 'lastname', 'email', 'password', 'view_phone']);
@@ -530,6 +536,68 @@ class UsersController extends Controller
 
 		$this->message('Partner was successfully saved', 'success');
 		return $user;
+	}
+
+	public function employeesCreate(PartnersCreateRequest $request)
+	{
+		$data = $request->only(['firstname', 'lastname', 'email', 'view_phone', 'avatar']);
+
+		$data['type'] = 2;
+		$data['teams_leader'] = false;
+		$data['active'] = true;
+		$data['password'] = UsersService::password(config('app.name'));
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$data['teams_id'] = auth()->user()->teams_id;
+		$data['plans_id'] = auth()->user()->plans_id;
+		$data['offset'] = config('app.offset');
+		$data['employee'] = true;
+		$data = array_filter($data, 'strlen');
+
+		$user = User::create($data);
+		LinksService::create($user);
+
+		if ( ! empty($data['avatar'])) {
+			$temp = explode('.', $data['avatar']);
+			$name = $user->id.'.'.$temp[1];
+			Storage::move(str_replace('storage', 'public', $data['avatar']), 'public/upload/employees/'.$user->id.'/'.$name);
+			$file = 'storage/upload/employees/'.$user->id.'/'.$name;
+			$user->update(['avatar' => $file]);
+		}
+
+		$this->message('Employee was successfully saved', 'success');
+		return $user;
+	}
+
+	public function employeesUpdate(PartnersCreateRequest $request, User $user)
+	{
+		$data = $request->only(['firstname', 'lastname', 'email', 'view_phone', 'avatar']);
+		$data['phone'] = UsersService::phoneToNumber($data);
+		$file = '';
+		if ( ! empty($data['avatar'])) {
+			$temp = explode('.', $data['avatar']);
+			$name = $user->id.'.'.$temp[1];
+			if (strpos($data['avatar'], 'temp') !== false) {
+				Storage::deleteDirectory('public/upload/homeadvisor/'.$user->id);
+				Storage::copy(str_replace('storage', 'public', $data['avatar']), 'public/upload/employees/'.$user->id.'/'.$name);
+			}
+			$file = 'storage/upload/employees/'.$user->id.'/'.$name;
+		} else {
+			Storage::deleteDirectory('public/upload/employees/'.$user->id);
+		}
+		$data['avatar'] = $file;
+		
+		$user->update($data);
+
+		$this->message('Teammate was successfully saved', 'success');
+		return $user;
+	}
+
+	public function employeesRemove(User $user)
+	{
+		$user->links()->delete();
+
+		$user->delete();
+		return $this->message('Partner was successfully removed', 'success');
 	}
 
 	public function partnersUpdate(PartnersCreateRequest $request, User $user)
