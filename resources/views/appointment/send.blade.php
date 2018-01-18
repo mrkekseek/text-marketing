@@ -84,76 +84,81 @@
 
 						<div ng-show="selectedClient.id">
 							<div class="form-group">
-								<div ng-show="partners.length" class="btn-group" uib-dropdown dropdown-append-to-body>
+								<div ng-show="employees.length" class="btn-group" uib-dropdown dropdown-append-to-body>
 									<button id="btn-append-to-body" type="button" class="btn btn-default" uib-dropdown-toggle>
-										<span ng-show="partner.id">@{{ partner.firstname + ' ' + partner.lastname }}</span>
-										<span ng-show=" ! partner.id">{{ __('Select Partner from a list') }}</span>
+										<span ng-show="employee.id">@{{ employee.firstname + ' ' + employee.lastname }}</span>
+										<span ng-show=" ! employee.id">{{ __('Select Employee from a list') }}</span>
 										<span class="caret"></span>
 									</button>
 
 									<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="btn-append-to-body">
-										<li role="menuitem" ng-repeat="partner in partners"><a href="javascript:;" ng-click="setPartner(partner)">@{{ partner.firstname + ' ' + partner.lastname }}</a></li>
+										<li role="menuitem" ng-repeat="employee in employees"><a href="javascript:;" ng-click="setEmployee(employee)">@{{ employee.firstname + ' ' + employee.lastname }}</a></li>
 									</ul>
 								</div>
 
-								<span ng-show="partner.id">
-									<button type="button" class="btn btn-default" ng-click="addPartner(partner.id)">{{ __('Edit') }}</button>
-									<button type="button" class="btn btn-default" ng-click="removePartner(partner.id)">{{ __('Remove') }}</button>
+								<span ng-show="employee.id">
+									<button type="button" class="btn btn-default" ng-click="addEmployee(employee.id)">{{ __('Edit') }}</button>
+									<button type="button" class="btn btn-default" ng-click="removeEmployee(employee.id)">{{ __('Remove') }}</button>
 								</span>
 
-								<span ng-show="partners.length">&nbsp;&nbsp;{{ __('or') }}&nbsp;&nbsp;</span>
+								<span ng-show="employees.length">&nbsp;&nbsp;{{ __('or') }}&nbsp;&nbsp;</span>
 
-								<button type="button" class="btn btn-primary" ng-click="addPartner()">{{ __('Create New Partner') }}</button>
+								<button type="button" class="btn btn-primary" ng-click="addEmployee()">{{ __('Create New Employee') }}</button>
 							</div>
 
 							<div class="divider divider-dashed"></div>
 
-							<div uib-alert class="alert-info" ng-show=" ! partner.id">
-								{{ __('Choose from list or create new Partner to send Reviews') }}
+							<div uib-alert class="alert-info" ng-show=" ! employee.id">
+								{{ __('Choose from list or create new Employee to send message') }}
 							</div>
 
-							<div ng-show="partner.id">
+							<div ng-show="employee.id">
 								<div class="row">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<label>{{ __('Company Name') }}</label>
 											<div class="input-group">
-												<input type="text" class="form-control" maxlength="32" ng-model="partner.company_name" ng-change="companyChange()" placeholder="{{ __('Company Name') }}" />
-												<span class="input-group-addon bg-success" ng-show="partner.company_status == 'verified' && ! companyChanged">{{ __('Verified') }}</span>
-												<span class="input-group-addon bg-warning" ng-show="partner.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
-												<span class="input-group-addon bg-danger" ng-show="partner.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
-												<span class="input-group-btn" ng-show="partner.company_status == '' || companyChanged">
+												<input type="text" class="form-control" maxlength="32" ng-model="employee.company_name" ng-change="companyChange()" placeholder="{{ __('Company Name') }}" />
+												<span class="input-group-addon bg-success" ng-show="employee.company_status == 'verified' && ! companyChanged">{{ __('Verified') }}</span>
+												<span class="input-group-addon bg-warning" ng-show="employee.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
+												<span class="input-group-addon bg-danger" ng-show="employee.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
+												<span class="input-group-btn" ng-show="employee.company_status == '' || companyChanged">
 													<button class="btn btn-default" ng-click="companySave()">{{ __('Save') }}</button>
 												</span>
 											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
 										</div>
 									</div>
 								</div>
 								<div class="divider divider-dashed"></div>
 							</div>
 
-							<div ng-show="partner.id">
+							<div ng-show="employee.id">
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6">
-											<div uib-alert class="alert-info" ng-show="partner.company_status != 'verified' || companyChanged">
+											<div uib-alert class="alert-info" ng-show="employee.company_status != 'verified' || companyChanged">
 												{{ __('To send texts you should save Company Name and wait untill it will be verified. It may takes 15 minutes') }}
 											</div>
 
-											<div ng-show="partner.company_status == 'verified' && ! companyChanged">
+											<div ng-show="employee.company_status == 'verified' && ! companyChanged">
 												<div>
 													<textarea rows="3" cols="10" class="form-control appointment-textarea" readonly="readonly">@{{ createText() }}</textarea>
 												</div>
 											</div>
 											
 										</div>
-										<div class="col-sm-6" ng-show="partner.company_status == 'verified' && ! companyChanged">
+										<div class="col-sm-6" ng-show="employee.company_status == 'verified' && ! companyChanged">
 											<div uib-timepicker ng-model="time" show-meridian="true"></div>
 										</div>
 									</div>
 								</div>
 
-								<div class="form-group" ng-show="partner.company_status == 'verified' && ! companyChanged">
+								<div class="form-group" ng-show="employee.company_status == 'verified' && ! companyChanged">
 									<button class="btn btn-primary" ng-click="send()">{{ __('Send') }}</button>
 								</div>
 							</div>
@@ -166,11 +171,11 @@
 </div>
 
 
-<script type="text/ng-template" id="PartnersCreate.html">
-	<form name="form_partner" method="post" novalidate="novalidate">
+<script type="text/ng-template" id="EmployeesCreate.html">
+	<form name="form_employee" method="post" novalidate="novalidate">
 		<div class="modal-header">
-			<h4 class="modal-title" ng-show=" ! partner.id">{{ __("Create New Partner") }}</h4>
-			<h4 class="modal-title" ng-show="partner.id">{{ __("Edit Partner") }}</h4>
+			<h4 class="modal-title" ng-show=" ! employee.id">{{ __("Create New Employee") }}</h4>
+			<h4 class="modal-title" ng-show="employee.id">{{ __("Edit Employee") }}</h4>
 		</div>
 
 		<div class="modal-body">
@@ -178,24 +183,44 @@
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
 						<label>{{ __("First Name") }}</label>
-						<input type="text" name="firstname" class="form-control" ng-model="partner.firstname" required="required" />
+						<input type="text" name="firstname" class="form-control" ng-model="employee.firstname" required="required" />
 					</div>
 
 					<div class="form-group">
 						<label>{{ __("Last Name") }}</label>
-						<input type="text" class="form-control" ng-model="partner.lastname" />
+						<input type="text" class="form-control" ng-model="employee.lastname" />
+					</div>
+					<div class="form-group">
+						<label>{{ __("Avatar") }}</label>
+						<div class="form-group">
+							<span class="upload-button-box">
+								<button type="button" class="btn btn-sm btn-default">
+									<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+								</button>
+								<input onchange="angular.element(this).scope().uploadFile(event.target.files[0])" accept="image/jpeg,image/png,image/gif,image/bmp,video/avi,video/mp4,video/quicktime,video/x-ms-wmv" type="file" />
+							</span>
+
+							<span class="upload-tooltip" uib-tooltip="{{ __('Image size limit is 500 KB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP Video size limit is 3 MB; supported video file types include .AVI, .MP4, .WMV, and .MOV') }}">
+								<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+							</span>
+						</div>
+						<div class="form-group">
+							<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
+							<i ng-show="file.url" ng-click="removeMMS()" class="fa fa-times mms-remove" aria-hidden="true"></i>
+							<i ng-show="request" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+						</div>
 					</div>
 				</div>
 
 				<div class="col-sm-6 col-xs-12">
 					<div class="form-group">
 						<label>{{ __("Email") }}</label>
-						<input type="email" class="form-control" name="email" ng-model="partner.email" required="required" />
+						<input type="email" class="form-control" name="email" ng-model="employee.email" required="required" />
 					</div>
 
 					<div class="form-group">
 						<label>{{ __("Phone") }}</label>
-						<input type="text" class="form-control" name="view_phone" ng-model="partner.view_phone" />
+						<input type="text" class="form-control" name="view_phone" ng-model="employee.view_phone" />
 					</div>
 				</div>
 			</div>

@@ -46,6 +46,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('users/partners', 'UsersController@partnersCreate');
 	Route::post('users/partners/{user}', 'UsersController@partnersUpdate');
 	Route::delete('users/partners/{user}', 'UsersController@partnersRemove');
+
+	Route::get('users/employees', 'UsersController@employees');
+	Route::put('users/employees', 'UsersController@employeesCreate');
+	Route::post('users/employees/{user}', 'UsersController@employeesUpdate');
+	Route::delete('users/employees/{user}', 'UsersController@employeesRemove');
+
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
 	Route::post('users/saveSettings', 'UsersController@saveSettings');

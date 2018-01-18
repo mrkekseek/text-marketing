@@ -56,12 +56,12 @@ class Api
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
 	}
 
-	static public function appointment($target_id, $clients, $message, $company, $offset)
+	static public function appointment($target_id, $clients, $message, $company, $offset, $attachment = '')
 	{
 		$type = 'appointment';
 		$block = true;
 		$block_24 = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
 	}
 
 	static public function followUp($target_id, $clients, $message, $company, $offset)

@@ -1,19 +1,20 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('AppointmentCtrl', ['$scope', '$uibModal', '$timeout', 'request', 'langs', 'validate', AppointmentCtrl]);
+    angular.module('app').controller('AppointmentCtrl', ['$scope', '$uibModal', '$timeout', '$location', 'request', 'langs', 'validate', AppointmentCtrl]);
 
-    function AppointmentCtrl($scope, $uibModal, $timeout, request, langs, validate) {
+    function AppointmentCtrl($scope, $uibModal, $timeout, $location, request, langs, validate) {
         $scope.clients = [];
-        $scope.partners = [];
+        $scope.employees = [];
         $scope.client = {};
         $scope.selectedClient = {};
-        $scope.partner = {};
+        $scope.employee = {};
         $scope.time = new Date();
+        $scope.file = {};
 
         $scope.init = function() {
             $scope.getClients();
-            $scope.getPartners();
+            $scope.getEmployees();
         };
 
         $scope.getClients = function(){
@@ -22,14 +23,14 @@
             }, 'get');
         };
 
-        $scope.getPartners = function (partner_id) {
-            partner_id = partner_id || false;
-            request.send('/users/partners', false, function (data) {
-                $scope.partners = data;
-                if (partner_id) {
-                    for (var k in $scope.partners) {
-                        if ($scope.partners[k].id == partner_id) {
-                            $scope.setPartner($scope.partners[k]);
+        $scope.getEmployees = function (employee_id) {
+            employee_id = employee_id || false;
+            request.send('/users/employees', false, function (data) {
+                $scope.employees = data;
+                if (employee_id) {
+                    for (var k in $scope.employees) {
+                        if ($scope.employees[k].id == employee_id) {
+                            $scope.setEmployee($scope.employees[k]);
                         }
                     }
                 }
@@ -73,48 +74,48 @@
             }
         };
 
-        $scope.setPartner = function (partner) {
-            $scope.partner = partner;
-
-            if ($scope.partner.id) {
-                
+        $scope.setEmployee = function (employee) {
+            $scope.file.url = '';
+            $scope.employee = employee;
+            if ($scope.employee.avatar) {
+                $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + $scope.employee.avatar;
             }
         };
 
-        $scope.addPartner = function(partner_id) {
-            partner_id = partner_id || false;
+        $scope.addEmployee = function(employee_id) {
+            employee_id = employee_id || false;
 
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'PartnersCreate.html',
-                controller: 'ModalPartnersCreateCtrl',
+                templateUrl: 'EmployeesCreate.html',
+                controller: 'ModalEmployeeCreateCtrl',
                 resolve: {
                     items: function () {
-                        return { 'partner': $scope.by_id(partner_id) };
+                        return { 'employee': $scope.by_id(employee_id) };
                     }
                 }
             });
 
             modalInstance.result.then(function (response) {
-                $scope.getPartners(response.id);
+                $scope.getEmployees(response.id);
             }, function () {
 
             });
         };
 
-        $scope.removePartner = function (partner_id) {
-            if (confirm(langs.get('Do you realy want to remove this partner?'))) {
-                request.send('/users/partners/' + partner_id, {}, function (data) {
-                    $scope.setPartner({});
-                    $scope.getPartners();
+        $scope.removeEmployee = function (employee_id) {
+            if (confirm(langs.get('Do you realy want to remove this employee?'))) {
+                request.send('/users/employees/' + employee_id, {}, function (data) {
+                    $scope.setEmployee({});
+                    $scope.getEmployees();
                 }, 'delete');
             }
         };
 
-        $scope.by_id = function (partner_id) {
-            for (var k in $scope.partners) {
-                if ($scope.partners[k].id == partner_id) {
-                    return $scope.partners[k];
+        $scope.by_id = function (employee_id) {
+            for (var k in $scope.employees) {
+                if ($scope.employees[k].id == employee_id) {
+                    return $scope.employees[k];
                 }
             }
             return {};
@@ -128,8 +129,8 @@
         };
 
         $scope.companySave = function () {
-            var user = $scope.partner.id ? $scope.partner : $scope.user;
-            request.send('/users/company' + ($scope.partner.id ? '/' + $scope.partner.id : ''), {'company': user.company_name}, function (data) {
+            var user = $scope.employee.id ? $scope.employee : $scope.user;
+            request.send('/users/company' + ($scope.employee.id ? '/' + $scope.employee.id : ''), {'company': user.company_name}, function (data) {
                 if (data) {
                     user.company_status = data.status;
                     $scope.companyChanged = false;
@@ -139,11 +140,11 @@
         };
 
         $scope.checkCompany = function () {
-            var user = $scope.partner.id ? $scope.partner : $scope.user;
+            var user = $scope.employee.id ? $scope.employee : $scope.user;
             $timeout.cancel($scope.timer);
             if ($scope.user.company_status == 'pending') {
                 $scope.timer = $timeout(function () {
-                    request.send('/users/status' + ($scope.partner.id ? '/' + $scope.partner.id : ''), {}, function (data) {
+                    request.send('/users/status' + ($scope.employee.id ? '/' + $scope.employee.id : ''), {}, function (data) {
                         if (data) {
                             user.company_status = data.status;
                         }
@@ -154,7 +155,7 @@
         };
 
         $scope.createText = function() {
-            return 'Hi ' + $scope.selectedClient.firstname + ', your technician ' + $scope.partner.firstname + ' will be there at ' + $scope.createTime() + '. If there is an issue please text back, thanks!';
+            return 'Hi ' + $scope.selectedClient.firstname + ', your technician ' + $scope.employee.firstname + ' will be there at ' + $scope.createTime() + '. If there is an issue please text back, thanks!';
         };
 
         $scope.createTime = function() {
@@ -172,7 +173,7 @@
                 'text': $scope.createText()
             };
 
-            request.send('/appointment/' + $scope.partner.id + '/' + $scope.selectedClient.id, data, function (data) {
+            request.send('/appointment/' + $scope.employee.id + '/' + $scope.selectedClient.id, data, function (data) {
                 
             }, 'put');
         };
@@ -184,23 +185,53 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ModalPartnersCreateCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalPartnersCreateCtrl]);
+    angular.module('app').controller('ModalEmployeeCreateCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$http', '$location', 'request', 'validate', 'logger', 'langs', 'items', ModalEmployeeCreateCtrl]);
 
-    function ModalPartnersCreateCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
-        $scope.partner = angular.copy(items.partner);
+    function ModalEmployeeCreateCtrl($rootScope, $scope, $uibModalInstance, $http, $location, request, validate, logger, langs, items) {
+        $scope.employee = angular.copy(items.employee);
+        $scope.file = {};
+
+        if ($scope.employee.avatar) {
+            $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + $scope.employee.avatar;
+        }
+
+        $scope.uploadFile = function(file) {
+            var size = file.size / 1024;
+            if (size > 500) {
+                logger.logError(langs.get('Image size limit is 500 KB'));
+                return;
+            }
+
+            $scope.file.name = file.name;
+            var fd = new FormData();
+            fd.append('file', file);
+
+            $http.post('/api/v1/upload/file', fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            }).then(function(response) {
+                $scope.employee.avatar = response.data.data;
+                $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + response.data.data;
+                $scope.request = false;
+            });
+        };
+
+        $scope.removeMMS = function() {
+            $scope.employee.avatar = $scope.file.url = '';
+        };
 
         $scope.save = function () {
             var error = 1;
-            error *= validate.check($scope.form_partner.firstname, 'Name');
-            error *= validate.check($scope.form_partner.email, 'Email');
-            error *= validate.phone($scope.form_partner.view_phone, 'Phone');
+            error *= validate.check($scope.form_employee.firstname, 'Name');
+            error *= validate.check($scope.form_employee.email, 'Email');
+            error *= validate.phone($scope.form_employee.view_phone, 'Phone');
 
             if (error) {
-                request.send('/users/partners/' + ($scope.partner.id ? $scope.partner.id : ''), $scope.partner, function (data) {
+                request.send('/users/employees/' + ($scope.employee.id ? $scope.employee.id : ''), $scope.employee, function (data) {
                     if (data) {
                         $uibModalInstance.close(data);
                     }
-                }, (!$scope.partner.id ? 'put' : 'post'));
+                }, (!$scope.employee.id ? 'put' : 'post'));
             }
         };
 

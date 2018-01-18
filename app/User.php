@@ -152,6 +152,11 @@ class User extends Authenticatable
 
     public function scopePartners($query)
     {
-        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false);
+        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false)->where('employee', false);
+    }
+
+    public function scopeEmployees($query)
+    {
+        return $query->where('teams_id', $this->teams_id)->where('teams_leader', false)->where('employee', true);
     }
 }

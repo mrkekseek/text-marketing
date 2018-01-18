@@ -16,6 +16,7 @@ class SendAppointment implements ShouldQueue
     protected $appointment;
     protected $phones;
     protected $user;
+    protected $attachment;
 
     /**
      * Create a new job instance.
@@ -27,6 +28,7 @@ class SendAppointment implements ShouldQueue
         $this->appointment = $appointment;
         $this->phones = $phones;
         $this->user = $user;
+        $this->attachment = ! empty($this->user->avatar) ? config('app.url').'/'.$this->user->avatar : '';
     }
 
     /**
@@ -36,7 +38,7 @@ class SendAppointment implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::appointment($this->appointment->id, $this->phones, $this->appointment->text, $this->user->company_name, $this->user->offset);
+        $response = Api::appointment($this->appointment->id, $this->phones, $this->appointment->text, $this->user->company_name, $this->user->offset, $this->attachment);
         if ($response['code'] != 200) {
             $this->appointment->update(['finish' => true]);
         }
