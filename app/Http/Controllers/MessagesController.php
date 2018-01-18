@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use App\Jobs\SendMarketingText;
 use App\Libraries\ApiValidate;
 use App\Http\Services\MessagesService;
+use Illuminate\Support\Facades\Storage;
 
 class MessagesController extends Controller
 {
@@ -30,14 +31,23 @@ class MessagesController extends Controller
     {
         if ($this->textValidate($request)) {
             $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch', 'x_day']);
+
             $data['lists_id'] = implode(',', $data['lists_id']);
             $data['date'] = $this->getDate($request->schedule, $request->time, auth()->user());
             $data['finish_date'] = $this->getFinishDate($request->finish_date, auth()->user());
             $data['token'] = $data['date'];
             $data['active'] = true;
-            $data['file'] = ! empty($data['file']) ? $data['file'] : '';
-
             $message = auth()->user()->messages()->create($data);
+            
+            if ( ! empty($data['file'])) {
+                $temp = explode('.', $data['file']);
+                $name = auth()->user()->id.'.'.$temp[1];
+                Storage::move(str_replace('storage', 'public', $data['file']), 'public/upload/marketing/'.$message->id.'/'.auth()->user()->id.'/'.$name);
+                $file = 'storage/upload/marketing/'.$message->id.'/'.auth()->user()->id.'/'.$name;
+
+                $message->update(['file' => $file]);
+            }
+
             $this->sendText($message);
             return $this->message('Message was successfully saved', 'success');
         }
@@ -49,12 +59,26 @@ class MessagesController extends Controller
     {
         if ($this->textValidate($request)) {
             $data = $request->only(['lists_id', 'text', 'file', 'schedule', 'switch', 'x_day']);
+            $file = '';
+            
+            if ( ! empty($data['file'])) {
+                $temp = explode('.', $data['file']);
+                $name = auth()->user()->id.'.'.$temp[1];
+                if (strpos($data['file'], 'temp') !== false) {
+                    Storage::deleteDirectory('public/upload/marketing/'.$id.'/'.auth()->user()->id);
+                    Storage::copy(str_replace('storage', 'public', $data['file']), 'public/upload/marketing/'.$id.'/'.auth()->user()->id.'/'.$name);
+                }
+                $file = 'storage/upload/marketing/'.$id.'/'.auth()->user()->id.'/'.$name;
+            } else {
+                Storage::deleteDirectory('public/upload/marketing/'.$id.'/'.auth()->user()->id);
+            }
+
             $data['lists_id'] = implode(',', $data['lists_id']);
             $data['date'] = $this->getDate($request->schedule, $request->time, auth()->user());
             $data['finish_date'] = $this->getFinishDate($request->finish_date, auth()->user());
             $data['token'] = $data['date'];
             $data['active'] = true;
-            $data['file'] = ! empty($data['file']) ? $data['file'] : '';
+            $data['file'] = $file;
             
             $message = Message::find($id);
             $message->update($data);

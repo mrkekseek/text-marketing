@@ -40,12 +40,12 @@ class Api
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
 	}
 
-	static public function message($target_id, $clients, $message, $company, $offset)
+	static public function message($target_id, $clients, $message, $company, $offset, $attachment = '')
 	{
 		$type = 'message';
 		$block = true;
 		$block_24 = true;
-		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
 	}
 
 	static public function dialog($target_id, $clients, $message, $company, $offset, $attachment = '')
