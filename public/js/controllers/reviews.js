@@ -123,10 +123,6 @@
             string = string.replace(' ', 'T');
             return new Date(string);
         };
-
-        $scope.getStars = function(num) {
-            return new Array(num);
-        }
     };
 })();
 

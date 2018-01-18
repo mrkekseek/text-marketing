@@ -27,8 +27,8 @@
 											<table>
 												<tbody>
 													<tr ng-repeat="r in [5, 4, 3, 2, 1]">
-														<td class="stars-cell">
-															<i class="fa fa-star" ng-repeat="s in getStars(r) track by $index"></i>
+														<td>
+															<div stars="@{{r}}" stars-align="right"></div>
 														</td>
 														<td class="results-cell">@{{ responses[r] }} {{ __('Responses') }}</td>
 													</tr>
@@ -73,7 +73,7 @@
 																	</div>
 																	<div class="col-sm-3">
 																		<span ng-show="seance.value" class="stars-cell">
-																			<i class="fa fa-star" ng-repeat="s in getStars(seance.value) track by $index"></i>
+																			<div stars="@{{seance.value}}"></div>
 																		</span>
 																		<span ng-show="! seance.value">
 																			{{ __('N/A') }}
@@ -125,8 +125,8 @@
 													<td>@{{ seance.completed | date: 'MMMM d' }}@{{ getSuffix(seance.completed | date: 'd') }} @{{ seance.completed | date: 'h:mm a' }}</td>
 													<td>@{{ seance.clients.firstname; seance.clients.lastname }}</td>
 													<td>
-														<span ng-show="seance.value" class="stars-cell">
-															<i class="fa fa-star" ng-repeat="s in getStars(seance.value) track by $index"></i>
+														<span ng-show="seance.value">
+															<div stars="@{{seance.value}}"></div>
 														</span>
 														<span ng-show="! seance.value">{{ __('N/A') }}</span>
 													</td>
