@@ -274,6 +274,9 @@
 					for (var k in temp) {
 						$scope.message.lists_id.push(temp[k] * 1);
 					}
+                    if ($scope.message.file) {
+                        $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + $scope.message.file;
+                    }
             	}, 'get');
 			}
 		};
@@ -528,6 +531,12 @@
         };
 
         $scope.uploadFile = function(file) {
+            var size = file.size / 1024;
+            if (size > 500) {
+                logger.logError(langs.get('Image size limit is 500 KB'));
+                return;
+            }
+
             $scope.file.name = file.name;
             var fd = new FormData();
             fd.append('file', file);
@@ -535,10 +544,15 @@
             $http.post('/api/v1/upload/file', fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
-            }).then(function(response){
+            }).then(function(response) {
                 $scope.message.file = response.data.data;
                 $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + response.data.data;
+                $scope.request = false;
             });
+        };
+
+        $scope.removeMMS = function() {
+            $scope.message.file = $scope.file.url = '';
         };
 
 		$scope.openImport = function(index) {

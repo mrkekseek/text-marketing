@@ -269,8 +269,8 @@
 					</td>
 					<td>@{{ report.type }}</td>
 					<td>
-						<i ng-repeat="k in getStars(report.value) track by $index" class="fa fa-star surveys-stars" aria-hidden="true"></i>
-						<span ng-show="! getStars(report.value).length">N/A</span>
+						<div stars="@{{report.value}}"></div>
+						<span ng-show="report.value == 0">N/A</span>
 					</td>
 				</tr>
 			</table>

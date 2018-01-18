@@ -43,10 +43,6 @@
             }
         };
 
-        $scope.range = function(key) {
-            return new Array(key * 1);
-        };
-
         $scope.set = function(question) {
             if (question.value == 5) {
                 $scope.answers.push({

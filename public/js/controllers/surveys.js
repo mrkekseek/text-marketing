@@ -450,11 +450,6 @@
             }
         }
 
-        $scope.getStars = function(num) {
-            num = num | 0;
-            return Array(num * 1);
-        };
-
         $scope.cancel = function () {
             $uibModalInstance.close();
         };
