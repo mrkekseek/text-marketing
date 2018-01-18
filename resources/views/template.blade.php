@@ -76,6 +76,7 @@
         <script src="/js/controllers/reviews.js"></script>
         <script src="/js/controllers/surveys.js"></script>
         <script src="/js/controllers/surveys_partners.js"></script>
+        <script src="/js/controllers/appointment.js"></script>
         <script src="/js/directives/charset.js"></script>
         <script src="/js/directives/stars.js"></script>
         <script src="/js/directives/big-stars.js"></script>

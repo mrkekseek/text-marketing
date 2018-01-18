@@ -58,6 +58,20 @@ display: inline;
     background-color: #E96562;
 }
 
+.main-menu-list {
+	display: inline-block;
+	max-width: 155px;
+    vertical-align: middle;
+}
+
+.i-menu-list {
+	vertical-align: middle;
+}
+
+.appointment-textarea {
+	resize: none;
+}
+
 .init-loader .fa {
 	font-size: 100px;
 	position: absolute;

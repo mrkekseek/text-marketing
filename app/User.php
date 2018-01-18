@@ -90,6 +90,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Dialog', 'users_id');
     }
 
+    public function appointments()
+    {
+        return $this->hasMany('App\Appointment');
+    }
+
     static public function facebookTokens()
     {
         return self::where('type', '2')->where('facebook_token', '!=', '')->has('facebookUrl')->with('facebookUrl')->get()->toArray();
