@@ -9,7 +9,7 @@ use App\Link;
 use App\Client;
 use App\Dialog;
 use App\Alert;
-use Bitly;
+use DivArt\ShortLink\Facades\ShortLink;
 use Carbon\Carbon;
 use App\Events\FirstLead;
 use App\Jobs\SendHAEmail;
@@ -260,7 +260,8 @@ class HomeadvisorController extends Controller
     	$linkPos = strpos($text, 'bit.ly/');
     	if ($linkPos !== false) {
     		$originLink = substr($text, $linkPos, 14);
-    		$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
+    		$fakeLink = ShortLink::bitly(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
+    		//$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
     		$fakeLink = str_replace('http://', '', $fakeLink);
     		$text = str_replace($originLink, $fakeLink, $ha->text);
     	}

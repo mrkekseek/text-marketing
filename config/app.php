@@ -168,6 +168,7 @@ return [
         Shivella\Bitly\BitlyServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Wilgucki\Csv\CsvServiceProvider::class,
+        \DivArt\ShortLink\ShortLinkServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -238,5 +239,6 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'CsvReader' => Wilgucki\Csv\Facades\Reader::class,
         'CsvWriter' => Wilgucki\Csv\Facades\Writer::class,
+        'ShortLink' => \DivArt\ShortLink\Facades\ShortLink::class,
     ],
 ];
