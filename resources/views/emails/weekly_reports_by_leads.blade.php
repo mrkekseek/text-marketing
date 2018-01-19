@@ -4,11 +4,11 @@ Hi {{ $firstname }},<br />
 
 Hope you had a great week! Here’s a snapshot of your past week on ContractorTexter:<br />
 
-{{ $result['clients_count'] }} of HomeAdvisor Leads<br />
-{{ $result['clicked_count'] }} of Leads that clicked on the link to your booking site<br />
-{{ $result['clicked_client'] }}<br />
-{{ $result['reply_count'] }} of Leads that texted you back<br />
-{{ $result['reply_client'] }}<br />
+<ul style="padding: 0">
+	<li><p>{{ $result['clients_count'] }} HomeAdvisor Leads</p></li>
+	<li><p>{{ $result['clicked_count'] }} Leads clicked on the link to your booking site: <i>{{ $result['clicked_client'] }}</i></p></li>
+	<li><p>{{ $result['reply_count'] }} Leads texted you back: <i>{{ $result['reply_client'] }}</i></p></li>
+</ul>
 
 Remember to ask your clients their thoughts on the text so we can improve and close more.<br />
 
