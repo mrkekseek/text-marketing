@@ -8,7 +8,7 @@ use App\Survey;
 use App\User;
 use App\Question;
 use App\Libraries\ApiValidate;
-use Bitly;
+use DivArt\ShortLink\Facades\ShortLink;
 use App\Http\Requests\SeancesCreateRequest;
 use App\Http\Services\SurveysService;
 use Illuminate\Http\Request;
@@ -256,7 +256,8 @@ class SeancesController extends Controller
 
 	public function url($code)
 	{
-        list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/seances/'.$code));
+        list($protocol, $url) = explode('://', ShortLink::bitly(config('app.url').'/seances/'.$code));
+        //list($protocol, $url) = explode('://', Bitly::getUrl(config('app.url').'/seances/'.$code));
 		return $url;
 	}
 
