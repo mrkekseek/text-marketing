@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c78becede82861394aa0d0e115d4f98",
+    "content-hash": "8dd0489e0b53f755b5edc6eaa0de1714",
     "packages": [
         {
             "name": "cartalyst/collections",
@@ -187,6 +187,62 @@
                 "stripe"
             ],
             "time": "2017-08-30T14:58:24+00:00"
+        },
+        {
+            "name": "div-art/shortlink",
+            "version": "0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/div-art/ShortLink.git",
+                "reference": "77d4c70fc10786abd5cb0b365e418b86ecbd8558"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/div-art/ShortLink/zipball/77d4c70fc10786abd5cb0b365e418b86ecbd8558",
+                "reference": "77d4c70fc10786abd5cb0b365e418b86ecbd8558",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "6.*",
+                "illuminate/support": "~5",
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "DivArt\\ShortLink\\ShortLinkServiceProvider"
+                    ],
+                    "aliases": {
+                        "ShortLink": "DivArt\\ShortLink\\Facades\\ShortLink"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "DivArt\\ShortLink\\": "src/"
+                },
+                "files": [
+                    "src/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Div-Art",
+                    "email": "info@div-art.com"
+                }
+            ],
+            "description": "A Laravel 5.5 shortener package",
+            "keywords": [
+                "div-art",
+                "laravel",
+                "shortlink"
+            ],
+            "time": "2018-01-19T08:45:50+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",

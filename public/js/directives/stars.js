@@ -1,6 +1,6 @@
 angular.module('app').directive('stars', function() {
 	return {
-    	controller: function ($scope, $element, $attrs) {
+    	controller: function($scope, $element, $attrs) {
     		$scope.starsColor = $attrs.starsColor || '#FEA40C';
     		$scope.starsAlign = $attrs.starsAlign || 'none';
     		$scope.starsSize = $attrs.starsSize || '16';
