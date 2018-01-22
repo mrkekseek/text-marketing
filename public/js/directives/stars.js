@@ -1,38 +1,52 @@
 angular.module('app').directive('stars', function() {
+    function getTemplate() {
+        var template = '';
+        template += '<span style="{{mainOptions}};">';
+        template +=     '<span ng-repeat="s in stars track by $index">';
+        template +=         '<i class="fa fa-star {{starsSpin}}"></i>';
+        template +=         '<br ng-show="starsOrientation" />';
+        template +=     '</span>';
+        template += '</span>';
+        return template;
+    };
+
+    function link(scope, element, attrs, ctrl) {
+        console.log('link');
+        scope.starsSpin = attrs.starsSpin == 'true' ? 'fa-spin' : '';
+        scope.starsOrientation = attrs.starsOrientation == 'vertical' ? true : false;
+        
+        scope.options = {
+            'align': 'float:' + (attrs.starsAlign || 'none'),
+            'size': 'font-size:' +  (attrs.starsSize || '16') + 'px',
+            'color': 'color:' + (attrs.starsColor || '#FEA40C'),
+            'padding': 'padding:' + (attrs.starsPadding || '1') + 'px',
+            'white-space': 'white-space:' + (attrs.starsWrap || 'nowrap')
+        };
+
+        scope.mainOptions = ctrl.getStyle(scope.options);
+        scope.stars = ctrl.getStars(attrs.stars);
+    };
 	return {
-    	controller: function($scope, $element, $attrs) {
-    		$scope.starsColor = $attrs.starsColor || '#FEA40C';
-    		$scope.starsAlign = $attrs.starsAlign || 'none';
-    		$scope.starsSize = $attrs.starsSize || '16';
-    		$scope.starsPadding = $attrs.starsPadding || '1';
-    		$scope.starsWrap = $attrs.starsWrap || 'nowrap';
-    		$scope.starsSpin = $attrs.starsSpin == 'true' ? 'fa-spin' : '';
-    		$scope.starsOrientation = $attrs.starsOrientation == 'vertical' ? true : false;
-    		
-    		$scope.options = {
-    			'align': 'float:' + $scope.starsAlign,
-    			'size': 'font-size:' + $scope.starsSize + 'px',
-    			'color': 'color:' + $scope.starsColor,
-    			'padding': 'padding:' + $scope.starsPadding + 'px',
-    			'white-space': 'white-space:' + $scope.starsWrap
-    		};
+        scope: {},
+        controller: ['$scope', function directiveController($scope) {
+            console.log('controller');
+            this.getStyle = function(options) {
+                var temp = [];
+                for (var k in options) {
+                    if (options[k] == 'color:gold') {
+                        options[k] = options[k].replace('gold', '#FEA40C'); 
+                    }
+                    temp.push(options[k]);
+                }
+                return temp.join(';');
+            };
 
-    		$scope.getStyle = function() {
-    			var temp = [];
-    			for (var k in $scope.options) {
-    				if ($scope.options[k] == 'color:gold') {
-    					$scope.options[k] = $scope.options[k].replace('gold', '#FEA40C'); 
-    				}
-    				temp.push($scope.options[k]);
-    			}
-    			return temp.join(';');
-    		};
-
-    		$scope.getStars = function() {
-	            return new Array($attrs.stars * 1);
-	        }
-        },
+            this.getStars = function(stars) {
+                return new Array(stars * 1);
+            }
+        }],
+    	link: link,
     	replace: true,
-    	template: '<span style="{{getStyle()}};"><span ng-repeat="s in getStars() track by $index"><i class="fa fa-star {{starsSpin}}"></i><br ng-show="starsOrientation" /></span></span>'
+    	template: getTemplate
 	}
 });

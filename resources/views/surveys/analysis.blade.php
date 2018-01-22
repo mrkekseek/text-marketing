@@ -5,6 +5,8 @@
 				<span>{{ __('Analysis') }}</span>
 				<i class="fa fa-question-circle-o help-icon" uib-tooltip="This is the Analysis page for the Star Rating Question. You can filter by date and see the Written Comments (for responses less than 5 stars). The Response Rate is the % of clients who answered the Star Rating Question. The Social Rate is the % that gave you 5 stars and also left an online review." tooltip-placement="right" aria-hidden="true"></i>
 			</h2>
+			<!--<div big-stars ng-model="test">@{{nameBob}}</div>-->
+			
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="text-center">

@@ -26,7 +26,6 @@
         $scope.get = function() {
             request.send('/dialogs', {}, function (data) {
                 $scope.dialogs = data;
-                console.log($scope.dialogs);
                 if ($scope.dialogs.length) {
                     var temp = $location.path().split('/');
                     if (temp[3]) {
@@ -51,9 +50,10 @@
         };
 
         $scope.getSuffix = function(num) {
-            var res = '';
             if (num) {
                 num = num.toString();
+                if (num == '11' || '12' || '13') { return 'th'; }
+                var res = '';
                 switch(num.slice(num.length - 1)) {
                     case '1': res = 'st'; break;
                     case '2': res = 'nd'; break;
@@ -70,21 +70,11 @@
             $scope.activeClient.id = client.id;
             request.send('/dialogs/' + client.id, {}, function (data) {
                 $scope.messages = data;
-                console.log($scope.messages);
                 for (var k in $scope.messages) {
                     var date = new Date($scope.messages[k].created_at);
                     $scope.messages[k].created_at = date;
                 }
             }, 'get');
-        };
-
-        $scope.getSuffix = function(day) {
-            switch (day) {
-                case '1': return 'st';
-                case '2': return 'nd';
-                case '3': return 'rd';
-                default: return  'th';
-            }
         };
 
         $scope.maxChars = function() {
@@ -143,8 +133,9 @@
 
     function MarketingSettingsCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger) {
         $scope.inputs = [''];
-
+        $scope.ha = {'text': 'some'};
         $scope.init = function() {
+            $scope.get();
             if ($scope.user.additional_phones) {
                 var temp = $scope.user.additional_phones.split(',');
                 $scope.inputs = [];
@@ -152,6 +143,12 @@
                     $scope.inputs.push(temp[k]);
                 }
             }
+        };
+
+        $scope.get = function() {
+            request.send('/homeadvisor', {}, function (data) {
+                $scope.ha = data;
+            }, 'get');
         };
 
         $scope.addInput = function() {
@@ -163,6 +160,8 @@
         };
 
         $scope.saveSettings = function() {
+            console.log($scope.ha);
+            return;
             var post_mas = {
                 'company_name': $scope.user.company_name,
                 'additional_phones': $scope.inputs
