@@ -65,7 +65,6 @@ class SendReportsByLeads extends Command
             
             $result['reply_client'] = ! empty($result['reply_client']) ? implode(', ', $result['reply_client']) : '';
             $result['clicked_client'] = ! empty($result['clicked_client']) ? implode(', ', $result['clicked_client']) : '';
-            
             Notification::send($user, new WeeklyReportsByLeads($user->firstname, $result));
         }
     }

@@ -1,6 +1,6 @@
 angular.module('app').directive('charSet', function(getShortUrl, logger) {
 	return {
-  		require: 'ngModel',
+  		require: ['charSet', 'ngModel'],
 		scope: {
 			company: '=company',
 			firstname: '=btnFirstname',
@@ -13,7 +13,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			id: '=uniqueId',
 			result: '=ngModel'
 		},
-		controller: ['$scope', '$timeout', function CharSetCtrl($scope, $timeout) {
+		controller: ['$scope', function CharSetCtrl($scope) {
 			$scope.optout = $scope.company ? ' Txt STOP to OptOut' : '';
 			$scope.minLms = 140 - $scope.optout.length - ($scope.company ? $scope.company.length - 2 : 0);
 			$scope.max = ($scope.lms ? 500 : 140) - $scope.optout.length - ($scope.company ? $scope.company.length - 2 : 0);
