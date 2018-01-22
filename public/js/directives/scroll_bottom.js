@@ -5,8 +5,7 @@ angular.module('app').directive('scrollBottom', function () {
     },
     link: function (scope, element) {
       scope.$watchCollection('scrollBottom', function (newValue) {
-        if (newValue)
-        {
+        if (newValue) {
           $(element).scrollTop($(element)[0].scrollHeight);
         }
       });
