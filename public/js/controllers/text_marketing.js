@@ -160,8 +160,8 @@
         };
 
         $scope.saveSettings = function() {
-            console.log($scope.ha);
-            return;
+            //console.log($scope.ha);
+            //return;
             var post_mas = {
                 'company_name': $scope.user.company_name,
                 'additional_phones': $scope.inputs

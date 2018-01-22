@@ -1,5 +1,8 @@
 angular.module('app').directive('textArea', function(getShortUrl, logger) {
 	return {
+		scope: {
+			model: '=ngModel'
+		},
 		restrict: 'CEAM',
 		require: ['textArea', 'ngModel'],
 		controller: ['$scope', function TextAreaCtrl($scope) {			
@@ -20,7 +23,6 @@ angular.module('app').directive('textArea', function(getShortUrl, logger) {
 	            	textAreaCtrl.init(newValue);
 	            }
 	        });
-	        attrs.ngModel = textAreaCtrl.result();
 	        scope.max = 500;
 		},
 		replace: true,
