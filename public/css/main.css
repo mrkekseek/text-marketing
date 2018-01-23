@@ -676,6 +676,12 @@ li.toggle-provider {
 	margin-left: 30px;
 }
 
+.switch-box {
+	display: inline-block;
+	vertical-align: middle;
+	margin-left: 30px;
+}
+
 .phones-list:hover .icon-client {
 	display: inline-block;
 }
@@ -693,6 +699,10 @@ li.toggle-provider {
 	vertical-align: top;
 	font-weight: normal;
 	margin-left: 5px;
+}
+
+.team-leader span {
+	margin-left: 0px;
 }
 
 .header-container > .top-header .dropdown-menu .active a {
