@@ -18,14 +18,16 @@ class AppointmentController extends Controller
 
     	if ($this->textValidate($data, $user, $client)) {
     		$phones = [];
+            $date = $this->getDate($data['schedule'], $data['date'], $user);
 	    	$appointment = $user->appointments()->create([
 	            'client_id' => $client->id,
-	            'text' => $data['text']
+	            'text' => $data['text'],
+                'schedule' => $data['schedule'],
+                'date' => $date
 	        ]);
 
 	        $phones[] = ['phone' => $client->phone];
-
-            $date = $this->getDate($data['schedule'], $data['date'], $user);
+            
             $delay = Carbon::now()->diffInSeconds($date);
 
 	    	SendAppointment::dispatch($appointment, $phones, $user)->delay($delay)->onQueue('texts');
