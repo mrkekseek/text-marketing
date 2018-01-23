@@ -10,11 +10,22 @@
         $scope.selectedClient = {};
         $scope.employee = {};
         $scope.time = new Date();
+        $scope.date = new Date();
         $scope.file = {};
+        $scope.popup = {};
+        $scope.activeDate = false;
+        $scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
         $scope.init = function() {
             $scope.getClients();
             $scope.getEmployees();
+        };
+
+        $scope.openDate = function () {
+            $scope.popup.popup_date = ! $scope.popup.popup_date;
+        };
+
+        $scope.toggleDate = function() {
         };
 
         $scope.getClients = function(){
@@ -155,7 +166,17 @@
         };
 
         $scope.createText = function() {
-            return 'Hi ' + $scope.selectedClient.firstname + ', your technician ' + $scope.employee.firstname + ' will be there at ' + $scope.createTime() + '. If there is an issue please text back, thanks!';
+            return 'Hi ' + $scope.selectedClient.firstname + ', your technician ' + $scope.employee.firstname + ' will be there at ' + $scope.createTime() + $scope.createDate() + '. If there is an issue please text back, thanks!';
+        };
+
+        $scope.createDate = function() {
+            var date = '';
+            if ($scope.activeDate) {
+                var year = $scope.date.getFullYear().toString();
+                console.log(year);
+                date = ' on ' + $scope.date.getDate() + '/' + ($scope.date.getMonth() + 1) + '/' + year.slice(2);
+            }
+            return date;
         };
 
         $scope.createTime = function() {
