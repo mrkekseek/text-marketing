@@ -17,6 +17,7 @@ use App\Link;
 use App\Url;
 use App\ContactList;
 use App\SocialReview;
+use App\Setting;
 
 use App\Libraries\Api;
 use App\Libraries\Jwt;
@@ -795,6 +796,33 @@ class UsersController extends Controller
     			}
     		}
     	}
+    }
+
+    public function settings()
+    {
+    	return Setting::first();
+    }
+
+    public function settingsCreate(Request $request)
+    {
+    	$data = $request->only('followup_text');
+    	$setting = Setting::create($data);
+    	$this->message('Settings was successfully saved', 'success');
+    	return $setting->id;
+
+    }
+
+    public function settingsUpdate(Request $request, Setting $setting)
+    {
+    	$data = $request->only('followup_text');
+    	$setting->update($data);
+    	$this->message('Settings was successfully saved', 'success');
+    	return $setting->id;
+    }
+
+    public function companyNames()
+    {
+    	return User::companyNames();
     }
 
     public function saveLog($data, $source)

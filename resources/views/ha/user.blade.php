@@ -61,7 +61,7 @@
 							<div class="form-group">
 								<label>{{ __('Follow-Up Text') }}</label>
 								<i class="fa fa-question-circle-o" uib-tooltip="Follow-Up Text goes out an hour after the Instant Text, if the Lead does not click on your link or does not text you back." tooltip-placement="right" aria-hidden="true"></i>
-								<input class="form-control" type="text" disabled="disabled" ng-model="followupText" />
+								<input class="form-control" type="text" disabled="disabled" ng-value="getFollowUpText()" />
 							</div>
 
 							<div class="form-group">

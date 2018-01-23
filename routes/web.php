@@ -40,6 +40,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('pages/menu', 'PagesController@menu');
 
+	Route::get('settings', 'UsersController@settings');
+	Route::put('settings', 'UsersController@settingsCreate');
+	Route::post('settings/{setting}', 'UsersController@settingsUpdate');
+	Route::get('settings/companyNames', 'UsersController@companyNames');
+
 	Route::put('users/company/{user?}', 'UsersController@company');
 	Route::get('users/status/{user?}', 'UsersController@status');
 	Route::get('users/partners', 'UsersController@partners');
