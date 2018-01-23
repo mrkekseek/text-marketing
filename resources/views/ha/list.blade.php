@@ -1,8 +1,5 @@
 <div class="page page-table" data-ng-controller="LinksCtrl" data-ng-init="init()">
 	<h2>
-		<div class="pull-right">
-			<!--<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Link') }}</span></button>-->
-		</div>
 		{{ __('HomeAdvisor Links') }}
 	</h2>
 
@@ -50,12 +47,6 @@
 							</div>
 						</th>
 
-						<!--<th class="th-button">
-						</th>
-
-						<th class="th-button">
-						</th>-->
-
 						<th class="th-button">
 						</th>
 					</tr>
@@ -82,18 +73,6 @@
 						<td>
 							@{{ link.success }}
 						</td>
-
-						<!--<td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-success" ng-click="create(link.id)">
-								<i class="fa fa-pencil-square-o"></i>
-							</a>
-						</td>
-
-						<td class="td-button text-center">
-							<a href="javascript:;" class="a-icon text-danger" ng-click="remove(link.id)">
-								<i class="fa fa-trash"></i>
-							</a>
-						</td>-->
 
 						<td class="td-button text-center">
 							<button ng-show="! link.user.homeadvisors.send_request" class="btn btn-default" uib-tooltip="Not activate yet">{{ __("Send") }}</button>

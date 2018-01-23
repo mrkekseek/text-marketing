@@ -32,9 +32,6 @@
 									</span>
 								</div>
 							</div>
-							<!--<div class="form-group">
-								<div text-area ng-model="ha.text"></div>
-							</div>-->
 							<div class="form-group">
 					    		<button type="button" class="btn btn-primary" ng-click="saveSettings();">{{ __('Save') }}</button>
 				    		</div>
