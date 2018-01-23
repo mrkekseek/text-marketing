@@ -108,6 +108,37 @@
 
 							<div class="divider divider-dashed"></div>
 
+							<div ng-show="employee.id">
+								<label class="ui-radio">
+									<input name="appointmentSchedule" ng-model="appointmentSchedule" type="radio" value="0" />
+									<span>{{ __('Send Now') }}</span>
+								</label>
+
+								<label class="ui-radio">
+									<input name="appointmentSchedule" ng-model="appointmentSchedule" type="radio" value="1" />
+									<span>{{ __('Schedule Send') }}</span>
+								</label>
+
+								<div ng-show="appointmentSchedule == 1">
+									<div class="calendar-box">
+										<span class="input-group">
+											<input type="text" class="form-control" ng-model="appointmentDate" uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup.popup_appointment_date" datepicker-options="dateOptions" close-text="Close" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default" ng-click="openDate('popup_appointment_date')"><i class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+										</span>
+									</div>
+
+									<div class="time-box">
+										<div uib-timepicker ng-model="appointmentTime" hour-step="1" minute-step="1" min="timeMin" max="timeMax" show-meridian="true"></div>
+									</div>
+								</div>
+
+								<div class="divider divider-dashed"></div>
+							</div>
+
+							
+
 							<div uib-alert class="alert-info" ng-show=" ! employee.id">
 								{{ __('Choose from list or create new Employee to send message') }}
 							</div>
@@ -160,7 +191,7 @@
 												<span class="input-group">
 													<input type="text" class="form-control" ng-disabled="! activeDate" ng-model="date" uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup.popup_date" datepicker-options="dateOptions" close-text="Close" />
 													<span class="input-group-btn">
-														<button type="button" class="btn btn-default" ng-click="openDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+														<button type="button" class="btn btn-default" ng-click="openDate('popup_date')"><i class="glyphicon glyphicon-calendar"></i></button>
 													</span>
 												</span>
 											</div>
