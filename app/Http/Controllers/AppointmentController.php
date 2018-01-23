@@ -14,9 +14,9 @@ class AppointmentController extends Controller
 {
     public function create(Request $request, User $user, Client $client)
     {
-    	$data = $request->only(['text']);
+    	$data = $request->only(['text', 'date', 'schedule']);
 
-    	if ($this->textValidate($data['text'], $user, $client)) {
+    	if ($this->textValidate($data, $user, $client)) {
     		$phones = [];
 	    	$appointment = $user->appointments()->create([
 	            'client_id' => $client->id,
@@ -25,12 +25,15 @@ class AppointmentController extends Controller
 
 	        $phones[] = ['phone' => $client->phone];
 
-	    	SendAppointment::dispatch($appointment, $phones, $user)->onQueue('texts');
+            $date = $this->getDate($data['schedule'], $data['date'], $user);
+            $delay = Carbon::now()->diffInSeconds($date);
+
+	    	SendAppointment::dispatch($appointment, $phones, $user)->delay($delay)->onQueue('texts');
 	    	return $this->message(__('Message was send'), 'success');
     	}
     }
 
-    public function textValidate($text, $user, $client)
+    public function textValidate($data, $user, $client)
     {
     	if ( ! ApiValidate::companyExists($user->company_name, $user)) {
             return $this->message('This Company Name isn\'t verified');
@@ -45,7 +48,7 @@ class AppointmentController extends Controller
             $phones = true;
             $limit = true;
             
-            $message = $text;
+            $message = $data['text'];
 
             if ( ! ApiValidate::messageLength($message, $user->company_name)) {
                 $length = false;
@@ -74,11 +77,30 @@ class AppointmentController extends Controller
 
         $date = Carbon::now()->subHours($user->offset);
 
+        if ( ! empty($data['schedule'])) {
+            $time = $data['date'];
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+        }
+        
         if (ApiValidate::underBlocking($date)) {
             return $this->message('You can\'t send texts before 9 AM.');
         }
 
         return 1;
+    }
+
+    public function getDate($schedule, $time, $user)
+    {
+        $date = Carbon::now()->subHours($user->offset);
+        if ( ! empty($schedule)) {
+            $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
+        }
+
+        if (empty($validate)) {
+            $date->addHours($user->offset);
+        }
+
+        return $date;
     }
 
     public function push(Request $request, Appointment $appointment)
