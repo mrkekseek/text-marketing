@@ -121,6 +121,14 @@ class User extends Authenticatable
         }])->get();
     }
 
+    static public function companyNames()
+    {
+        return self::where('type', 2)
+                    ->where('plans_id', 'home-advisor-contractortexter')
+                    ->where('company_name', '!=', '')
+                    ->where('company_status', 'verified')->get()->pluck('company_name');
+    }
+
     protected static function boot()
     {
         parent::boot();

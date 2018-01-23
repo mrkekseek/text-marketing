@@ -260,9 +260,7 @@ class HomeadvisorController extends Controller
     	$linkPos = strpos($text, 'bit.ly/');
     	if ($linkPos !== false) {
     		$originLink = substr($text, $linkPos, 14);
-    		$fakeLink = ShortLink::bitly(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
-    		//$fakeLink = Bitly::getUrl(config('app.url').'/magic/'.$dialog->id.'/'.$originLink);
-    		$fakeLink = str_replace('http://', '', $fakeLink);
+    		$fakeLink = ShortLink::bitly(config('app.url').'/magic/'.$dialog->id.'/'.$originLink, false);
     		$text = str_replace($originLink, $fakeLink, $ha->text);
     	}
     	return $text;
@@ -302,7 +300,7 @@ class HomeadvisorController extends Controller
 	{
 		$phones = [];
 		$temp = [];
-		$link = Bitly::getUrl(config('app.url').'/ha/user/');
+		$link = ShortLink::bitly(config('app.url').'/ha/user/');
 		$link = str_replace('http://', '', $link);
 		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
 		

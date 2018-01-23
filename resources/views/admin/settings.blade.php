@@ -10,11 +10,11 @@
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label>{{ __('Follow-Up Text') }}</label>
-								<div text-area ng-model="settings.followUpText" btn-link="true"></div>
+								<div text-area ng-model="settings.followup_text" btn-link="true" company="companyName"></div>
 							</div>
 							
 							<div class="form-group">
-					    		<button type="button" class="btn btn-primary" ng-click="saveSettings();">{{ __('Save') }}</button>
+					    		<button type="button" class="btn btn-primary" ng-click="save();">{{ __('Save') }}</button>
 				    		</div>
 						</div>
 					</div>
