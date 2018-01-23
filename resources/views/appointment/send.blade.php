@@ -153,7 +153,27 @@
 											
 										</div>
 										<div class="col-sm-6" ng-show="employee.company_status == 'verified' && ! companyChanged">
-											<div uib-timepicker ng-model="time" show-meridian="true"></div>
+											<div class="time-box">
+												<div uib-timepicker ng-model="time" show-meridian="true"></div>
+											</div>
+											<div class="calendar-box">
+												<span class="input-group">
+													<input type="text" class="form-control" ng-disabled="! activeDate" ng-model="date" uib-datepicker-popup="dd-MMMM-yyyy" is-open="popup.popup_date" datepicker-options="dateOptions" close-text="Close" />
+													<span class="input-group-btn">
+														<button type="button" class="btn btn-default" ng-click="openDate()"><i class="glyphicon glyphicon-calendar"></i></button>
+													</span>
+												</span>
+											</div>
+											<div class="switch-box">
+												<label class="ui-switch ui-switch-success ui-switch-sm url-switch">
+													<input type="checkbox" ng-model="activeDate" ng-change="toggleDate()" />
+													<i></i>
+													<span ng-switch="activeDate" class="team-leader">{{ __('Date ') }} 
+														<span class="team-leader" ng-switch-when="false">{{ __('off') }}</span>
+														<span class="team-leader" ng-switch-when="true">{{ __('on') }}</span>
+													</span>
+												</label>
+											</div>
 										</div>
 									</div>
 								</div>
