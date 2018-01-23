@@ -11,7 +11,6 @@ angular.module('app').directive('stars', function() {
     };
 
     function link(scope, element, attrs, ctrl) {
-        console.log('link');
         scope.starsSpin = attrs.starsSpin == 'true' ? 'fa-spin' : '';
         scope.starsOrientation = attrs.starsOrientation == 'vertical' ? true : false;
         
@@ -27,9 +26,9 @@ angular.module('app').directive('stars', function() {
         scope.stars = ctrl.getStars(attrs.stars);
     };
 	return {
+        restrict: 'A',
         scope: {},
         controller: ['$scope', function directiveController($scope) {
-            console.log('controller');
             this.getStyle = function(options) {
                 var temp = [];
                 for (var k in options) {

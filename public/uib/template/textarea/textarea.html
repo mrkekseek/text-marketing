@@ -1,41 +1,42 @@
 <div>
+
 	<div class="chars-area">
-		<textarea id="{{ id }}" class="form-control" placeholder="Message Text" ng-model="model" maxlength="{{ max }}"></textarea>
+		<textarea id="{{ id }}" class="form-control" placeholder="Message Text" ng-model="model" maxlength="{{ max }}" ng-change="charCount()"></textarea>
 		<span>
-			<span ng-show="size > minLms">3 messages </span>
-			<span>{{ size }}</span> /
+			<span ng-show="size > 140">3 messages </span>
+			<span>{{ charCount() }}</span> /
 			<span>{{ max }}</span>
-			<span class="fa fa-question-circle-o" uib-tooltip="You can go over {{ minLms }} characters and have {{ max }}. This will cost 3 text credits." tooltip-placement="left"></span>
+			<span class="fa fa-question-circle-o" uib-tooltip="You can go over 140 characters and have {{ max }}. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
 
-	<div class="btn-group btn-group-justified move-top-pixel" ng-show="! showMessageTextUrl">
+	<div class="btn-group btn-group-justified move-top-pixel" ng-show="! showUrl">
 		<div class="btn-group" ng-if="firstname">
-			<button ng-click="insert(firstnameTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert('[$FirstName]')" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-user"></i> First Name
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="lastname">
-			<button ng-click="insert(lastnameTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert('[$LastName]')" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-user-o"></i> Last Name
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="link">
-			<button ng-click="insert(linkTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert('[$Link]')" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-link"></i> Review Link
 			</button>
 		</div>
 
-		<div class="btn-group" ng-if="shortlink">
+		<div class="btn-group" ng-if="shortLink">
 			<button ng-click="toggleUrl()" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-link"></i> Short Link
 			</button>
 		</div>
 	</div>
 
-	<div ng-show="showMessageTextUrl" class="input-group short-url-box">
+	<div ng-show="showUrl" class="input-group short-url-box">
 		<input class="form-control" type="text" placeholder="Add your link here" ng-model="shortLinkMessageText" />
 		<div class="input-group-btn">
 			<button ng-click="insertShortLink(shortLinkMessageText)" type="button" class="btn btn-sm btn-primary">
@@ -46,4 +47,6 @@
 			</button>
 		</div>
 	</div>
+	
 </div>
+<div stars="5"></div>

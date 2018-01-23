@@ -133,9 +133,8 @@
 
     function MarketingSettingsCtrl($rootScope, $scope, $uibModal, request, langs, $location, logger) {
         $scope.inputs = [''];
-        $scope.ha = {'text': 'some'};
+
         $scope.init = function() {
-            $scope.get();
             if ($scope.user.additional_phones) {
                 var temp = $scope.user.additional_phones.split(',');
                 $scope.inputs = [];
@@ -143,12 +142,6 @@
                     $scope.inputs.push(temp[k]);
                 }
             }
-        };
-
-        $scope.get = function() {
-            request.send('/homeadvisor', {}, function (data) {
-                $scope.ha = data;
-            }, 'get');
         };
 
         $scope.addInput = function() {
@@ -160,8 +153,6 @@
         };
 
         $scope.saveSettings = function() {
-            //console.log($scope.ha);
-            //return;
             var post_mas = {
                 'company_name': $scope.user.company_name,
                 'additional_phones': $scope.inputs
