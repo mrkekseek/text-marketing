@@ -37,7 +37,7 @@ class MessagesController extends Controller
             $data['finish_date'] = $this->getFinishDate($request->finish_date, auth()->user());
             $data['token'] = $data['date'];
             $data['active'] = true;
-            $data['file'] = '';
+            $data['file'] = ! empty($data['file']) ? $data['file'] : '';
             $message = auth()->user()->messages()->create($data);
             
             if ( ! empty($data['file'])) {
