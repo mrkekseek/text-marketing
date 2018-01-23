@@ -1,7 +1,8 @@
 angular.module('app').directive('textArea', function($http, logger) {
 	return {
 		scope: {
-			model: '=ngModel'
+			model: '=ngModel',
+			companyName: '=company'
 		},
 		restrict: 'CEAM',
 		require: ['textArea', 'ngModel'],
@@ -10,14 +11,13 @@ angular.module('app').directive('textArea', function($http, logger) {
 			$scope.showUrl = false;
 			$scope.id = 'test';
 
-			this.initOptions = function() {
-				
-			};
-
 			$scope.charCount = function () {
 				$scope.size = 0;
 				if ($scope.model && $scope.model != '') {
 					$scope.size = $scope.model.length;
+					if ($scope.model.indexOf('[$Link]') + 1) {
+						$scope.size += 14 - '[$Link]'.length;
+					}
 				}
 				return $scope.size;
 			};
@@ -53,6 +53,15 @@ angular.module('app').directive('textArea', function($http, logger) {
 				$scope.showUrl = ! $scope.showUrl;
 			};
 
+			$scope.maxChars = function() {
+				var count = 0;
+				count = $scope.max;
+				if ($scope.companyName && $scope.companyName != '') {
+					count -= $scope.companyName.length;
+				}
+				return count;
+			};
+
 			$scope.$watch($scope.model, function(value) {
 	            $scope.charCount();
 	        });
@@ -62,6 +71,7 @@ angular.module('app').directive('textArea', function($http, logger) {
 			parentCtrl = ctrls[1];
 
 	        scope.max = attrs.max || 140;
+
 	        scope.firstname = attrs.btnFirstname == 'true' ? true : false;
 	        scope.lastname = attrs.btnLastname == 'true' ? true : false;
 	        scope.link = attrs.btnLink == 'true' ? true : false;

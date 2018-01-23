@@ -10,6 +10,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Libraries\Api;
 use App\Dialog;
 use App\User;
+use App\Setting;
+use DivArt\ShortLink\Facades\ShortLink;
 
 class SendFollowUpText implements ShouldQueue
 {
@@ -18,6 +20,7 @@ class SendFollowUpText implements ShouldQueue
     protected $dialog;
     protected $clients;
     protected $user;
+    protected $test;
 
     /**
      * Create a new job instance.
@@ -29,6 +32,7 @@ class SendFollowUpText implements ShouldQueue
         $this->dialog = $dialog;
         $this->clients = $clients;
         $this->user = $user;
+        $this->test = $this->createText($this->dialog->text);
     }
 
     /**
@@ -42,11 +46,13 @@ class SendFollowUpText implements ShouldQueue
 
             $dialog =  $this->user->dialogs()->create([
                 'clients_id' => $this->dialog->clients_id,
-                'text' => 'Last text - any interest in our service? Thanks!',
+                'text' => '',
                 'file' => '',
                 'my' => true,
                 'status' => 2,
             ]);
+
+            $dialog->update(['text' => $this->createText($this->dialog->text, $dialog->id)]);
 
             $response = Api::followUp($dialog->id, $this->clients, $dialog->text, $this->user->company_name, $this->user->offset);
             if ($response['code'] != 200) {
@@ -59,5 +65,25 @@ class SendFollowUpText implements ShouldQueue
                 }
             }
         }
+    }
+
+    public function createText($text, $id = false)
+    {
+        $followUpText = '';
+        $settings = Setting::first();
+        if ( ! empty($settings->followup_text)) {
+            $followUpText = $settings->followup_text;
+        }
+
+        $linkPos = strpos($text, 'bit.ly/');
+        if ($linkPos !== false) {
+            $originLink = substr($text, $linkPos, 14);
+            $longLink = ShortLink::expand($originLink);
+            $temp = explode('/', $longLink);
+            $link = ShortLink::bitly(config('app.url').'/magic/'.$id.'/bit.ly/'.array_pop($temp), false);
+            $followUpText = str_replace('[$Link]', $link, $followUpText);
+        }
+
+        return $followUpText;
     }
 }

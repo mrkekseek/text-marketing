@@ -11,11 +11,13 @@
         $scope.oldCompany = angular.copy($scope.user.company_name);
         $scope.file = {};
         $scope.request = false;
-        $scope.followupText = 'Last text - any interest in our service? Thanks!';
+        $scope.followupText = '';
+        $scope.settings = {};
 
         $scope.init = function() {
             $scope.get();
             $scope.getLeads();
+            $scope.getSettings();
         };
 
         $scope.get = function() {
@@ -49,6 +51,27 @@
                     }
                 }
             }, 'get');
+        };
+
+        $scope.getSettings = function() {
+            request.send('/settings', {}, function (data) {
+                if (data) {
+                    $scope.settings = data;
+                    $scope.followupText = $scope.settings.followup_text;
+                }
+            }, 'get');
+        };
+
+        $scope.getFollowUpText = function() {
+            var link = '';
+            var text = $scope.followupText;
+            if ($scope.ha.text) {
+                if ($scope.ha.text.indexOf('bit.ly') + 1) {
+                    link = $scope.ha.text.slice($scope.ha.text.indexOf('bit.ly'), $scope.ha.text.indexOf('bit.ly') + 14);
+                }
+                text = text.replace('[$Link]', link);
+            }
+            return text;
         };
 
         $scope.getSuffix = function(day) {

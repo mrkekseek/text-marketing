@@ -1,10 +1,10 @@
 <div>
 	<div class="chars-area">
-		<textarea id="{{ id }}" class="form-control" placeholder="Message Text" ng-model="model" maxlength="{{ max }}" ng-change="charCount()"></textarea>
+		<textarea id="{{ id }}" class="form-control" placeholder="Message Text" ng-model="model" maxlength="{{ maxChars() }}" ng-change="charCount()"></textarea>
 		<span>
 			<span ng-show="size > 140">3 messages </span>
 			<span>{{ charCount() }}</span> /
-			<span>{{ max }}</span>
+			<span>{{ maxChars() }}</span>
 		</span>
 	</div>
 
