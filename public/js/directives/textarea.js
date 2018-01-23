@@ -10,6 +10,10 @@ angular.module('app').directive('textArea', function($http, logger) {
 			$scope.showUrl = false;
 			$scope.id = 'test';
 
+			this.initOptions = function() {
+				
+			};
+
 			$scope.charCount = function () {
 				$scope.size = 0;
 				if ($scope.model && $scope.model != '') {
