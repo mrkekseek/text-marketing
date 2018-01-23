@@ -184,7 +184,7 @@
             var date = '';
             if ($scope.activeDate) {
                 var year = $scope.date.getFullYear().toString();
-                date = ' on ' + $scope.date.getDate() + '/' + ($scope.date.getMonth() + 1) + '/' + year.slice(2);
+                date = ' on ' + ($scope.date.getMonth() + 1) + '/' + $scope.date.getDate() + '/' + year.slice(2);
             }
             return date;
         };
