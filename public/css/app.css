@@ -68,8 +68,9 @@ display: inline;
 	vertical-align: middle;
 }
 
-.appointment-textarea {
+textarea.form-control.appointment-textarea {
 	resize: none;
+	height: 83px;
 }
 
 .init-loader .fa {

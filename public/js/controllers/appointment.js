@@ -15,8 +15,11 @@
         $scope.popup = {};
         $scope.activeDate = false;
         $scope.appointmentSchedule = '0';
+        $scope.windowTime = '0';
         $scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $scope.appointmentDate = new Date();
+        $scope.fromTime = '9AM';
+        $scope.toTime = '9AM';
 
         var date = new Date();
         date.setHours(9, 0);
@@ -37,6 +40,10 @@
         };
 
         $scope.toggleDate = function() {
+        };
+
+        $scope.getArray = function(num) {
+            return new Array(num);
         };
 
         $scope.getClients = function(){
@@ -190,13 +197,20 @@
         };
 
         $scope.createTime = function() {
-            var ampm = $scope.time.getHours() >= 12 ? 'PM' : 'AM';
-            var hours = $scope.time.getHours() > 12 ? $scope.time.getHours() - 12 : $scope.time.getHours();
-            hours = hours.toString().length < 2 ? '0' + hours : hours;
-            var minutes = $scope.time.getMinutes();
-            minutes = minutes.toString().length < 2 ? '0' + minutes : minutes;
+            if ($scope.windowTime == '0') {
+                var ampm = $scope.time.getHours() >= 12 ? 'PM' : 'AM';
+                var hours = $scope.time.getHours() > 12 ? $scope.time.getHours() - 12 : $scope.time.getHours();
+                hours = hours.toString().length < 2 ? '0' + hours : hours;
+                var minutes = $scope.time.getMinutes();
+                minutes = minutes.toString().length < 2 ? '0' + minutes : minutes;
 
-            return hours + ':' + minutes + ' ' + ampm;
+                return hours + ':' + minutes + ' ' + ampm;
+            } else {
+                return $scope.fromTime + ' - ' + $scope.toTime;
+                console.log($scope.fromTime);
+                console.log($scope.toTime);
+            }
+            
         }
 
         $scope.send = function() {

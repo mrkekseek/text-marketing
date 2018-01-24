@@ -154,7 +154,7 @@
 												<span class="input-group-addon bg-warning" ng-show="employee.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
 												<span class="input-group-addon bg-danger" ng-show="employee.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
 												<span class="input-group-btn" ng-show="employee.company_status == '' || companyChanged">
-													<button class="btn btn-default" ng-click="companySave()">{{ __('Save') }}</button>
+													<button class="btn btпеn-default" ng-click="companySave()">{{ __('Save') }}</button>
 												</span>
 											</div>
 										</div>
@@ -177,15 +177,39 @@
 											</div>
 
 											<div ng-show="employee.company_status == 'verified' && ! companyChanged">
-												<div>
-													<textarea rows="3" cols="10" class="form-control appointment-textarea" readonly="readonly">@{{ createText() }}</textarea>
+												<div class="form-group">
+													<textarea class="form-control appointment-textarea" readonly="readonly">@{{ createText() }}</textarea>
 												</div>
 											</div>
 											
 										</div>
 										<div class="col-sm-6" ng-show="employee.company_status == 'verified' && ! companyChanged">
-											<div class="time-box">
-												<div uib-timepicker ng-model="time" show-meridian="true"></div>
+											<div>
+												<label class="ui-radio">
+													<input name="windowTime" ng-model="windowTime" type="radio" value="0" />
+													<span>{{ __('Exact Time') }}</span>
+												</label>
+
+												<label class="ui-radio">
+													<input name="windowTime" ng-model="windowTime" type="radio" value="1" />
+													<span>{{ __('Window Time') }}</span>
+												</label>
+											</div>
+
+											<div class="switch-box">
+												<div uib-timepicker ng-model="time" show-meridian="true" ng-show="windowTime == 0">
+												</div>
+												<div class="wrap-window-time" ng-show="windowTime == 1">
+													<select class="form-control window-time" ng-model="fromTime">
+														<option value="@{{$index + 9}}AM" ng-repeat="item in getArray(4) track by $index">@{{$index + 9}} AM</option>
+														<option value="@{{$index + 1}}PM" ng-repeat="item in getArray(9) track by $index">@{{$index + 1}} PM</option>
+													</select>
+													-
+													<select class="form-control window-time" ng-model="toTime">
+														<option value="@{{$index + 9}}AM" ng-repeat="item in getArray(4) track by $index">@{{$index + 9}} AM</option>
+														<option value="@{{$index + 1}}PM" ng-repeat="item in getArray(9) track by $index">@{{$index + 1}} PM</option>
+													</select>
+												</div>
 											</div>
 											<div class="calendar-box">
 												<span class="input-group">
