@@ -19,7 +19,7 @@
 										<img src="/img/stars.png" alt="">
 									</div>
 									<div class="question-score">
-										@{{ analysis.rating }}
+										@{{ analysis.rating.toFixed(1) }}
 									</div>
 									<a href="javascript:;" class="link-results" uib-popover-template="popover.templateUrl">@{{ analysis.responses }} {{ __('Response') }}@{{ analysis.responses > 1 ? 's' : '' }}</a>
 									
