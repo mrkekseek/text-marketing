@@ -47,6 +47,7 @@ class WeeklyReportsByLeads extends Notification
         return (new MailMessage)
                     ->subject('Weekly Recap')
                     ->from('Uri@ContractorTexter.com')
+                    ->cc('Uri@ContractorTexter.com')
                     ->markdown('emails.weekly_reports_by_leads', [
                         'firstname' => $this->firstname,
                         'result' => $this->result,
