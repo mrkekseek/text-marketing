@@ -1,4 +1,4 @@
-@component('mail::message')
+
 
 <div style="margin: 0 auto; min-width: 320px; background: #EAEAEA;">
 	<div style="text-align: center; background: #fff;">
@@ -63,11 +63,17 @@
 						</td>
 					</tr>
 				</table>
-				<p>{{ $text }}</p>
+				<p style="text-align: center;">{{ $text }}</p>
 			</div>
 		</div>
 		<div style="clear: both;">
 		</div>
 	</div>
 </div>
-@endcomponent
+<table style="width: 100%; color: #74787e;" class="footer" align="center" width="370" cellpadding="0" cellspacing="0">
+    <tr style="background-color: #f5f8fa;">
+        <td class="content-cell" align="center" id="footer" style="padding: 10px;">
+            <p>© {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+        </td>
+    </tr>
+</table>
