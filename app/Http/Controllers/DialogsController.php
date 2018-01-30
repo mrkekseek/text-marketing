@@ -149,7 +149,7 @@ class DialogsController extends Controller
     {
         $phones = [];
         $temp = [];
-        $link = Bitly::getUrl(config('app.url').'/marketing/inbox/'.$dialog->clients_id);
+        $link = Bitly::getUrl(config('app.url').'/magic/inbox/'.$user->id.'/'.$dialog->clients_id);
         $link = str_replace('http://', '', $link);
 
         $text = 'Hi '.$user->firstname .', a lead just texted you a reply. Please click '.$link.' to see it and reply if you like - thanks!';
