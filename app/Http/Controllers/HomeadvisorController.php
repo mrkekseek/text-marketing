@@ -300,7 +300,7 @@ class HomeadvisorController extends Controller
 	{
 		$phones = [];
 		$temp = [];
-		$link = ShortLink::bitly(config('app.url').'/ha/user/');
+		$link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$user->id.'/'.$client->id);
 		$link = str_replace('http://', '', $link);
 		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
 		

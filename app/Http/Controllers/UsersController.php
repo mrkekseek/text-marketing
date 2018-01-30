@@ -651,6 +651,13 @@ class UsersController extends Controller
 		auth()->login($user);
 	}
 
+	public function magicInbox(User $user, Client $client)
+	{
+		auth()->login($user);
+		$link = config('app.url').'/marketing/inbox/'.$client->id;
+		return redirect($link);
+	}
+
 	public function password(UsersPasswordRequest $request)
 	{
 		$user = auth()->user();

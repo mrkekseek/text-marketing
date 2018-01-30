@@ -148,6 +148,7 @@ Route::get('recovery', function() {
 });
 
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
+Route::get('magic/inbox/{user}/{client}', 'UsersController@magicInbox');
 
 Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_fb_token', 'UsersController@facebookToken');
 Route::any('save_fb_reviews', 'UsersController@facebookReviews');
