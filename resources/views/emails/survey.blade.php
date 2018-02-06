@@ -4,7 +4,7 @@
 	<div style="text-align: center; background: #fff;">
 		<div style="background: #fff; max-width: 700px; display: inline-block;">
 			<div>
-				<h2 style="margin-bottom: 0;">{{ $company_name }}</h2>
+				<h1 style="margin-bottom: 0; color: #C82027">{{ $company_name }}</h1>
 			</div>
 			<div class="outer-box" style="padding: 30px; text-align: left;">
 				<p style="text-align: center;">
