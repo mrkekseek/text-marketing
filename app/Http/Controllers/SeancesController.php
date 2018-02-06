@@ -199,7 +199,7 @@ class SeancesController extends Controller
     {
         $delay = Carbon::now()->diffInSeconds($date);
 
-        $job = (new SendEmail($client, $seance, $survey))->delay($delay)->onQueue('emails');
+        $job = (new SendEmail($client, $seance, $survey, auth()->user()->company_name))->delay($delay)->onQueue('emails');
         $this->dispatch($job);
     }
 

@@ -17,17 +17,19 @@ class SendEmail implements ShouldQueue
     protected $client;
     protected $seance;
     protected $survey;
+    protected $company_name;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($client, $seance, $survey)
+    public function __construct($client, $seance, $survey, $company_name)
     {
         $this->client = $client;
         $this->seance = $seance;
         $this->survey = $survey;
+        $this->company_name = ! empty($company_name) ? $company_name : '';
     }
 
     /**
@@ -39,6 +41,6 @@ class SendEmail implements ShouldQueue
     {
         $this->survey['email'] = str_replace('[$FirstName]', $this->client['firstname'], $this->survey['email']);
         $this->survey['subject'] = str_replace('[$FirstName]', $this->client['firstname'], $this->survey['subject']);
-        Mail::to($this->client['email'])->send(new SurveySend($this->seance, $this->survey));
+        Mail::to($this->client['email'])->send(new SurveySend($this->seance, $this->survey, $this->company_name));
     }
 }
