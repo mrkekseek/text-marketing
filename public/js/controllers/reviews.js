@@ -75,6 +75,7 @@
              
             request.send('/analysis/calendar', {'date': time}, function (data) {
                 if (data) {
+                    console.log(data);
                     for (var k in data) {
                         data[k].created_at = $scope.getUserDate(data[k].created_at);
                         var reviewRating = 0;
