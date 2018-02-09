@@ -27,11 +27,13 @@ class AnalysisController extends Controller
         $to = Carbon::create($data['date']['year'], $data['date']['month'], $data['date']['date'], 23, 59, 59);
 
         return auth()->user()->reviews()->whereHas('seances', function($q) use ($from, $to) {
-            $q->where('completed', '!=', '');
+            $q->whereNotNull('completed');
             $q->where('completed', '>', $from);
             $q->where('completed', '<', $to);
         })->with(['seances' => function($q){
             $q->whereNotNull('completed');
+            $q->with('clients');
+            $q->with('answers');
         },'seances.answers', 'seances.clients'])->get();
     }
 }

@@ -53,7 +53,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://app.contractortexter.com'),
+    'url' => env('APP_URL', 'https://app.contractortexter.com'),
 
     /*
     |--------------------------------------------------------------------------
