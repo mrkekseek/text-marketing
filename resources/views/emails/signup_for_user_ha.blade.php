@@ -1,10 +1,10 @@
 @component('mail::message')
 
 Hi {{ $user->firstname }},<br />
-Thanks for signing up with {{ $project }}!<br />
-Please email us the name of your HomeAdvisor rep so we can set up the integration and get you started right away. If you have any questions, please respond to this email.<br />
-
-<p>Thanks!</p>
+<br />
+Thanks for signing up with us!<br />
+Right now we are sending your account info over to HomeAdvisor to get you connected. Normally it takes a day or so for them - once they do we will put in our template text and send you a test text for your approval. We won't make you live until then.<br />
+<p>We will be in touch soon, thanks!</p>
 Uri<br />
 CEO | Cofounder <br />
 {{ config('mail.from.address') }}
