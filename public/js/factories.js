@@ -203,7 +203,7 @@
         return {
             getLink: function(longUrl, func) {
                 $.getJSON(
-                    "https://api.bitly.com/v3/shorten?callback=?", 
+                    "https://api-ssl.bitly.com/v3/shorten?callback=?", 
                     { 
                         "format": "json",
                         "apiKey": 'R_ac165a693c4d43ab87337e0264f74263',
