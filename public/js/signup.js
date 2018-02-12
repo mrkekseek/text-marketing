@@ -29,7 +29,7 @@
             error *= validate.check($scope.form.firstname, 'Name');
 
             if ($scope.signUp.plans_id == 'home-advisor') {
-                error *= validate.check($scope.form.rep, 'HomeAdvisor Rep');
+                error *= validate.check($scope.form.rep, 'HomeAdvisor Account #');
             }
 
             if (error) {
