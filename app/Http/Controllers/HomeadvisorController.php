@@ -9,6 +9,7 @@ use App\Link;
 use App\Client;
 use App\Dialog;
 use App\Alert;
+use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Carbon\Carbon;
 use App\Events\FirstLead;
@@ -19,8 +20,9 @@ use App\Jobs\SendAlertClick;
 use App\Jobs\SendFollowUpText;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Services\UsersService;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
 class HomeadvisorController extends Controller
 {
@@ -60,6 +62,7 @@ class HomeadvisorController extends Controller
 		auth()->user()->homeadvisors()->create([
 			'text' => $data['ha']['text'],
 			'additional_phones' => $data['ha']['additional_phones'],
+			'emails' => $data['ha']['emails'],
 			'active' => $data['ha']['active'],
 			'file' => $file,
 		]);
@@ -103,6 +106,7 @@ class HomeadvisorController extends Controller
 		$homeadvisor->update([
 			'text' => $data['ha']['text'],
 			'additional_phones' => empty($data['ha']['additional_phones']) ? '' : $data['ha']['additional_phones'],
+			'emails' => empty($data['ha']['emails']) ? '' : $data['ha']['emails'],
 			'active' => $data['ha']['active'],
 			'file' => $file,
 		]);
@@ -115,6 +119,7 @@ class HomeadvisorController extends Controller
 		auth()->user()->homeadvisors()->create([
 			'send_request' => true,
 			'text' => '',
+			'emails' => '',
 		]);
 
     	$this->sendActivateEmail();
@@ -249,7 +254,7 @@ class HomeadvisorController extends Controller
 		$phones[] = $row;
 		$date = Carbon::now()->addHour();
 		$delay = Carbon::now()->diffInSeconds($date);
-		
+
         SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
         SendFollowUpText::dispatch($dialog, $phones, $user)->delay($delay)->onQueue('texts');
     }
@@ -289,19 +294,32 @@ class HomeadvisorController extends Controller
 			$user = $client->team->team_leader();
 			$homeadvisor = $client->team->team_leader()->homeadvisors;
 			
+			$link = false;
+			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones) || ! empty($homeadvisor->emails)) {
+				$link = $this->getMagicLink($user->id, $client->id);
+			}
+
 			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) {
-				$this->sendAlertClick($user, $homeadvisor, $client);
+				$this->sendAlertClick($user, $homeadvisor, $client, $link);
+			}
+
+			if ( ! empty($homeadvisor->emails)) {
+				$this->sendAlertClickEmail($homeadvisor, $client, $link);
 			}
 		}
 		return redirect('http://bit.ly/'.$bitly);
 	}
 
-	public function sendAlertClick($user, $homeadvisor, $client)
+	private function getMagicLink($id, $client_id)
+	{
+		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id, false);
+	}
+
+	public function sendAlertClick($user, $homeadvisor, $client, $link)
 	{
 		$phones = [];
 		$temp = [];
-		$link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$user->id.'/'.$client->id);
-		$link = str_replace('http://', '', $link);
+		
 		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
 		
 		if ( ! empty($user->phone)) {
@@ -328,6 +346,23 @@ class HomeadvisorController extends Controller
 			$alert = Alert::create($data);
 			SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
 		}
+	}
+
+	public function sendAlertClickEmail($homeadvisor, $client, $link)
+	{
+		$temp = [];
+		if ( ! empty($homeadvisor->emails)) {
+			$emails = explode(',', $homeadvisor->emails);
+			foreach ($emails as $email) {
+				$temp[] = $email;
+			}
+		}
+
+		if ( ! empty($temp)) {
+            $message = (new SendAlertClickEmail($client->firstname, 'https://'.$link))
+                ->onQueue('emails');
+            Mail::to($temp)->queue($message);
+        }
 	}
 
 	public function createPhone($number)

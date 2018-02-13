@@ -6,6 +6,7 @@
     function HomeAdvisorCtrl($rootScope, $scope, $timeout, $http, $location, request, langs, logger, validate) {
         $scope.ha = {};
         $scope.inputs = [];
+        $scope.emails = [];
         $scope.list = [];
         $scope.companyChanged = false;
         $scope.oldCompany = angular.copy($scope.user.company_name);
@@ -27,7 +28,16 @@
                     if ($scope.ha.additional_phones) {
                         $scope.inputs = $scope.ha.additional_phones.split(',');
                     }
-                    $scope.inputs.push('');
+                    
+                    if ($scope.inputs.length <= 1) {
+                        $scope.inputs.push('');
+                    }
+
+                    if ($scope.ha.emails) {
+                        $scope.emails = $scope.ha.emails.split(',');
+                    }
+                    $scope.emails.push('');
+
                     if ($scope.ha.file) {
                         $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + $scope.ha.file;
                     }
@@ -90,16 +100,27 @@
         };
 
         $scope.add = function() {
-            $scope.inputs.push('');
+            if ($scope.inputs.length <= 1) {
+                $scope.inputs.push('');
+            } else {
+                logger.log('You can add only 2 additional phone numbers');
+            }
         };
 
         $scope.remove = function(index) {
             $scope.inputs.splice(index, 1);
         };
 
+        $scope.emailsAdd = function () {
+            $scope.emails.push('');
+        };
+
+        $scope.emailsRemove = function (index) {
+            $scope.emails.splice(index, 1);
+        };
+
         $scope.save = function() {
             var error = 1;
-
             if ($scope.ha.text == '') {
                 logger.logError(langs.get('SMS Text can\'t be blank'));
                 error = 0;
@@ -116,14 +137,26 @@
             }
 
             error *= validate.phone($scope.form_ha.phone, 'Number for alerts');
+
+            var inputs = [];
             for (var k in $scope.inputs) {
                 if ($scope.inputs[k] != '') {
                     error *= validate.phone($scope.form_ha['phone_' + k], 'Additional phone');
+                    inputs.push($scope.inputs[k]);
+                }
+            }
+
+            var emails = [];
+            for (var k in $scope.emails) {
+                if ($scope.emails[k] != '') {
+                    error *= validate.check($scope.form_ha['email_' + k], 'Email');
+                    emails.push($scope.emails[k]);
                 }
             }
 
             if (error) {
-                $scope.ha.additional_phones = $scope.inputs.join(',');
+                $scope.ha.additional_phones = inputs.join(',');
+                $scope.ha.emails = emails.join(',');
                 request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {'ha': $scope.ha, 'user': $scope.user}, false, ($scope.ha.id ? 'post' : 'put'));
             }
         };

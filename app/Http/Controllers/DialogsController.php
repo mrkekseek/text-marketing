@@ -13,7 +13,9 @@ use App\Libraries\ApiValidate;
 use App\Jobs\SendLeadText;
 use App\Jobs\SendAlertClick;
 use Illuminate\Support\Facades\Log;
-use Bitly;
+use Illuminate\Support\Facades\Mail;
+use DivArt\ShortLink\Facades\ShortLink;
+use App\Mail\SendAlertEmail;
 
 
 class DialogsController extends Controller
@@ -131,10 +133,25 @@ class DialogsController extends Controller
         $dialog->save();
 
         $user = User::find($dialog->users_id);
+        
+        $magicLink = false;
+        if ( ! empty($user->phone) || ! empty($user->homeadvisors->additional_phones) || ! empty($user->homeadvisors->emails)) {
+            $magicLink = $this->getMagicLink($user->id, $dialog->clients_id);
+        }
 
         if ( ! empty($user->phone) || ! empty($user->homeadvisors->additional_phones)) {
-            $this->sendAlert($user, $dialog);
+            $this->sendAlert($user, $magicLink);
         }
+        
+        if ( ! empty($user->homeadvisors->emails)) {
+            $this->sendAlertEmail($user, $magicLink);
+        }
+    }
+
+    private function getMagicLink($id, $clients_id)
+    {
+        $link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$clients_id, false);
+        return $link;
     }
 
     public function saveLog($data, $source)
@@ -145,12 +162,10 @@ class DialogsController extends Controller
         file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').$source.': '.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
-    public function sendAlert($user, $dialog)
+    public function sendAlert($user, $link)
     {
         $phones = [];
         $temp = [];
-        $link = Bitly::getUrl(config('app.url').'/magic/inbox/'.$user->id.'/'.$dialog->clients_id);
-        $link = str_replace('http://', '', $link);
 
         $text = 'Hi '.$user->firstname .', a lead just texted you a reply. Please click '.$link.' to see it and reply if you like - thanks!';
 
@@ -178,6 +193,25 @@ class DialogsController extends Controller
             ];
             $alert = Alert::create($data);
             SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+        }
+    }
+
+    public function sendAlertEmail($user, $link)
+    {
+        $temp = [];
+        
+        if ( ! empty($user->homeadvisors->emails)) {
+            $emails = explode(',', $user->homeadvisors->emails);
+
+            foreach ($emails as $email) {
+                $temp[] = $email;
+            }
+        }
+        
+        if ( ! empty($temp)) {
+            $message = (new SendAlertEmail($user->firstname, 'https://'.$link))
+                ->onQueue('emails');
+            Mail::to($temp)->queue($message);
         }
     }
 

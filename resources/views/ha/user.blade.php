@@ -82,28 +82,52 @@
 								<i ng-show="request" class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
 							</div>
 
-							<div class="form-group">
-								<label>{{ __('My number for alerts') }}</label>
-								<i class="fa fa-question-circle-o" uib-tooltip="If the Lead clicks your link or texts you back, the platform will send a text to this number alerting you." tooltip-placement="right" aria-hidden="true"></i>
-								<input type="text" name="phone" class="form-control" ng-model="user.view_phone" required="required" />
-							</div>
+							<div class="row">
+								<div class="col-sm-6 col-xs-12">
+									<div class="form-group">
+										<label>{{ __('My number for alerts') }}</label>
+										<i class="fa fa-question-circle-o" uib-tooltip="If the Lead clicks your link or texts you back, the platform will send a text to this number alerting you." tooltip-placement="right" aria-hidden="true"></i>
+										<input type="text" name="phone" class="form-control" ng-model="user.view_phone" required="required" />
+									</div>
 
-							<label>{{ __('Additional phones') }}</label>
-							<span class="fa fa-question-circle-o" uib-tooltip="You can add additional numbers that will be alerted." tooltip-placement="right"></span>
-							<div class="form-group" ng-repeat="input in inputs track by $index">
-								<div class="input-group">
-									<input type="text" name="phone_@{{$index}}" class="form-control" ng-model="inputs[$index]" placeholder="{{ __('Enter phone here...') }}" />
-									<span class="input-group-btn" ng-show="$index == inputs.length - 1">
-										<button class="btn btn-default" type="button" ng-click="add();">
-											<i class="fa fa-plus" aria-hidden="true"></i>
-										</button>
-									</span>
+									<label>{{ __('Additional phones') }}</label>
+									<span class="fa fa-question-circle-o" uib-tooltip="You can add additional numbers that will be alerted." tooltip-placement="right"></span>
+									<div class="form-group" ng-repeat="input in inputs track by $index">
+										<div class="input-group">
+											<input type="text" name="phone_@{{$index}}" class="form-control" ng-model="inputs[$index]" placeholder="{{ __('Enter phone here...') }}" />
+											<span class="input-group-btn" ng-show="$index == inputs.length - 1">
+												<button class="btn btn-default" type="button" ng-click="add();">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</span>
 
-									<span class="input-group-btn" ng-show="$index < inputs.length - 1">
-										<button class="btn btn-default" type="button" ng-click="remove($index);">
-											<i class="fa fa-minus" aria-hidden="true"></i>
-										</button>
-									</span>
+											<span class="input-group-btn" ng-show="$index < inputs.length - 1">
+												<button class="btn btn-default" type="button" ng-click="remove($index);">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-6 col-xs-12">
+									<label>{{ __('Emails for alerts') }}</label>
+									<div class="form-group" ng-repeat="email in emails track by $index">
+										<div class="input-group">
+											<input type="text" name="email_@{{$index}}" class="form-control" ng-model="emails[$index]" placeholder="{{ __('Enter email here...') }}" />
+											<span class="input-group-btn" ng-show="$index == emails.length - 1">
+												<button class="btn btn-default" type="button" ng-click="emailsAdd();">
+													<i class="fa fa-plus" aria-hidden="true"></i>
+												</button>
+											</span>
+
+											<span class="input-group-btn" ng-show="$index < emails.length - 1">
+												<button class="btn btn-default" type="button" ng-click="emailsRemove($index);">
+													<i class="fa fa-minus" aria-hidden="true"></i>
+												</button>
+											</span>
+										</div>
+									</div>
 								</div>
 							</div>
 
