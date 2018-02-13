@@ -27,4 +27,11 @@ class HACreateRequest extends FormRequest
             'ha.text' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'ha.text.required' => 'SMS Text can\'t be blank',
+        ];
+    }
 }
