@@ -56,7 +56,10 @@ class AuthController extends Controller
         LinksService::create($user);
 
         if ( ! empty($request->rep)) {
-            $user->homeadvisors()->create(['rep' => $request->rep]);
+            $user->homeadvisors()->create([
+                'rep' => $request->rep,
+                'emails' => '',
+            ]);
         }
 
         auth()->login($user);
