@@ -16,11 +16,13 @@ class UploadController extends Controller
 {
     public function save(Request $request)
     {
-    	$path = '';
-		if ($request->file) {
-			$path = $request->file->store('public/upload/temp');
+		$path = [];
+		foreach ($request->file() as $file) {
+			if ($file->isValid()) {
+				$path[] = Storage::disk('s3')->url($file->store('temp', 's3'));
+			}
 		}
-		return $path = str_replace('public', 'storage', $path);
+		return $path;
     }
 
     public function csv(Request $request)

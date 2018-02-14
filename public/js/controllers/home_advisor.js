@@ -194,6 +194,45 @@
             });
         };
 
+        $scope.ports = [];
+        $scope.uploading = {
+            ports: 0
+        };
+        $scope.uploadPorts = function (files) {
+            var fd = new FormData();
+            var check = true;
+            for (var k in files) {
+                var size = files[k].size / 1024;
+                if (size > 2048) {
+                    logger.logError(langs.get(files[k].name + ' is too large. Image size limit is 500 KB'));
+                    check = false;
+                } else {
+                    fd.append('file' + k, files[k]);
+                }
+            }
+
+            if (($scope.ports.length + files.length) > 5) {
+                logger.logError(langs.get('Max number of images is 5'));
+                return;
+            } 
+
+            if (check && files.length) {
+                $scope.uploading['ports'] = files.length;
+                $http.post('/api/v1/upload/file', fd, {
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                }).then(function (response) {
+                    $scope.uploading['ports'] = 0;
+                    var data = JSON.parse(response.data.data);
+                    for (var k in data) {
+                        $scope.ports.push(data[k]);
+                    }
+                });
+            }
+        };
+
         $scope.removeMMS = function() {
             $scope.ha.file = $scope.file.url = '';
         };

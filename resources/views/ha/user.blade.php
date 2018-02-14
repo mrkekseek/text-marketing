@@ -76,6 +76,7 @@
 									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
 								</span>
 							</div>
+
 							<div class="form-group">
 								<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
 								<i ng-show="file.url" ng-click="removeMMS()" class="fa fa-times mms-remove" aria-hidden="true"></i>
@@ -127,6 +128,35 @@
 												</button>
 											</span>
 										</div>
+									</div>
+								</div>
+							</div>
+
+							<hr />
+
+							<label>{{ __('HA Pictures') }}</label>
+							<div class="form-group">
+								<span class="upload-button-box">
+									<button type="button" class="btn btn-sm btn-default">
+										<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+									</button>
+									<input ng-disabled="uploading.ports > 0" onchange="angular.element(this).scope().uploadPorts(event.target.files)" multiple="multiple" accept="image/jpeg,image/png,image/gif,image/bmp" type="file" />
+								</span>
+
+								<span ng-show="uploading.ports == 0" class="upload-tooltip" uib-tooltip="{{ __('You can upload up to 5 images. Image size limit is 500 KB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP') }}">
+									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+								</span>
+
+								<span ng-show="uploading.ports > 0" class="upload-tooltip">
+									<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Uploading @{{ uploading.ports }} file@{{ uploading.ports == 1 ? '' : 's' }}. Please, wait...
+								</span>
+							</div>
+
+							<div class="form-group">
+								<div class="images-preview" ng-repeat="file in ports">
+									<img src="@{{ file }}" alt="" />
+									<div class="removeIcon" ng-click="removePort($index)" >
+										<i class="fa fa-times" aria-hidden="true"></i>
 									</div>
 								</div>
 							</div>
