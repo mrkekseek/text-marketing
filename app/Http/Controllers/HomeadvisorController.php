@@ -61,7 +61,7 @@ class HomeadvisorController extends Controller
 			]);
 		}
 
-		if ($user->plans_id != 'home-advisor-'.strtolower(config('app.name'))) {
+		if ($user->plans_id != 'home-advisor-'.strtolower(config('app.name')) && $user->plans_id != 'text-'.strtolower(config('app.name'))) {
 			return view('ha.forbidden');
 		} else {
 			$pictures = $user->pictures;
