@@ -14,9 +14,14 @@
         $scope.request = false;
         $scope.followupText = '';
         $scope.settings = {};
+        $scope.pictures = [];
+        $scope.uploading = {
+            pictures: 0
+        };
 
         $scope.init = function() {
             $scope.get();
+            $scope.getPictures();
             $scope.getLeads();
             $scope.getSettings();
         };
@@ -41,6 +46,14 @@
                     if ($scope.ha.file) {
                         $scope.file.url = $location.protocol() + '://' + $location.host() + '/' + $scope.ha.file;
                     }
+                }
+            }, 'get');
+        };
+
+        $scope.getPictures = function () {
+            request.send('/pictures', {}, function (data) {
+                if (data) {
+                    $scope.pictures = data;
                 }
             }, 'get');
         };
@@ -157,7 +170,9 @@
             if (error) {
                 $scope.ha.additional_phones = inputs.join(',');
                 $scope.ha.emails = emails.join(',');
-                request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {'ha': $scope.ha, 'user': $scope.user}, false, ($scope.ha.id ? 'post' : 'put'));
+                request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {'ha': $scope.ha, 'user': $scope.user, 'pictures': $scope.pictures}, function() {
+                    $scope.getPictures();
+                }, ($scope.ha.id ? 'post' : 'put'));
             }
         };
 
@@ -193,6 +208,48 @@
                 $scope.request = false;
             });
         };
+
+        $scope.uploadPictures = function (files) {
+            var fd = new FormData();
+            var check = true;
+            for (var k in files) {
+                var size = files[k].size / 1024;
+                if (size > 2048) {
+                    logger.logError(langs.get(files[k].name + ' is too large. Image size limit is 500 KB'));
+                    check = false;
+                } else {
+                    fd.append('file' + k, files[k]);
+                }
+            }
+
+            if (($scope.pictures.length + files.length) > 5) {
+                logger.logError(langs.get('Max number of images is 5'));
+                return;
+            } 
+
+            if (check && files.length) {
+                $scope.uploading['pictures'] = files.length;
+                $http.post('/api/v1/upload/fileS3', fd, {
+                    transformRequest: angular.identity,
+                    headers: {
+                        'Content-Type': undefined
+                    }
+                }).then(function (response) {
+                    $scope.uploading['pictures'] = 0;
+                    var data = JSON.parse(response.data.data);
+                    for (var k in data) {
+                        $scope.pictures.push({
+                            url: data[k]
+                        });
+                    }
+                });
+            }
+        };
+
+        $scope.removePicture = function(index) {
+            var removed = $scope.pictures.splice(index, 1);
+            request.send('/pictures/remove', { 'picture': removed[0] }, false, 'post');
+        }
 
         $scope.removeMMS = function() {
             $scope.ha.file = $scope.file.url = '';

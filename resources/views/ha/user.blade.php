@@ -55,7 +55,7 @@
 						<form name="form_ha" novalidate="novalidate" ng-show="user.company_status == 'verified' && ! companyChanged">
 							<div class="form-group">
 								<label>{{ __('Instant Text') }}</label>
-								<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-shortlink="true" lms="true"></char-set>
+								<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" lms="true"></char-set>
 							</div>
 
 							<div class="form-group">
@@ -76,6 +76,7 @@
 									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
 								</span>
 							</div>
+
 							<div class="form-group">
 								<img ng-show="file.url" src="@{{ file.url }}" class="preview-mms" />
 								<i ng-show="file.url" ng-click="removeMMS()" class="fa fa-times mms-remove" aria-hidden="true"></i>
@@ -131,6 +132,40 @@
 								</div>
 							</div>
 
+							<hr />
+
+							<label>{{ __('HA Pictures') }}</label>
+							<div class="form-group">
+								<a href="/ha/@{{ user.id }}" target="_blank" class="btn btn-default btn-sm pull-right">
+									<i class="fa fa-image"></i>
+									See your HA page
+								</a>
+
+								<span class="upload-button-box">
+									<button type="button" class="btn btn-sm btn-default">
+										<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+									</button>
+									<input ng-disabled="uploading.pictures > 0" onchange="angular.element(this).scope().uploadPictures(event.target.files)" multiple="multiple" accept="image/jpeg,image/png,image/gif,image/bmp" type="file" />
+								</span>
+
+								<span ng-show="uploading.pictures == 0" class="upload-tooltip" uib-tooltip="{{ __('You can upload up to 5 images. Image size limit is 2 MB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP') }}">
+									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+								</span>
+
+								<span ng-show="uploading.pictures > 0" class="upload-tooltip">
+									<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Uploading @{{ uploading.pictures }} file@{{ uploading.pictures == 1 ? '' : 's' }}. Please, wait...
+								</span>
+							</div>
+
+							<div class="form-group">
+								<div class="images-preview" ng-repeat="picture in pictures">
+									<img src="@{{ picture.url }}" alt="" />
+									<div class="removeIcon" ng-click="removePicture($index)" >
+										<i class="fa fa-times" aria-hidden="true"></i>
+									</div>
+								</div>
+							</div>
+
 							<div class="form-group">
 								<button class="btn btn-primary" type="submit" ng-click="save()">{{ __('Save') }}</button>
 							</div>
@@ -163,6 +198,8 @@
 									<i ng-show="item.inbox" class="fa fa-check-circle-o text-success" aria-hidden="true" uib-tooltip="Lead texted a reply"></i>
 									<span> </span>
 									<i ng-show="item.clicked" class="fa fa-check-circle-o text-info" aria-hidden="true" uib-tooltip="Link clicked"></i>
+									<span> </span>
+									<i ng-show="item.hapage" class="fa fa-check-circle-o text-danger" aria-hidden="true" uib-tooltip="Lead visited HA Page"></i>
 								</div>
 							</div>
 						</div>

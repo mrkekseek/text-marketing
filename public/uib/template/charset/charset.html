@@ -22,6 +22,12 @@
 			</button>
 		</div>
 
+		<div class="btn-group" ng-if="hapage">
+			<button ng-click="insert(hapageTag)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-image"></i> HA Page Link
+			</button>
+		</div>
+
 		<div class="btn-group" ng-if="link">
 			<button ng-click="insert(linkTag)" type="button" class="btn btn-sm btn-default">
 				<i class="fa fa-link"></i> Review Link

@@ -9,6 +9,7 @@ use App\Link;
 use App\Client;
 use App\Dialog;
 use App\Alert;
+use App\Picture;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Carbon\Carbon;
@@ -29,6 +30,56 @@ class HomeadvisorController extends Controller
 	public function info()
 	{
 		return auth()->user()->homeadvisors;
+	}
+
+	public function pictures()
+	{
+		return auth()->user()->pictures;
+	}
+
+	public function picturesRemove(Request $request)
+	{
+		$file = false;
+		if (empty($request->picture['id'])) {
+			$temp = explode('/temp/', $request->picture['url']);
+			$file = 'temp/'.$temp[1];
+		} else {
+			$temp = explode('/pictures/', $request->picture['url']);
+			$file = 'pictures/'.$temp[1];
+
+			Picture::destroy($request->picture['id']);
+		}
+		Storage::disk('s3')->delete($file);
+		return 'ok';
+	}
+
+	public function page(User $user, Client $client = null)
+	{
+		if ( ! empty($client)) {
+			$client->update([
+				'hapage' => true,
+			]);
+		}
+
+		if ($user->plans_id != 'home-advisor-'.strtolower(config('app.name'))) {
+			return view('ha.forbidden');
+		} else {
+			$pictures = $user->pictures;
+			$ha = $user->homeadvisors;
+			$link = $this->getBitlyLink($ha->text);
+
+			return view('ha.page')->with(compact('user', 'ha', 'pictures', 'link'));
+		}
+	}
+
+	public function getBitlyLink($text)
+	{
+		$link = '';
+		$linkPos = strpos($text, 'bit.ly/');
+    	if ($linkPos !== false) {
+    		$link = substr($text, $linkPos, 14);
+		}
+		return $link;
 	}
 
 	public function create(HACreateRequest $request)
@@ -72,8 +123,19 @@ class HomeadvisorController extends Controller
 
 	public function update(HACreateRequest $request, Homeadvisor $homeadvisor)
 	{
-		$data = $request->only(['ha', 'user']);
+		$data = $request->only(['ha', 'user', 'pictures']);
 		$file = '';
+
+		foreach ($data['pictures'] as $pos => $picture) {
+			if (empty($picture['id'])) {
+				$temp = explode('/temp/', $picture['url']);
+				Storage::disk('s3')->move('temp/'.$temp[1], 'pictures/'.$temp[1]);
+				auth()->user()->pictures()->create([
+					'url' => Storage::disk('s3')->url('pictures/'.$temp[1]),
+					'pos' => $pos,
+				]);
+			}
+		}
 		
 		$phone = UsersService::phoneToNumber($data['user']);
 
@@ -266,8 +328,14 @@ class HomeadvisorController extends Controller
     	if ($linkPos !== false) {
     		$originLink = substr($text, $linkPos, 14);
     		$fakeLink = ShortLink::bitly(config('app.url').'/magic/'.$dialog->id.'/'.$originLink, false);
-    		$text = str_replace($originLink, $fakeLink, $ha->text);
-    	}
+    		$text = str_replace($originLink, $fakeLink, $text);
+		}
+		
+		if (strpos($text, '[$HAPage]') !== false) {
+			$hapage = ShortLink::bitly(config('app.url').'/ha/'.$user->id.'/'.$client->id, false);
+    		$text = str_replace('[$HAPage]', $hapage, $text);
+		}
+
     	return $text;
 	}
 

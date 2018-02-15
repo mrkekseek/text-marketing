@@ -79,6 +79,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('homeadvisor/', 'HomeadvisorController@create');
 	Route::post('homeadvisor/fake', 'HomeadvisorController@sendFake');
 	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
+	Route::get('pictures', 'HomeadvisorController@pictures');
+	Route::post('pictures/remove', 'HomeadvisorController@picturesRemove');
 
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
 	Route::get('clients/reports/{client}', 'ClientsController@reportsReviews');
@@ -132,6 +134,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('appointment/{user}/{client}', 'AppointmentController@create');
 
 	Route::post('upload/file', 'UploadController@save');
+	Route::post('upload/fileS3', 'UploadController@saveS3');
 	Route::post('upload/csv', 'UploadController@csv');
 });
 
@@ -146,6 +149,8 @@ Route::get('support', function() {
 Route::get('recovery', function() {
 	return view('recovery');
 });
+
+Route::get('ha/{user}/{client?}', 'HomeadvisorController@page');
 
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
 Route::get('magic/inbox/{user}/{client}', 'UsersController@magicInbox');
