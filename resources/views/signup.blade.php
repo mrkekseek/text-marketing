@@ -72,6 +72,15 @@
 										<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' ">
 											<div class="input-group input-group-first">
 												<span class="input-group-addon">
+													<span class="fa fa-phone"></span>
+												</span>
+												<input type="text" name="view_phone" class="form-control input-lg" placeholder="{{ __('Your Cell (for testing)') }}" ng-model="signUp.view_phone" />
+											</div>
+										</div>
+
+										<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' ">
+											<div class="input-group input-group-first">
+												<span class="input-group-addon">
 													<span class="fa fa-home"></span>
 												</span>
 												<input type="text" name="rep" class="form-control input-lg" placeholder="{{ __('HomeAdvisor Account #') }}" ng-model="signUp.rep" ng-required="signUp.plans_id == 'home-advisor'" />

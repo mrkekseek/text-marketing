@@ -17,7 +17,7 @@ class CreateSocialUrlsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned()->default(0);
             $table->string('name')->default('');
-            $table->string('url')->default('');
+            $table->text('url');
             $table->string('social_id')->default('');
             $table->integer('active')->unsigned()->default(0);
             $table->integer('default')->unsigned()->default(0);

@@ -49,7 +49,11 @@ class AuthController extends Controller
 		$data['active'] = true;
 		$data['password'] = UsersService::password($data['password']);
 		$data['teams_id'] = UsersService::createTeam($data);
-		$data['trial_ends_at'] = UsersService::trialEndsAt($data['plans_id']);
+        $data['trial_ends_at'] = UsersService::trialEndsAt($data['plans_id']);
+        if ( ! empty($request->view_phone)) {
+            $data['view_phone'] = $request->view_phone;
+            $data['phone'] = UsersService::phoneToNumber($data);
+        }
         $data = array_filter($data, 'strlen');
 
         $user = User::create($data);
