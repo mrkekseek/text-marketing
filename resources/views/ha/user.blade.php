@@ -136,7 +136,7 @@
 
 							<label>{{ __('HA Pictures') }}</label>
 							<div class="form-group">
-								<a href="/ha/@{{ user.id }}" target="_blank" class="btn btn-default btn-sm pull-right">
+								<a href="/ha-job/@{{ user.id }}" target="_blank" class="btn btn-default btn-sm pull-right">
 									<i class="fa fa-image"></i>
 									See your HA page
 								</a>

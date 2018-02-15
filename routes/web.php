@@ -150,7 +150,7 @@ Route::get('recovery', function() {
 	return view('recovery');
 });
 
-Route::get('ha/{user}/{client?}', 'HomeadvisorController@page');
+Route::get('ha-job/{user}/{client?}', 'HomeadvisorController@page');
 
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
 Route::get('magic/inbox/{user}/{client}', 'UsersController@magicInbox');
