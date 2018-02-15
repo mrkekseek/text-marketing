@@ -95,6 +95,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Appointment');
     }
 
+    public function pictures()
+    {
+        return $this->hasMany('App\Picture');
+    }
+
     static public function facebookTokens()
     {
         return self::where('type', '2')->where('facebook_token', '!=', '')->has('facebookUrl')->with('facebookUrl')->get()->toArray();

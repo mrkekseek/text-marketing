@@ -14,7 +14,17 @@ use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
-    public function save(Request $request)
+	public function save(Request $request)
+    {
+		$path = '';
+        if ($request->file) {
+            $path = $request->file->store('public/upload/temp');
+        }
+        return str_replace('public', 'storage', $path);
+
+	}
+	
+    public function saveS3(Request $request)
     {
 		$path = [];
 		foreach ($request->file() as $file) {

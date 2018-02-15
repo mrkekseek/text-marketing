@@ -5,6 +5,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			company: '=company',
 			firstname: '=btnFirstname',
 			lastname: '=btnLastname',
+			hapage: '=btnHapage',
 			link: '=btnLink',
 			shortlink: '=btnShortlink',
 			lms: '=lms',
@@ -19,6 +20,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			$scope.max = ($scope.lms ? 500 : 140) - $scope.optout.length - ($scope.company ? $scope.company.length - 2 : 0);
 			$scope.firstnameTag = '[$FirstName]';
 			$scope.lastnameTag = '[$LastName]';
+			$scope.hapageTag = '[$HAPage]';
 			$scope.linkTag = '[$Link]';
 			$scope.size = 0;
 			$scope.showMessageTextUrl = false;
@@ -51,6 +53,10 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 
 					if ($scope.result.indexOf($scope.lastnameTag) + 1) {
 						$scope.size += $scope.maxLastname - $scope.lastnameTag.length;
+					}
+
+					if ($scope.result.indexOf($scope.hapageTag) + 1) {
+						$scope.size += 14 - $scope.hapageTag.length;
 					}
 
 					if ($scope.result.indexOf($scope.linkTag) + 1) {
