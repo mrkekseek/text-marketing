@@ -27,7 +27,7 @@ class ApiValidate
 
     static public function messageSymbols($text)
     {
-        $text = str_replace(['[$FirstName]', '[$LastName]', '[$Link]', "\n"], '', $text);
+        $text = str_replace(['[$FirstName]', '[$LastName]', '[$HAPage]', '[$Link]', "\n"], '', $text);
         for ($i = 0, $count = strlen($text); $i < $count; $i++) {
             if (strpos(self::SUPPORTED_CHARACTERS, $text[$i]) === false) {
                return false;

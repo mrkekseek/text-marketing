@@ -57,10 +57,11 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => env('AWS_KEY'),
-            'secret' => env('AWS_SECRET'),
-            'region' => env('AWS_REGION'),
-            'bucket' => env('AWS_BUCKET'),
+            'key' => env('AWS_KEY', 'AKIAI2TISRR65NCOW4DQ'),
+            'secret' => env('AWS_SECRET', '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'),
+            'region' => env('AWS_REGION', 'us-west-2'),
+            'bucket' => env('AWS_BUCKET', 'contractortexter-files'),
+            'visibility' => 'public',
         ],
 
     ],
