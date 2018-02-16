@@ -46,7 +46,7 @@
 								<i ng-show="! message.my" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>
 							</div>
 							<div class="message-body">
-								@{{ message.text }}
+								@{{ message.text.replace('[$FirstName]', message.clients.firstname).replace('[$LastName]', message.clients.lastname) }}
 								<div class="text-right">
 									<i ng-show="message.status == 1 && message.my" class="fa fa-check text-danger" aria-hidden="true"></i>
 									<i ng-show="message.status == 0 && message.my" class="fa fa-times text-danger" aria-hidden="true"></i>
