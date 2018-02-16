@@ -31,7 +31,6 @@ class SendLeadText implements ShouldQueue
         $this->clients = $clients;
         $this->user = $user;
         $this->attachment = ! empty($this->dialog->file) ? config('app.url').'/'.$this->dialog->file : '';
-        $this->handle();
     }
 
     /**
