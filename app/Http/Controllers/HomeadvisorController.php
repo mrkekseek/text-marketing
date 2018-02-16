@@ -230,10 +230,8 @@ class HomeadvisorController extends Controller
 		}
 
 		$this->saveLog($data, 'HomeAdvisor data');
-
     	if ( ! empty($data)) {
-
-    		$link = Link::where('code', $code)->first();
+			$link = Link::where('code', $code)->first();
 	    	if ( ! empty($link)) {
 				$view_phone = $this->phone($data);
 				$phone = str_replace(['-', '(', ')', ' ', '.', '_'], '', $view_phone);
@@ -245,8 +243,9 @@ class HomeadvisorController extends Controller
 					'view_phone' => $view_phone,
 					'email' => $this->email($data),
 					'source' => 'HomeAdvisor',
+					'hapage' => 0,
 				];
-				
+
 				$client = $link->user->teams->clients()->where('phone', $phone)->first();
 				if ( ! empty($client)) {
 					$client->update($lead);
@@ -263,7 +262,6 @@ class HomeadvisorController extends Controller
 				if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($phone)) {
 					$this->textToLead($link->user, $client, $ha);
 				}
-
 
 				http_response_code(200);
 				echo '<success>User '.$code.'</success>';

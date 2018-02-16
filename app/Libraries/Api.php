@@ -88,6 +88,7 @@ class Api
 			'http_errors' => false,
 			'json' => $data,
 		]);
+
         return self::response($response);
 	}
 }
