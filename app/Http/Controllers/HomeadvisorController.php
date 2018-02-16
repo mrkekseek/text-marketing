@@ -369,9 +369,9 @@ class HomeadvisorController extends Controller
     		$text = str_replace($originLink, $fakeLink, $text);
 		}
 		
-		if (strpos($text, '[$HAPage]') !== false) {
+		if (strpos($text, '[$JobPics]') !== false) {
 			$hapage = ShortLink::bitly(config('app.url').'/ha-job/'.$user->id.'/'.$client->id, false);
-    		$text = str_replace('[$HAPage]', $hapage, $text);
+    		$text = str_replace('[$JobPics]', $hapage, $text);
 		}
 
     	return $text;

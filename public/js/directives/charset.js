@@ -20,7 +20,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			$scope.max = ($scope.lms ? 500 : 140) - $scope.optout.length - ($scope.company ? $scope.company.length - 2 : 0);
 			$scope.firstnameTag = '[$FirstName]';
 			$scope.lastnameTag = '[$LastName]';
-			$scope.hapageTag = '[$HAPage]';
+			$scope.hapageTag = '[$JobPics]';
 			$scope.linkTag = '[$Link]';
 			$scope.size = 0;
 			$scope.showMessageTextUrl = false;
