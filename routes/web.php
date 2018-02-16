@@ -175,6 +175,8 @@ Route::any('appointment/push/{appointment}', 'AppointmentController@push');
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');
 
+Route::any('leads/convert', 'HomeadvisorController@convert');
+
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
 })->where('catchall', '(.*)');

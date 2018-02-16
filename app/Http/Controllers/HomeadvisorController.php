@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Homeadvisor;
 use App\User;
+use App\Team;
 use App\Link;
 use App\Client;
 use App\Dialog;
 use App\Alert;
 use App\Picture;
+use App\Lead;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Carbon\Carbon;
@@ -27,6 +29,28 @@ use Illuminate\Support\Facades\Mail;
 
 class HomeadvisorController extends Controller
 {
+	public function convert(Request $request)
+	{
+		$leads = $request->json();
+		foreach ($leads as $lead) {
+			if ( ! Client::where('phone', $lead['phone'])->count()) {
+				$newLead = [
+					'firstname' => $lead['firstname'],
+					'lastname' => $lead['lastname'],
+					'phone' => $lead['phone'],
+					'view_phone' => $lead['view_phone'],
+					'email' => $lead['emails'],
+					'source' => 'HomeAdvisor',
+					'hapage' => 0,
+					'created_at' => Carbon::parse($lead['created_at']),
+				];
+
+				$team = Team::find($lead['team_id']);
+				$client = $team->clients()->create($newLead);
+			}
+		}
+	}
+
 	public function info()
 	{
 		return auth()->user()->homeadvisors;
@@ -220,18 +244,27 @@ class HomeadvisorController extends Controller
 
     public function lead(Request $request, $code)
     {
-		$this->saveLog($request->all(), 'HomeAdvisor request->all()');
-		$this->saveLog($code, 'HomeAdvisor CODE');
-
 		$data = $request->json()->all();
 
 		if (empty($data)) {
 			$data = $request->all();
 		}
 
+		$this->saveLog($code, 'HomeAdvisor CODE');
 		$this->saveLog($data, 'HomeAdvisor data');
+
+		$backup = Lead::create([
+			'code' => $code,
+			'data' => json_encode($data),
+		]);
+
     	if ( ! empty($data)) {
 			$link = Link::where('code', $code)->first();
+			$backup->update([
+				'user_id' => $link->user->id,
+				'team_id' => $link->user->teams->id,
+			]);
+
 	    	if ( ! empty($link)) {
 				$view_phone = $this->phone($data);
 				$phone = str_replace(['-', '(', ')', ' ', '.', '_'], '', $view_phone);
@@ -249,6 +282,9 @@ class HomeadvisorController extends Controller
 				$client = $link->user->teams->clients()->where('phone', $phone)->first();
 				if ( ! empty($client)) {
 					$client->update($lead);
+					$backup->update([
+						'exists' => true,
+					]);
 				} else {
 					$client = $link->user->teams->clients()->create($lead);
 				}
@@ -262,6 +298,10 @@ class HomeadvisorController extends Controller
 				if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($phone)) {
 					$this->textToLead($link->user, $client, $ha);
 				}
+
+				$backup->update([
+					'saved' => true,
+				]);
 
 				http_response_code(200);
 				echo '<success>User '.$code.'</success>';
