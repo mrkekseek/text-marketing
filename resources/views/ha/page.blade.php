@@ -17,7 +17,7 @@
     <body id="app" class="app">
         <div class="container">
             <div class="pictures-header text-center">
-                <h1>{{ $user->company_name }}</h1>
+                <h1>{{ $user->firstname.' '.$user->lastname }}'s Job Pics</h1>
                 @if ( ! empty($ha->file))
                     <img src="/{{ $ha->file }}" alt="" />
                 @endif

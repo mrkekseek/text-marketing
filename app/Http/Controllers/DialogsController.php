@@ -35,7 +35,7 @@ class DialogsController extends Controller
 	{
 		$data = $request->only(['text', 'time']);
 
-		if ($this->textValidate($data, $client, $request)) {
+		if ($this->textValidate($data, $client, $request, false)) {
             $dialog = auth()->user()->dialogs()->create([
                 'clients_id' => $client->id,
                 'text' => $data['text'],
@@ -52,7 +52,7 @@ class DialogsController extends Controller
 		}
 	}
 
-	public function textValidate($data, $client)
+	public function textValidate($data, $client, $request, $block = true)
     {
         if ( ! ApiValidate::companyExists(auth()->user()->company_name, auth()->user())) {
             return $this->message('This Company Name isn\'t verified');
@@ -92,7 +92,7 @@ class DialogsController extends Controller
         }
 
         $date = (object)$data['time'];
-        if (ApiValidate::underBlocking($date)) {
+        if (ApiValidate::underBlocking($date, $block)) {
             return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
         }
 

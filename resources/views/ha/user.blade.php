@@ -64,6 +64,7 @@
 								<input class="form-control" type="text" disabled="disabled" ng-value="getFollowUpText()" />
 							</div>
 
+							<label>Upload Logo</label>
 							<div class="form-group">
 								<span class="upload-button-box">
 									<button type="button" class="btn btn-sm btn-default">
@@ -134,27 +135,32 @@
 
 							<hr />
 
-							<label>{{ __('HA Pictures') }}</label>
-							<div class="form-group">
-								<span class="upload-button-box">
-									<button type="button" class="btn btn-sm btn-default">
-										<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
-									</button>
-									<input ng-disabled="uploading.pictures > 0" onchange="angular.element(this).scope().uploadPictures(event.target.files)" multiple="multiple" accept="image/jpeg,image/png,image/gif,image/bmp" type="file" />
-								</span>
+							<label>{{ __('Upload Job Pics') }}</label>
+							<i class="fa fa-question-circle-o" uib-tooltip="Here you can upload up to 5 pictures of jobs you've done. A link will then be added to the text which the Lead can click to see the pics." tooltip-placement="right" aria-hidden="true"></i>
+							<div class="row form-group">
+								<div class="col-md-6 col-xs-12">
+									<span class="upload-button-box">
+										<button type="button" class="btn btn-sm btn-default">
+											<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
+										</button>
+										<input ng-disabled="uploading.pictures > 0" onchange="angular.element(this).scope().uploadPictures(event.target.files)" multiple="multiple" accept="image/jpeg,image/png,image/gif,image/bmp" type="file" />
+									</span>
 
-								<span ng-show="uploading.pictures == 0" class="upload-tooltip" uib-tooltip="{{ __('You can upload up to 5 images. Image size limit is 2 MB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP') }}">
-									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
-								</span>
+									<span ng-show="uploading.pictures == 0" class="upload-tooltip" uib-tooltip="{{ __('You can upload up to 5 images. Image size limit is 2 MB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP') }}">
+										<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
+									</span>
 
-								<span ng-show="uploading.pictures > 0" class="upload-tooltip">
-									<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Uploading @{{ uploading.pictures }} file@{{ uploading.pictures == 1 ? '' : 's' }}. Please, wait...
-								</span>
+									<span ng-show="uploading.pictures > 0" class="upload-tooltip">
+										<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Uploading @{{ uploading.pictures }} file@{{ uploading.pictures == 1 ? '' : 's' }}. Please, wait...
+									</span>
+								</div>
 
-								<a href="/ha-job/@{{ user.id }}" target="_blank" class="btn btn-default btn-sm">
-									<i class="fa fa-image"></i>
-									See Your Pictures
-								</a>
+								<div class="col-md-6 col-xs-12">
+									<a href="/ha-job/@{{ user.id }}" target="_blank" class="btn btn-default btn-sm">
+										<i class="fa fa-image"></i>
+										See Your Pictures
+									</a>
+								</div>
 							</div>
 
 							<div class="form-group">
@@ -165,6 +171,8 @@
 									</div>
 								</div>
 							</div>
+
+							<hr />
 
 							<div class="form-group">
 								<button class="btn btn-primary" type="submit" ng-click="save()">{{ __('Save') }}</button>
