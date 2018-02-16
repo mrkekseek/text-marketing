@@ -22,7 +22,7 @@ class DialogsController extends Controller
 {
     public function all()
 	{
-		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->orderBy('created_at', 'desc')->get()->unique('clients_id')->toArray());
+		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with(['clients' => function($q) { $q->orderBy('created_at', 'desc'); }])->orderBy('created_at', 'desc')->get()->unique('clients_id')->toArray());
 	}
 
 	public function info($id = false)
