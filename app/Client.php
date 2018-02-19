@@ -9,6 +9,10 @@ class Client extends Model
 {
     protected $guarded = [];
 
+    protected $attributes = [
+        'hapage' => 0,
+    ];
+
     public function lists()
     {
     	return $this->belongsToMany('App\ContactList', 'list_clients', 'clients_id', 'lists_id')->withTimestamps();

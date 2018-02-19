@@ -305,17 +305,17 @@ class HomeadvisorController extends Controller
 
 				http_response_code(200);
 				echo '<success>User '.$code.'</success>';
-				exit;
+				return;
 			}
 			
 			http_response_code(500);
 			echo '<error>Bad request</error>';
-			exit;
+			return;
     	}
 
     	http_response_code(500);
 		echo '<error>Data required</error>';
-		exit;
+		return;
     }
 
     public function saveLog($data, $source)
