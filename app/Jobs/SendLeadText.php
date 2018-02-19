@@ -45,9 +45,11 @@ class SendLeadText implements ShouldQueue
             $this->dialog->update(['status' => 0]);
         }
 
-        foreach ($response['data'] as $client) {
-            if ( ! empty($client['finish'])) {
-                $this->dialog->update(['status' => 0]);
+        if ( ! empty($response['data'])) {
+            foreach ($response['data'] as $client) {
+                if ( ! empty($client['finish'])) {
+                    $this->dialog->update(['status' => 0]);
+                }
             }
         }
     }
