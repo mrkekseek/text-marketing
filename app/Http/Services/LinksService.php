@@ -17,7 +17,7 @@ class LinksService
         Link::create($data);
     }
 
-    static private function code($user)
+    static public function code($user)
     {
         return str_replace(['.', ',', '/', '&', '$', '=', ':', ';', '"', "'"], '_', crypt(time().$user->firstname.$user->lastname, time()));
     }
