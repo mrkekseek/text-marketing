@@ -8,6 +8,12 @@
 <p>
 	<b>Success String:</b><span> {{ $link->success }}</span>
 </p>
+@if ( ! empty($user->phone))
+<p>
+	<b>Cell #:</b><span> {{ $user->phone }}</span>
+</p>
+@endif
+
 @if ( ! empty($ha->rep))
 <p>
 	<b>HomeAdvisor Rep:</b><span> {{ $ha->rep }}</span>

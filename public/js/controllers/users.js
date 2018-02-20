@@ -6,14 +6,15 @@
     function UsersCtrl($rootScope, $scope, $uibModal, $window, request, langs, validate) {
 		$scope.request_finish = false;
     	$scope.list = [];
-    	$scope.plans_list = [];
+		$scope.plans_list = [];
+		$scope.quickSearch = '';
 
     	$scope.get = function () {
     		request.send('/users', $scope.auth, function (data) {
     			$scope.list = data;
     			$scope.request_finish = true;
 			}, 'get');
-    	};
+		};
 
     	$scope.plans = function () {
             request.send('/plans', false, function (data) {
