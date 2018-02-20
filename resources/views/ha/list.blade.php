@@ -1,5 +1,9 @@
 <div class="page page-table" data-ng-controller="LinksCtrl" data-ng-init="init()">
 	<h2>
+		<div class="search-bar pull-right">
+			<input type="text" class="form-control" ng-model="quickSearch" placeholder="{{ __('Quick Search...') }}" />
+		</div>
+
 		{{ __('HomeAdvisor Links') }}
 	</h2>
 
@@ -13,7 +17,11 @@
 			<a href="javascript:;" ng-click="create()">{{ __("Create New Link") }}</a> {{ __("now") }}
 		</div>
 
-		<section class="panel panel-default table-dynamic table-responsive " ng-show="list.length">
+		<div uib-alert class="alert-warning" ng-show="(list | filter : quickSearch).length == 0">
+			{{ __("Nothing found.") }}
+		</div>
+
+		<section class="panel panel-default table-dynamic table-responsive " ng-show="(list | filter : quickSearch).length">
 			<table class="table table-bordered table-striped table-middle">
 				<thead>
 					<tr>
@@ -31,7 +39,7 @@
 
 						<th>
 							<div class="th">
-								{{ __('Phone') }}
+								{{ __('Cell #') }}
 							</div>
 						</th>
 
@@ -53,7 +61,7 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="link in list">
+					<tr ng-repeat="link in list | filter : quickSearch">
 						<td>
 							@{{ link.user.firstname }}
 						</td>

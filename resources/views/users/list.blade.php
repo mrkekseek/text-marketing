@@ -4,6 +4,10 @@
 			<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Teammate') }}</span></button>
 		</div>
 
+		<div class="search-bar pull-right">
+			<input type="text" class="form-control" ng-model="quickSearch" placeholder="{{ __('Quick Search...') }}" />
+		</div>
+
 		{{ __('Users') }}
 	</h2>
 
@@ -16,8 +20,12 @@
 			{{ __("You haven't any teammate yet.") }}
 			<a href="javascript:;" ng-click="create()">{{ __("Create New Teammate") }}</a> {{ __("now") }}
 		</div>
+
+		<div uib-alert class="alert-warning" ng-show="(list | filter : quickSearch).length == 0">
+			{{ __("Nothing found.") }}
+		</div>
 		
-		<section class="panel panel-default table-dynamic table-responsive " ng-show="list.length">
+		<section class="panel panel-default table-dynamic table-responsive " ng-show="(list | filter : quickSearch).length">
 			<table class="table table-bordered table-striped table-middle">
 				<thead>
 					<tr>
@@ -41,7 +49,7 @@
 
 						<th>
 							<div class="th">
-								{{ __('Phone') }}
+								{{ __('Cell #') }}
 							</div>
 						</th>
 
@@ -63,7 +71,7 @@
 				</thead>
 
 				<tbody>
-					<tr ng-repeat="user in list">
+					<tr ng-repeat="user in list | filter : quickSearch">
 						<td>
 							@{{ user.firstname }}
 						</td>
