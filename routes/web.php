@@ -136,6 +136,9 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::post('upload/file', 'UploadController@save');
 	Route::post('upload/fileS3', 'UploadController@saveS3');
 	Route::post('upload/csv', 'UploadController@csv');
+
+	Route::get('phones', 'ReportsController@phones');
+	Route::post('reports', 'ReportsController@get');
 });
 
 Route::get('signup/{type?}', function($type = false) {
