@@ -74,7 +74,7 @@
 												<span class="input-group-addon">
 													<span class="fa fa-phone"></span>
 												</span>
-												<input type="text" name="view_phone" class="form-control input-lg" placeholder="{{ __('Your Cell (for testing)') }}" ng-model="signUp.view_phone" />
+												<input type="text" name="view_phone" class="form-control input-lg" placeholder="{{ __('Your Cell (for testing)') }}" ng-model="signUp.view_phone" ng-required="signUp.plans_id == 'home-advisor'" />
 											</div>
 										</div>
 

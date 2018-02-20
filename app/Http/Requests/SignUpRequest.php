@@ -27,7 +27,8 @@ class SignUpRequest extends FormRequest
             'email' => 'required|email|unique:users,email',
             'firstname' => 'required',
             'password' => 'required',
-            'rep' => 'required_if:plans_code,home-advisor'
+            'view_phone' => 'required_if:plans_code,home-advisor',
+            'rep' => 'required_if:plans_code,home-advisor',
         ];
     }
 
@@ -39,7 +40,8 @@ class SignUpRequest extends FormRequest
     public function messages()
     {
         return [
-            'rep.required_if' => __('HomeAdvisor Rep is required'),
+            'view_phone.required_if' => __('Your Cell # is required'),
+            'rep.required_if' => __('HomeAdvisor Account # is required'),
         ];
     }
 }
