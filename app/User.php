@@ -65,6 +65,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Review', 'user_id');
     }
 
+    public function alerts()
+    {
+        return $this->hasMany('App\Alert', 'user_id');
+    }
+
     public function urls()
     {
         return $this->hasMany('App\Url', 'user_id');

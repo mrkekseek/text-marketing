@@ -24,6 +24,10 @@
 			</div>
 
 			<div class="col-sm-3">
+				<input type="text" placeholder="User..." ng-change="get()" typeahead-on-select="get()" ng-model="filter.user" typeahead-min-length="0" uib-typeahead="user as (user.firstname + ' ' + user.lastname) for user in usersList | filter:$viewValue | limitTo:10 | orderBy:'firstname'" class="form-control" />
+			</div>
+
+			<div class="col-sm-3">
 				<div class="input-group">
 					<input type="text" class="form-control" ng-change="get()" uib-datepicker-popup="{{ 'dd-MMMM-yyyy' }}" ng-focus="openDate()" ng-model="filter.date" is-open="date.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
 					<span class="input-group-btn">

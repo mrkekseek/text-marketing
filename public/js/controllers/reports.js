@@ -4,23 +4,35 @@
     angular.module('app').controller('ReportsCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', ReportsCtrl]);
 
     function ReportsCtrl($rootScope, $scope, $uibModal, request, langs) {
-        $scope.request_finish = false;
+        $scope.request_finish = true;
         $scope.filter = {
             'type': '',
             'phone': '',
+            'user': '',
             'date': new Date()
         };
         $scope.list = [];
         $scope.phones = [];
+        $scope.usersList = [];
 
         $scope.init = function () {
             $scope.getPhones();
+            $scope.getUsers();
+            $scope.get();
         };
 
         $scope.getPhones = function () {
             request.send('/phones', {}, function (data) {
                 $scope.phones = data;
-                $scope.get();
+            }, 'get');
+        };
+
+        $scope.getUsers = function () {
+            request.send('/users', {}, function (data) {
+                for (var k in data) {
+                    $scope.usersList.push(data[k]);
+                }
+                console.log($scope.usersList);
             }, 'get');
         };
 
@@ -36,7 +48,7 @@
                     message.created_at = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ' ' + ampm;
                     return message;
                 });
-                console.log($scope.list);
+                //console.log($scope.list);
                 $scope.request_finish = true;
             }, 'post');
         };
