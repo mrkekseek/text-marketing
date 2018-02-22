@@ -13,7 +13,7 @@
         };
         $scope.list = [];
         $scope.phones = [];
-        $scope.usersList = [];
+        $scope.users = [];
 
         $scope.init = function () {
             $scope.getPhones();
@@ -30,9 +30,8 @@
         $scope.getUsers = function () {
             request.send('/users', {}, function (data) {
                 for (var k in data) {
-                    $scope.usersList.push(data[k]);
+                    $scope.users.push(data[k]);
                 }
-                console.log($scope.usersList);
             }, 'get');
         };
 
