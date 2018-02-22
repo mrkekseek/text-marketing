@@ -62,8 +62,6 @@
             request.send('/clients/leads', {}, function (data) {
                 $scope.list = data;
                 for (var k in $scope.list) {
-                    var date = new Date($scope.list[k].created_at);
-                    $scope.list[k].created_at = date;
                     $scope.list[k].count = 0;
 
                     for (var j in $scope.list[k].dialogs) {

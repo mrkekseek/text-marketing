@@ -10,6 +10,7 @@
         $scope.messages_text = '';
         $scope.sent = false;
         $scope.inputs = [''];
+        $scope.showPhonesBox = true;
 
     	$scope.init = function() {
             $scope.get();
@@ -30,17 +31,17 @@
                     var temp = $location.path().split('/');
                     if (temp[3]) {
                         $scope.activeClient.id = temp[3];
+                        for (var k in $scope.dialogs) {
+                            if ($scope.dialogs[k].clients.id == $scope.activeClient.id) {
+                                $scope.activeClient.firstname = $scope.dialogs[k].clients.firstname;
+                                $scope.activeClient.lastname = $scope.dialogs[k].clients.lastname;
+                            }
+                        }
                     } else if ($scope.dialogs.length) {
                         $scope.activeClient.id = $scope.dialogs[0].clients.id;
                     }
                     $scope.setClient($scope.activeClient);
                 }
-
-                for (var k in $scope.dialogs) {
-                    var date = new Date($scope.createDate($scope.dialogs[k].clients.created_at));
-                    $scope.dialogs[k].clients.created_at = date;
-                }
-
             }, 'get');
         };
 
@@ -68,12 +69,11 @@
         $scope.setClient = function(client) {
             $location.path('/marketing/inbox/' + client.id, false);
             $scope.activeClient.id = client.id;
+            $scope.activeClient.firstname = client.firstname;
+            $scope.activeClient.lastname = client.lastname;
+            $scope.showPhonesBox = ! $scope.showPhonesBox;
             request.send('/dialogs/' + client.id, {}, function (data) {
                 $scope.messages = data;
-                for (var k in $scope.messages) {
-                    var date = new Date($scope.messages[k].created_at);
-                    $scope.messages[k].created_at = date;
-                }
             }, 'get');
         };
 
@@ -336,7 +336,6 @@
             });
 
             modalInstance.result.then(function(response) {
-                console.log(response);
             }, function () {
 
             });

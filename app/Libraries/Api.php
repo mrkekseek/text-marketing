@@ -92,8 +92,8 @@ class Api
         return self::response($response);
 	}
 
-	static public function reports($type, $phone, $date)
+	static public function reports($type, $phone, $date, $ids)
 	{
-		return self::send('reports/get', compact('type', 'phone', 'date'));
+		return self::send('reports/get', compact('type', 'phone', 'date', 'ids'));
 	}
 }
