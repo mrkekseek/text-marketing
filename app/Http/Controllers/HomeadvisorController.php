@@ -352,11 +352,19 @@ class HomeadvisorController extends Controller
         }
 
 		$phones[] = $row;
+		
 		$date = Carbon::now()->addHour();
+		$from = Carbon::now()->addHour()->subHour($user->offset);
+		$to = Carbon::now()->addHour(7)->subHour($user->offset);
+
+		if ($date->hour >= $from->hour && $date->hour < $to->hour) {
+			$date = $to;
+			$date->minute = 1;
+		}
 		$delay = Carbon::now()->diffInSeconds($date);
 
-        SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
-        SendFollowUpText::dispatch($dialog, $phones, $user)->delay($delay)->onQueue('texts');
+		SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
+		SendFollowUpText::dispatch($dialog, $phones, $user)->delay($delay)->onQueue('texts');
     }
 
     public function createText($user, $client, $ha, $dialog)
