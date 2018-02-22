@@ -4,7 +4,7 @@
     angular.module('app').controller('ReportsCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', ReportsCtrl]);
 
     function ReportsCtrl($rootScope, $scope, $uibModal, request, langs) {
-        $scope.request_finish = true;
+        $scope.request_finish = false;
         $scope.filter = {
             'type': '',
             'phone': '',
@@ -47,7 +47,6 @@
                     message.created_at = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ' ' + ampm;
                     return message;
                 });
-                //console.log($scope.list);
                 $scope.request_finish = true;
             }, 'post');
         };

@@ -869,7 +869,7 @@
 							</div>
 							<div class="pull-left">
 								<div>
-									<strong>@{{ item.phone }}</strong>
+									<strong>@{{ item.view_phone }}</strong>
 									<span class="small-italic">(@{{ item.created_at_string}})</span>
 								</div>
 								<div>
