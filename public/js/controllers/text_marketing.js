@@ -31,18 +31,24 @@
                     var temp = $location.path().split('/');
                     if (temp[3]) {
                         $scope.activeClient.id = temp[3];
-                        for (var k in $scope.dialogs) {
-                            if ($scope.dialogs[k].clients.id == $scope.activeClient.id) {
-                                $scope.activeClient.firstname = $scope.dialogs[k].clients.firstname;
-                                $scope.activeClient.lastname = $scope.dialogs[k].clients.lastname;
-                            }
-                        }
+                        $scope.getClientName($scope.activeClient.id);
                     } else if ($scope.dialogs.length) {
                         $scope.activeClient.id = $scope.dialogs[0].clients.id;
+                        $scope.getClientName($scope.activeClient.id);
                     }
                     $scope.setClient($scope.activeClient);
                 }
             }, 'get');
+        };
+
+        $scope.getClientName = function(id) {
+            for (var k in $scope.dialogs) {
+                if ($scope.dialogs[k].clients.id == id) {
+                    $scope.activeClient.firstname = $scope.dialogs[k].clients.firstname;
+                    $scope.activeClient.lastname = $scope.dialogs[k].clients.lastname;
+                }
+            }
+            return $scope.activeClient;
         };
 
         $scope.createDate = function(string) {
