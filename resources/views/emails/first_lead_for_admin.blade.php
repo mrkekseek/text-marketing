@@ -2,5 +2,6 @@
 <p>{{ $user->firstname }} is Ready to Go Live</p>
 
 <b>User email: </b>{{ $user->email }}<br />
-<b>HomeAdvisor Rep: </b>{{ $ha->rep }}<br />
+<b>HA Account #: </b>{{ $ha->rep }}<br />
+<b>Cell #: </b>{{ $user->phone }}<br />
 @endcomponent

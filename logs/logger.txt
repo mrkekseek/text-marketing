@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 [2018-02-19 11:55:33] HomeAdvisor CODE: 15v1vFWIZa4b_
 [2018-02-19 11:55:33] HomeAdvisor data: Array
+=======
+[2018-02-19 08:50:12] HomeAdvisor CODE: 15OdA5P4QoGa_
+[2018-02-19 08:50:12] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => John
     [last_name] => Doe
@@ -20,8 +25,1090 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
 [2018-02-19 11:55:33] HomeAdvisor CODE: 15v1vFWIZa4b_
 [2018-02-19 11:55:33] HomeAdvisor data: Array
+=======
+[2018-02-19 08:51:19] HomeAdvisor CODE: 15OdA5P4QoGa_
+[2018-02-19 08:51:19] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 08:52:18] HomeAdvisor CODE: 15zSEzC4yJk7Q
+[2018-02-19 08:52:18] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 08:52:33] HomeAdvisor CODE: 15zSEzC4yJk7Q
+[2018-02-19 08:52:33] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 08:52:50] HomeAdvisor CODE: 15zSEzC4yJk7Q
+[2018-02-19 08:52:50] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 08:54:27] HomeAdvisor CODE: 15P2qMwHvJT3Q
+[2018-02-19 08:54:27] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 08:54:41] HomeAdvisor CODE: 15P2qMwHvJT3Q
+[2018-02-19 08:54:41] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 08:57:54] HomeAdvisor CODE: 15ytv98Gh1CNs
+[2018-02-19 08:57:54] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:00:15] HomeAdvisor CODE: 15coHGQ5yMk_I
+[2018-02-19 09:00:15] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:03:41] HomeAdvisor CODE: 15iNq8IGRe4ZM
+[2018-02-19 09:03:41] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:03:52] HomeAdvisor CODE: 15iNq8IGRe4ZM
+[2018-02-19 09:03:52] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:04:02] HomeAdvisor CODE: 15iNq8IGRe4ZM
+[2018-02-19 09:04:02] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:05:12] HomeAdvisor CODE: 15poB9HT3vf9k
+[2018-02-19 09:05:12] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:06:53] HomeAdvisor CODE: 15ZxX7igrNTLk
+[2018-02-19 09:06:53] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:07:11] HomeAdvisor CODE: 15ZxX7igrNTLk
+[2018-02-19 09:07:11] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:07:23] HomeAdvisor CODE: 15ZxX7igrNTLk
+[2018-02-19 09:07:23] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:07:57] HomeAdvisor CODE: 15ZxX7igrNTLk
+[2018-02-19 09:07:57] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:13:30] HomeAdvisor CODE: 15DDw5SwWnO7Q
+[2018-02-19 09:13:30] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:13:45] HomeAdvisor CODE: 15DDw5SwWnO7Q
+[2018-02-19 09:13:45] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 09:19:39] HomeAdvisor CODE: 15FRXpj3k_XnM
+[2018-02-19 09:19:39] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:41:35] HomeAdvisor CODE: 15Z1WvyvP9uBg
+[2018-02-19 10:41:35] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:42:54] HomeAdvisor CODE: 15YNsVIju__5g
+[2018-02-19 10:42:54] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:44:02] HomeAdvisor CODE: 153BoKHHCtdAQ
+[2018-02-19 10:44:02] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:44:10] HomeAdvisor CODE: 153BoKHHCtdAQ
+[2018-02-19 10:44:10] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:45:35] HomeAdvisor CODE: 15axg04t3z37k
+[2018-02-19 10:45:35] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:45:54] HomeAdvisor CODE: 15axg04t3z37k
+[2018-02-19 10:45:54] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:46:06] HomeAdvisor CODE: 15axg04t3z37k123
+[2018-02-19 10:46:06] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:46:39] HomeAdvisor CODE: 15axg04t3z37k123
+[2018-02-19 10:46:39] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:46:53] HomeAdvisor CODE: 15Ymr39zooUQs
+[2018-02-19 10:46:53] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:49:48] HomeAdvisor CODE: 15YHdqhu9cSHE
+[2018-02-19 10:49:48] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:50:06] HomeAdvisor CODE: 150HV1YXMnHPI
+[2018-02-19 10:50:06] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:59:08] HomeAdvisor CODE: 15WRrAJZIL116
+[2018-02-19 10:59:08] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:59:28] HomeAdvisor CODE: 15WRrAJZIL116
+[2018-02-19 10:59:28] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 10:59:38] HomeAdvisor CODE: 15WRrAJZIL116
+[2018-02-19 10:59:38] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:01:12] HomeAdvisor CODE: 15Yh_f2tNbRL2
+[2018-02-19 11:01:12] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:01:33] HomeAdvisor CODE: 15Yh_f2tNbRL2
+[2018-02-19 11:01:33] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:01:52] HomeAdvisor CODE: 152EyL63MvDXw
+[2018-02-19 11:01:52] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:02:05] HomeAdvisor CODE: 152EyL63MvDXw
+[2018-02-19 11:02:05] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:02:17] HomeAdvisor CODE: 152EyL63MvDXw
+[2018-02-19 11:02:17] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:02:17] HomeAdvisor CODE: 152EyL63MvDXw
+[2018-02-19 11:02:17] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:02:58] HomeAdvisor CODE: 152EyL63MvDXw
+[2018-02-19 11:02:58] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:02:58] HomeAdvisor CODE: 152EyL63MvDXw
+[2018-02-19 11:02:58] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:03:20] HomeAdvisor CODE: 15HTE3WJEap5_
+[2018-02-19 11:03:20] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:03:20] HomeAdvisor CODE: 15HTE3WJEap5_
+[2018-02-19 11:03:20] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:04:24] HomeAdvisor CODE: 15HTE3WJEap5_
+[2018-02-19 11:04:24] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:04:24] HomeAdvisor CODE: 15HTE3WJEap5_
+[2018-02-19 11:04:24] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:05:36] HomeAdvisor CODE: 15yZ14aeefkTE
+[2018-02-19 11:05:36] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:05:36] HomeAdvisor CODE: 15yZ14aeefkTE
+[2018-02-19 11:05:36] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:22:29] HomeAdvisor CODE: 15I04JKGnE_qk
+[2018-02-19 11:22:29] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:22:29] HomeAdvisor CODE: 15I04JKGnE_qk
+[2018-02-19 11:22:29] HomeAdvisor data: Array
+(
+    [first_name] => Ben
+    [last_name] => Smith
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531718
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:22:29] HomeAdvisor CODE: 15I04JKGnE_qk
+[2018-02-19 11:22:29] HomeAdvisor data: Array
 (
     [first_name] => Bill
     [last_name] => Down
@@ -42,8 +1129,734 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
-[2018-02-19 11:55:34] HomeAdvisor CODE: 15v1vFWIZa4b_
-[2018-02-19 11:55:34] HomeAdvisor data: Array
+[2018-02-19 11:23:06] HomeAdvisor CODE: 15I04JKGnE_qk
+[2018-02-19 11:23:06] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:23:06] HomeAdvisor CODE: 15I04JKGnE_qk
+[2018-02-19 11:23:06] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:23:57] HomeAdvisor CODE: 15qsLQgOY4XVQ
+[2018-02-19 11:23:57] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:23:57] HomeAdvisor CODE: 15qsLQgOY4XVQ
+[2018-02-19 11:23:57] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:25:40] HomeAdvisor CODE: 15HUC65r_a3iY
+[2018-02-19 11:25:40] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:26:01] HomeAdvisor CODE: 15HUC65r_a3iY
+[2018-02-19 11:26:01] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:26:01] HomeAdvisor CODE: 15HUC65r_a3iY
+[2018-02-19 11:26:01] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:26:27] HomeAdvisor CODE: 15HUC65r_a3iY
+[2018-02-19 11:26:27] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:26:27] HomeAdvisor CODE: 15HUC65r_a3iY
+[2018-02-19 11:26:27] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:26:58] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:26:58] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:26:58] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:26:58] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:09] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:09] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:09] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:09] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:21] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:21] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:21] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:21] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:34] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:34] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:34] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:34] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:41] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:41] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:27:41] HomeAdvisor CODE: 15ECRpsSqDVzs
+[2018-02-19 11:27:41] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:28:41] HomeAdvisor CODE: 15hzuDdQDBme2
+[2018-02-19 11:28:41] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:28:55] HomeAdvisor CODE: 15hzuDdQDBme2
+[2018-02-19 11:28:55] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:29:41] HomeAdvisor CODE: 15hzuDdQDBme2
+[2018-02-19 11:29:41] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:29:41] HomeAdvisor CODE: 15hzuDdQDBme2
+[2018-02-19 11:29:41] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:32:09] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:32:09] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:32:09] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:32:09] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:32:19] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:32:19] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:32:20] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:32:20] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:32:46] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:32:46] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:32:47] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:32:47] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:33:04] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:33:04] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:33:04] HomeAdvisor CODE: 15Lc8KOQaMmSo
+[2018-02-19 11:33:04] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:34:42] HomeAdvisor CODE: 15m_emuDY2aSY
+[2018-02-19 11:34:42] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:34:43] HomeAdvisor CODE: 15m_emuDY2aSY
+[2018-02-19 11:34:43] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:34:43] HomeAdvisor CODE: 15m_emuDY2aSY
+[2018-02-19 11:34:43] HomeAdvisor data: Array
 (
     [firstName] => John
     [lastName] => Doe
@@ -83,8 +1896,8 @@
     [lead_id] => 192065244
 )
 
-[2018-02-19 11:55:34] HomeAdvisor CODE: 15v1vFWIZa4b_
-[2018-02-19 11:55:34] HomeAdvisor data: Array
+[2018-02-19 11:34:43] HomeAdvisor CODE: 15m_emuDY2aSY
+[2018-02-19 11:34:43] HomeAdvisor data: Array
 (
     [firstName] => Bill
     [lastName] => Down
@@ -124,8 +1937,134 @@
     [lead_id] => 192065244
 )
 
-[2018-02-19 11:55:35] HomeAdvisor CODE: 15v1vFWIZa4b_
-[2018-02-19 11:55:35] HomeAdvisor data: Array
+[2018-02-19 11:35:33] HomeAdvisor CODE: 15tCEi0yZm_3U
+[2018-02-19 11:35:33] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:35:33] HomeAdvisor CODE: 15tCEi0yZm_3U
+[2018-02-19 11:35:33] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:35:33] HomeAdvisor CODE: 15tCEi0yZm_3U
+[2018-02-19 11:35:33] HomeAdvisor data: Array
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-19 11:35:34] HomeAdvisor CODE: 15tCEi0yZm_3U
+[2018-02-19 11:35:34] HomeAdvisor data: Array
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-19 11:35:34] HomeAdvisor CODE: 15tCEi0yZm_3U
+[2018-02-19 11:35:34] HomeAdvisor data: Array
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -181,8 +2120,8 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
-[2018-02-19 11:55:35] HomeAdvisor CODE: 15v1vFWIZa4b_
-[2018-02-19 11:55:35] HomeAdvisor data: Array
+[2018-02-19 11:35:34] HomeAdvisor CODE: 15tCEi0yZm_3U
+[2018-02-19 11:35:34] HomeAdvisor data: Array
 (
     [name] => Fancy Nancy
     [firstName] => Bill
@@ -238,8 +2177,8 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
-[2018-02-19 11:58:36] HomeAdvisor CODE: 15C_oSS91Dbs6
-[2018-02-19 11:58:36] HomeAdvisor data: Array
+[2018-02-19 11:37:23] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:23] HomeAdvisor data: Array
 (
     [first_name] => John
     [last_name] => Doe
@@ -260,8 +2199,8 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
-[2018-02-19 11:58:36] HomeAdvisor CODE: 15C_oSS91Dbs6
-[2018-02-19 11:58:36] HomeAdvisor data: Array
+[2018-02-19 11:37:24] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:24] HomeAdvisor data: Array
 (
     [first_name] => Bill
     [last_name] => Down
@@ -282,8 +2221,8 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
-[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
-[2018-02-19 11:58:37] HomeAdvisor data: Array
+[2018-02-19 11:37:24] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:24] HomeAdvisor data: Array
 (
     [firstName] => John
     [lastName] => Doe
@@ -323,8 +2262,8 @@
     [lead_id] => 192065244
 )
 
-[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
-[2018-02-19 11:58:37] HomeAdvisor data: Array
+[2018-02-19 11:37:24] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:24] HomeAdvisor data: Array
 (
     [firstName] => Bill
     [lastName] => Down
@@ -364,8 +2303,8 @@
     [lead_id] => 192065244
 )
 
-[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
-[2018-02-19 11:58:37] HomeAdvisor data: Array
+[2018-02-19 11:37:24] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:24] HomeAdvisor data: Array
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -421,8 +2360,1019 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+[2018-02-19 11:37:24] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:24] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => Bill
+    [lastName] => Down
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 2222222222
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => info@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-19 11:37:54] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:54] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:37:54] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:54] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:37:54] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:54] HomeAdvisor data: Array
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-19 11:37:54] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:54] HomeAdvisor data: Array
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-19 11:37:54] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:54] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => John
+    [lastName] => Doe
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 5501531717
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => id@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-19 11:37:55] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:37:55] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => Bill
+    [lastName] => Down
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 2222222222
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => info@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-19 11:38:04] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:38:04] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:38:04] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:38:04] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:38:04] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:38:04] HomeAdvisor data: Array
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-19 11:38:04] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:38:04] HomeAdvisor data: Array
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-19 11:38:04] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:38:04] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => John
+    [lastName] => Doe
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 5501531717
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => id@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-19 11:38:04] HomeAdvisor CODE: 15EwLgiQtBWyU
+[2018-02-19 11:38:04] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => Bill
+    [lastName] => Down
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 2222222222
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => info@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
+[2018-02-19 11:38:38] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
+[2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:55:34] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:34] HomeAdvisor data: Array
+=======
+[2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
+[2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:55:34] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:34] HomeAdvisor data: Array
+=======
+[2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
+[2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:55:35] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:35] HomeAdvisor data: Array
+=======
+[2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
+[2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [name] => Fancy Nancy
+    [firstName] => John
+    [lastName] => Doe
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 5501531717
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => id@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:55:35] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:35] HomeAdvisor data: Array
+=======
+[2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
+[2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [name] => Fancy Nancy
+    [firstName] => Bill
+    [lastName] => Down
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 2222222222
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => info@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:58:36] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:36] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:02] HomeAdvisor CODE: 15joNjCiKu5fQ
+[2018-02-19 12:01:02] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:58:36] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:36] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:02] HomeAdvisor CODE: 15joNjCiKu5fQ
+[2018-02-19 12:01:02] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:37] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:06] HomeAdvisor CODE: 15joNjCiKu5fQ
+[2018-02-19 12:01:06] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:37] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:06] HomeAdvisor CODE: 15joNjCiKu5fQ
+[2018-02-19 12:01:06] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+<<<<<<< HEAD
+[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:37] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:09] HomeAdvisor CODE: 15joNjCiKu5fQ
+[2018-02-19 12:01:09] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [name] => Fancy Nancy
+    [firstName] => John
+    [lastName] => Doe
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 5501531717
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => id@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+<<<<<<< HEAD
 [2018-02-19 11:58:38] HomeAdvisor CODE: 15C_oSS91Dbs6
 [2018-02-19 11:58:38] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:10] HomeAdvisor CODE: 15joNjCiKu5fQ
+[2018-02-19 12:01:10] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => Bill
@@ -478,8 +3428,12 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:10:37] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:37] HomeAdvisor data: Array
+=======
+[2018-02-19 12:01:43] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:01:43] HomeAdvisor data: Array
 (
     [first_name] => John
     [last_name] => Doe
@@ -500,8 +3454,36 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+[2018-02-19 12:02:41] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:02:41] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+<<<<<<< HEAD
 [2018-02-19 12:10:38] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:38] HomeAdvisor data: Array
+=======
+[2018-02-19 12:02:41] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:02:41] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => Bill
     [last_name] => Down
@@ -522,8 +3504,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:10:39] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:39] HomeAdvisor data: Array
+=======
+[2018-02-19 12:02:45] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:02:45] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => John
     [lastName] => Doe
@@ -563,8 +3550,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:10:39] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:39] HomeAdvisor data: Array
+=======
+[2018-02-19 12:02:45] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:02:45] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => Bill
     [lastName] => Down
@@ -604,8 +3596,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:10:40] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:40] HomeAdvisor data: Array
+=======
+[2018-02-19 12:02:48] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:02:48] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -661,8 +3658,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:10:40] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:40] HomeAdvisor data: Array
+=======
+[2018-02-19 12:02:49] HomeAdvisor CODE: 15YnTilf15S2k
+[2018-02-19 12:02:49] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => Bill
@@ -718,8 +3720,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:13:29] HomeAdvisor CODE: 15MTrYkJ9o3pY
 [2018-02-19 12:13:29] HomeAdvisor data: Array
+=======
+[2018-02-19 12:10:46] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:46] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => John
     [last_name] => Doe
@@ -740,8 +3747,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:13:29] HomeAdvisor CODE: 15MTrYkJ9o3pY
 [2018-02-19 12:13:29] HomeAdvisor data: Array
+=======
+[2018-02-19 12:10:47] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:47] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => Bill
     [last_name] => Down
@@ -762,8 +3774,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:13:30] HomeAdvisor CODE: 15MTrYkJ9o3pY
 [2018-02-19 12:13:30] HomeAdvisor data: Array
+=======
+[2018-02-19 12:10:50] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:50] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => John
     [lastName] => Doe
@@ -803,8 +3820,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:13:30] HomeAdvisor CODE: 15MTrYkJ9o3pY
 [2018-02-19 12:13:30] HomeAdvisor data: Array
+=======
+[2018-02-19 12:10:50] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:50] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => Bill
     [lastName] => Down
@@ -844,8 +3866,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:13:30] HomeAdvisor CODE: 15MTrYkJ9o3pY
 [2018-02-19 12:13:30] HomeAdvisor data: Array
+=======
+[2018-02-19 12:10:54] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:54] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -901,8 +3928,253 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
 [2018-02-19 12:13:31] HomeAdvisor CODE: 15MTrYkJ9o3pY
 [2018-02-19 12:13:31] HomeAdvisor data: Array
+=======
+[2018-02-19 12:10:54] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:54] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [name] => Fancy Nancy
+    [firstName] => Bill
+    [lastName] => Down
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 2222222222
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => info@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-20 10:37:04] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:04] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-20 10:37:05] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:05] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-20 10:37:06] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:06] HomeAdvisor data: Array
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-20 10:37:06] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:06] HomeAdvisor data: Array
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-20 10:37:07] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:07] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => John
+    [lastName] => Doe
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 5501531717
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => id@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-20 10:37:07] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:07] HomeAdvisor data: Array
 (
     [name] => Fancy Nancy
     [firstName] => Bill
