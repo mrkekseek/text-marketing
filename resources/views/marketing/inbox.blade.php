@@ -26,7 +26,7 @@
 							<div class="phone-name">
 								@{{ dialog.clients.firstname }}
 								@{{ dialog.clients.lastname }}
-								<span class="small-italic">(@{{ dialog.clients.created_at | date: 'MMMM d' }}@{{ getSuffix(dialog.clients.created_at | date: 'd') }} @{{ dialog.clients.created_at | date: 'h:mm a' }})</span>
+								<span class="small-italic">(@{{ dialog.clients.created_at_string }})</span>
 							</div>
 						</div>
 						<div class="col-sm-2 text-right">
@@ -36,6 +36,32 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="mobile-phones-body visible-xs">
+			<span class="dropable-phones-outer">
+				<button type="button" class="btn btn-default" ng-click="showPhonesBox = ! showPhonesBox">
+					@{{ activeClient.firstname + ' ' +  activeClient.lastname }} <span class="caret pull-right"></span>
+				</button>
+				<div ng-show="showPhonesBox" class="dropable-phones">
+					<div ng-show="true">
+						<div class="search-group">
+							<i class="fa fa-search search-icon" aria-hidden="true"></i>
+							<input ng-model="search.$" class="form-control" type="text" placeholder="Search from list..." />
+						</div>
+						<div class="dropable-phones-inner">
+							<div ng-repeat="dialog in dialogs | filter: search">
+								<div class="divider divider-xs divider-dashed">
+								</div>
+								<a href="javascript:;" class="selecting-phones" ng-click="setClient(dialog.clients)" ng-class="{'active': dialog.clients.id == activeClient.id}">
+									<strong class="ng-binding">@{{ dialog.clients.phone}}</strong> @{{ dialog.clients.firstname + ' ' +  dialog.clients.lastname }}
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</span>
+		</div>
+
 		<div class="dialogs-body">
 			<div class="chat-body" scroll-bottom="messages">
 				<div class="chat-wrap">
@@ -50,7 +76,7 @@
 								<div class="text-right">
 									<i ng-show="message.status == 1 && message.my" class="fa fa-check text-danger" aria-hidden="true"></i>
 									<i ng-show="message.status == 0 && message.my" class="fa fa-times text-danger" aria-hidden="true"></i>
-									<span class="small-italic">@{{ message.created_at | date: 'MMMM d' }}@{{ getSuffix(message.created_at | date: 'd') }} @{{ message.created_at | date: 'h:mm a' }}</span>
+									<span class="small-italic">@{{ message.created_at_string }}</span>
 								</div>
 							</div>
 						</div>
