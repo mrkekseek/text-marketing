@@ -8,19 +8,30 @@
         $scope.filter = {
             'type': '',
             'phone': '',
+            'user': '',
             'date': new Date()
         };
         $scope.list = [];
         $scope.phones = [];
+        $scope.users = [];
 
         $scope.init = function () {
             $scope.getPhones();
+            $scope.getUsers();
+            $scope.get();
         };
 
         $scope.getPhones = function () {
             request.send('/phones', {}, function (data) {
                 $scope.phones = data;
-                $scope.get();
+            }, 'get');
+        };
+
+        $scope.getUsers = function () {
+            request.send('/users', {}, function (data) {
+                for (var k in data) {
+                    $scope.users.push(data[k]);
+                }
             }, 'get');
         };
 
@@ -36,7 +47,6 @@
                     message.created_at = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ' ' + ampm;
                     return message;
                 });
-                console.log($scope.list);
                 $scope.request_finish = true;
             }, 'post');
         };

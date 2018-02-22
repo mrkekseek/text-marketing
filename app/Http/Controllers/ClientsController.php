@@ -11,6 +11,7 @@ use App\Http\Services\UsersService;
 use App\Http\Requests\ClientCreateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ClientsController extends Controller
 {
@@ -21,7 +22,12 @@ class ClientsController extends Controller
 
 	public function leads()
 	{
-		return auth()->user()->teams->clients()->where('source', 'HomeAdvisor')->with('dialogs')->orderBy('created_at', 'desc')->get();
+		return auth()->user()->teams->clients()->where('source', 'HomeAdvisor')->with('dialogs')->orderBy('created_at', 'desc')->get()->each(function($item, $key) {
+			Carbon::setToStringFormat('F dS g:i A');
+			$item->created_at_string = $item->created_at->__toString();
+			Carbon::resetToStringFormat();
+			return $item;
+		});
 	}
 
 	public function info(Request $request, $id = false)
