@@ -26,6 +26,7 @@ class SignUpRequest extends FormRequest
         return [
             'email' => 'required|email|unique:users,email',
             'firstname' => 'required',
+            'lastname' => 'required',
             'password' => 'required',
             'view_phone' => 'required_if:plans_code,home-advisor',
             'rep' => 'required_if:plans_code,home-advisor',

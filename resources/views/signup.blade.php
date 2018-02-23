@@ -65,7 +65,7 @@
 												<span class="input-group-addon">
 													<span class="fa fa-user-o"></span>
 												</span>
-												<input type="text" name="lastname" class="form-control input-lg" placeholder="{{ __('Last Name') }}" ng-model="signUp.lastname" required="required" />
+												<input type="text" name="lastname" class="form-control input-lg" placeholder="{{ __('Last Name') }}" ng-model="signUp.lastname" ng-required="signUp.plans_id == 'home-advisor'" />
 											</div>
 										</div>
 

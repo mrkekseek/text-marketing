@@ -23,6 +23,25 @@
     </form>
 </script>
 
+<script type="text/ng-template" id="ModalVideo.html">
+    <form name="form" method="post" novalidate="novalidate">
+        <div class="modal-header">
+            <h4 class="modal-title">{{ __("How It Works?") }}</h4>
+        </div>
+
+        <div class="modal-body">
+            <video width="100%" height="auto" controls >
+                <source src="/video/havideofinalreal.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
+        </div>
+    </form>
+</script>
+
 <header id="header" class="header-container header-fixed bg-white" id="header">
     <div class="top-header clearfix">
         <div class="logo">
@@ -41,9 +60,15 @@
             </ul>
 
             <ul class="nav-right pull-right list-unstyled">
-                <li ng-show="user.type > 1">
+                <li class="help_menu" ng-show="user.type > 1">
+                    <a href="javascript:;" class="dropdown-toggle" ng-click="modal_video()">
+                        <span class="support_link hidden-xs" uib-tooltip="Watch the video" tooltip-placement="bottom">How Does It Work?</span>
+                        <i class="fa fa-question-circle visible-xs"></i>
+                    </a>
+
                     <a href="javascript:;" class="dropdown-toggle" ng-click="modal_email()">
-                        <i class="fa fa-envelope-o" uib-tooltip="Email us" tooltip-placement="left"></i>
+                        <span class="support_link hidden-xs" uib-tooltip="Email us" tooltip-placement="bottom">Support</span>
+                        <i class="fa fa-envelope-o visible-xs"></i>
                     </a>
                 </li>
 

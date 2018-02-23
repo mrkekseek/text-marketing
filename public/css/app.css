@@ -752,3 +752,13 @@ textarea.form-control.appointment-textarea {
 .report-attach {
 	width: 95px;
 }
+
+.help_menu .support_link {
+	font-size: 14px;
+	padding: 0 5px;
+}
+
+.header-container>.top-header .top-nav .nav-right>.help_menu>a {
+	padding: 15px 5px;
+	display: inline-block;
+}

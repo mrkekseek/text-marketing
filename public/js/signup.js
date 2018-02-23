@@ -29,6 +29,7 @@
             error *= validate.check($scope.form.firstname, 'Name');
 
             if ($scope.signUp.plans_id == 'home-advisor') {
+                error *= validate.check($scope.form.lastname, 'Last Name');
                 error *= validate.check($scope.form.view_phone, 'Your Cell #');
                 error *= validate.check($scope.form.rep, 'HomeAdvisor Account #');
             }

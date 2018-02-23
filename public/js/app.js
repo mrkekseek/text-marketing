@@ -208,6 +208,17 @@ angular.module('app').filter('capitalize', function() {
                 }
             });
         };
+        
+        $scope.modal_video = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'ModalVideo.html',
+                controller: 'ModalVideoCtrl',
+                resolve: {
+                    items: {}
+                }
+            });
+        };
     };
 })();
 
@@ -239,6 +250,18 @@ angular.module('app').filter('capitalize', function() {
             }
         };
 
+        $scope.cancel = function() {
+            $uibModalInstance.close();
+        };
+    };
+})();
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalVideoCtrl', ['$rootScope', '$scope', '$uibModalInstance', 'request', 'validate', 'logger', 'langs', 'items', ModalVideoCtrl]);
+
+    function ModalVideoCtrl($rootScope, $scope, $uibModalInstance, request, validate, logger, langs, items) {
         $scope.cancel = function() {
             $uibModalInstance.close();
         };
