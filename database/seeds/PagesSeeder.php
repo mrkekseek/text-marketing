@@ -263,6 +263,16 @@ class PagesSeeder extends Seeder
             'public' => 0,
         ]);
 
+        DB::table('pages')->insert([
+            'code' => 'leads-list',
+            'folder' => 'leads',
+            'file' => 'list',
+            'name' => 'Leads',
+            'icon' => 'fa fa-users',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+
 
 
 
@@ -379,6 +389,11 @@ class PagesSeeder extends Seeder
             'users_type' => 2,
         ]);
 
+        DB::table('pages_access')->insert([
+            'code' => 'leads-list',
+            'users_type' => 2,
+        ]);
+
 
 
 
@@ -418,11 +433,19 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_menu')->insert([
-            'pages_code' => 'settings-admin',
+            'pages_code' => 'leads-list',
             'parents_code' => '',
             'plans' => 'none',
             'main' => 0,
             'pos' => 6,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'settings-admin',
+            'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 7,
         ]);
 
         DB::table('pages_menu')->insert([

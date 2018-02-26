@@ -770,3 +770,11 @@ textarea.form-control.appointment-textarea {
 .how_it_works .tooltip-inner {
     width: 120px;
 }
+
+.check-span {
+	color: #5cb85c;
+}
+
+.times-span {
+	color: #C82027;
+}
