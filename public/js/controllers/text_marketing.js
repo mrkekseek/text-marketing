@@ -27,6 +27,7 @@
         $scope.get = function() {
             request.send('/dialogs', {}, function (data) {
                 $scope.dialogs = data;
+                console.log(data);
                 if ($scope.dialogs.length) {
                     var temp = $location.path().split('/');
                     if (temp[3]) {

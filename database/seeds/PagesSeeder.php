@@ -183,7 +183,7 @@ class PagesSeeder extends Seeder
             'public' => 0,
         ]);
 
-        /* DB::table('pages')->insert([
+        DB::table('pages')->insert([
             'code' => 'messages-messages',
             'folder' => '',
             'file' => '',
@@ -191,7 +191,7 @@ class PagesSeeder extends Seeder
             'icon' => 'fa fa-commenting-o',
             'tpl' => '',
             'public' => 0,
-        ]); */
+        ]);
 
         DB::table('pages')->insert([
             'code' => 'messages-add',
@@ -344,10 +344,10 @@ class PagesSeeder extends Seeder
             'users_type' => 1,
         ]);
 
-        /* DB::table('pages_access')->insert([
+        DB::table('pages_access')->insert([
             'code' => 'messages-messages',
             'users_type' => 1,
-        ]); */
+        ]);
 
         DB::table('pages_access')->insert([
             'code' => 'messages-add',
@@ -702,7 +702,7 @@ class PagesSeeder extends Seeder
             'plans' => 'none',
             'main' => 0,
             'pos' => 4,
-        ]); */
+        ]);
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'messages-messages',
@@ -710,7 +710,7 @@ class PagesSeeder extends Seeder
             'plans' => 'text-contractortexter',
             'main' => 0,
             'pos' => 4,
-        ]);
+        ]); */
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'messages-add',
