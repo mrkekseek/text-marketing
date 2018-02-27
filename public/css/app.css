@@ -753,12 +753,28 @@ textarea.form-control.appointment-textarea {
 	width: 95px;
 }
 
-.help_menu .support_link {
-	font-size: 14px;
-	padding: 0 5px;
+.help_menu .support_span {
+	font-size: 12px;
 }
 
 .header-container>.top-header .top-nav .nav-right>.help_menu>a {
-	padding: 15px 5px;
+	padding: 14px 0;
+	margin: 0 5px;
 	display: inline-block;
+}
+
+.support_link .tooltip-inner {
+    width: 80px;
+}
+
+.how_it_works .tooltip-inner {
+    width: 120px;
+}
+
+.check-span {
+	color: #5cb85c;
+}
+
+.times-span {
+	color: #C82027;
 }

@@ -79,6 +79,7 @@
         <script src="/js/controllers/appointment.js"></script>
         <script src="/js/controllers/settings.js"></script>
         <script src="/js/controllers/reports.js"></script>
+        <script src="/js/controllers/leads.js"></script>
         <script src="/js/directives/charset.js"></script>
         <script src="/js/directives/textarea.js"></script>
         <script src="/js/directives/stars.js"></script>

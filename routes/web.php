@@ -139,6 +139,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('phones', 'ReportsController@phones');
 	Route::post('reports', 'ReportsController@get');
+	
+	Route::post('leads', 'LeadsController@get');
 });
 
 Route::get('signup/{type?}', function($type = false) {

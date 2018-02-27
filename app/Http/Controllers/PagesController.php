@@ -27,12 +27,12 @@ class PagesController extends Controller
 		$plan = empty(auth()->user()->plans_id) ? 'none' : auth()->user()->plans_id;
 		$menu = PagesMenu::whereNotIn('pages_code', $noAccess)->where('plans', $plan)->orderBy('pos')->get();
     	$codes = $menu->pluck('pages_code')->toArray();
-    	$pages = Page::whereIn('code', $codes)->get();
+		$pages = Page::whereIn('code', $codes)->get();
 
     	$temp = [];
     	foreach ($pages as $page) {
     		$temp[$page['code']] = $page;
-    	}
+		}
 
     	$items = [];
     	foreach ($menu as $parent) {
