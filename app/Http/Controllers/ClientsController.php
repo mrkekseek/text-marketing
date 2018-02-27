@@ -23,8 +23,9 @@ class ClientsController extends Controller
 	public function leads()
 	{
 		return auth()->user()->teams->clients()->where('source', 'HomeAdvisor')->with('dialogs')->orderBy('created_at', 'desc')->get()->each(function($item, $key) {
+			$offset = auth()->user()->offset;
 			Carbon::setToStringFormat('F dS g:i A');
-			$item->created_at_string = $item->created_at->__toString();
+			$item->created_at_string = $item->created_at->subHour($offset)->__toString();
 			Carbon::resetToStringFormat();
 			return $item;
 		});

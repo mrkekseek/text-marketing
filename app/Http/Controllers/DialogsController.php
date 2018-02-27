@@ -22,9 +22,10 @@ class DialogsController extends Controller
 {
     public function all()
 	{
-		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->orderBy('created_at', 'desc')->get()->each(function($item, $key) {           
+		return array_values(Dialog::has('clients')->where('users_id', auth()->user()->id)->with('clients')->orderBy('created_at', 'desc')->get()->each(function($item, $key) {
+            $offset = auth()->user()->offset;
             Carbon::setToStringFormat('F dS g:i A');
-			$item->clients->created_at_string = $item->clients->created_at->__toString();
+			$item->clients->created_at_string = $item->clients->created_at->subHour($offset)->__toString();
             Carbon::resetToStringFormat();
 			return $item;
         })->unique('clients_id')->toArray());
@@ -34,8 +35,9 @@ class DialogsController extends Controller
 	{
         Dialog::where('clients_id', $id)->where('users_id', auth()->user()->id)->update(['new' => 0]);
 		return Dialog::where('clients_id', $id)->where('users_id', auth()->user()->id)->with('clients')->orderBy('created_at', 'asc')->get()->each(function($item, $key) {
-            Carbon::setToStringFormat('F dS g:i A');
-			$item->created_at_string = $item->created_at->__toString();
+            $offset = auth()->user()->offset;
+			Carbon::setToStringFormat('F dS g:i A');
+			$item->created_at_string = $item->created_at->subHour($offset)->__toString();
             Carbon::resetToStringFormat();
 			return $item;
         });

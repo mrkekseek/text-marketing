@@ -26,7 +26,7 @@
 <script type="text/ng-template" id="ModalVideo.html">
     <form name="form" method="post" novalidate="novalidate">
         <div class="modal-header">
-            <h4 class="modal-title">{{ __("How It Works?") }}</h4>
+            <h4 class="modal-title">{{ __("How Does It Work?") }}</h4>
         </div>
 
         <div class="modal-body">
@@ -61,13 +61,13 @@
 
             <ul class="nav-right pull-right list-unstyled">
                 <li class="help_menu" ng-show="user.type > 1">
-                    <a href="javascript:;" class="dropdown-toggle" ng-click="modal_video()">
-                        <span class="support_link hidden-xs" uib-tooltip="Watch the video" tooltip-placement="bottom">How Does It Work?</span>
+                    <a href="javascript:;" class="how_it_works dropdown-toggle" ng-click="modal_video()">
+                        <span class="support_span hidden-xs" uib-tooltip="Watch the video" tooltip-placement="bottom">How Does It Work?</span>
                         <i class="fa fa-question-circle visible-xs"></i>
                     </a>
 
-                    <a href="javascript:;" class="dropdown-toggle" ng-click="modal_email()">
-                        <span class="support_link hidden-xs" uib-tooltip="Email us" tooltip-placement="bottom">Support</span>
+                    <a href="javascript:;" class="support_link dropdown-toggle" ng-click="modal_email()">
+                        <span class="support_span hidden-xs" uib-tooltip="Email us" tooltip-placement="bottom">Support</span>
                         <i class="fa fa-envelope-o visible-xs"></i>
                     </a>
                 </li>

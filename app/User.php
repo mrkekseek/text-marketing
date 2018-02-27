@@ -104,6 +104,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Picture');
     }
+    
+    public function leads()
+    {
+        return $this->hasMany('App\Lead', 'user_id');
+    }
 
     static public function facebookTokens()
     {

@@ -413,7 +413,7 @@ class HomeadvisorController extends Controller
 				$link = $this->getMagicLink($user->id, $client->id);
 			}
 
-			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) {
+			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
 				$this->sendAlertClick($user, $homeadvisor, $client, $link);
 			}
 
