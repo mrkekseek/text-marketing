@@ -64,13 +64,13 @@
 											@{{ client.lastname }}
 										</div>
 									</div>
-									<a href="javascript:;" class="a-icon text-info icon-client icon-report" ng-click="reportClient(client.id)" uib-tooltip="See reports">
+									<a href="javascript:;" class="a-icon text-info icon-client icon-report" ng-click="reportClient(client.id)" uib-tooltip="See reports" tooltip-append-to-body="true">
 										<i class="fa fa-list-alt" aria-hidden="true"></i>
 									</a>
-									<a href="javascript:;" class="a-icon text-success icon-client icon-edit" ng-click="editClient(client)" uib-tooltip="Edit">
+									<a href="javascript:;" class="a-icon text-success icon-client icon-edit" ng-click="editClient(client)" uib-tooltip="Edit" tooltip-append-to-body="true">
 										<i class="fa fa-pencil"></i>
 									</a>
-									<a href="javascript:;" class="a-icon text-danger icon-client icon-remove" ng-click="removeClient(client.id)" uib-tooltip="Remove">
+									<a href="javascript:;" class="a-icon text-danger icon-client icon-remove" ng-click="removeClient(client.id)" uib-tooltip="Remove" tooltip-append-to-body="true">
 										<i class="fa fa-trash"></i>
 									</a>
 								</div>
@@ -225,7 +225,7 @@
 								<span ng-show="seanceText == '1' && seanceEmail == '1'">{{ __('and') }}</span>
 								<span ng-show="seanceEmail == '1'">{{ __('Email') }}</span>
 							</button>
-							<i class="fa fa-question-circle-o help-send-icon" uib-tooltip-template="'sendTooltip.html'" tooltip-placement="right" aria-hidden="true"></i>
+							<i class="fa fa-question-circle-o help-send-icon" uib-tooltip-template="'sendTooltip.html'" tooltip-placement="right" tooltip-append-to-body="true"></i>
 						</div>
 					</div>
 				</div>
