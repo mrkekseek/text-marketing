@@ -65,13 +65,13 @@
 
 						<th>
 							<div class="th">
-								{{ __('Exists') }} <i class="fa fa-question-circle" uib-tooltip="Lead already was in the database" tooltip-placement="bottom"></i>
+								{{ __('Exists') }} <i class="fa fa-question-circle" uib-tooltip="Lead already was in the database" tooltip-placement="bottom" tooltip-append-to-body="true"></i>
 							</div>
 						</th>
 
 						<th>
 							<div class="th">
-								{{ __('Saved') }} <i class="fa fa-question-circle" uib-tooltip="Lead was successfully saved  in to the database" tooltip-placement="bottom"></i>
+								{{ __('Saved') }} <i class="fa fa-question-circle" uib-tooltip="Lead was successfully saved  in to the database" tooltip-placement="bottom" tooltip-append-to-body="true"></i>
 							</div>
 						</th>
 
