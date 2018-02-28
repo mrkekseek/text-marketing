@@ -778,3 +778,75 @@ textarea.form-control.appointment-textarea {
 .times-span {
 	color: #C82027;
 }
+
+.followup_group {
+	margin-bottom: 10px;
+}
+
+.followup_group div,
+.followup_group .followup_delay select {
+	display: inline-block;
+}
+
+.followup_group .followup_delay select {
+	width: 85%;
+}
+
+.followup_group .followup_text {
+	width: 70%;
+}
+
+@media(min-width: 768px) and (max-width: 1640px) {
+	.followup_group .followup_text {
+		width: 60%;
+	}
+}
+
+@media(min-width: 768px) and (max-width: 1320px) {
+	.followup_group .followup_text {
+		width: 50%;
+	}
+
+	.followup_group .followup_delay select {
+		width: 75%;
+	}
+}
+
+@media(min-width: 768px) and (max-width: 1120px) {
+	.followup_group .followup_text {
+		width: 40%;
+	}
+
+	.followup_group .followup_delay select {
+		width: 65%;
+	}
+}
+
+@media(max-width: 710px) {
+	.followup_group .followup_text {
+		width: 60%;
+	}
+
+	.followup_group .followup_delay select {
+		width: 75%;
+	}
+}
+
+@media(max-width: 550px) {
+	.followup_group .followup_text {
+		width: 50%;
+	}
+
+	.followup_group .followup_delay select {
+		width: 55%;
+	}
+}
+
+.followup_group .followup_switcher {
+	line-height: 34px;
+    margin: 5px 20px 0 15px;
+}
+
+.followup_group .disabled_followup {
+	opacity: 0.5;
+}

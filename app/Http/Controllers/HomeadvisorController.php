@@ -195,6 +195,12 @@ class HomeadvisorController extends Controller
 			'emails' => empty($data['ha']['emails']) ? '' : $data['ha']['emails'],
 			'active' => $data['ha']['active'],
 			'file' => $file,
+			'first_followup_active' => $data['ha']['first_followup_active'],
+			'first_followup_text' => $data['ha']['first_followup_text'],
+			'first_followup_delay' => $data['ha']['first_followup_delay'],
+			'second_followup_active' => $data['ha']['second_followup_active'],
+			'second_followup_text' => $data['ha']['second_followup_text'],
+			'second_followup_delay' => $data['ha']['second_followup_delay'],
 		]);
 
 		return $this->message('Settings are successfully saved.', 'success');
@@ -352,19 +358,38 @@ class HomeadvisorController extends Controller
         }
 
 		$phones[] = $row;
-		
-		$date = Carbon::now()->addHour();
-		$from = Carbon::now()->addHour()->subHour($user->offset);
-		$to = Carbon::now()->addHour(7)->subHour($user->offset);
-
-		if ($date->hour >= $from->hour && $date->hour < $to->hour) {
-			$date = $to;
-			$date->minute = 1;
-		}
-		$delay = Carbon::now()->diffInSeconds($date);
 
 		SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
-		SendFollowUpText::dispatch($dialog, $phones, $user)->delay($delay)->onQueue('texts');
+
+		if ( ! empty($ha->first_followup_active)) {
+			$followup_delay = $ha->first_followup_delay;
+			$date = Carbon::now()->addHour($followup_delay);
+			$from = Carbon::now()->addHour($followup_delay)->subHour($user->offset);
+			$to = Carbon::now()->addHour($followup_delay)->addHour(6)->subHour($user->offset);
+
+			if ($date->hour >= $from->hour && $date->hour < $to->hour) {
+				$date = $to;
+				$date->minute = 1;
+			}
+			$delay = Carbon::now()->diffInSeconds($date);
+
+			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
+		}
+
+		if ( ! empty($ha->second_followup_active)) {
+			$followup_delay = $ha->second_followup_delay;
+			$date = Carbon::now()->addHour($followup_delay);
+			$from = Carbon::now()->addHour($followup_delay)->subHour($user->offset);
+			$to = Carbon::now()->addHour($followup_delay)->addHour(6)->subHour($user->offset);
+
+			if ($date->hour >= $from->hour && $date->hour < $to->hour) {
+				$date = $to;
+				$date->minute = 1;
+			}
+			$delay = Carbon::now()->diffInSeconds($date);
+
+			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->second_followup_text)->delay($delay)->onQueue('texts');
+		}
     }
 
     public function createText($user, $client, $ha, $dialog)

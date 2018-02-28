@@ -4,7 +4,10 @@
     angular.module('app').controller('HomeAdvisorCtrl', ['$rootScope', '$scope', '$timeout', '$http', '$location', 'request', 'langs', 'logger', 'validate', HomeAdvisorCtrl]);
 
     function HomeAdvisorCtrl($rootScope, $scope, $timeout, $http, $location, request, langs, logger, validate) {
-        $scope.ha = {};
+        $scope.ha = {
+            first_followup_delay: '1',
+            second_followup_delay: '1'
+        };
         $scope.inputs = [];
         $scope.emails = [];
         $scope.list = [];
@@ -13,23 +16,44 @@
         $scope.file = {};
         $scope.request = false;
         $scope.followupText = '';
+        $scope.disabled = {};
         $scope.settings = {};
         $scope.pictures = [];
         $scope.uploading = {
             pictures: 0
         };
+        $scope.followup_hours = [];
+        $scope.default_followup_text = 'Last text - any interest in our service ? Click to book[$Link] - Thanks!';
 
         $scope.init = function() {
             $scope.get();
             $scope.getPictures();
             $scope.getLeads();
-            $scope.getSettings();
+            $scope.generateHours();
         };
 
         $scope.get = function() {
             request.send('/homeadvisor', {}, function (data) {
                 if (data) {
                     $scope.ha = data;
+
+                    if ($scope.ha.first_followup_delay != '0' && $scope.ha.second_followup_delay != '0') {
+                        $scope.ha.first_followup_delay = $scope.ha.first_followup_delay.toString();
+                        $scope.ha.second_followup_delay = $scope.ha.second_followup_delay.toString();
+                    }
+
+                    if ( ! $scope.ha.first_followup_text) {
+                        $scope.ha.first_followup_text = $scope.default_followup_text;
+                    }
+                    
+                    if ( ! $scope.ha.second_followup_text) {
+                        $scope.ha.second_followup_text = $scope.default_followup_text;
+                    }
+
+                    
+
+                    console.log($scope.ha);
+
                     if ($scope.ha.additional_phones) {
                         $scope.inputs = $scope.ha.additional_phones.split(',');
                     }
@@ -72,27 +96,6 @@
                     }
                 }
             }, 'get');
-        };
-
-        $scope.getSettings = function() {
-            request.send('/settings', {}, function (data) {
-                if (data) {
-                    $scope.settings = data;
-                    $scope.followupText = $scope.settings.followup_text;
-                }
-            }, 'get');
-        };
-
-        $scope.getFollowUpText = function() {
-            var link = '';
-            var text = $scope.followupText;
-            if ($scope.ha.text) {
-                if ($scope.ha.text.indexOf('bit.ly') + 1) {
-                    link = $scope.ha.text.slice($scope.ha.text.indexOf('bit.ly'), $scope.ha.text.indexOf('bit.ly') + 14);
-                }
-                text = text.replace('[$Link]', link);
-            }
-            return text;
         };
 
         $scope.getSuffix = function(day) {
@@ -168,7 +171,7 @@
             if (error) {
                 $scope.ha.additional_phones = inputs.join(',');
                 $scope.ha.emails = emails.join(',');
-                request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {'ha': $scope.ha, 'user': $scope.user, 'pictures': $scope.pictures}, function() {
+                request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), { 'ha': $scope.ha, 'user': $scope.user, 'pictures': $scope.pictures}, function() {
                     $scope.getPictures();
                 }, ($scope.ha.id ? 'post' : 'put'));
             }
@@ -281,6 +284,12 @@
                         $scope.checkCompany();
                     }, 'get');
                 }, 5000);
+            }
+        };
+
+        $scope.generateHours = function () {
+            for (var i = 1; i <= 24; i++) {
+                $scope.followup_hours[i-1] = i;
             }
         };
     };
