@@ -27,12 +27,12 @@ class SendFollowUpText implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Dialog $dialog, $clients, User $user)
+    public function __construct(Dialog $dialog, $clients, User $user, $text)
     {
         $this->dialog = $dialog;
         $this->clients = $clients;
         $this->user = $user;
-        $this->test = $this->createText($this->dialog->text);
+        $this->text = $text;
     }
 
     /**
@@ -44,7 +44,7 @@ class SendFollowUpText implements ShouldQueue
     {
         if (empty($this->dialog->clicked) && empty($this->dialog->reply) && $this->dialog->status == 1) {
 
-            $dialog =  $this->user->dialogs()->create([
+            $dialog = $this->user->dialogs()->create([
                 'clients_id' => $this->dialog->clients_id,
                 'text' => '',
                 'file' => '',
@@ -52,7 +52,7 @@ class SendFollowUpText implements ShouldQueue
                 'status' => 2,
             ]);
 
-            $dialog->update(['text' => $this->createText($this->dialog->text, $dialog->id)]);
+            $dialog->update(['text' => $this->createText($this->dialog->text, $this->text, $dialog->id)]);
 
             $response = Api::followUp($dialog->id, $this->clients, $dialog->text, $this->user->company_name, $this->user->offset);
             if ($response['code'] != 200) {
@@ -67,14 +67,8 @@ class SendFollowUpText implements ShouldQueue
         }
     }
 
-    public function createText($text, $id = false)
+    public function createText($text, $followUpText, $id = false)
     {
-        $followUpText = '';
-        $settings = Setting::first();
-        if ( ! empty($settings->followup_text)) {
-            $followUpText = $settings->followup_text;
-        }
-
         $linkPos = strpos($text, 'bit.ly/');
         if ($linkPos !== false) {
             $originLink = substr($text, $linkPos, 14);

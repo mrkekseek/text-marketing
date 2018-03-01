@@ -6,7 +6,15 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Services\LinksService;
+use App\Events\FirstLead;
+use App\Jobs\SendFirstLead;
+use App\Jobs\SendLeadText;
+use App\Jobs\SendFollowUpText;
+use App\Notifications\SendFirstLeadForAdmin;
 
 class LeadsTest extends TestCase
 {
@@ -41,12 +49,366 @@ class LeadsTest extends TestCase
             ->create([
                 'users_id' => $this->user->id,
             ]);
+    }
 
+    public function testFirstLeadEvent()
+    {
+        Event::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        $user = $this->user;
+
+        Event::assertDispatched(FirstLead::class);
+    }
+
+    public function testFirstLeadExists()
+    {
         $this->client = factory(\App\Client::class)
             ->create([
                 'team_id' => $this->user->teams_id,
                 'phone' => '2222222222',
             ]);
+
+        Event::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Event::assertNotDispatched(FirstLead::class);
+    }
+
+    public function testFirstLeadDiffPhones()
+    {
+        $this->client = factory(\App\Client::class)
+            ->create([
+                'team_id' => $this->user->teams_id,
+                'phone' => '2222222222',
+            ]);
+
+        Event::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '3333333333';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('clients', [
+            'firstname' => $firstName,
+            'lastname' => $lastName,
+            'phone' => $phone,
+            'email' => $email,
+        ]);
+
+        Event::assertNotDispatched(FirstLead::class);
+    }
+
+    public function testFirstLeadJob()
+    {
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertPushedOn('emails', SendFirstLead::class);
+    }
+
+    public function testFirstLeadNotification()
+    {
+        Notification::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Notification::assertSentTo($this->owner, SendFirstLeadForAdmin::class);
+    }
+
+    public function testFirstTextToLeadJob()
+    {
+        $this->homeadvisor->update([
+            'active' => true,
+            'text' => 'text',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertPushedOn('texts', SendLeadText::class);
+    }
+
+    public function testFirstTextToLeadJobNotActive()
+    {
+        $this->homeadvisor->update([
+            'active' => false,
+            'text' => 'text',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertNotPushed(SendLeadText::class);
+    }
+
+    public function testFirstTextToLeadJobEmptyText()
+    {
+        $this->homeadvisor->update([
+            'active' => true,
+            'text' => '',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertNotPushed(SendLeadText::class);
+    }
+
+    public function testFirstTextToLeadJobEmptyPhone()
+    {
+        $this->homeadvisor->update([
+            'active' => true,
+            'text' => 'text',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertNotPushed(SendLeadText::class);
+    }
+
+    /* 
+        test that job SendFollowUpText
+        is pushing on "texts" queue
+    */
+
+    public function testFollowupJob()
+    {
+        $this->homeadvisor->update([
+            'first_followup_active' => true,
+            'first_followup_text' => 'Testing text for followup',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertPushedOn('texts', SendFollowUpText::class);
+
+        $followup_text = $this->homeadvisor->first_followup_text;
+
+        Queue::assertPushed(SendFollowUpText::class, function ($job) use ($followup_text) {
+            return $job->text === $followup_text;
+        });
+    }
+
+    /*
+        test that job SendFollowUpText
+        is dispatching when
+        first_followup_active is true and
+        second_followup_active is false
+    */
+    
+    public function testFirstFollowupIsActiveWithoutSecond()
+    {
+        $this->homeadvisor->update([
+            'first_followup_active' => true,
+            'second_followup_active' => false,
+            'first_followup_text' => 'Testing text for first followup',
+            'second_followup_text' => '',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        $followup_text = $this->homeadvisor->first_followup_text;
+
+        Queue::assertPushed(SendFollowUpText::class, function ($job) use ($followup_text) {
+            return $job->text === $followup_text;
+        });
+    }
+
+    /*
+        test that job SendFollowUpText
+        for first followup
+        is not dispatching when
+        first_followup_active is false
+        second_followup_active is false
+    */
+
+    public function testFollowupsNotActive()
+    {
+        $this->homeadvisor->update([
+            'first_followup_active' => false,
+            'second_followup_active' => false,
+            'first_followup_text' => '',
+            'second_followup_text' => '',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertNotPushed(SendFollowUpText::class);
+    }
+
+    /*
+        test that job SendFollowUpText
+        is dispatching when
+        first_followup_active is false
+        second_followup_active is true
+    */
+
+    public function testSecondFollowupIsActiveWithoutFirst()
+    {
+        $this->homeadvisor->update([
+            'first_followup_active' => false,
+            'second_followup_active' => true,
+            'first_followup_text' => '',
+            'second_followup_text' => 'Testing text for second followup',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        $followup_text = $this->homeadvisor->second_followup_text;
+
+        Queue::assertPushed(SendFollowUpText::class, function ($job) use ($followup_text) {
+            return $job->text === $followup_text;
+        });
+    }
+
+    /*
+        test that job SendFollowUpText
+        is dispatching when
+        first_followup_active is true
+        second_followup_active is true
+    */
+
+    public function testBothFollowupsIsActive()
+    {
+        $this->homeadvisor->update([
+            'first_followup_active' => true,
+            'second_followup_active' => true,
+            'first_followup_text' => 'Testing text for first followup',
+            'second_followup_text' => 'Testing text for second followup',
+        ]);
+
+        Queue::fake();
+
+        $firstName = 'Bill';
+        $lastName = 'Down';
+        $phone = '2222222222';
+        $email = 'info@div-art.com';
+
+        $json = '{"name":"Fancy Nancy","firstName":"'.$firstName.'","lastName":"'.$lastName.'","address":"123 Main St","city":"USAville","stateProvince":"PA","postalCode":"12345","primaryPhone":"'.$phone.'","phoneExt":"1234","secondaryPhone":"5558675308","secondaryPhoneExt":"1234","email":"'.$email.'","srOid":87654321,"leadOid":135911130,"taskOid":40006,"taskName":"Maid Service","spPartnerId":"54321","crmKey":"abcd-12345","contactStatus":"New HomeAdvisor Prospect - Not Contacted","comments":"I\'m looking for recurring cleaning services, please.","interview":[{"question":"What kind of location is this?","answer":"Home/Residence"},{"question":"Cleaning Type Needed","answer":"Recurring Service"},{"question":"Request Stage","answer":"Ready to Hire"},{"question":"Desired Completion Date","answer":"Within 1 week"}],"matchType":"exact","leadDescription":"Exact Match","spEntityId":88888888,"spCompanyName":"Maid Service Cleaning, LLC"}';
+
+        $this->expectOutputString('<success>'.$this->link->success.'</success>');
+        $response = $this->post($this->link->url, json_decode($json, true));
+
+        Queue::assertPushed(SendFollowUpText::class, 2);
     }
 
     /**
@@ -56,6 +418,8 @@ class LeadsTest extends TestCase
      */
     public function testNewLeadGet()
     {
+        Queue::fake();
+
         $firstName = 'John';
         $lastName = 'Doe';
         $phone = '5501531717';
@@ -81,6 +445,8 @@ class LeadsTest extends TestCase
      */
     public function testExistLeadGet()
     {
+        Queue::fake();
+
         $firstName = 'Bill';
         $lastName = 'Down';
         $phone = '2222222222';
@@ -106,6 +472,8 @@ class LeadsTest extends TestCase
      */
     public function testNewLeadJson()
     {
+        Queue::fake();
+
         $firstName = 'John';
         $lastName = 'Doe';
         $phone = '5501531717';
@@ -131,6 +499,8 @@ class LeadsTest extends TestCase
      */
     public function testExistLeadJson()
     {
+        Queue::fake();
+
         $firstName = 'Bill';
         $lastName = 'Down';
         $phone = '2222222222';
@@ -156,6 +526,8 @@ class LeadsTest extends TestCase
      */
     public function testNewLeadEliteJson()
     {
+        Queue::fake();
+
         $firstName = 'John';
         $lastName = 'Doe';
         $phone = '5501531717';
@@ -181,6 +553,8 @@ class LeadsTest extends TestCase
      */
     public function testExistLeadEliteJson()
     {
+        Queue::fake();
+
         $firstName = 'Bill';
         $lastName = 'Down';
         $phone = '2222222222';
