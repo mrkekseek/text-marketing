@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Homeadvisor;
 use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Jobs\SignUp;
@@ -63,6 +64,12 @@ class AuthController extends Controller
             $user->homeadvisors()->create([
                 'rep' => $request->rep,
                 'emails' => '',
+                'first_followup_active' => Homeadvisor::FIRST_FOLLOWUP_ACTIVE,
+                'first_followup_delay' => Homeadvisor::FIRST_FOLLOWUP_DELAY,
+                'first_followup_text' => Homeadvisor::FIRST_FOLLOWUP_TEXT,
+                'second_followup_active' => Homeadvisor::SECOND_FOLLOWUP_ACTIVE,
+                'second_followup_delay' => Homeadvisor::SECOND_FOLLOWUP_DELAY,
+                'second_followup_text' => Homeadvisor::SECOND_FOLLOWUP_TEXT,
             ]);
         }
 

@@ -61,7 +61,46 @@
 							<div class="form-group">
 								<label>{{ __('Follow-Up Text') }}</label>
 								<i class="fa fa-question-circle-o" uib-tooltip="Follow-Up Text goes out an hour after the Instant Text, if the Lead does not click on your link or does not text you back." tooltip-placement="right" aria-hidden="true"></i>
-								<input class="form-control" type="text" disabled="disabled" ng-value="getFollowUpText()" />
+								
+								<div class="followup_group">
+									<div class="followup_text">
+										<input class="form-control" type="text" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-click="changeFollowupText('first')" ng-disabled=" ! ha.first_followup_active" ng-model="ha.first_followup_text" />
+									</div>
+
+									<div class="followup_delay">
+										<select class="form-control" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-model="ha.first_followup_delay" ng-disabled=" ! ha.first_followup_active">
+											<option value="@{{ hour }}" ng-repeat="hour in followup_hours">@{{ hour }} @{{ hour == 1 ? 'hour' : 'hours' }}</option>
+										</select>
+										<i class="fa fa-question-circle-o" ng-class="{disabled_followup: ! ha.first_followup_active}" uib-tooltip="Time after Lead came in. Follow up texts will never be sent between midnight and 6 AM." tooltip-placement="bottom" tooltip-append-to-body="true"></i>
+									</div>
+
+									<div class="followup_switcher pull-left">
+										<label class="ui-switch ui-switch-success ui-switch-sm">
+											<input id="enable_followup_first" type="checkbox" ng-model="ha.first_followup_active" ng-true-value="1" ng-false-value="0" />
+											<i></i>
+										</label>
+									</div>
+								</div>
+
+								<div class="followup_group">
+									<div class="followup_text">
+										<input class="form-control" type="text" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-click="changeFollowupText('second')" ng-disabled=" ! ha.second_followup_active" ng-model="ha.second_followup_text" />
+									</div>
+
+									<div class="followup_delay">
+										<select class="form-control" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-model="ha.second_followup_delay" ng-disabled=" ! ha.second_followup_active">
+											<option value="@{{ hour }}" ng-repeat="hour in followup_hours">@{{ hour }} @{{ hour == 1 ? 'hour' : 'hours' }}</option>
+										</select>
+										<i class="fa fa-question-circle-o" ng-class="{disabled_followup: ha.second_followup_active == 0}" uib-tooltip="Time after Lead came in. Follow up texts will never be sent between midnight and 6 AM." tooltip-placement="bottom" tooltip-append-to-body="true"></i>
+									</div>
+
+									<div class="followup_switcher pull-left">
+										<label class="ui-switch ui-switch-success ui-switch-sm">
+											<input id="enable_followup_second" type="checkbox" ng-model="ha.second_followup_active" ng-true-value="1" ng-false-value="0" />
+											<i></i>
+										</label>
+									</div>
+								</div>
 							</div>
 
 							<label>Upload Logo</label>
