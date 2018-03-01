@@ -63,6 +63,7 @@ class HomeadvisorController extends Controller
 			$info->second_followup_active = Homeadvisor::SECOND_FOLLOWUP_ACTIVE;
 			$info->second_followup_delay = Homeadvisor::SECOND_FOLLOWUP_DELAY;
 			$info->second_followup_text = Homeadvisor::SECOND_FOLLOWUP_TEXT;
+			$info->save();
 		}
 
 		return $info;
