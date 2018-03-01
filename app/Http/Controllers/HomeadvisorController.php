@@ -56,7 +56,7 @@ class HomeadvisorController extends Controller
 	{
 		$info = auth()->user()->homeadvisors;
 
-		if (empty($info->first_followup_delay) && empty($info->first_followup_text)) {
+		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
 			$info->first_followup_active = Homeadvisor::FIRST_FOLLOWUP_ACTIVE;
 			$info->first_followup_delay = Homeadvisor::FIRST_FOLLOWUP_DELAY;
 			$info->first_followup_text = Homeadvisor::FIRST_FOLLOWUP_TEXT;

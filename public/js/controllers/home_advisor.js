@@ -16,7 +16,6 @@
         $scope.file = {};
         $scope.request = false;
         $scope.followupText = '';
-        $scope.disabled = {};
         $scope.settings = {};
         $scope.pictures = [];
         $scope.uploading = {
