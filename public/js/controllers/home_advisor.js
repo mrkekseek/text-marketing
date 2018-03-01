@@ -23,7 +23,6 @@
             pictures: 0
         };
         $scope.followup_hours = [];
-        $scope.default_followup_text = 'Last text - any interest in our service ? Click to book[$Link] - Thanks!';
 
         $scope.init = function() {
             $scope.get();
@@ -41,18 +40,6 @@
                         $scope.ha.first_followup_delay = $scope.ha.first_followup_delay.toString();
                         $scope.ha.second_followup_delay = $scope.ha.second_followup_delay.toString();
                     }
-
-                    if ( ! $scope.ha.first_followup_text) {
-                        $scope.ha.first_followup_text = $scope.default_followup_text;
-                    }
-                    
-                    if ( ! $scope.ha.second_followup_text) {
-                        $scope.ha.second_followup_text = $scope.default_followup_text;
-                    }
-
-                    
-
-                    console.log($scope.ha);
 
                     if ($scope.ha.additional_phones) {
                         $scope.inputs = $scope.ha.additional_phones.split(',');

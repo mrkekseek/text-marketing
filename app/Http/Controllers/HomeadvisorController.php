@@ -24,6 +24,7 @@ use App\Jobs\SendFollowUpText;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
 use App\Http\Services\UsersService;
+use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 
@@ -53,7 +54,18 @@ class HomeadvisorController extends Controller
 
 	public function info()
 	{
-		return auth()->user()->homeadvisors;
+		$info = auth()->user()->homeadvisors;
+
+		if (empty($info->first_followup_delay) && empty($info->first_followup_text)) {
+			$info->first_followup_active = Homeadvisor::FIRST_FOLLOWUP_ACTIVE;
+			$info->first_followup_delay = Homeadvisor::FIRST_FOLLOWUP_DELAY;
+			$info->first_followup_text = Homeadvisor::FIRST_FOLLOWUP_TEXT;
+			$info->second_followup_active = Homeadvisor::SECOND_FOLLOWUP_ACTIVE;
+			$info->second_followup_delay = Homeadvisor::SECOND_FOLLOWUP_DELAY;
+			$info->second_followup_text = Homeadvisor::SECOND_FOLLOWUP_TEXT;
+		}
+
+		return $info;
 	}
 
 	public function pictures()
@@ -256,12 +268,10 @@ class HomeadvisorController extends Controller
 			$data = $request->all();
 		}
 
-		$this->saveLog($code, 'HomeAdvisor CODE');
-		$this->saveLog($data, 'HomeAdvisor data');
-
 		$backup = Lead::create([
 			'code' => $code,
 			'data' => json_encode($data),
+			'exists' => false,
 		]);
 
     	if ( ! empty($data)) {
@@ -282,20 +292,21 @@ class HomeadvisorController extends Controller
 					'view_phone' => $view_phone,
 					'email' => $this->email($data),
 					'source' => 'HomeAdvisor',
-					'hapage' => 0,
 				];
 
 				$client = $link->user->teams->clients()->where('phone', $phone)->first();
+				$lead_exists = true;
 				if ( ! empty($client)) {
 					$client->update($lead);
 					$backup->update([
 						'exists' => true,
 					]);
+					$lead_exists = false;
 				} else {
 					$client = $link->user->teams->clients()->create($lead);
 				}
 
-				if ($link->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1) {
+				if ($link->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1 && $lead_exists) {
 					$owner = User::where('owner', true)->first();
 					event(new FirstLead($link->user, $owner, $link->user->homeadvisors));
 				}
@@ -342,7 +353,7 @@ class HomeadvisorController extends Controller
 			'status' => 2,
 		]);
 
-		$text = $this->createText($user, $client, $ha, $dialog);
+		$text = HomeAdvisorService::createText($user, $client, $ha, $dialog);
 		$dialog->update(['text' => $text]);
 
 		$row = [
@@ -361,7 +372,7 @@ class HomeadvisorController extends Controller
 
 		SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
 
-		if ( ! empty($ha->first_followup_active)) {
+		if ( ! empty($ha->first_followup_active) && ! empty($ha->first_followup_text)) {
 			$followup_delay = $ha->first_followup_delay;
 			$date = Carbon::now()->addHour($followup_delay);
 			$from = Carbon::now()->addHour($followup_delay)->subHour($user->offset);
@@ -376,7 +387,7 @@ class HomeadvisorController extends Controller
 			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
 		}
 
-		if ( ! empty($ha->second_followup_active)) {
+		if ( ! empty($ha->second_followup_active) && ! empty($ha->second_followup_text)) {
 			$followup_delay = $ha->second_followup_delay;
 			$date = Carbon::now()->addHour($followup_delay);
 			$from = Carbon::now()->addHour($followup_delay)->subHour($user->offset);
@@ -391,24 +402,6 @@ class HomeadvisorController extends Controller
 			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->second_followup_text)->delay($delay)->onQueue('texts');
 		}
     }
-
-    public function createText($user, $client, $ha, $dialog)
-    {
-    	$text = $ha->text;
-    	$linkPos = strpos($text, 'bit.ly/');
-    	if ($linkPos !== false) {
-    		$originLink = substr($text, $linkPos, 14);
-    		$fakeLink = ShortLink::bitly(config('app.url').'/magic/'.$dialog->id.'/'.$originLink, false);
-    		$text = str_replace($originLink, $fakeLink, $text);
-		}
-		
-		if (strpos($text, '[$JobPics]') !== false) {
-			$hapage = ShortLink::bitly(config('app.url').'/ha-job/'.$user->id.'/'.$client->id, false);
-    		$text = str_replace('[$JobPics]', $hapage, $text);
-		}
-
-    	return $text;
-	}
 
 	public function sendFake(Request $request)
 	{
