@@ -780,73 +780,41 @@ textarea.form-control.appointment-textarea {
 }
 
 .followup_group {
+	padding-top: 10px;
 	margin-bottom: 10px;
 }
 
-.followup_group div,
-.followup_group .followup_delay select {
+.followup_delay select {
 	display: inline-block;
 }
 
 .followup_group .followup_delay select {
-	width: 85%;
+	width: 195px;
 }
 
 .followup_group .followup_text {
-	width: 70%;
-}
-
-@media(min-width: 768px) and (max-width: 1640px) {
-	.followup_group .followup_text {
-		width: 60%;
-	}
-}
-
-@media(min-width: 768px) and (max-width: 1320px) {
-	.followup_group .followup_text {
-		width: 50%;
-	}
-
-	.followup_group .followup_delay select {
-		width: 75%;
-	}
-}
-
-@media(min-width: 768px) and (max-width: 1120px) {
-	.followup_group .followup_text {
-		width: 40%;
-	}
-
-	.followup_group .followup_delay select {
-		width: 65%;
-	}
-}
-
-@media(max-width: 710px) {
-	.followup_group .followup_text {
-		width: 60%;
-	}
-
-	.followup_group .followup_delay select {
-		width: 75%;
-	}
-}
-
-@media(max-width: 550px) {
-	.followup_group .followup_text {
-		width: 50%;
-	}
-
-	.followup_group .followup_delay select {
-		width: 55%;
-	}
+	width: 100%;
+	margin-bottom: 10px;
 }
 
 .followup_group .followup_switcher {
-	line-height: 34px;
-    margin: 5px 20px 0 15px;
+	margin-bottom: 10px;
+}
+
+.followup_group .followup_switcher label,
+.followup_group .followup_switcher span {
+	vertical-align: middle;
+}
+
+.followup_group .followup_switcher label {
+	margin: 0;
+	height: 20px;
 }
 
 .followup_group .disabled_followup {
 	opacity: 0.5;
+}
+
+.followup_group .followup_textarea div.chars-area textarea {
+	height: 80px;
 }
