@@ -816,16 +816,10 @@ textarea.form-control.appointment-textarea {
 }
 
 .followup_group .followup_textarea div.chars-area textarea {
-	height: 50px;
+	height: 60px;
 }
 
-@media(min-width: 1700px) {
-	.followup_group .followup_textarea div.chars-area textarea {
-		height: 60px;
-	}
-}
-
-@media(min-width: 1120px) {
+@media(max-width: 1120px) {
 	.followup_group .followup_textarea div.chars-area textarea {
 		height: 80px;
 	}
