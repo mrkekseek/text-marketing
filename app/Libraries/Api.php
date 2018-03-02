@@ -8,6 +8,7 @@ class Api
 {
 	static private function send($uri, $data, $method = 'POST')
     {
+		$data['env'] = env('APP_ENV');
         $client = new Guzzle(['base_uri' => config('services.api.domain')]);
         $response = $client->request($method, $uri, [
             'headers' => [
@@ -94,6 +95,6 @@ class Api
 
 	static public function reports($type, $phone, $date, $ids)
 	{
-		return self::send('reports/get', compact('type', 'phone', 'date', 'ids'));
+		return self::send('messages/get', compact('type', 'phone', 'date', 'ids'));
 	}
 }

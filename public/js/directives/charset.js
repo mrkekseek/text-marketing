@@ -49,7 +49,6 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 					if ($scope.result.indexOf($scope.firstnameTag) + 1) {
 						$scope.size += $scope.maxFirstname - $scope.firstnameTag.length;
 					}
-					console.log($scope.lms);
 
 					if ($scope.result.indexOf($scope.lastnameTag) + 1) {
 						$scope.size += $scope.maxLastname - $scope.lastnameTag.length;

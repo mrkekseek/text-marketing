@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Link;
+use App\Libraries\Api;
 use Illuminate\Http\Request;
 
 class LinksController extends Controller
