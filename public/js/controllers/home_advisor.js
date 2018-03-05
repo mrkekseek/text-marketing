@@ -5,8 +5,8 @@
 
     function HomeAdvisorCtrl($rootScope, $scope, $timeout, $http, $location, request, langs, logger, validate) {
         $scope.ha = {
-            first_followup_delay: '1',
-            second_followup_delay: '1'
+            first_followup_delay: '60',
+            second_followup_delay: '60'
         };
         $scope.inputs = [];
         $scope.emails = [];
@@ -21,7 +21,15 @@
         $scope.uploading = {
             pictures: 0
         };
-        $scope.followup_hours = [];
+        $scope.followup_hours = [
+            {
+                text: 15,
+                value: 15
+            }, {
+                text: 30,
+                value: 30
+            }
+        ];
 
         $scope.init = function() {
             $scope.get();
@@ -275,7 +283,27 @@
 
         $scope.generateHours = function () {
             for (var i = 1; i <= 24; i++) {
-                $scope.followup_hours[i-1] = i;
+                $scope.followup_obj = {};
+                $scope.followup_obj.text = i;
+                $scope.followup_obj.value = i * 60;
+                $scope.followup_hours.push($scope.followup_obj);
+            }
+        };
+
+        $scope.getHourText = function (amount) {
+            switch (amount) {
+                case 15:
+                    return 'minutes after Instant Text';
+                    break;
+                case 30:
+                    return 'minutes after Instant Text';
+                    break;
+                case 60:
+                    return 'hour after Instant Text';
+                    break;
+                default:
+                    return 'hours after Instant Text';
+                    break;
             }
         };
     };
