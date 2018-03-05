@@ -8,6 +8,7 @@
         "php": ">=7.0.0",
         "cartalyst/stripe-laravel": "7.0.*",
         "div-art/shortlink": "^0.2.0",
+        "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "guzzlehttp/guzzle": "~6.0",
         "imangazaliev/didom": "^1.12",
