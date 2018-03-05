@@ -301,7 +301,9 @@
                 case 60:
                     return 'hour after Instant Text';
                     break;
-                default: return 'hours after Instant Text';
+                default:
+                    return 'hours after Instant Text';
+                    break;
             }
         };
     };
