@@ -14,9 +14,30 @@ class ApiTest extends TestCase
      *
      * @return void
      */
-    public function testApiEnvironment()
+    public function testMaxLenghtOfCompanyName()
     {
-        $response = Api::company('popik');
-		dd($response);
+        $response = Api::company('First Testovich Company First Testovich Company First Testovich Company First Testovich Company First Testovich Company');
+        $this->assertFalse($response['data']);
+    }
+    
+     public function testVerifiedCompany()
+    {
+        $response = Api::company('First Testovich Company');
+		$this->assertEquals($response['data'], 'verified');
+    }
+
+    public function testDeniedCompany()
+    {
+        $response = Api::company('Second Testovich Company');
+		$this->assertEquals($response['data'], 'denied');
+    }
+
+    /* треба чистити базу */
+
+    public function testCreatingNewCompany()
+    {
+        $response = Api::company('New company');
+        $this->assertEquals($response['data']['data']['status_code'], 'MPCE4001');
+        $this->assertEquals($response['data']['data']['request_id'], '1234561234567asdf123');
     }
 }

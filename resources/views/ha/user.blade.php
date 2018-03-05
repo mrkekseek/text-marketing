@@ -79,7 +79,7 @@
 
 											<div class="followup_delay">
 												<select class="form-control" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-model="ha.first_followup_delay" ng-disabled=" ! ha.first_followup_active">
-													<option value="@{{ hour }}" ng-repeat="hour in followup_hours">@{{ hour }} @{{ hour == 1 ? 'hour after Instant Text' : 'hours after Instant Text' }}</option>
+													<option value="@{{ hour.value }}" ng-repeat="hour in followup_hours">@{{ hour.text + ' ' + getHourText(hour.value) }}</option>
 												</select>
 												<i class="fa fa-question-circle-o" ng-class="{disabled_followup: ! ha.first_followup_active}" uib-tooltip="Time after Lead came in. Follow up texts will never be sent between midnight and 6 AM." tooltip-placement="bottom" tooltip-append-to-body="true"></i>
 											</div>
@@ -104,7 +104,7 @@
 
 											<div class="followup_delay">
 												<select class="form-control" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-model="ha.second_followup_delay" ng-disabled=" ! ha.second_followup_active">
-													<option value="@{{ hour }}" ng-repeat="hour in followup_hours">@{{ hour }} @{{ hour == 1 ? 'hour after Instant Text' : 'hours after Instant Text' }}</option>
+													<option value="@{{ hour.value }}" ng-repeat="hour in followup_hours">@{{ hour.text + ' ' + getHourText(hour.value) }}</option>
 												</select>
 												<i class="fa fa-question-circle-o" ng-class="{disabled_followup: ha.second_followup_active == 0}" uib-tooltip="Time after Lead came in. Follow up texts will never be sent between midnight and 6 AM." tooltip-placement="bottom" tooltip-append-to-body="true"></i>
 											</div>
