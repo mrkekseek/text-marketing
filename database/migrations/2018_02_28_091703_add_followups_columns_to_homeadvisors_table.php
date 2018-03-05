@@ -16,10 +16,10 @@ class AddFollowupsColumnsToHomeadvisorsTable extends Migration
         Schema::table('homeadvisors', function (Blueprint $table) {
             $table->tinyInteger('first_followup_active')->after('text')->unsigned();
             $table->text('first_followup_text')->after('first_followup_active')->nullable();
-            $table->string('first_followup_delay')->after('first_followup_text');
+            $table->smallInteger('first_followup_delay')->after('first_followup_text')->unsigned();
             $table->tinyInteger('second_followup_active')->after('first_followup_delay')->unsigned();
             $table->text('second_followup_text')->after('second_followup_active')->nullable();
-            $table->string('second_followup_delay')->after('second_followup_text');
+            $table->smallInteger('second_followup_delay')->after('second_followup_text')->unsigned();
         });
     }
 
