@@ -2,10 +2,10 @@
 	<div class="chars-area">
 		<textarea id="{{ id }}" class="form-control" placeholder="Message Text" ng-model="result" maxlength="{{ max }}"></textarea>
 		<span>
-			<span ng-show="size > minLms">3 messages </span>
+			<span ng-show="size > minLms && lms">3 messages </span>
 			<span>{{ size }}</span> /
 			<span>{{ max }}</span>
-			<span class="fa fa-question-circle-o" uib-tooltip="You can go over {{ minLms }} characters and have {{ max }}. This will cost 3 text credits." tooltip-placement="left"></span>
+			<span class="fa fa-question-circle-o" ng-show="lms" uib-tooltip="You can go over {{ minLms }} characters and have {{ max }}. This will cost 3 text credits." tooltip-placement="left"></span>
 		</span>
 	</div>
 

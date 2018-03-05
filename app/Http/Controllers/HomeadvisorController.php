@@ -372,17 +372,17 @@ class HomeadvisorController extends Controller
 		$phones[] = $row;
 
 		SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
-
+		
 		if ( ! empty($ha->first_followup_active) && ! empty($ha->first_followup_text)) {
 			$followup_delay = $ha->first_followup_delay;
-			$date = Carbon::now()->addHour($followup_delay);
-			$from = Carbon::now()->addHour($followup_delay)->subHour($user->offset);
-			$to = Carbon::now()->addHour($followup_delay)->addHour(6)->subHour($user->offset);
+			$date = Carbon::now()->addMinutes($followup_delay);
+			$user_date = Carbon::now()->addMinutes($followup_delay)->subHour($user->offset);
 
-			if ($date->hour >= $from->hour && $date->hour < $to->hour) {
-				$date = $to;
-				$date->minute = 1;
+			if ($user_date->hour <= 6) {
+				$date->addHour(6 - $user_date->hour);
+				$data->minute = 1;
 			}
+			
 			$delay = Carbon::now()->diffInSeconds($date);
 
 			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
@@ -390,14 +390,14 @@ class HomeadvisorController extends Controller
 
 		if ( ! empty($ha->second_followup_active) && ! empty($ha->second_followup_text)) {
 			$followup_delay = $ha->second_followup_delay;
-			$date = Carbon::now()->addHour($followup_delay);
-			$from = Carbon::now()->addHour($followup_delay)->subHour($user->offset);
-			$to = Carbon::now()->addHour($followup_delay)->addHour(6)->subHour($user->offset);
+			$date = Carbon::now()->addMinutes($followup_delay);
+			$user_date = Carbon::now()->addMinutes($followup_delay)->subHour($user->offset);
 
-			if ($date->hour >= $from->hour && $date->hour < $to->hour) {
-				$date = $to;
-				$date->minute = 1;
+			if ($user_date->hour <= 6) {
+				$date->addHour(6 - $user_date->hour);
+				$data->minute = 1;
 			}
+			
 			$delay = Carbon::now()->diffInSeconds($date);
 
 			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->second_followup_text)->delay($delay)->onQueue('texts');
