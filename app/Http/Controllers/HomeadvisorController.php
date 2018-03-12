@@ -384,7 +384,6 @@ class HomeadvisorController extends Controller
 			}
 			
 			$delay = Carbon::now()->diffInSeconds($date);
-			dd($ha);
 			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
 		}
 

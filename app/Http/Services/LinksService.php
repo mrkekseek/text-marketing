@@ -28,7 +28,8 @@ class LinksService
     {
         $extra_key = '';
         if ($extra_crypt) {
-            $extra_key = rand();
+            mt_srand();
+            $extra_key = mt_rand();
         }
 
         return str_replace(['.', ',', '/', '&', '$', '=', ':', ';', '"', "'"], '_', crypt($extra_key.time().$user->firstname.$user->lastname, time()));
