@@ -162,7 +162,7 @@ class HomeadvisorController extends Controller
 	{
 		$data = $request->only(['ha', 'user', 'pictures']);
 		$file = '';
-
+		
 		foreach ($data['pictures'] as $pos => $picture) {
 			if (empty($picture['id'])) {
 				$temp = explode('/temp/', $picture['url']);
@@ -384,7 +384,7 @@ class HomeadvisorController extends Controller
 			}
 			
 			$delay = Carbon::now()->diffInSeconds($date);
-
+			dd($ha);
 			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
 		}
 
