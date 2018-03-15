@@ -268,7 +268,7 @@ class LeadsTest extends TestCase
 
         $this->expectOutputString('<success>'.$this->link->success.'</success>');
         $response = $this->post($this->link->url, json_decode($json, true));
-
+        
         Queue::assertPushedOn('texts', SendFollowUpText::class);
 
         $followup_text = $this->homeadvisor->first_followup_text;
