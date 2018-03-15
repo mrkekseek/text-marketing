@@ -15,7 +15,6 @@
         $scope.oldCompany = angular.copy($scope.user.company_name);
         $scope.file = {};
         $scope.request = false;
-        $scope.followupText = '';
         $scope.settings = {};
         $scope.pictures = [];
         $scope.uploading = {
