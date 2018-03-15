@@ -372,7 +372,7 @@ class HomeadvisorController extends Controller
 		$phones[] = $row;
 
 		SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
-		
+
 		if ( ! empty($ha->first_followup_active) && ! empty($ha->first_followup_text)) {
 			$followup_delay = $ha->first_followup_delay;
 			$date = Carbon::now()->addMinutes($followup_delay);
@@ -431,7 +431,7 @@ class HomeadvisorController extends Controller
 				$link = $this->getMagicLink($user->id, $client->id);
 			}
 
-			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
+			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && ! empty($dialog->clicked)) {
 				$this->sendAlertClick($user, $homeadvisor, $client, $link);
 			}
 

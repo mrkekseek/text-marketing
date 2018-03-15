@@ -43,7 +43,6 @@ class SendFollowUpText implements ShouldQueue
     public function handle()
     {
         if (empty($this->dialog->clicked) && empty($this->dialog->reply) && $this->dialog->status == 1) {
-
             $dialog = $this->user->dialogs()->create([
                 'clients_id' => $this->dialog->clients_id,
                 'text' => '',
@@ -53,7 +52,7 @@ class SendFollowUpText implements ShouldQueue
             ]);
 
             $dialog->update(['text' => $this->createText($this->dialog->text, $this->text, $dialog->id)]);
-
+            
             $response = Api::followUp($dialog->id, $this->clients, $dialog->text, $this->user->company_name, $this->user->offset);
             if ($response['code'] != 200) {
                 $dialog->update(['status' => 0]);
