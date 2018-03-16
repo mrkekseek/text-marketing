@@ -17,7 +17,7 @@
 					</div>
 
 					<div uib-alert class="alert-success" ng-show="list.length">
-						{{ __('Your request was approved by HomeAdvisor') }}
+						{{ __('Want 3 Free Months? Refer 1 Friend. Click <a href="#">HERE</a> for details') }}
 					</div>
 
 					<button type="button" class="btn btn-primary" ng-show=" ! ha.send_request" ng-click="activate()">{{ __('Activate HomeAdvisor') }}</button>
@@ -229,6 +229,36 @@
 		</div>
 
 		<div class="col-sm-12 col-md-6">
+			<div class="referral_section" ng-show="show_referral && ! list.length">
+				<form name="form" novalidate="novalidate">
+					<div class="ref-block">
+						<div class="ref-title text-center">
+							<h4>Want 3 Free Months? Refer 1 Friend</h4>
+						</div>
+	
+						<div class="ref-body">					
+							<p>
+								Just enter your friend’s name + contact info - we reach out<br />
+								If they sign up, you get 3 free months<br />
+								3 Friends - 1 year free
+							</p>
+	
+							<div class="form-group">
+								<label>{{ __('Friend’s Name:') }}</label>
+								<input type="text" name="name" class="form-control" ng-model="referral.name" placeholder="{{ __('Enter name here...') }}" required="required" />
+							</div>
+	
+							<div class="form-group">
+								<label>{{ __('Number or Email:') }}</label>
+								<input type="text" name="contacts" class="form-control" ng-model="referral.contacts" placeholder="{{ __('Enter number or email here...') }}" required="required" />
+							</div>
+	
+							<button class="btn btn-default" ng-click="registerReferral()">{{ __('Send') }}</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
 			<div class="panel panel-default" ng-show="list.length">
 				<div class="panel-heading">
 					<strong>{{ __('Leads') }}</strong>

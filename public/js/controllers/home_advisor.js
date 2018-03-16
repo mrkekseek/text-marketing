@@ -29,6 +29,8 @@
                 value: 30
             }
         ];
+        $scope.show_referral = false;
+        $scope.referral = {};
 
         $scope.init = function() {
             $scope.get();
@@ -101,10 +103,25 @@
         };
 
         $scope.activate = function() {
+            $scope.show_referral = true;
             request.send('/homeadvisor/activate' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {}, function (data) {
                 $scope.ha.send_request = true;
             }, ($scope.ha.id ? 'post' : 'put'));
         };
+
+        $scope.registerReferral = function() {
+            var error = 1;
+            
+            error *= validate.check($scope.form.name, 'Name');
+            error *= validate.check($scope.form.contacts, 'Number or Email');
+
+            if (error) {
+                request.send('/homeadvisor/referral', $scope.referral, function (data) {
+                    $scope.referral.name = '';
+                    $scope.referral.contacts = '';
+                }, 'post');
+            }
+        }
 
         $scope.add = function() {
             if ($scope.inputs.length <= 1) {

@@ -476,7 +476,11 @@ class UsersController extends Controller
 
     public function all()
 	{
-		return User::allUsers();
+		return User::allUsers()->each(function($item, $key) {
+			$ha = $item->homeadvisors()->first();
+			$item->rep = $ha['rep'];
+			return $item;
+		});
 	}
 
 	public function partners()

@@ -78,6 +78,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');
 	Route::put('homeadvisor/', 'HomeadvisorController@create');
 	Route::post('homeadvisor/fake', 'HomeadvisorController@sendFake');
+	Route::post('homeadvisor/referral', 'HomeadvisorController@sendReferral');
 	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
 	Route::get('pictures', 'HomeadvisorController@pictures');
 	Route::post('pictures/remove', 'HomeadvisorController@picturesRemove');
