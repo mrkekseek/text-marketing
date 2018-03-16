@@ -24,12 +24,13 @@ class SendAlertClick implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Alert $alert, $phones, $text, $user)
+    public function __construct(Alert $alert, $phones, $text, $user, $reply_viewed = false)
     {
         $this->alert = $alert;
         $this->phones = $phones;
         $this->text = $text;
         $this->user = $user;
+        $this->reply_viewed = $reply_viewed;
     }
 
     /**
@@ -39,6 +40,8 @@ class SendAlertClick implements ShouldQueue
      */
     public function handle()
     {
-        $response = Api::alert($this->alert->id, $this->phones, $this->text, 'ContractorTexter', $this->user->offset);
+        if ( ! $this->reply_viewed) {
+            $response = Api::alert($this->alert->id, $this->phones, $this->text, 'ContractorTexter', $this->user->offset);
+        }
     }
 }

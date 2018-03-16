@@ -204,7 +204,10 @@ class DialogsController extends Controller
                 'text' => $text,
             ];
             $alert = Alert::create($data);
+            $delay = Carbon::now()->addMinutes(10);
+            $dialog = Dialog::where('users_id', $user->id)->first();
             SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+            SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog->reply_viewed)->delay($delay)->onQueue('texts');
         }
     }
 
