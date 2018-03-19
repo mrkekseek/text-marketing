@@ -249,7 +249,7 @@
 							</div>
 	
 							<div class="form-group">
-								<label>{{ __('Friend's Email or Number:') }}</label>
+								<label>{{ __("Friend's Email or Number:") }}</label>
 								<input type="text" name="contacts" class="form-control" ng-model="referral.contacts" placeholder="{{ __('Enter number or email here...') }}" required="required" />
 							</div>
 	
