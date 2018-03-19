@@ -824,3 +824,28 @@ textarea.form-control.appointment-textarea {
 		height: 80px;
 	}
 }
+
+.ref-block {
+	background-color: #C82027;
+	padding: 30px 15px;
+	color: #fff;
+}
+
+.ref-body {
+	width: 60%;
+	margin: 0 auto;
+}
+
+.ref-body .btn {
+	display: block;
+	margin: 0 auto;
+	color:#626262;
+}
+
+.ha_number {
+	width: 100px;
+}
+
+.ref-page .form-control {
+	width: 60%;
+}

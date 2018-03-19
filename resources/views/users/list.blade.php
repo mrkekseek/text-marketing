@@ -59,6 +59,12 @@
 							</div>
 						</th>
 						
+						<th class="ha_number">
+							<div class="th">
+								{{ __('Account #') }}
+							</div>
+						</th>
+						
 						<th class="th-button">
 						</th>
 
@@ -90,6 +96,10 @@
 
 						<td>
 							@{{ user.teams.name }}
+						</td>
+						
+						<td>
+							@{{ user.rep }}
 						</td>
 						
 						<td class="td-button text-center">

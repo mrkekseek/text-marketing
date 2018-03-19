@@ -12,7 +12,7 @@
     	$scope.get = function () {
     		request.send('/users', $scope.auth, function (data) {
     			$scope.list = data;
-    			$scope.request_finish = true;
+				$scope.request_finish = true;
 			}, 'get');
 		};
 

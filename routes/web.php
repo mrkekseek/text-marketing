@@ -78,6 +78,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');
 	Route::put('homeadvisor/', 'HomeadvisorController@create');
 	Route::post('homeadvisor/fake', 'HomeadvisorController@sendFake');
+	Route::post('homeadvisor/referral', 'HomeadvisorController@sendReferral');
 	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
 	Route::get('pictures', 'HomeadvisorController@pictures');
 	Route::post('pictures/remove', 'HomeadvisorController@picturesRemove');
@@ -158,7 +159,8 @@ Route::get('recovery', function() {
 Route::get('ha-job/{user}/{client?}', 'HomeadvisorController@page');
 
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
-Route::get('magic/inbox/{user}/{client}', 'UsersController@magicInbox');
+Route::get('magic/inbox/{user}/{client}/{dialog}', 'UsersController@magicInbox');
+Route::get('magic/referral/{hash}', 'UsersController@magicReferral');
 
 Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_fb_token', 'UsersController@facebookToken');
 Route::any('save_fb_reviews', 'UsersController@facebookReviews');
