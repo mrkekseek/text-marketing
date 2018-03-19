@@ -14,7 +14,7 @@ Hope you had a great week! Here’s a snapshot of your past week on ContractorTe
 <p>As always, you can log into your dashboard to see everything: <a href="{{ config('app.url') }}">app.contractortexter.com</a></p>
 Remember to ask your clients their thoughts on the text so we can improve and close more.<br />
 
-<p><b>Want 3 Free Months? Refer 1 Friend. Click <a href="#">HERE</a> for details</b></p>
+<p><b>Want 3 Free Months? Refer 1 Friend. Click <a href="{{ config('app.url') }}/magic/referral/{{ $result['user_hash'] }}">HERE</a> for details</b></p>
 
 
 Thanks,<br>

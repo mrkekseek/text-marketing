@@ -61,7 +61,7 @@
 						
 						<th class="ha_number">
 							<div class="th">
-								{{ __('HomeAdvisor Account #') }}
+								{{ __('Account #') }}
 							</div>
 						</th>
 						

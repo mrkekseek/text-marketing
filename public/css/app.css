@@ -845,3 +845,7 @@ textarea.form-control.appointment-textarea {
 .ha_number {
 	width: 100px;
 }
+
+.ref-page .form-control {
+	width: 60%;
+}

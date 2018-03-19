@@ -655,12 +655,23 @@ class UsersController extends Controller
 		auth()->login($user);
 	}
 
-	public function magicInbox(User $user, Client $client)
+	public function magicInbox(User $user, Client $client, Dialog $dialog)
 	{
 		auth()->login($user);
-		$user->dialogs()->where('clients_id', $client->id)->update(['reply_viewed' => true]);
+		$dialog->update(['reply_viewed' => 1]);
 		$link = config('app.url').'/marketing/inbox/'.$client->id;
 		return redirect($link);
+	}
+
+	public function magicReferral($hash)
+	{
+		$user = User::whereRaw('MD5(CONCAT(id, created_at)) = "'. $hash.'"')->first();
+		if ($user) {
+			auth()->login($user);
+			$user_hash = md5($user.$user->created_at);
+			$link = config('app.url').'/ha/referral/'.$user_hash;
+			return redirect($link);
+		}
 	}
 
 	public function password(UsersPasswordRequest $request)

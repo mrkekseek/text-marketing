@@ -47,6 +47,7 @@ class SendReportsByLeads extends Command
                 'clients_count' => ! empty($user->teams->clients_count) ? $user->teams->clients_count : 0,
                 'clicked_count' => 0,
                 'reply_count' => 0,
+                'user_hash' => md5($user->id.$user->created_at),
             ];
 
             if ( ! empty($user->teams->clients)) {

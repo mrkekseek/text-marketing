@@ -17,7 +17,7 @@
 					</div>
 
 					<div uib-alert class="alert-success" ng-show="list.length">
-						{{ __('Want 3 Free Months? Refer 1 Friend. Click <a href="#">HERE</a> for details') }}
+						{{ __('Want 3 Free Months? Refer 1 Friend. Click ')}}<a href="/ha/referral">HERE</a>{{ __(' for details') }}
 					</div>
 
 					<button type="button" class="btn btn-primary" ng-show=" ! ha.send_request" ng-click="activate()">{{ __('Activate HomeAdvisor') }}</button>

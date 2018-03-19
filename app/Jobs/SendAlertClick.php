@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use App\Libraries\Api;
 use App\Alert;
+use App\Dialog;
 
 class SendAlertClick implements ShouldQueue
 {
@@ -18,19 +19,20 @@ class SendAlertClick implements ShouldQueue
     public $phones;
     public $text;
     public $user;
+    public $dialog;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Alert $alert, $phones, $text, $user, $reply_viewed = false)
+    public function __construct(Alert $alert, $phones, $text, $user, Dialog $dialog)
     {
         $this->alert = $alert;
         $this->phones = $phones;
         $this->text = $text;
         $this->user = $user;
-        $this->reply_viewed = $reply_viewed;
+        $this->dialog = $dialog;
     }
 
     /**
@@ -40,7 +42,7 @@ class SendAlertClick implements ShouldQueue
      */
     public function handle()
     {
-        if ( ! $this->reply_viewed) {
+        if ( ! $this->dialog->reply_viewed) {
             $response = Api::alert($this->alert->id, $this->phones, $this->text, 'ContractorTexter', $this->user->offset);
         }
     }

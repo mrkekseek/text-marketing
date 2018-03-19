@@ -142,17 +142,18 @@ class DialogsController extends Controller
         $dialog->my = false;
         $dialog->reply = 0;
         $dialog->clicked = 0;
+        $dialog->reply_viewed = 0;
         $dialog->save();
 
         $user = User::find($dialog->users_id);
         
         $magicLink = false;
         if ( ! empty($user->phone) || ! empty($user->homeadvisors->additional_phones) || ! empty($user->homeadvisors->emails)) {
-            $magicLink = $this->getMagicLink($user->id, $dialog->clients_id);
+            $magicLink = $this->getMagicLink($user->id, $dialog->clients_id, $dialog->id);
         }
-
+        
         if ( ! empty($user->phone) || ! empty($user->homeadvisors->additional_phones)) {
-            $this->sendAlert($user, $magicLink);
+            $this->sendAlert($user, $magicLink, $dialog);
         }
         
         if ( ! empty($user->homeadvisors->emails)) {
@@ -160,9 +161,9 @@ class DialogsController extends Controller
         }
     }
 
-    private function getMagicLink($id, $clients_id)
+    private function getMagicLink($id, $clients_id, $dialog_id)
     {
-        $link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$clients_id, false);
+        $link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$clients_id.'/'.$dialog_id, false);
         return $link;
     }
 
@@ -174,7 +175,7 @@ class DialogsController extends Controller
         file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').$source.': '.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
-    public function sendAlert($user, $link)
+    public function sendAlert($user, $link, $dialog)
     {
         $phones = [];
         $temp = [];
@@ -205,9 +206,8 @@ class DialogsController extends Controller
             ];
             $alert = Alert::create($data);
             $delay = Carbon::now()->addMinutes(10);
-            $dialog = Dialog::where('users_id', $user->id)->first();
-            SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
-            SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog->reply_viewed)->delay($delay)->onQueue('texts');
+            SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
+            SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->delay($delay)->onQueue('texts');
         }
     }
 
