@@ -476,7 +476,11 @@ class UsersController extends Controller
 
     public function all()
 	{
-		return User::allUsers();
+		return User::allUsers()->each(function($item, $key) {
+			$ha = $item->homeadvisors()->first();
+			$item->rep = $ha['rep'];
+			return $item;
+		});
 	}
 
 	public function partners()
@@ -651,11 +655,23 @@ class UsersController extends Controller
 		auth()->login($user);
 	}
 
-	public function magicInbox(User $user, Client $client)
+	public function magicInbox(User $user, Client $client, Dialog $dialog)
 	{
 		auth()->login($user);
+		$dialog->update(['reply_viewed' => 1]);
 		$link = config('app.url').'/marketing/inbox/'.$client->id;
 		return redirect($link);
+	}
+
+	public function magicReferral($hash)
+	{
+		$user = User::whereRaw('MD5(CONCAT(id, created_at)) = "'. $hash.'"')->first();
+		if ($user) {
+			auth()->login($user);
+			$user_hash = md5($user.$user->created_at);
+			$link = config('app.url').'/ha/referral/'.$user_hash;
+			return redirect($link);
+		}
 	}
 
 	public function password(UsersPasswordRequest $request)

@@ -21,6 +21,7 @@ use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
 use App\Jobs\SendAlertClick;
 use App\Jobs\SendFollowUpText;
+use App\Jobs\SendReferral;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
 use App\Http\Services\UsersService;
@@ -495,6 +496,16 @@ class HomeadvisorController extends Controller
                 ->onQueue('emails');
             Mail::to($temp)->queue($message);
         }
+	}
+
+	public function sendReferral(Request $request)
+	{
+		$data = $request->only(['name', 'contacts']);
+		$owner = User::where('owner', 1)->first();
+
+		SendReferral::dispatch(auth()->user(), $owner, $data)->onQueue('emails');
+
+		return $this->message('Information about referral was sent', 'success');
 	}
 
 	public function createPhone($number)

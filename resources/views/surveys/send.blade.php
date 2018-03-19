@@ -173,7 +173,7 @@
 											</div>
 
 											<div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
-												{{ __('To send texts you should save Company Name and wait untill it will be verified. It may takes 15 minutes') }}
+												{{ __('Please insert your Company Name - it can take up to 15 minutes') }}
 											</div>
 										</div>
 									</div>
