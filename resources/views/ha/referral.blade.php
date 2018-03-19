@@ -10,9 +10,9 @@
                     <div class="referral_section ref-page">
                         <form name="form" novalidate="novalidate">
                             <div uib-alert class="alert-info">
-                                Just enter your friend’s name + contact info - we reach out<br />
-                                If they sign up, you get 3 free months<br />
-                                3 Friends - 1 year free
+                                <b>1.</b> Just enter your friend’s name + contact info<br />
+								<b>2.</b> If they sign up, you get 3 free months<br />
+								<b>3.</b> 3 Friends - 1 year free
                             </div>
 
                             <div class="form-group">
@@ -21,7 +21,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>{{ __('Number or Email:') }}</label>
+                                <label>{{ __("Friend's Email or Number:") }}</label>
                                 <input type="text" name="contacts" class="form-control" ng-model="referral.contacts" placeholder="{{ __('Enter number or email here...') }}" required="required" />
                             </div>
 
