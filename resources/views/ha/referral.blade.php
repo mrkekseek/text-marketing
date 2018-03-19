@@ -16,7 +16,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>{{ __('Friend’s Name:') }}</label>
+                                <label>{{ __("Friend's Name:") }}</label>
                                 <input type="text" name="name" class="form-control" ng-model="referral.name" placeholder="{{ __('Enter name here...') }}" required="required" />
                             </div>
 
