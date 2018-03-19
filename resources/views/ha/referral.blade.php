@@ -10,9 +10,9 @@
                     <div class="referral_section ref-page">
                         <form name="form" novalidate="novalidate">
                             <div uib-alert class="alert-info">
-                                Just enter your friend’s name + contact info - we reach out<br />
-                                If they sign up, you get 3 free months<br />
-                                3 Friends - 1 year free
+                                1. Just enter your friend’s name + contact info<br />
+								2. If they sign up, you get 3 free months<br />
+								3. 3 Friends - 1 year free
                             </div>
 
                             <div class="form-group">

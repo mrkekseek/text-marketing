@@ -238,9 +238,9 @@
 	
 						<div class="ref-body">					
 							<p>
-								Just enter your friend’s name + contact info - we reach out<br />
-								If they sign up, you get 3 free months<br />
-								3 Friends - 1 year free
+								1. Just enter your friend’s name + contact info<br />
+								2. If they sign up, you get 3 free months<br />
+								3. 3 Friends - 1 year free
 							</p>
 	
 							<div class="form-group">
