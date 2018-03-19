@@ -836,6 +836,18 @@ textarea.form-control.appointment-textarea {
 	margin: 0 auto;
 }
 
+@media (max-width: 1285px) {
+	.ref-body {
+		width: 70%;
+	}
+}
+
+@media (max-width: 1150px) {
+	.ref-body {
+		width: 90%;
+	}
+}
+
 .ref-body .btn {
 	display: block;
 	margin: 0 auto;
