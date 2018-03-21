@@ -14,11 +14,11 @@ class ApiTest extends TestCase
      *
      * @return void
      */
-    public function testMaxLenghtOfCompanyName()
+    /* public function testMaxLenghtOfCompanyName()
     {
         $response = Api::company('First Testovich Company First Testovich Company First Testovich Company First Testovich Company First Testovich Company');
         $this->assertFalse($response['data']);
-    }
+    } */
     
     /* public function testVerifiedCompany()
     {

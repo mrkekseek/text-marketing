@@ -15,7 +15,7 @@ use App\Lead;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Carbon\Carbon;
-use App\Events\FirstLead;
+use App\Events\SaveLeadFromHomeadvisor;
 use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
 use App\Jobs\SendLeadText;
@@ -307,16 +307,8 @@ class HomeadvisorController extends Controller
 				} else {
 					$client = $link->user->teams->clients()->create($lead);
 				}
-
-				if ($link->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1 && $lead_exists) {
-					$owner = User::where('owner', true)->first();
-					event(new FirstLead($link->user, $owner, $link->user->homeadvisors));
-				}
-
-				$ha = $link->user->homeadvisors;
-				if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($phone)) {
-					$this->textToLead($link->user, $client, $ha);
-				}
+				
+				event(new SaveLeadFromHomeadvisor($link->user, $client, $lead_exists));
 
 				$backup->update([
 					'saved' => true,
@@ -343,65 +335,6 @@ class HomeadvisorController extends Controller
 			mkdir('logs', 0777);
 		}
 		file_put_contents('logs/logger.txt', date('[Y-m-d H:i:s] ').$source.': '.print_r($data, true).PHP_EOL, FILE_APPEND | LOCK_EX);
-    }
-
-    public function textToLead($user, $client, $ha)
-    {
-		$dialog = $user->dialogs()->create([
-			'clients_id' => $client->id,
-			'text' => '',
-			'file' => ! empty($ha->file) ? $ha->file : '',
-			'my' => true,
-			'status' => 2,
-		]);
-
-		$text = HomeAdvisorService::createText($user, $client, $ha, $dialog);
-		$dialog->update(['text' => $text]);
-
-		$row = [
-            'phone' => $client->phone,
-        ];
-
-        if (strpos($dialog->text, '[$FirstName]') !== false) {
-            $row['firstname'] = $client->firstname;
-        }
-
-        if (strpos($dialog->text, '[$LastName]') !== false) {
-            $row['lastname'] = $client->lastname;
-        }
-
-		$phones[] = $row;
-
-		SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
-
-		if ( ! empty($ha->first_followup_active) && ! empty($ha->first_followup_text)) {
-			$followup_delay = $ha->first_followup_delay;
-			$date = Carbon::now()->addMinutes($followup_delay);
-			$user_date = Carbon::now()->addMinutes($followup_delay)->subHour($user->offset);
-
-			if ($user_date->hour <= 6) {
-				$date->addHour(6 - $user_date->hour);
-				$data->minute = 1;
-			}
-			
-			$delay = Carbon::now()->diffInSeconds($date);
-			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
-		}
-
-		if ( ! empty($ha->second_followup_active) && ! empty($ha->second_followup_text)) {
-			$followup_delay = $ha->second_followup_delay;
-			$date = Carbon::now()->addMinutes($followup_delay);
-			$user_date = Carbon::now()->addMinutes($followup_delay)->subHour($user->offset);
-
-			if ($user_date->hour <= 6) {
-				$date->addHour(6 - $user_date->hour);
-				$data->minute = 1;
-			}
-			
-			$delay = Carbon::now()->diffInSeconds($date);
-
-			SendFollowUpText::dispatch($dialog, $phones, $user, $ha->second_followup_text)->delay($delay)->onQueue('texts');
-		}
     }
 
 	public function sendFake(Request $request)
