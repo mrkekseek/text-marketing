@@ -13,11 +13,11 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'App\Events\FirstLead' => [
-            'App\Listeners\SendFirstLeadNotification',
-        ],
         'App\Events\NewLead' => [
             'App\Listeners\SendNewLeadNotification',
+        ],
+        'App\Events\SaveLeadFromHomeadvisor' => [
+            'App\Listeners\SendFirstHomeadvisorLeadNotification',
         ],
     ];
 
