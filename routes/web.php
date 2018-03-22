@@ -73,6 +73,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('teams', 'TeamsController@all');
 
 	Route::get('homeadvisor', 'HomeadvisorController@info');
+	Route::post('homeadvisor/lookup', 'HomeadvisorController@lookup');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
 	Route::post('homeadvisor/activate/{homeadvisor}', 'HomeadvisorController@activateUpdate');
 	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');

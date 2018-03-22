@@ -18,6 +18,7 @@
         "league/flysystem-aws-s3-v3": "~1.0",
         "maatwebsite/excel": "~2.1.0",
         "paquettg/string-encode": "^0.1.1",
+        "propaganistas/laravel-phone": "^4.0",
         "shivella/laravel-bitly": "^1.0",
         "wilgucki/csv": "^0.6.2",
         "yangqi/htmldom": "^1.0"

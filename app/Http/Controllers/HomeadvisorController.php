@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use CsvReader;
 use App\Homeadvisor;
 use App\User;
 use App\Team;
@@ -14,6 +15,7 @@ use App\Picture;
 use App\Lead;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Carbon\Carbon;
 use App\Events\SaveLeadFromHomeadvisor;
 use App\Jobs\SendHAEmail;
@@ -468,5 +470,22 @@ class HomeadvisorController extends Controller
 	public function email($data)
 	{
 		return ! empty($data['email']) ? $data['email'] : '';
+	}
+
+	public function lookup()
+	{
+		$reader = CsvReader::open('../phones.csv');
+		foreach ($reader->readAll() as $row) {
+			$data = [
+				'phone' => trim($row[0]),
+				'country' => trim($row[1]),
+			];
+
+			$number_type = PhoneNumber::make($data['phone'], $data['country'])->getType();
+			$number_formated = PhoneNumber::make($data['phone'], $data['country'])->formatE164();
+			if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
+				//SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+			}
+		}
 	}
 }
