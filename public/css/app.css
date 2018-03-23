@@ -861,3 +861,8 @@ textarea.form-control.appointment-textarea {
 .ref-page .form-control {
 	width: 60%;
 }
+
+.pause-followup label {
+	margin-bottom: 0;
+	margin-top: 9px;
+}

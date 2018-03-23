@@ -9,7 +9,7 @@ class Api
 	static private function send($uri, $data, $method = 'POST')
     {
 		$data['env'] = env('APP_ENV');
-        $client = new Guzzle(['base_uri' => config('services.api.domain')]);
+		$client = new Guzzle(['base_uri' => config('services.api.domain')]);
         $response = $client->request($method, $uri, [
             'headers' => [
 				'X-Project-Token' => config('app.token'),

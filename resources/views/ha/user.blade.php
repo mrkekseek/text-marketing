@@ -136,13 +136,11 @@
 							<div class="row">
 								<div class="col-sm-6 col-xs-12">
 									<div class="form-group">
-										<label>{{ __('My number for alerts') }}</label>
+										<label>{{ __('My Cell for Text Alerts') }}</label>
 										<i class="fa fa-question-circle-o" uib-tooltip="If the Lead clicks your link or texts you back, the platform will send a text to this number alerting you." tooltip-placement="right" aria-hidden="true"></i>
 										<input type="text" name="phone" class="form-control" ng-model="user.view_phone" required="required" />
 									</div>
 
-									<label>{{ __('Additional phones') }}</label>
-									<span class="fa fa-question-circle-o" uib-tooltip="You can add additional numbers that will be alerted." tooltip-placement="right"></span>
 									<div class="form-group" ng-repeat="input in inputs track by $index">
 										<div class="input-group">
 											<input type="text" name="phone_@{{$index}}" class="form-control" ng-model="inputs[$index]" placeholder="{{ __('Enter phone here...') }}" />
@@ -262,6 +260,7 @@
 			<div class="panel panel-default" ng-show="list.length">
 				<div class="panel-heading">
 					<strong>{{ __('Leads') }}</strong>
+					<strong class="pull-right">{{ __('Pause Followups') }}</strong>
 				</div>
 				<div class="panel-body leads">
 					<div ng-repeat="item in list">
@@ -284,6 +283,12 @@
 									<span> </span>
 									<i ng-show="item.hapage" class="fa fa-check-circle-o text-danger" aria-hidden="true" uib-tooltip="Lead visited HA Page"></i>
 								</div>
+							</div>
+							<div class="pause-followup pull-right">
+								<label class="ui-switch ui-switch-success ui-switch-sm">
+									<input type="checkbox" ng-click="disableFollowup(item.id)" ng-model="item.followup_disabled" ng-true-value="1" ng-false-value="0" />
+									<i></i>
+								</label>
 							</div>
 						</div>
 						<div class="divider divider-dashed divider-sm pull-in">
