@@ -78,9 +78,9 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
             $date = Carbon::now()->addMinutes($followup_delay);
             $user_date = Carbon::now()->addMinutes($followup_delay)->subHour($user->offset);
 
-            if ($user_date->hour <= 6) {
-                $date->addHour(6 - $user_date->hour);
-                $data->minute = 1;
+            if ($user_date->hour <= 8) {
+                $date->addHour(8 - $user_date->hour);
+                $date->minute = 1;
             }
             
             $delay = Carbon::now()->diffInSeconds($date);
@@ -92,9 +92,9 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
             $date = Carbon::now()->addMinutes($followup_delay);
             $user_date = Carbon::now()->addMinutes($followup_delay)->subHour($user->offset);
 
-            if ($user_date->hour <= 6) {
-                $date->addHour(6 - $user_date->hour);
-                $data->minute = 1;
+            if ($user_date->hour <= 8) {
+                $date->addHour(8 - $user_date->hour);
+                $date->minute = 1;
             }
             
             $delay = Carbon::now()->diffInSeconds($date);
