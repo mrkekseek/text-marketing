@@ -190,6 +190,10 @@
         $scope.enable = function () {
             request.send('/homeadvisor/enable/' + $scope.ha.id, {}, false, 'put');
         };
+        
+        $scope.disableFollowup = function (id) {
+            request.send('/clients/disableFollowup/' + id, {}, false, 'put');
+        };
 
         $scope.maxChars = function (field) {
             var max = 0;

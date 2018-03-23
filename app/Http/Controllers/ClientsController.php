@@ -116,4 +116,11 @@ class ClientsController extends Controller
 	{
 		return str_replace([' ', '-', '.', ',', '_', '(', ')', '+'], '', $phone);
 	}
+
+	public function disableFollowup($request)
+	{
+		$client = Client::find($request);
+		$client['followup_disabled'] = ! $client['followup_disabled'];
+		$client->update();
+	}
 }

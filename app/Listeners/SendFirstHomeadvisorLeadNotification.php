@@ -22,7 +22,7 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
      */
     public function __construct()
     {
-        //
+       //
     }
 
     /**

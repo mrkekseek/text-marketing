@@ -90,6 +90,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('clients/{id}', 'ClientsController@info');
 	Route::get('clients', 'ClientsController@all');
 	Route::put('clients', 'ClientsController@create');
+	Route::put('clients/disableFollowup/{id}', 'ClientsController@disableFollowup');
 	Route::post('clients/{id}', 'ClientsController@update');
 	Route::delete('clients/{id}', 'ClientsController@remove');
 
