@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use CsvReader;
 use App\Homeadvisor;
 use App\User;
 use App\Team;
@@ -14,6 +15,7 @@ use App\Picture;
 use App\Lead;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
+use Propaganistas\LaravelPhone\PhoneNumber;
 use Carbon\Carbon;
 use App\Events\SaveLeadFromHomeadvisor;
 use App\Jobs\SendHAEmail;
@@ -366,7 +368,7 @@ class HomeadvisorController extends Controller
 			}
 
 			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && ! empty($dialog->clicked)) {
-				$this->sendAlertClick($user, $homeadvisor, $client, $link);
+				$this->sendAlertClick($user, $homeadvisor, $client, $link, $dialog);
 			}
 
 			if ( ! empty($homeadvisor->emails)) {
@@ -381,7 +383,7 @@ class HomeadvisorController extends Controller
 		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id, false);
 	}
 
-	public function sendAlertClick($user, $homeadvisor, $client, $link)
+	public function sendAlertClick($user, $homeadvisor, $client, $link, $dialog)
 	{
 		$phones = [];
 		$temp = [];
@@ -403,6 +405,7 @@ class HomeadvisorController extends Controller
 				}
 			}
 		}
+
 		if ( ! empty($phones)) {
 			$data = [
 				'user_id' => $user->id,
@@ -410,8 +413,23 @@ class HomeadvisorController extends Controller
 				'text' => $text,
 			];
 			$alert = Alert::create($data);
-			SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+			SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
 		}
+
+		$lead_text = 'Saw you went to our site, were you able to book the appointment?';
+			
+		$client_data = [
+			'users_id' => $user->id,
+			'clients_id' => $client->id,
+			'text' =>  $lead_text,
+			'my' =>  true,
+			'status' => 2,
+		];
+
+		$clients_phones = [];
+        $clients_phones[] = ['phone' => $client->phone];
+		$lead_dialog = Dialog::create($client_data);
+		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->onQueue('texts');
 	}
 
 	public function sendAlertClickEmail($homeadvisor, $client, $link)
@@ -468,5 +486,21 @@ class HomeadvisorController extends Controller
 	public function email($data)
 	{
 		return ! empty($data['email']) ? $data['email'] : '';
+	}
+
+	public function lookup()
+	{
+		$reader = CsvReader::open('../phones.csv');
+		foreach ($reader->readAll() as $row) {
+			$data = [
+				'phone' => trim($row[0]),
+			];
+
+			$number_type = PhoneNumber::make($data['phone'], 'US')->getType();
+			$number_formated = PhoneNumber::make($data['phone'], 'US')->formatE164();
+			if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
+				//SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+			}
+		}
 	}
 }

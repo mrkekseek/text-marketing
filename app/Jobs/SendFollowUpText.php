@@ -11,6 +11,7 @@ use App\Libraries\Api;
 use App\Dialog;
 use App\User;
 use App\Setting;
+use App\Client;
 use DivArt\ShortLink\Facades\ShortLink;
 
 class SendFollowUpText implements ShouldQueue
@@ -42,7 +43,8 @@ class SendFollowUpText implements ShouldQueue
      */
     public function handle()
     {
-        if (empty($this->dialog->clicked) && empty($this->dialog->reply) && $this->dialog->status == 1) {
+        $client = Client::where('phone', $this->clients[0]['phone'])->first();
+        if (empty($this->dialog->clicked) && empty($this->dialog->reply) && $this->dialog->status == 1 && ! $client->followup_disabled) {
             $dialog = $this->user->dialogs()->create([
                 'clients_id' => $this->dialog->clients_id,
                 'text' => '',
