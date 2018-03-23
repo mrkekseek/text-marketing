@@ -490,17 +490,28 @@ class HomeadvisorController extends Controller
 
 	public function lookup()
 	{
+		$result = [];
 		$reader = CsvReader::open('../phones.csv');
+		
 		foreach ($reader->readAll() as $row) {
 			$data = [
 				'phone' => trim($row[0]),
 			];
-
-			$number_type = PhoneNumber::make($data['phone'], 'US')->getType();
-			$number_formated = PhoneNumber::make($data['phone'], 'US')->formatE164();
-			if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
-				//SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
+			try {
+				$number_type = PhoneNumber::make($data['phone'], 'US')->getType();
+				$number_formated = PhoneNumber::make($data['phone'], 'US')->formatE164();
+				if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
+					$result[] = $number_formated;
+				}
 			}
+			catch(\libphonenumber\NumberParseException $e) {
+				//print_r($e);
+			}
+		}
+
+		if ( ! empty($result)) {
+			$response = Api::newUsers($result);
+			dd($response);
 		}
 	}
 }

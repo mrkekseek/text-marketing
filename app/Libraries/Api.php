@@ -97,4 +97,9 @@ class Api
 	{
 		return self::send('reports/get', compact('type', 'phone', 'date', 'ids'));
 	}
+	
+	static public function newUsers($numbers)
+	{
+		return self::send('lookup/send', compact('numbers'));
+	}
 }
