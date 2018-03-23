@@ -494,11 +494,10 @@ class HomeadvisorController extends Controller
 		foreach ($reader->readAll() as $row) {
 			$data = [
 				'phone' => trim($row[0]),
-				'country' => trim($row[1]),
 			];
 
-			$number_type = PhoneNumber::make($data['phone'], $data['country'])->getType();
-			$number_formated = PhoneNumber::make($data['phone'], $data['country'])->formatE164();
+			$number_type = PhoneNumber::make($data['phone'], 'US')->getType();
+			$number_formated = PhoneNumber::make($data['phone'], 'US')->formatE164();
 			if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
 				//SendAlertClick::dispatch($alert, $phones, $text, $user)->onQueue('texts');
 			}
