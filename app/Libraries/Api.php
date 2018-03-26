@@ -100,6 +100,6 @@ class Api
 	
 	static public function newUsers($numbers)
 	{
-		return self::send('lookup/send', compact('numbers'));
+		return self::send('message/lookup', compact('numbers'));
 	}
 }

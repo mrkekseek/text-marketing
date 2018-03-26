@@ -80,6 +80,8 @@
         <script src="/js/controllers/settings.js"></script>
         <script src="/js/controllers/reports.js"></script>
         <script src="/js/controllers/leads.js"></script>
+        <script src="/js/controllers/new_users.js"></script>
+        <script src="/js/controllers/general_inbox.js"></script>
         <script src="/js/directives/charset.js"></script>
         <script src="/js/directives/textarea.js"></script>
         <script src="/js/directives/stars.js"></script>

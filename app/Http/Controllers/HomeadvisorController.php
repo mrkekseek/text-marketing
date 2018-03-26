@@ -508,7 +508,7 @@ class HomeadvisorController extends Controller
 				//print_r($e);
 			}
 		}
-
+		
 		if ( ! empty($result)) {
 			$response = Api::newUsers($result);
 			dd($response);
