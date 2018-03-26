@@ -870,3 +870,7 @@ textarea.form-control.appointment-textarea {
 #new_users_texts textarea {
 	height: 70px;
 }
+
+.pointer {
+	cursor: pointer;
+}

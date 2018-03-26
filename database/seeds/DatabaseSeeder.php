@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             PagesSeeder::class,
             SurveysSeeder::class,
             QuestionsTableSeeder::class,
+            SettingsSeeder::class,
         ]);
     }
 }

@@ -1,36 +1,51 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('NewUsersCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', NewUsersCtrl]);
+    angular.module('app').controller('NewUsersCtrl', ['$rootScope', '$scope', '$http', '$location', '$uibModal', 'request', 'langs', NewUsersCtrl]);
 
-    function NewUsersCtrl($rootScope, $scope, $uibModal, request, langs) {
-        $scope.request_finish = false;
-        $scope.filter = {
-            'user': '',
-            'date': new Date()
-        };
-        $scope.list = [];
-        $scope.phones = [];
-        $scope.users = [];
-        $scope.user = {};
+    function NewUsersCtrl($rootScope, $scope, $http, $location, $uibModal, request, langs) {
+        $scope.texts = {};
+        $scope.file = {};
 
         $scope.init = function () {
-            $scope.getUsers();
-            $scope.get();
-        };
-
-        $scope.getUsers = function () {
-            request.send('/users', {}, function (data) {
-                for (var k in data) {
-                    $scope.users.push(data[k]);
+            request.send('/settings', {}, function (data) {
+                if (data) {
+                        $scope.texts = data;
                 }
             }, 'get');
         };
 
-        $scope.get = function () {
-            request.send('/leads', $scope.filter, function (data) {
-                $scope.list = data;
-                $scope.request_finish = true;
+        $scope.save = function () {
+            request.send('/settings/update', {'texts': $scope.texts}, function (data) {
+            }, 'post');
+        };
+
+        $scope.uploadFile = function (file) {
+            var size = file.size / 1024;
+            if (size > 500) {
+                logger.logError(langs.get('Image size limit is 500 KB'));
+                return;
+            }
+
+            $scope.file.name = file.name;
+            var fd = new FormData();
+            fd.append('file', file);
+
+            $http.post('/api/v1/upload/fileS3', fd, {
+                transformRequest: angular.identity,
+                headers: { 'Content-Type': undefined }
+            }).then(function (response) {
+                $scope.file.url = JSON.parse(response.data.data);
+                $scope.request = false;
+            });
+        };
+
+        $scope.removeFile = function () {
+            $scope.file = $scope.file.url = '';
+        };
+
+        $scope.send = function () {
+            request.send('/homeadvisor/lookup', {'url': $scope.file.url}, function (data) {
             }, 'post');
         };
     };

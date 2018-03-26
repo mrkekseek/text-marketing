@@ -296,7 +296,6 @@ class PagesSeeder extends Seeder
 
 
 
-
         DB::table('pages_access')->truncate();
     	
         DB::table('pages_access')->insert([

@@ -488,18 +488,18 @@ class HomeadvisorController extends Controller
 		return ! empty($data['email']) ? $data['email'] : '';
 	}
 
-	public function lookup()
+	public function lookup(Request $request)
 	{
+		$data = $request->only('url');
+		$url = $data['url'][0];
+		$numbers = file($url);
 		$result = [];
-		$reader = CsvReader::open('../phones.csv');
 		
-		foreach ($reader->readAll() as $row) {
-			$data = [
-				'phone' => trim($row[0]),
-			];
+		foreach ($numbers as $item) {
+			$number = trim($item);
 			try {
-				$number_type = PhoneNumber::make($data['phone'], 'US')->getType();
-				$number_formated = PhoneNumber::make($data['phone'], 'US')->formatE164();
+				$number_type = PhoneNumber::make($number, 'US')->getType();
+				$number_formated = PhoneNumber::make($number, 'US')->formatE164();
 				if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
 					$result[] = $number_formated;
 				}
@@ -509,9 +509,9 @@ class HomeadvisorController extends Controller
 			}
 		}
 		
-		if ( ! empty($result)) {
+		/* if ( ! empty($result)) {
 			$response = Api::newUsers($result);
 			dd($response);
-		}
+		} */
 	}
 }
