@@ -9,10 +9,12 @@ use App\Http\Requests\SignUpRequest;
 use App\Jobs\SignUp;
 use App\Jobs\Support;
 use App\Jobs\Recovery;
+use App\Jobs\SendHomeadvisorActivationDelay;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -76,8 +78,11 @@ class AuthController extends Controller
         auth()->login($user);
         $owner = User::where('owner', 1)->first();
 
-        $job = (new SignUp($owner, $user))->delay(0)->onQueue('emails');
+        $job = (new SignUp($owner, $user))->delay(0)->onQueue('texts');
         $this->dispatch($job);
+
+        SendHomeadvisorActivationDelay::dispatch($user)->delay(Carbon::now()->addDays(Homeadvisor::FIRST_DELAY_AFTER_SIGNUP))->onQueue('texts');
+        SendHomeadvisorActivationDelay::dispatch($user, Homeadvisor::SECOND_DELAY_AFTER_SIGNUP)->delay(Carbon::now()->addDays(Homeadvisor::SECOND_DELAY_AFTER_SIGNUP))->onQueue('texts');
 
         return $this->message('You were successfully registered', 'success');
     }

@@ -58,6 +58,14 @@ class Api
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
 	}
 
+	static public function generalMessages($target_id, $clients, $message, $company, $offset)
+	{
+		$type = 'general';
+		$block = true;
+		$block_24 = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
+	}
+
 	static public function appointment($target_id, $clients, $message, $company, $offset, $attachment = '')
 	{
 		$type = 'appointment';
@@ -96,10 +104,5 @@ class Api
 	static public function reports($type, $phone, $date, $ids)
 	{
 		return self::send('reports/get', compact('type', 'phone', 'date', 'ids'));
-	}
-	
-	static public function newUsers($numbers)
-	{
-		return self::send('message/lookup', compact('numbers'));
 	}
 }

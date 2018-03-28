@@ -23,6 +23,11 @@
 								<label>{{ __('4 Days After Signup Text') }}</label>
 								<div text-area ng-model="texts[2].text"></div>
 							</div>
+                            
+                            <div class="form-group">
+								<label>{{ __('Twilio Text') }}</label>
+								<div text-area ng-model="texts[3].text"></div>
+							</div>
 							
 							<div class="form-group">
 					    		<button type="button" class="btn btn-primary" ng-click="save()">{{ __('Save') }}</button>

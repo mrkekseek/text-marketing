@@ -14,7 +14,7 @@ class SettingsSeeder extends Seeder
     	DB::table('settings')->truncate();
     	
         DB::table('settings')->insert([
-            'text' => 'Hi [$FirstName] - thanks for signing up! We are now sending your info to HomeAdvisor to get you connected. For any questions, please text back - thanks!',
+            'text' => 'Hi [$FirstName] - thanks for signing up! We sent your info to HomeAdvisor to get connected. For any Qs, please text back - Thanks!',
             'text_code' => 'thankyou',
         ]);
 
@@ -26,6 +26,11 @@ class SettingsSeeder extends Seeder
         DB::table('settings')->insert([
             'text' => 'Hi [$FirstName] - sorry for the continued delay - we are pushing HomeAdvisor hard to connect you, just waiting on them. Thanks!',
             'text_code' => 'fourdays',
+        ]);
+        
+        DB::table('settings')->insert([
+            'text' => 'Hi - would you like to use our service?',
+            'text_code' => 'twilio',
         ]);
     }
 }

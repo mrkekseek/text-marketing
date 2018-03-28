@@ -13,17 +13,20 @@ use App\Dialog;
 use App\Alert;
 use App\Picture;
 use App\Lead;
+use App\Setting;
+use App\GeneralMessage;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Propaganistas\LaravelPhone\PhoneNumber;
 use Carbon\Carbon;
 use App\Events\SaveLeadFromHomeadvisor;
-use App\Jobs\SendHAEmail;
 use App\Http\Requests\HACreateRequest;
+use App\Jobs\SendHAEmail;
 use App\Jobs\SendLeadText;
 use App\Jobs\SendAlertClick;
 use App\Jobs\SendFollowUpText;
 use App\Jobs\SendReferral;
+use App\Jobs\SendGeneralText;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
 use App\Http\Services\UsersService;
@@ -501,17 +504,145 @@ class HomeadvisorController extends Controller
 				$number_type = PhoneNumber::make($number, 'US')->getType();
 				$number_formated = PhoneNumber::make($number, 'US')->formatE164();
 				if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
-					$result[] = $number_formated;
+					$result[] = str_replace('+1', '', $number_formated);
 				}
 			}
 			catch(\libphonenumber\NumberParseException $e) {
 				//print_r($e);
 			}
 		}
+
+		$data = Setting::where('text_code', 'twilio')->first();
+		$text = $data['text'];
 		
-		/* if ( ! empty($result)) {
-			$response = Api::newUsers($result);
-			dd($response);
-		} */
+		if ( ! empty($result)) {
+			foreach ($result as $phone) {
+				if ( ! GeneralMessage::where('phone', $phone)->exists()) {
+					$global_dialog = new GeneralMessage();
+					$global_dialog->type = 'twilio';
+					$global_dialog->phone = $phone;
+					$global_dialog->text = $text;
+					$global_dialog->my = 1;
+					$global_dialog->status = 0;
+					$global_dialog->save();
+
+					$phones = [];
+					$phones[] = ['phone' => $phone];
+					$offset = 0;
+
+					//SendGeneralText::dispatch($global_dialog, $phones, $text, 'ContractorTexter', $offset)->onQueue('texts');
+				}
+			}
+		}
 	}
+
+	public function getGeneralMessages()
+	{
+		return array_values(GeneralMessage::all()->each(function($item, $key) {
+            Carbon::setToStringFormat('F dS g:i A');
+			$item->created_at_string = $item->created_at->__toString();
+            Carbon::resetToStringFormat();
+			return $item;
+        })->unique('phone')->toArray());
+	}
+
+	public function getGeneralMessageWithUser($phone)
+	{
+		return GeneralMessage::where('phone', $phone)->get()->each(function($item, $key) {
+            Carbon::setToStringFormat('F dS g:i A');
+			$item->created_at_string = $item->created_at->__toString();
+            Carbon::resetToStringFormat();
+			return $item;
+        });
+	}
+
+	public function inbox(Request $request, GeneralMessage $message)
+    {
+        $data = $request->only(['CONTENTS']);
+        $message = $message->replicate();
+        $message->text = $data['CONTENTS'];
+        $message->new = true;
+        $message->status = 1;
+        $message->my = false;
+        $message->save();
+	}
+	
+	public function push(Request $request, GeneralMessage $message)
+    {
+		$data = $request->json()->all();
+        $status = 2;
+        foreach ($data as $client) {
+            if ( ! empty($client['finish'])) {
+                $status = 0;
+                if ( ! empty($client['success'])) {
+                    $status = 1;
+                }
+            }
+        }
+
+        $message->update([
+            'status' => $status
+        ]);
+    }
+	
+	public function sendGeneralMessage(Request $request, GeneralMessage $message)
+    {
+		$data = $request->only(['text', 'time']);
+
+		if ($this->textValidate($data, $message, false)) {
+			$general_message = new GeneralMessage();
+			$general_message->type = $message->type;
+			$general_message->phone = $message->phone;
+			$general_message->text = $data['text'];
+			$general_message->my = true;
+			$general_message->status = 2;
+			$general_message->save();
+
+            $phones = [];
+			$phones[] = ['phone' => $message->phone];
+			$offset = 0;
+
+            SendGeneralText::dispatch($general_message, $phones, $data['text'], 'ContractorTexter', $offset)->onQueue('texts');
+
+			$this->message(__('Message was send'), 'success');
+			return $general_message;
+		}
+	}
+
+	public function textValidate($data, $message, $block = true)
+    {
+        $text = trim($data['text']);
+        if ( ! ApiValidate::messageSymbols($text)) {
+            return $this->message('SMS Text contains forbidden characters');
+        }
+
+        if ( ! empty($message)) {
+            $length = true;
+            $phones = true;
+            $limit = true;
+
+            if ( ! ApiValidate::messageLength($text, auth()->user()->company_name)) {
+                $length = false;
+            }
+
+            if ( ! ApiValidate::phoneFormat($message->phone)) {
+                $phones = false;
+            }
+
+            if (empty($length)) {
+                return $this->message('SMS Text is too long. Text will not be send');
+            }
+
+            if (empty($phones)) {
+                return $this->message('Some client\'s phone numbers have wrong format. Text will not be send');
+            }
+        }
+
+        $date = (object)$data['time'];
+        if (ApiValidate::underBlocking($date, $block)) {
+            return $this->message('You can\'t send texts before 9 AM. You can try to use Schedule Send');
+        }
+
+        return 1;
+    }
 }
