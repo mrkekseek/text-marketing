@@ -69,6 +69,7 @@ class HomeadvisorController extends Controller
 			$info->second_followup_active = Homeadvisor::SECOND_FOLLOWUP_ACTIVE;
 			$info->second_followup_delay = Homeadvisor::SECOND_FOLLOWUP_DELAY;
 			$info->second_followup_text = Homeadvisor::SECOND_FOLLOWUP_TEXT;
+			$info->text = Homeadvisor::DEFAULT_TEXT_TEMPLATE;
 			$info->save();
 		}
 
@@ -137,6 +138,8 @@ class HomeadvisorController extends Controller
 		auth()->user()->update([
 			'view_phone' => $data['user']['view_phone'],
 			'phone' => $phone,
+			'office_phone' => $data['user']['office_phone'],
+			'website' => $data['user']['website'],
 		]);
 
 		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
@@ -418,8 +421,8 @@ class HomeadvisorController extends Controller
 			$alert = Alert::create($data);
 			SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
 		}
-
-		$lead_text = 'Saw you went to our site, were you able to book the appointment?';
+		
+		$lead_text = 'Hi '.$client->firstname.', saw you went to our site, were you able to book the appointment?';
 			
 		$client_data = [
 			'users_id' => $user->id,
@@ -432,7 +435,7 @@ class HomeadvisorController extends Controller
 		$clients_phones = [];
         $clients_phones[] = ['phone' => $client->phone];
 		$lead_dialog = Dialog::create($client_data);
-		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->onQueue('texts');
+		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->delay(Carbon::now()->addMinutes(15))->onQueue('texts');
 	}
 
 	public function sendAlertClickEmail($homeadvisor, $client, $link)

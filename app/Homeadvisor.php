@@ -14,6 +14,7 @@ class Homeadvisor extends Model
     const SECOND_FOLLOWUP_ACTIVE = 0;
     const FIRST_DELAY_AFTER_SIGNUP = 2;
     const SECOND_DELAY_AFTER_SIGNUP = 4;
+    const DEFAULT_TEXT_TEMPLATE = '[$FirstName], we\'\re happy to offer a free estimate! Please click [$Link] or [$OfficePhone]. Thanks! - [$UserFirstName]';
 
     protected $guarded = [];
 

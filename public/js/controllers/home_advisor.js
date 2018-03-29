@@ -186,6 +186,35 @@
                 }, ($scope.ha.id ? 'post' : 'put'));
             }
         };
+        
+        $scope.saveBeforeActivation = function() {
+            var error = 1;
+            if ($scope.user.company_name == '') {
+                logger.logError(langs.get('Company Name is required'));
+                error = 0;
+            }
+
+            error *= validate.check($scope.form_ha.website, 'Website');
+            error *= validate.phone($scope.form_ha.office_phone, 'Office Number');
+            error *= validate.phone($scope.form_ha.phone, 'Number for alerts');
+
+            var inputs = [];
+            for (var k in $scope.inputs) {
+                if ($scope.inputs[k] != '') {
+                    error *= validate.phone($scope.form_ha['phone_' + k], 'Additional phone');
+                    inputs.push($scope.inputs[k]);
+                }
+            }
+
+            if (error) {
+                $scope.ha.additional_phones = inputs.join(',');
+                console.log($scope.user);
+                console.log($scope.ha);
+                request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), { 'ha': $scope.ha, 'user': $scope.user, 'pictures': $scope.pictures}, function() {
+                    $scope.getPictures();
+                }, ($scope.ha.id ? 'post' : 'put'));
+            }
+        };
 
         $scope.enable = function () {
             request.send('/homeadvisor/enable/' + $scope.ha.id, {}, false, 'put');
