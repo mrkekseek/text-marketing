@@ -38,23 +38,31 @@ class SendHomeadvisorActivationDelay implements ShouldQueue
      */
     public function handle()
     {
-        $message = GeneralMessage::where('phone', $this->user->phone)->first();
-        $homeadvisor = $this->user->homeadvisors;
-
-        $data = Setting::where('text_code', 'twodays')->first();
-        $text = $data['text'];
-
-        if ($this->activation_delay == 4) {
-            $data = Setting::where('text_code', 'fourdays')->first();
+        if ($this->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 0) {
+            $data = Setting::where('text_code', 'twodays')->first();
             $text = $data['text'];
-        }
+            $type = 'twodays';
 
-        $phones = [];
-        $phones[] = [
-            'phone' => $this->user->phone,
-        ];
+            if ($this->activation_delay == 4) {
+                $data = Setting::where('text_code', 'fourdays')->first();
+                $text = $data['text'];
+                $type = 'fourdays';
+            }
+
+            $message = new GeneralMessage();
+            $message->type = $type;
+            $message->phone = $this->user->phone;
+            $message->firstname = $this->user->firstname;
+            $message->lastname = $this->user->lastname;
+            $message->text = $text;
+            $message->my = 1;
+            $message->status = 0;
+            $message->save();
+
+            $phones[] = [
+                'phone' => $this->user->phone,
+            ];
         
-        if ($this->user->teams->clients()->where('source', 'HomeAdvisor')->count() != 1 && ! $homeadvisor->active) {
             Api::generalMessages($message->id, $phones, $text, 'ContractorTexter', $this->user->offset);
         }
     }
