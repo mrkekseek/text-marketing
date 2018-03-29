@@ -81,8 +81,13 @@ class AuthController extends Controller
         $job = (new SignUp($owner, $user))->delay(0)->onQueue('texts');
         $this->dispatch($job);
 
-        SendHomeadvisorActivationDelay::dispatch($user)->delay(Carbon::now()->addDays(Homeadvisor::FIRST_DELAY_AFTER_SIGNUP))->onQueue('texts');
-        SendHomeadvisorActivationDelay::dispatch($user, Homeadvisor::SECOND_DELAY_AFTER_SIGNUP)->delay(Carbon::now()->addDays(Homeadvisor::SECOND_DELAY_AFTER_SIGNUP))->onQueue('texts');
+        $first_delay_date = Carbon::now()->addDays(Homeadvisor::FIRST_DELAY_AFTER_SIGNUP);
+        $first_delay = Carbon::now()->diffInSeconds($first_delay_date);
+        $second_delay_date = Carbon::now()->addDays(Homeadvisor::FIRST_DELAY_AFTER_SIGNUP);
+        $second_delay = Carbon::now()->diffInSeconds($second_delay_date);
+
+        SendHomeadvisorActivationDelay::dispatch($user)->delay($first_delay)->onQueue('texts');
+        SendHomeadvisorActivationDelay::dispatch($user, Homeadvisor::SECOND_DELAY_AFTER_SIGNUP)->delay($second_delay)->onQueue('texts');
 
         return $this->message('You were successfully registered', 'success');
     }
