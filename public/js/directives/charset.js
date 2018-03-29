@@ -71,7 +71,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 					}
 
 					if ($scope.result.indexOf($scope.officePhoneTag) + 1) {
-						$scope.size += 14 - $scope.officePhoneTag.length;
+						$scope.size += 10 - $scope.officePhoneTag.length;
 					}
 				}
 			};
@@ -100,7 +100,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 					}
 					
 					if ($scope.result.indexOf($scope.officePhoneTag) + 1) {
-						$scope.max += 14 - $scope.officePhoneTag.length;
+						$scope.max += 10 - $scope.officePhoneTag.length;
 					}
 				}
 			};

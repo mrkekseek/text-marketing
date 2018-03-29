@@ -28,7 +28,6 @@ angular.module('app').directive('textArea', function($http, logger) {
                		var shortUrl = response.data;
 					$scope.insert(shortUrl);
 					$scope.showUrl = false;
-					$scope.showWebsiteUrl = false;
                	});
 			};
 
@@ -53,10 +52,6 @@ angular.module('app').directive('textArea', function($http, logger) {
 
 			$scope.toggleUrl = function() {
 				$scope.showUrl = ! $scope.showUrl;
-			};
-			
-			$scope.toggleWebsiteUrl = function() {
-				$scope.showWebsiteUrl = !$scope.showWebsiteUrl;
 			};
 
 			$scope.maxChars = function() {
