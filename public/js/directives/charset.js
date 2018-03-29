@@ -8,6 +8,8 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			hapage: '=btnHapage',
 			link: '=btnLink',
 			shortlink: '=btnShortlink',
+			website: '=btnWebsite',
+			officePhone: '=btnOfficePhone',
 			lms: '=lms',
 			maxFirstname: '=maxFirstname',
 			maxLastname: '=maxLastname',
@@ -21,6 +23,8 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			$scope.lastnameTag = '[$LastName]';
 			$scope.hapageTag = '[$JobPics]';
 			$scope.linkTag = '[$Link]';
+			$scope.officePhoneTag = '[$OfficePhone]';
+			$scope.websiteTag = '[$Website]';
 			$scope.size = 0;
 			$scope.showMessageTextUrl = false;
 			$scope.shortLinkMessageText = '';
@@ -61,6 +65,14 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 					if ($scope.result.indexOf($scope.linkTag) + 1) {
 						$scope.size += 14 - $scope.linkTag.length;
 					}
+					
+					if ($scope.result.indexOf($scope.websiteTag) + 1) {
+						$scope.size += 14 - $scope.websiteTag.length;
+					}
+
+					if ($scope.result.indexOf($scope.officePhoneTag) + 1) {
+						$scope.size += 10 - $scope.officePhoneTag.length;
+					}
 				}
 			};
 
@@ -81,6 +93,14 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 
 					if ($scope.result.indexOf($scope.linkTag) + 1) {
 						$scope.max += 14 - $scope.linkTag.length;
+					}
+					
+					if ($scope.result.indexOf($scope.websiteTag) + 1) {
+						$scope.max += 14 - $scope.websiteTag.length;
+					}
+					
+					if ($scope.result.indexOf($scope.officePhoneTag) + 1) {
+						$scope.max += 10 - $scope.officePhoneTag.length;
 					}
 				}
 			};

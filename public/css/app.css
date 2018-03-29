@@ -874,3 +874,27 @@ textarea.form-control.appointment-textarea {
 .pointer {
 	cursor: pointer;
 }
+
+@media (max-width: 1600px) {
+	.btn-group.btn-group-justified.move-top-pixel .btn-sm {
+		padding: 5px 0;
+	}
+}
+
+@media (max-width: 1500px) {
+	.btn-group.btn-group-justified.move-top-pixel .btn-sm {
+		font-size: 10px;
+	}
+}
+
+@media (min-width: 991px) and (max-width: 1300px) {
+	.btn-group.btn-group-justified.move-top-pixel .charset_button_text {
+		display: none;
+	}
+}
+
+@media (max-width: 551px) {
+	.btn-group.btn-group-justified.move-top-pixel .charset_button_text {
+		display: none;
+	}
+}
