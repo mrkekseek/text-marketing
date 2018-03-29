@@ -10,10 +10,10 @@
 				<div class="panel-body">
 					<div uib-alert class="alert-info" ng-show=" ! ha.send_request">
 						<ol class="unstyled_ul">
-							<li>To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly).</li>
-							<li>Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.</li>
-							<li>We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
-							<li>Once you are connected we will send a test text to your Cell.</li>
+							<li>{{ __('To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly).') }}</li>
+							<li>{{ __('Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.') }}</li>
+							<li>{{ __('We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to <a href="https://app.contractortexter.com">app.contractortexter.com</a>.') }}</li>
+							<li>{{ __('Once you are connected we will send a test text to your Cell.') }}</li>
 						</ol>						
 					</div>
 
@@ -51,19 +51,20 @@
 								</div>
 							</div>
 
-							<!-- <div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
-								{{ __('Please insert your Company Name - it can take up to 15 minutes') }}
-							</div> -->
+							<div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
+								{{ __('This can take up to 15 minutes') }}
+							</div>
+							
 							<div class="row">
 								<div class="col-sm-6 col-xs-12">
 									<div class="form-group">
 										<label>{{ __('Website') }}</label>
-										<input type="text" class="form-control" maxlength="32" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" required="required" />
+										<input type="text" class="form-control" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" required="required" />
 									</div>
 									
 									<div class="form-group">
 										<label>{{ __('Office Number') }}</label>
-										<input type="text" class="form-control" maxlength="32" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" required="required" />
+										<input type="text" class="form-control" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" required="required" />
 									</div>
 								</div>
 							</div>

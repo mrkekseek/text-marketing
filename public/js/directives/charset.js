@@ -26,21 +26,11 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 			$scope.officePhoneTag = '[$OfficePhone]';
 			$scope.websiteTag = '[$Website]';
 			$scope.size = 0;
-			$scope.showShortLinkInput = false;
 			$scope.showMessageTextUrl = false;
 			$scope.shortLinkMessageText = '';
-			$scope.showWebsiteUrl = false;
-			$scope.websiteText = '';
 
 			$scope.toggleUrl = function() {
 				$scope.showMessageTextUrl = ! $scope.showMessageTextUrl;
-				$scope.showShortLinkInput = ! $scope.showShortLinkInput;
-				
-			};
-
-			$scope.toggleWebsiteUrl = function () {
-				$scope.showWebsiteUrl = !$scope.showWebsiteUrl;
-				$scope.showShortLinkInput = !$scope.showShortLinkInput;
 			};
 
 			$scope.insertShortLink = function(longLink) {
@@ -49,7 +39,6 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 						shortUrl = shortUrl.replace('http://', '');
 						$scope.insert(shortUrl);
 						$scope.shortLinkMessageText = '';
-						$scope.websiteText = '';
 						document.getElementById('refresh').click();
 					} else {
 						logger.logError('Inccorect link');
@@ -77,6 +66,10 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 						$scope.size += 14 - $scope.linkTag.length;
 					}
 					
+					if ($scope.result.indexOf($scope.websiteTag) + 1) {
+						$scope.size += 14 - $scope.websiteTag.length;
+					}
+
 					if ($scope.result.indexOf($scope.officePhoneTag) + 1) {
 						$scope.size += 14 - $scope.officePhoneTag.length;
 					}
@@ -100,6 +93,10 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 
 					if ($scope.result.indexOf($scope.linkTag) + 1) {
 						$scope.max += 14 - $scope.linkTag.length;
+					}
+					
+					if ($scope.result.indexOf($scope.websiteTag) + 1) {
+						$scope.max += 14 - $scope.websiteTag.length;
 					}
 					
 					if ($scope.result.indexOf($scope.officePhoneTag) + 1) {
