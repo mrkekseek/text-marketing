@@ -530,7 +530,7 @@ class HomeadvisorController extends Controller
 					$phones[] = ['phone' => $phone];
 					$offset = 0;
 
-					//SendGeneralText::dispatch($global_dialog, $phones, $text, 'ContractorTexter', $offset)->onQueue('texts');
+					SendGeneralText::dispatch($global_dialog, $phones, $text, 'ContractorTexter', $offset)->onQueue('texts');
 				}
 			}
 		}
