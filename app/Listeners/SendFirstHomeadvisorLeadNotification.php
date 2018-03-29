@@ -68,6 +68,14 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
         if (strpos($dialog->text, '[$LastName]') !== false) {
             $row['lastname'] = $client->lastname;
         }
+        
+        if (strpos($dialog->text, '[$Website]') !== false) {
+            $row['website_shortlink'] = $user->website_shortlink;
+        }
+        
+        if (strpos($dialog->text, '[$OfficePhone]') !== false) {
+            $row['office_phone'] = $user->office_phone;
+        }
 
         $phones[] = $row;
 

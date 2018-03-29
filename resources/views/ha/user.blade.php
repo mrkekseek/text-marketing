@@ -1,7 +1,7 @@
 <div class="page page-table" data-ng-controller="HomeAdvisorCtrl" ng-init="init()">
 	<h2>
 		{{ __('HomeAdvisor') }}	
-		<i class="fa fa-question-circle-o help-icon" uib-tooltip="To get started, click the 'Activate HomeAdvisor' button. We will then speak to your HomeAdvisor rep to get you connected and we will alert you when we are done. Then you can customize the text you want your leads to receive. We recommend putting in the link to your booking site and your number and letting them know that they can reply by text as well. This gives the lead 3 ways to engage. On the right side of the page you will see a list of all of your leads. Leads who click the link will have a green check next to their name, while a blue check signifies that they texted a reply." tooltip-placement="right-top" aria-hidden="true"></i>
+		<i class="fa fa-question-circle-o help-icon" uib-tooltip="To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly). Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below. We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to app.contractortexter.com. Once you are connected we will send a test text to your Cell." tooltip-placement="right-top" aria-hidden="true"></i>
 	</h2>
 
 	<div class="row">
@@ -9,7 +9,12 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div uib-alert class="alert-info" ng-show=" ! ha.send_request">
-						{{ __("To get started, click the 'Activate HomeAdvisor' button. We will then speak to your HomeAdvisor rep to get you connected and we will alert you when we are done. Then you can customize the text you want your leads to receive. We recommend putting in the link to your booking site and your number and letting them know that they can reply by text as well. This gives the lead 3 ways to engage. On the right side of the page you will see a list of all of your leads. Leads who click the link will have a green check next to their name, while a blue check signifies that they texted a reply.") }}
+						<ol class="unstyled_ul">
+							<li>{{ __('To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly).') }}</li>
+							<li>{{ __('Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.') }}</li>
+							<li>{{ __('We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to <a href="https://app.contractortexter.com">app.contractortexter.com</a>.') }}</li>
+							<li>{{ __('Once you are connected we will send a test text to your Cell.') }}</li>
+						</ol>						
 					</div>
 
 					<div uib-alert class="alert-info" ng-show="ha.send_request && ! list.length">
@@ -34,31 +39,42 @@
 							</label>
 						</div>
 
-						<div class="form-group">
-							<label>{{ __('Company Name') }}</label>
-							<i class="fa fa-question-circle-o" uib-tooltip-template="'companyTooltip.html'" tooltip-placement="right" aria-hidden="true"></i>
-							<div class="input-group">
-								<input type="text" class="form-control" maxlength="32" ng-model="user.company_name" ng-change="companyChange()" placeholder="{{ __('Company Name') }}" />
-								<span class="input-group-addon bg-success" ng-show="user.company_status == 'verified' && ! companyChanged">{{ __('Verified') }}</span>
-								<span class="input-group-addon bg-warning" ng-show="user.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
-								<span class="input-group-addon bg-danger" ng-show="user.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
-								<span class="input-group-btn" ng-show="user.company_status == '' || companyChanged">
-									<button class="btn btn-default" ng-click="companySave()">{{ __('Save') }}</button>
-								</span>
-							</div>
-						</div>
-
-						<div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
-							{{ __('Please insert your Company Name - it can take up to 15 minutes') }}
-						</div>
-
-						<form name="form_ha" novalidate="novalidate" ng-show="user.company_status == 'verified' && ! companyChanged">
+						<form name="form_ha" novalidate="novalidate">
 							<div class="form-group">
-								<label>{{ __('Instant Text') }}</label>
-								<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" lms="true"></char-set>
+								<label>{{ __('Company Name') }}</label>
+								<i class="fa fa-question-circle-o" uib-tooltip-template="'companyTooltip.html'" tooltip-placement="right" aria-hidden="true"></i>
+								<div class="input-group">
+									<input type="text" class="form-control" maxlength="32" ng-model="user.company_name" ng-change="companyChange()" placeholder="{{ __('Company Name') }}" />
+									<span class="input-group-addon bg-success" ng-show="user.company_status == 'verified' && ! companyChanged">{{ __('Verified') }}</span>
+									<span class="input-group-addon bg-warning" ng-show="user.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
+									<span class="input-group-addon bg-danger" ng-show="user.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
+								</div>
 							</div>
 
-							<div class="form-group">
+							<div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
+								{{ __('This can take up to 15 minutes') }}
+							</div>
+							
+							<div class="row">
+								<div class="col-sm-6 col-xs-12">
+									<div class="form-group">
+										<label>{{ __('Website') }}</label>
+										<input type="text" class="form-control" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" required="required" />
+									</div>
+									
+									<div class="form-group">
+										<label>{{ __('Office Number') }}</label>
+										<input type="text" class="form-control" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" required="required" />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group" ng-show="user.company_status == 'verified' && ! companyChanged">
+								<div class="form-group">
+									<label>{{ __('Instant Text') }}</label>
+									<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" btn-website="true" btn-office-phone="true" lms="true"></char-set>
+								</div>
+							
 								<label>{{ __('Texts') }}</label>
 								<i class="fa fa-question-circle-o" uib-tooltip="Follow-Up Text goes out an hour after the Instant Text, if the Lead does not click on your link or does not text you back." tooltip-placement="right" aria-hidden="true"></i>
 								
@@ -74,7 +90,7 @@
 
 										<div ng-show="ha.first_followup_active">
 											<div class="followup_text">
-												<char-set ng-model="ha.first_followup_text" class="followup_textarea" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-disabled=" ! ha.first_followup_active" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-hapage="true" btn-link="true"></char-set>
+												<char-set ng-model="ha.first_followup_text" class="followup_textarea" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-disabled=" ! ha.first_followup_active" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-hapage="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set>
 											</div>
 
 											<div class="followup_delay">
@@ -99,7 +115,7 @@
 
 										<div ng-show="ha.second_followup_active">
 											<div class="followup_text">
-												<char-set ng-model="ha.second_followup_text" class="followup_textarea" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-disabled=" ! ha.second_followup_active" btn-firstname="true" btn-hapage="true" btn-link="true"></char-set>
+												<char-set ng-model="ha.second_followup_text" class="followup_textarea" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-disabled=" ! ha.second_followup_active" btn-firstname="true" btn-hapage="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set>
 											</div>
 
 											<div class="followup_delay">
@@ -159,8 +175,8 @@
 									</div>
 								</div>
 
-								<div class="col-sm-6 col-xs-12">
-									<label>{{ __('Emails for alerts') }}</label>
+								<div class="col-sm-6 col-xs-12" ng-show="user.company_status == 'verified' && ! companyChanged">
+									<label>{{ __('My Email for Alerts') }}</label>
 									<div class="form-group" ng-repeat="email in emails track by $index">
 										<div class="input-group">
 											<input type="text" name="email_@{{$index}}" class="form-control" ng-model="emails[$index]" placeholder="{{ __('Enter email here...') }}" />
@@ -217,8 +233,12 @@
 
 							<hr />
 
-							<div class="form-group">
+							<div class="form-group" ng-show="user.company_status == 'verified'">
 								<button class="btn btn-primary" type="submit" ng-click="save()">{{ __('Save') }}</button>
+							</div>
+							
+							<div class="form-group" ng-show="user.company_status != 'verified'">
+								<button class="btn btn-primary" type="submit" ng-click="saveBeforeActivation()">{{ __('Save') }}</button>
 							</div>
 						</form>
 					</div>

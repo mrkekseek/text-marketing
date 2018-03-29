@@ -61,6 +61,8 @@ class HomeadvisorController extends Controller
 	public function info()
 	{
 		$info = auth()->user()->homeadvisors;
+		$info->website = auth()->user()->website;
+		$info->office_phone = auth()->user()->office_phone;
 
 		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
 			$info->first_followup_active = Homeadvisor::FIRST_FOLLOWUP_ACTIVE;
@@ -184,9 +186,17 @@ class HomeadvisorController extends Controller
 
 		ApiValidate::phoneFormat($phone);
 		
+		if ( ! empty($data['user']['website'])) {
+			$url = str_replace(['http://', 'https://'], '', $data['user']['website']);
+			$website_shortlink = ShortLink::bitly('http://'.$url, false);
+		}
+
 		auth()->user()->update([
 			'view_phone' => $data['user']['view_phone'],
 			'phone' => $phone,
+			'office_phone' => $data['user']['office_phone'],
+			'website' => $data['user']['website'],
+			'website_shortlink' => ! empty($website_shortlink) ? $website_shortlink : '',
 		]);
 
 		$data['ha']['text'] = str_replace("\n", "", $data['ha']['text']);
@@ -418,8 +428,8 @@ class HomeadvisorController extends Controller
 			$alert = Alert::create($data);
 			SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
 		}
-
-		$lead_text = 'Saw you went to our site, were you able to book the appointment?';
+		
+		$lead_text = 'Hi '.$client->firstname.', saw you went to our site, were you able to book the appointment?';
 			
 		$client_data = [
 			'users_id' => $user->id,
@@ -432,7 +442,10 @@ class HomeadvisorController extends Controller
 		$clients_phones = [];
         $clients_phones[] = ['phone' => $client->phone];
 		$lead_dialog = Dialog::create($client_data);
-		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->onQueue('texts');
+		$delay_amount = Carbon::now()->addMinutes(15);
+		$delay = Carbon::now()->diffInSeconds($delay_amount);
+
+		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->delay($delay)->onQueue('texts');
 	}
 
 	public function sendAlertClickEmail($homeadvisor, $client, $link)
