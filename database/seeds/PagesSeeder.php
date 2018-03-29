@@ -272,7 +272,26 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-
+        
+        DB::table('pages')->insert([
+            'code' => 'new_users-send',
+            'folder' => 'new_users',
+            'file' => 'send',
+            'name' => 'New Users',
+            'icon' => 'fa fa-user-plus',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'inbox-inbox',
+            'folder' => 'inbox',
+            'file' => 'list',
+            'name' => 'General Inbox',
+            'icon' => 'fa fa-envelope',
+            'tpl' => '',
+            'public' => 0,
+        ]);
 
 
 
@@ -393,6 +412,16 @@ class PagesSeeder extends Seeder
             'code' => 'leads-list',
             'users_type' => 2,
         ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'new_users-send',
+            'users_type' => 2,
+        ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'inbox-inbox',
+            'users_type' => 2,
+        ]);
 
 
 
@@ -439,13 +468,29 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 6,
         ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'new_users-send',
+            'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 7,
+        ]);
 
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'inbox-inbox',
+            'parents_code' => '',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 8,
+        ]);
+        
         DB::table('pages_menu')->insert([
             'pages_code' => 'settings-admin',
             'parents_code' => '',
             'plans' => 'none',
             'main' => 0,
-            'pos' => 7,
+            'pos' => 9,
         ]);
 
         DB::table('pages_menu')->insert([

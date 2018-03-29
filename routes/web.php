@@ -42,7 +42,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('settings', 'UsersController@settings');
 	Route::put('settings', 'UsersController@settingsCreate');
-	Route::post('settings/{setting}', 'UsersController@settingsUpdate');
+	Route::post('settings/update', 'UsersController@settingsUpdate');
 	Route::get('settings/companyNames', 'UsersController@companyNames');
 
 	Route::put('users/company/{user?}', 'UsersController@company');
@@ -80,9 +80,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('homeadvisor/', 'HomeadvisorController@create');
 	Route::post('homeadvisor/fake', 'HomeadvisorController@sendFake');
 	Route::post('homeadvisor/referral', 'HomeadvisorController@sendReferral');
+	Route::get('homeadvisor/general', 'HomeadvisorController@getGeneralMessages');
+	Route::get('homeadvisor/general/{id}', 'HomeadvisorController@getGeneralMessageWithUser');
 	Route::post('homeadvisor/{homeadvisor}', 'HomeadvisorController@update');
 	Route::get('pictures', 'HomeadvisorController@pictures');
 	Route::post('pictures/remove', 'HomeadvisorController@picturesRemove');
+	Route::put('general/send/{message}', 'HomeadvisorController@sendGeneralMessage');
 
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
 	Route::get('clients/reports/{client}', 'ClientsController@reportsReviews');
@@ -179,10 +182,12 @@ Route::any('company/push', 'UsersController@push');
 Route::any('review/push/{review}', 'SeancesController@push');
 Route::any('message/push/{text}', 'MessagesController@push');
 Route::any('dialog/push/{dialog}', 'DialogsController@push');
+Route::any('general/push/{message}', 'HomeadvisorController@push');
 Route::any('appointment/push/{appointment}', 'AppointmentController@push');
 
 Route::any('inbox/dialog/{dialog}', 'DialogsController@inbox');
 Route::any('inbox/message/{message}', 'MessagesController@inbox');
+Route::any('inbox/general/{message}', 'HomeadvisorController@inbox');
 
 Route::any('leads/convert', 'HomeadvisorController@convert');
 
