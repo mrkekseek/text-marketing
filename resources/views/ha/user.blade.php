@@ -9,7 +9,12 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div uib-alert class="alert-info" ng-show=" ! ha.send_request">
-						{{ __("To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly). Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below. We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>. {{ __("Once you are connected we will send a test text to your Cell.") }}
+						<ol class="unstyled_ul">
+							<li>To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly).</li>
+							<li>Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.</li>
+							<li>We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
+							<li>Once you are connected we will send a test text to your Cell.</li>
+						</ol>						
 					</div>
 
 					<div uib-alert class="alert-info" ng-show="ha.send_request && ! list.length">
@@ -50,7 +55,7 @@
 								{{ __('Please insert your Company Name - it can take up to 15 minutes') }}
 							</div> -->
 							<div class="row">
-								<div class="col-sm-6 col-xs-12" ng-show="user.company_status != 'verified'">
+								<div class="col-sm-6 col-xs-12">
 									<div class="form-group">
 										<label>{{ __('Website') }}</label>
 										<input type="text" class="form-control" maxlength="32" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" required="required" />
@@ -66,7 +71,7 @@
 							<div class="form-group" ng-show="user.company_status == 'verified' && ! companyChanged">
 								<div class="form-group">
 									<label>{{ __('Instant Text') }}</label>
-									<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" lms="true"></char-set>
+									<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" btn-website="true" btn-office-phone="true" lms="true"></char-set>
 								</div>
 							
 								<label>{{ __('Texts') }}</label>
@@ -84,7 +89,7 @@
 
 										<div ng-show="ha.first_followup_active">
 											<div class="followup_text">
-												<char-set ng-model="ha.first_followup_text" class="followup_textarea" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-disabled=" ! ha.first_followup_active" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-hapage="true" btn-link="true"></char-set>
+												<char-set ng-model="ha.first_followup_text" class="followup_textarea" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-disabled=" ! ha.first_followup_active" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-hapage="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set>
 											</div>
 
 											<div class="followup_delay">
@@ -109,7 +114,7 @@
 
 										<div ng-show="ha.second_followup_active">
 											<div class="followup_text">
-												<char-set ng-model="ha.second_followup_text" class="followup_textarea" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-disabled=" ! ha.second_followup_active" btn-firstname="true" btn-hapage="true" btn-link="true"></char-set>
+												<char-set ng-model="ha.second_followup_text" class="followup_textarea" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-disabled=" ! ha.second_followup_active" btn-firstname="true" btn-hapage="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set>
 											</div>
 
 											<div class="followup_delay">

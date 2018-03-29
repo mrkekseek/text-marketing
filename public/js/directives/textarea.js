@@ -9,6 +9,7 @@ angular.module('app').directive('textArea', function($http, logger) {
 		controller: ['$scope', function TextAreaCtrl($scope) {
 			$scope.size = 0;
 			$scope.showUrl = false;
+			$scope.showWebsiteUrl = false;
 			$scope.id = 'test';
 
 			$scope.charCount = function () {
@@ -27,6 +28,7 @@ angular.module('app').directive('textArea', function($http, logger) {
                		var shortUrl = response.data;
 					$scope.insert(shortUrl);
 					$scope.showUrl = false;
+					$scope.showWebsiteUrl = false;
                	});
 			};
 
@@ -52,6 +54,10 @@ angular.module('app').directive('textArea', function($http, logger) {
 			$scope.toggleUrl = function() {
 				$scope.showUrl = ! $scope.showUrl;
 			};
+			
+			$scope.toggleWebsiteUrl = function() {
+				$scope.showWebsiteUrl = !$scope.showWebsiteUrl;
+			};
 
 			$scope.maxChars = function() {
 				var count = 0;
@@ -76,6 +82,8 @@ angular.module('app').directive('textArea', function($http, logger) {
 	        scope.lastname = attrs.btnLastname == 'true' ? true : false;
 	        scope.link = attrs.btnLink == 'true' ? true : false;
 	        scope.shortLink = attrs.btnShortLink == 'true' ? true : false;
+	        scope.website = attrs.btnWebsite == 'true' ? true : false;
+	        scope.officePhone = attrs.btnOfficePhone == 'true' ? true : false;
 		},
 		replace: true,
 		templateUrl: '/uib/template/textarea/textarea.html'

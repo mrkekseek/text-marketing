@@ -66,6 +66,7 @@ class AuthController extends Controller
             $user->homeadvisors()->create([
                 'rep' => $request->rep,
                 'emails' => '',
+                'text' => Homeadvisor::DEFAULT_TEXT_TEMPLATE,
                 'first_followup_active' => Homeadvisor::FIRST_FOLLOWUP_ACTIVE,
                 'first_followup_delay' => Homeadvisor::FIRST_FOLLOWUP_DELAY,
                 'first_followup_text' => Homeadvisor::FIRST_FOLLOWUP_TEXT,

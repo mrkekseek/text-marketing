@@ -55,7 +55,11 @@ class DialogsController extends Controller
                 'status' => 2,
             ]);
             $phones = [];
-            $phones[] = ['phone' => $client->phone];
+            $phones[] = [
+                'phone' => $client->phone,
+                'website_shortlink' => auth()->user()->website_shortlink,
+                'office_phone' => auth()->user()->office_phone,
+            ];
 
             SendLeadText::dispatch($dialog, $phones, auth()->user())->onQueue('texts');
 

@@ -32,6 +32,18 @@
 				<i class="fa fa-link"></i> Short Link
 			</button>
 		</div>
+
+		<div class="btn-group" ng-if="website">
+			<button ng-click="toggleWebsiteUrl()" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-link"></i> Website
+			</button>
+		</div>
+		
+		<div class="btn-group" ng-if="officePhone">
+			<button ng-click="toggleWebsiteUrl()" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-link"></i> Office Phone
+			</button>
+		</div>
 	</div>
 
 	<div ng-show="showUrl" class="input-group short-url-box">

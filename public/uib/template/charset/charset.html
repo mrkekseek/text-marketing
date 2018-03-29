@@ -9,34 +9,46 @@
 		</span>
 	</div>
 
-	<div class="btn-group btn-group-justified move-top-pixel" ng-show="! showMessageTextUrl">
+	<div class="btn-group btn-group-justified move-top-pixel" ng-show="! showShortLinkInput">
 		<div class="btn-group" ng-if="firstname">
 			<button ng-click="insert(firstnameTag)" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-user"></i> First Name
+				<i class="fa fa-user"></i> <span class="charset_button_text">First Name</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="lastname">
 			<button ng-click="insert(lastnameTag)" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-user-o"></i> Last Name
+				<i class="fa fa-user-o"></i> <span class="charset_button_text">Last Name</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="hapage">
 			<button ng-click="insert(hapageTag)" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-image"></i> Job Pics Link
+				<i class="fa fa-image"></i> <span class="charset_button_text">Job Pics Link</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="link">
 			<button ng-click="insert(linkTag)" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-link"></i> Link
+				<i class="fa fa-link"></i> <span class="charset_button_text">Link</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="shortlink">
 			<button ng-click="toggleUrl()" type="button" class="btn btn-sm btn-default">
-				<i class="fa fa-link"></i> Short Link
+				<i class="fa fa-link"></i> <span class="charset_button_text">Short Link</span>
+			</button>
+		</div>
+
+		<div class="btn-group" ng-if="website">
+			<button ng-click="insert(websiteTag)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-globe"></i> <span class="charset_button_text">Website</span>
+			</button>
+		</div>
+		
+		<div class="btn-group" ng-if="officePhone">
+			<button ng-click="insert(officePhoneTag)" type="button" class="btn btn-sm btn-default">
+				<i class="fa fa-phone"></i> <span class="charset_button_text">Office Phone</span>
 			</button>
 		</div>
 	</div>

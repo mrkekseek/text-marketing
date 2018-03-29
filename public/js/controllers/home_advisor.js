@@ -208,8 +208,6 @@
 
             if (error) {
                 $scope.ha.additional_phones = inputs.join(',');
-                console.log($scope.user);
-                console.log($scope.ha);
                 request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), { 'ha': $scope.ha, 'user': $scope.user, 'pictures': $scope.pictures}, function() {
                     $scope.getPictures();
                 }, ($scope.ha.id ? 'post' : 'put'));
