@@ -58,6 +58,14 @@ class Api
 		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'attachment', 'block_24'));
 	}
 
+	static public function generalMessages($target_id, $clients, $message, $company, $offset)
+	{
+		$type = 'general';
+		$block = true;
+		$block_24 = true;
+		return self::send('message/send', compact('target_id', 'clients', 'message', 'company', 'type', 'block', 'offset', 'block_24'));
+	}
+
 	static public function appointment($target_id, $clients, $message, $company, $offset, $attachment = '')
 	{
 		$type = 'appointment';

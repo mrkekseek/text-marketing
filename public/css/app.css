@@ -866,3 +866,11 @@ textarea.form-control.appointment-textarea {
 	margin-bottom: 0;
 	margin-top: 9px;
 }
+
+#new_users_texts textarea {
+	height: 70px;
+}
+
+.pointer {
+	cursor: pointer;
+}

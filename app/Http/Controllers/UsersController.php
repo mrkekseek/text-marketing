@@ -823,7 +823,7 @@ class UsersController extends Controller
 
     public function settings()
     {
-    	return Setting::first();
+    	return Setting::all();
     }
 
     public function settingsCreate(Request $request)
@@ -837,10 +837,16 @@ class UsersController extends Controller
 
     public function settingsUpdate(Request $request, Setting $setting)
     {
-    	$data = $request->only('followup_text');
-    	$setting->update($data);
+		$data = $request->only('texts');
+		foreach ($data as $item) {
+			foreach($item as $row) {
+				$text = $setting->find($row['id']);
+				$text->text = $row['text'];
+				$text->update();
+			}
+		}
+    	
     	$this->message('Settings was successfully saved', 'success');
-    	return $setting->id;
     }
 
     public function companyNames()

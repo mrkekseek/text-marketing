@@ -12,6 +12,8 @@ class Homeadvisor extends Model
     const SECOND_FOLLOWUP_DELAY = 60;
     const FIRST_FOLLOWUP_ACTIVE = 1;
     const SECOND_FOLLOWUP_ACTIVE = 0;
+    const FIRST_DELAY_AFTER_SIGNUP = 2;
+    const SECOND_DELAY_AFTER_SIGNUP = 4;
 
     protected $guarded = [];
 
