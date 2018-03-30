@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Libraries\Api;
 use App\Dialog;
 use App\User;
-use App\Setting;
 use App\Client;
 use DivArt\ShortLink\Facades\ShortLink;
 

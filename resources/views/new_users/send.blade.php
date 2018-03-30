@@ -11,22 +11,37 @@
 						<div class="col-sm-12" id="new_users_texts">
 							<div class="form-group">
 								<label>{{ __('Thank You Text') }}</label>
-								<div text-area ng-model="texts[0].text"></div>
+								<div text-area ng-model="texts.thank_you_signup"></div>
                             </div>
                             
                             <div class="form-group">
 								<label>{{ __('2 Days After Signup Text') }}</label>
-								<div text-area ng-model="texts[1].text"></div>
+								<div text-area ng-model="texts.two_days_not_active"></div>
                             </div>
                             
                             <div class="form-group">
 								<label>{{ __('4 Days After Signup Text') }}</label>
-								<div text-area ng-model="texts[2].text"></div>
+								<div text-area ng-model="texts.four_days_not_active"></div>
 							</div>
                             
                             <div class="form-group">
-								<label>{{ __('Twilio Text') }}</label>
-								<div text-area ng-model="texts[3].text"></div>
+								<label>{{ __('New Users Text') }}</label>
+								<div text-area ng-model="texts.new_user"></div>
+                            </div>
+                            
+                            <div class="form-group">
+								<label>{{ __('Default Instant Text') }}</label>
+								<div text-area ng-model="texts.instant"></div>
+                            </div>
+                            
+                            <div class="form-group">
+								<label>{{ __('Default First Followup Text') }}</label>
+								<div text-area ng-model="texts.first_followup"></div>
+                            </div>
+                            
+                            <div class="form-group">
+								<label>{{ __('Default Second Followup Text') }}</label>
+								<div text-area ng-model="texts.second_followup"></div>
 							</div>
 							
 							<div class="form-group">

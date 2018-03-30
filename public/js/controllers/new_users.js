@@ -8,7 +8,7 @@
         $scope.file = {};
 
         $scope.init = function () {
-            request.send('/settings', {}, function (data) {
+            request.send('/texts', {}, function (data) {
                 if (data) {
                         $scope.texts = data;
                 }
@@ -16,8 +16,8 @@
         };
 
         $scope.save = function () {
-            request.send('/settings/update', {'texts': $scope.texts}, function (data) {
-            }, 'post');
+            request.send('/texts' + ($scope.texts.id ? '/' + $scope.texts.id : ''), {'texts': $scope.texts}, function (data) {
+            }, 'put');
         };
 
         $scope.uploadFile = function (file) {

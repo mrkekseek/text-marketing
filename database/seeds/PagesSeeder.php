@@ -63,7 +63,7 @@ class PagesSeeder extends Seeder
             'public' => 0,
         ]);
 
-        DB::table('pages')->insert([
+        /* DB::table('pages')->insert([
             'code' => 'settings-admin',
             'folder' => 'admin',
             'file' => 'settings',
@@ -71,7 +71,7 @@ class PagesSeeder extends Seeder
             'icon' => 'fa fa-cog',
             'tpl' => '',
             'public' => 0,
-        ]);
+        ]); */
 
         DB::table('pages')->insert([
             'code' => 'plans-user',
@@ -313,10 +313,10 @@ class PagesSeeder extends Seeder
             'users_type' => 2,
         ]);
 
-        DB::table('pages_access')->insert([
+        /* DB::table('pages_access')->insert([
             'code' => 'settings-admin',
             'users_type' => 2,
-        ]);
+        ]); */
 
         DB::table('pages_access')->insert([
             'code' => 'ha-list',
@@ -485,13 +485,13 @@ class PagesSeeder extends Seeder
             'pos' => 8,
         ]);
         
-        DB::table('pages_menu')->insert([
+        /* DB::table('pages_menu')->insert([
             'pages_code' => 'settings-admin',
             'parents_code' => '',
             'plans' => 'none',
             'main' => 0,
             'pos' => 9,
-        ]);
+        ]); */
 
         DB::table('pages_menu')->insert([
             'pages_code' => 'surveys-surveys',
