@@ -13,7 +13,7 @@ use App\Dialog;
 use App\Alert;
 use App\Picture;
 use App\Lead;
-use App\Setting;
+use App\DefaultText;
 use App\GeneralMessage;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
@@ -63,14 +63,15 @@ class HomeadvisorController extends Controller
 		$info = auth()->user()->homeadvisors;
 		$info->website = auth()->user()->website;
 		$info->office_phone = auth()->user()->office_phone;
+		$text = DefaultText::first();
 
 		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
 			$info->first_followup_active = Homeadvisor::FIRST_FOLLOWUP_ACTIVE;
 			$info->first_followup_delay = Homeadvisor::FIRST_FOLLOWUP_DELAY;
-			$info->first_followup_text = Homeadvisor::FIRST_FOLLOWUP_TEXT;
+			$info->first_followup_text = $text->first_followup;
 			$info->second_followup_active = Homeadvisor::SECOND_FOLLOWUP_ACTIVE;
 			$info->second_followup_delay = Homeadvisor::SECOND_FOLLOWUP_DELAY;
-			$info->second_followup_text = Homeadvisor::SECOND_FOLLOWUP_TEXT;
+			$info->second_followup_text = $text->second_followup;
 			$info->save();
 		}
 
@@ -525,8 +526,8 @@ class HomeadvisorController extends Controller
 			}
 		}
 
-		$data = Setting::where('text_code', 'twilio')->first();
-		$text = $data['text'];
+		$default_text = DefaultText::first();
+		$text = $default_text->new_user;
 		
 		if ( ! empty($result)) {
 			foreach ($result as $phone) {

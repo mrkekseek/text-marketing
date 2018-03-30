@@ -14,7 +14,7 @@ use App\Mail\SignUpForUserHa;
 use App\Mail\SupportMail;
 use App\Libraries\Api;
 use App\GeneralMessage;
-use App\Setting;
+use App\DefaultText;
 
 class SignUp implements ShouldQueue
 {
@@ -47,11 +47,11 @@ class SignUp implements ShouldQueue
     {
         Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->url, $this->name));
         if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
-            $data = Setting::where('text_code', 'thankyou')->first();
-		    $text = str_replace('[$FirstName]', $this->user->firstname, $data['text']);
+            $default_text = DefaultText::first();
+		    $text = str_replace('[$FirstName]', $this->user->firstname, $default_text->thank_you_signup);
 
             $global_dialog = new GeneralMessage();
-            $global_dialog->type = 'thankyou';
+            $global_dialog->type = 'thank_you_signup';
             $global_dialog->phone = $this->user->phone;
             $global_dialog->firstname = $this->user->firstname;
             $global_dialog->lastname = $this->user->lastname;
@@ -60,7 +60,6 @@ class SignUp implements ShouldQueue
             $global_dialog->status = 0;
             $global_dialog->save();
 
-            $phones = [];
             $phones[] = ['phone' => $this->user->phone];
 
             Api::generalMessages($global_dialog->id, $phones, $text, 'ContractorTexter', $this->user->offset);

@@ -14,7 +14,8 @@
 							<li>{{ __("Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.") }}</li>
 							<li>{{ __("We've already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
 							<li>{{ __("Once you are connected we will send a test text to your Cell.") }}</li>
-						</ol>						
+						</ol>
+						Thanks!
 					</div>
 
 					<div uib-alert class="alert-info" ng-show="ha.send_request && ! list.length">

@@ -10,10 +10,12 @@ use App\Events\SaveLeadFromHomeadvisor;
 use App\Jobs\SendFirstLead;
 use App\Jobs\SendLeadText;
 use App\Jobs\SendFollowUpText;
+use App\Jobs\SendGeneralText;
 use App\User;
+use App\GeneralMessage;
 use Carbon\Carbon;
 
-class SendFirstHomeadvisorLeadNotification implements ShouldQueue
+class SendFirstHomeadvisorLeadNotification// implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -37,6 +39,19 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
         if ($event->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1 && $event->lead_exists) {
             $owner = User::where('owner', true)->first();
             SendFirstLead::dispatch($event->user, $owner, $ha)->onQueue('emails');
+
+            $general_message = new GeneralMessage();
+            $general_message->type = 'ha_activate';
+            $general_message->phone = $event->user->phone;
+            $general_message->text = $ha->text;
+            $general_message->my = true;
+            $general_message->status = 2;
+            $general_message->save();
+
+            $phones[] = ['phone' => $event->user->phone];
+            $offset = 0;
+
+            SendGeneralText::dispatch($general_message, $phones, $ha->text, 'ContractorTexter', $offset)->onQueue('texts');
         }
 
         if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($event->client->phone)) {

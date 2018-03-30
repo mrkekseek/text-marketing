@@ -10,7 +10,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use App\Libraries\Api;
 use App\GeneralMessage;
 use App\Homeadvisor;
-use App\Setting;
+use App\DefaultText;
 use App\User;
 
 class SendHomeadvisorActivationDelay implements ShouldQueue
@@ -39,14 +39,13 @@ class SendHomeadvisorActivationDelay implements ShouldQueue
     public function handle()
     {
         if ($this->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 0) {
-            $data = Setting::where('text_code', 'twodays')->first();
-            $text = $data['text'];
-            $type = 'twodays';
+            $default_text = DefaultText::first();
+            $text = str_replace('[$FirstName]', $this->user->firstname, $default_text->two_days_not_active);
+            $type = 'two_days_no_active';
 
             if ($this->activation_delay == 4) {
-                $data = Setting::where('text_code', 'fourdays')->first();
-                $text = $data['text'];
-                $type = 'fourdays';
+                $text = str_replace('[$FirstName]', $this->user->firstname, $default_text->four_days_not_active);
+                $type = 'four_days_not_active';
             }
 
             $message = new GeneralMessage();

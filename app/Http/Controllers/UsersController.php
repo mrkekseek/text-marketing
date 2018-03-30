@@ -17,7 +17,7 @@ use App\Link;
 use App\Url;
 use App\ContactList;
 use App\SocialReview;
-use App\Setting;
+use App\DefaultText;
 
 use App\Libraries\Api;
 use App\Libraries\Jwt;
@@ -821,31 +821,24 @@ class UsersController extends Controller
     	}
     }
 
-    public function settings()
+    public function getDefaultTexts()
     {
-    	return Setting::all();
+    	return DefaultText::first();
     }
 
-    public function settingsCreate(Request $request)
-    {
-    	$data = $request->only('followup_text');
-    	$setting = Setting::create($data);
-    	$this->message('Settings was successfully saved', 'success');
-    	return $setting->id;
-
-    }
-
-    public function settingsUpdate(Request $request, Setting $setting)
+    public function updateDefaultTexts(Request $request, DefaultText $text)
     {
 		$data = $request->only('texts');
-		foreach ($data as $item) {
-			foreach($item as $row) {
-				$text = $setting->find($row['id']);
-				$text->text = $row['text'];
-				$text->update();
-			}
-		}
-    	
+		
+		$text->thank_you_signup = $data['texts']['thank_you_signup'];
+		$text->two_days_not_active = $data['texts']['two_days_not_active'];
+		$text->four_days_not_active = $data['texts']['four_days_not_active'];
+		$text->new_user = $data['texts']['new_user'];
+		$text->instant = $data['texts']['instant'];
+		$text->first_followup = $data['texts']['first_followup'];
+		$text->second_followup = $data['texts']['second_followup'];
+		$text->update();
+
     	$this->message('Settings was successfully saved', 'success');
     }
 
