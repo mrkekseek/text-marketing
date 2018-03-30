@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Homeadvisor;
+use App\DefaultText;
 use App\Http\Requests\SignInRequest;
 use App\Http\Requests\SignUpRequest;
 use App\Jobs\SignUp;
@@ -61,18 +62,19 @@ class AuthController extends Controller
 
         $user = User::create($data);
         LinksService::create($user);
+        $text = DefaultText::first();
 
         if ( ! empty($request->rep)) {
             $user->homeadvisors()->create([
                 'rep' => $request->rep,
                 'emails' => '',
-                'text' => Homeadvisor::DEFAULT_TEXT_TEMPLATE,
+                'text' => $text->instant,
                 'first_followup_active' => Homeadvisor::FIRST_FOLLOWUP_ACTIVE,
                 'first_followup_delay' => Homeadvisor::FIRST_FOLLOWUP_DELAY,
-                'first_followup_text' => Homeadvisor::FIRST_FOLLOWUP_TEXT,
+                'first_followup_text' => $text->first_followup,
                 'second_followup_active' => Homeadvisor::SECOND_FOLLOWUP_ACTIVE,
                 'second_followup_delay' => Homeadvisor::SECOND_FOLLOWUP_DELAY,
-                'second_followup_text' => Homeadvisor::SECOND_FOLLOWUP_TEXT,
+                'second_followup_text' => $text->second_followup,
             ]);
         }
 
