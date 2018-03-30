@@ -557,12 +557,14 @@ class HomeadvisorController extends Controller
 			$item->created_at_string = $item->created_at->__toString();
             Carbon::resetToStringFormat();
 			return $item;
-        })->unique('phone')->toArray());
+		})->unique('phone')->toArray());
 	}
 
 	public function getGeneralMessageWithUser($phone)
 	{
 		return GeneralMessage::where('phone', $phone)->get()->each(function($item, $key) {
+			$user = User::where('phone', $item->phone)->first();
+			$item->user_firstname = $user->firstname;
             Carbon::setToStringFormat('F dS g:i A');
 			$item->created_at_string = $item->created_at->__toString();
             Carbon::resetToStringFormat();

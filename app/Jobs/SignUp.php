@@ -48,7 +48,7 @@ class SignUp implements ShouldQueue
         Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->url, $this->name));
         if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
             $default_text = DefaultText::first();
-		    $text = str_replace('[$FirstName]', $this->user->firstname, $default_text->thank_you_signup);
+		    $text = $default_text->thank_you_signup;
 
             $global_dialog = new GeneralMessage();
             $global_dialog->type = 'thank_you_signup';

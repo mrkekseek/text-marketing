@@ -75,6 +75,9 @@
             $scope.activeClient.lastname = dialog.lastname;
             $scope.showPhonesBox = !$scope.showPhonesBox;
             request.send('/homeadvisor/general/' + dialog.phone, {}, function (data) {
+                for (var k in data) {
+                    data[k].text = data[k].text.replace('[$FirstName]', data[k].user_firstname);
+                }
                 $scope.messages = data;
             }, 'get');
         };

@@ -40,11 +40,11 @@ class SendHomeadvisorActivationDelay implements ShouldQueue
     {
         if ($this->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 0) {
             $default_text = DefaultText::first();
-            $text = str_replace('[$FirstName]', $this->user->firstname, $default_text->two_days_not_active);
+            $text = $default_text->two_days_not_active;
             $type = 'two_days_no_active';
 
             if ($this->activation_delay == 4) {
-                $text = str_replace('[$FirstName]', $this->user->firstname, $default_text->four_days_not_active);
+                $text = $default_text->four_days_not_active;
                 $type = 'four_days_not_active';
             }
 
