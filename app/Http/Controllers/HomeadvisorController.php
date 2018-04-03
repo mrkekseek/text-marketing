@@ -67,10 +67,10 @@ class HomeadvisorController extends Controller
 
 		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
 			$info->first_followup_active = Homeadvisor::FIRST_FOLLOWUP_ACTIVE;
-			$info->first_followup_delay = Homeadvisor::FIRST_FOLLOWUP_DELAY;
+			$info->first_followup_delay = $text->first_followup_delay;
 			$info->first_followup_text = $text->first_followup;
 			$info->second_followup_active = Homeadvisor::SECOND_FOLLOWUP_ACTIVE;
-			$info->second_followup_delay = Homeadvisor::SECOND_FOLLOWUP_DELAY;
+			$info->second_followup_delay = $text->second_followup_delay;
 			$info->second_followup_text = $text->second_followup;
 			$info->save();
 		}
@@ -195,8 +195,8 @@ class HomeadvisorController extends Controller
 		auth()->user()->update([
 			'view_phone' => $data['user']['view_phone'],
 			'phone' => $phone,
-			'office_phone' => $data['user']['office_phone'],
-			'website' => $data['user']['website'],
+			'office_phone' => ! empty($data['user']['office_phone']) ? $data['user']['office_phone'] : '',
+			'website' => ! empty($data['user']['website']) ? $data['user']['website'] : '',
 			'website_shortlink' => ! empty($website_shortlink) ? $website_shortlink : '',
 		]);
 
@@ -323,8 +323,30 @@ class HomeadvisorController extends Controller
 				} else {
 					$client = $link->user->teams->clients()->create($lead);
 				}
+
+				$homeadvisor = $client->team->team_leader()->homeadvisors;
+
+				if ( ! empty($link->user->phone)) {
+					$phones[] = [
+						'phone' => $link->user->phone,
+					];
+					$temp[] = $link->user->phone;
+				}
+
+				if ( ! empty($homeadvisor->additional_phones)) {
+					$numbers = explode(',', $homeadvisor->additional_phones);
+					foreach ($numbers as $number) {
+						$phone = $this->createPhone($number);
+						if ( ! empty($phone)) {
+							$phones[] = [
+								'phone' => $phone,
+							];
+							$temp[] = $phone;
+						}
+					}
+				}
 				
-				event(new SaveLeadFromHomeadvisor($link->user, $client, $lead_exists));
+				event(new SaveLeadFromHomeadvisor($link->user, $client, $phones, $lead_exists));
 
 				$backup->update([
 					'saved' => true,
@@ -370,10 +392,16 @@ class HomeadvisorController extends Controller
 	{
 		$this->saveLog($_SERVER, 'MAGIC CLICK');
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'TweetmemeBot') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'HttpClient') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'UNAVAILABLE') === false) {
-			$dialog->update(['clicked' => true]);
 			$client = $dialog->clients;
-			$client->update(['clicked' => true]);
 			$user = $client->team->team_leader();
+			
+			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
+				$this->sendLeadClickText($user, $client);
+			}
+			
+			$dialog->update(['clicked' => true]);
+			$client->update(['clicked' => true]);
+			
 			$homeadvisor = $client->team->team_leader()->homeadvisors;
 			
 			$link = false;
@@ -396,16 +424,44 @@ class HomeadvisorController extends Controller
 	{
 		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id, false);
 	}
+	
+	private function sendLeadClickText($user, $client)
+	{
+		$default_text = DefaultText::first();
+		$lead_text = $default_text->lead_clicks;
+		$client_data = [
+			'users_id' => $user->id,
+			'clients_id' => $client->id,
+			'text' =>  $lead_text,
+			'my' =>  true,
+			'status' => 2,
+		];
+
+        $clients_phones[] = [
+			'phone' => $client->phone,
+			'firstname' => $client->firstname,
+		];
+		
+		$lead_dialog = Dialog::create($client_data);
+		$delay_amount = Carbon::now()->addMinutes(15);
+		$delay = Carbon::now()->diffInSeconds($delay_amount);
+
+		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->delay($delay)->onQueue('texts');
+	}
 
 	public function sendAlertClick($user, $homeadvisor, $client, $link, $dialog)
 	{
 		$phones = [];
 		$temp = [];
-		
-		$text = 'Hi, Lead '.$client->firstname.' just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - '.$link.'!';
+		$default_text = DefaultText::first();
+		$text = $default_text->lead_clicks_alert;
 		
 		if ( ! empty($user->phone)) {
-			$phones[]['phone'] = $user->phone;
+			$phones[] = [
+				'phone' => $user->phone,
+				'firstname' => $client->firstname,
+				'lastname' => $client->lastname,
+			];
 			$temp[] = $user->phone;
 		}
 
@@ -414,7 +470,11 @@ class HomeadvisorController extends Controller
 			foreach ($numbers as $number) {
 				$phone = $this->createPhone($number);
 				if ( ! empty($phone)) {
-					$phones[]['phone'] = $phone;
+					$phones[] = [
+						'phone' => $phone,
+						'firstname' => $client->firstname,
+						'lastname' => $client->lastname,
+					];
 					$temp[] = $phone;
 				}
 			}
@@ -429,24 +489,6 @@ class HomeadvisorController extends Controller
 			$alert = Alert::create($data);
 			SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
 		}
-		
-		$lead_text = 'Hi '.$client->firstname.', saw you went to our site, were you able to book the appointment?';
-			
-		$client_data = [
-			'users_id' => $user->id,
-			'clients_id' => $client->id,
-			'text' =>  $lead_text,
-			'my' =>  true,
-			'status' => 2,
-		];
-
-		$clients_phones = [];
-        $clients_phones[] = ['phone' => $client->phone];
-		$lead_dialog = Dialog::create($client_data);
-		$delay_amount = Carbon::now()->addMinutes(15);
-		$delay = Carbon::now()->diffInSeconds($delay_amount);
-
-		SendLeadText::dispatch($lead_dialog, $clients_phones, $user)->delay($delay)->onQueue('texts');
 	}
 
 	public function sendAlertClickEmail($homeadvisor, $client, $link)

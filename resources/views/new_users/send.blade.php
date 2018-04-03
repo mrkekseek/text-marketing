@@ -1,4 +1,4 @@
-<div class="page page-table" data-ng-controller="NewUsersCtrl" data-ng-init="init()">
+<div class="page page-table new_users" data-ng-controller="NewUsersCtrl" data-ng-init="init()">
 	<h2>
 		{{ __('New Users') }}
 	</h2>
@@ -10,8 +10,9 @@
                     <div class="row">
 						<div class="col-sm-12" id="new_users_texts">
 							<div class="form-group">
-								<label>{{ __('Thank You Text') }}</label>
-								<div text-area ng-model="texts.thank_you_signup"></div>
+								<label>{{ __('Thank You For Signup Text') }}</label>
+                                <div text-area ng-model="texts.thank_you_signup"></div>
+                                <!-- <char-set ng-model="texts.thank_you_signup" class="followup_textarea" unique-id="'thankyou_text'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" btn-firstname="true" btn-lastname="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set> -->
                             </div>
                             
                             <div class="form-group">
@@ -38,10 +39,48 @@
 								<label>{{ __('Default First Followup Text') }}</label>
 								<div text-area ng-model="texts.first_followup"></div>
                             </div>
+
+                            <div class="form-group">
+                                <label>{{ __('Default First Followup Delay') }}</label>
+                                <div class="followup_delay">
+                                    <select class="form-control" ng-model="texts.first_followup_delay">
+                                        <option value="@{{ hour.value }}" ng-repeat="hour in followup_hours">@{{ hour.text + ' ' + getHourText(hour.value) }}</option>
+                                    </select>
+                                </div>
+                            </div>
                             
                             <div class="form-group">
 								<label>{{ __('Default Second Followup Text') }}</label>
 								<div text-area ng-model="texts.second_followup"></div>
+							</div>
+
+                            <div class="form-group">
+                                <label>{{ __('Default Second Followup Delay') }}</label>
+                                <div class="followup_delay">
+                                    <select class="form-control" ng-model="texts.second_followup_delay">
+                                        <option value="@{{ hour.value }}" ng-repeat="hour in followup_hours">@{{ hour.text + ' ' + getHourText(hour.value) }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+								<label>{{ __("'Lead Clicks' Alert Text (text to User)") }}</label>
+								<div text-area ng-model="texts.lead_clicks_alert"></div>
+							</div>
+
+                            <div class="form-group">
+								<label>{{ __("'Lead Reply' Alert Text (text to User)") }}</label>
+								<div text-area ng-model="texts.lead_reply_alert"></div>
+							</div>
+
+                            <div class="form-group">
+								<label>{{ __("Lead Clicks Link To Site (text to Lead)") }}</label>
+								<div text-area ng-model="texts.lead_clicks"></div>
+							</div>
+
+                            <div class="form-group">
+								<label>{{ __("User Does Not Click Link In Reply Alert (text to User)") }}</label>
+								<div text-area ng-model="texts.user_click_reminder"></div>
 							</div>
 							
 							<div class="form-group">

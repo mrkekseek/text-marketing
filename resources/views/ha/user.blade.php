@@ -60,12 +60,12 @@
 								<div class="col-sm-6 col-xs-12">
 									<div class="form-group">
 										<label>{{ __('Website') }}</label>
-										<input type="text" class="form-control" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" required="required" />
+										<input type="text" class="form-control" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" ng-required="user.company_status != 'verified'" />
 									</div>
 									
 									<div class="form-group">
 										<label>{{ __('Office Number') }}</label>
-										<input type="text" class="form-control" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" required="required" />
+										<input type="text" class="form-control" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" ng-required="user.company_status != 'verified'" />
 									</div>
 								</div>
 							</div>

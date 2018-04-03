@@ -70,10 +70,10 @@ class AuthController extends Controller
                 'emails' => '',
                 'text' => $text->instant,
                 'first_followup_active' => Homeadvisor::FIRST_FOLLOWUP_ACTIVE,
-                'first_followup_delay' => Homeadvisor::FIRST_FOLLOWUP_DELAY,
+                'first_followup_delay' => $text->first_followup_delay,
                 'first_followup_text' => $text->first_followup,
                 'second_followup_active' => Homeadvisor::SECOND_FOLLOWUP_ACTIVE,
-                'second_followup_delay' => Homeadvisor::SECOND_FOLLOWUP_DELAY,
+                'second_followup_delay' => $text->second_followup_delay,
                 'second_followup_text' => $text->second_followup,
             ]);
         }
@@ -86,7 +86,7 @@ class AuthController extends Controller
 
         $first_delay_date = Carbon::now()->addDays(Homeadvisor::FIRST_DELAY_AFTER_SIGNUP);
         $first_delay = Carbon::now()->diffInSeconds($first_delay_date);
-        $second_delay_date = Carbon::now()->addDays(Homeadvisor::FIRST_DELAY_AFTER_SIGNUP);
+        $second_delay_date = Carbon::now()->addDays(Homeadvisor::SECOND_DELAY_AFTER_SIGNUP);
         $second_delay = Carbon::now()->diffInSeconds($second_delay_date);
 
         SendHomeadvisorActivationDelay::dispatch($user)->delay($first_delay)->onQueue('texts');

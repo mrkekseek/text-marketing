@@ -6,12 +6,24 @@
     function NewUsersCtrl($rootScope, $scope, $http, $location, $uibModal, request, langs) {
         $scope.texts = {};
         $scope.file = {};
+        $scope.followup_hours = [
+            {
+                text: 15,
+                value: 15
+            }, {
+                text: 30,
+                value: 30
+            }
+        ];
 
         $scope.init = function () {
             request.send('/texts', {}, function (data) {
                 if (data) {
-                        $scope.texts = data;
+                    $scope.texts = data;
+                    $scope.texts.first_followup_delay = $scope.texts.first_followup_delay.toString();
+                    $scope.texts.second_followup_delay = $scope.texts.second_followup_delay.toString();
                 }
+                $scope.generateHours();
             }, 'get');
         };
 
@@ -47,6 +59,32 @@
         $scope.send = function () {
             request.send('/homeadvisor/lookup', {'url': $scope.file.url}, function (data) {
             }, 'post');
+        };
+
+        $scope.generateHours = function () {
+            for (var i = 1; i <= 24; i++) {
+                $scope.followup_obj = {};
+                $scope.followup_obj.text = i;
+                $scope.followup_obj.value = i * 60;
+                $scope.followup_hours.push($scope.followup_obj);
+            }
+        };
+
+        $scope.getHourText = function (amount) {
+            switch (amount) {
+                case 15:
+                    return 'minutes after Instant Text';
+                    break;
+                case 30:
+                    return 'minutes after Instant Text';
+                    break;
+                case 60:
+                    return 'hour after Instant Text';
+                    break;
+                default:
+                    return 'hours after Instant Text';
+                    break;
+            }
         };
     };
 })();

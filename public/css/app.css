@@ -898,3 +898,7 @@ textarea.form-control.appointment-textarea {
 		display: none;
 	}
 }
+
+.new_users .followup_delay {
+	width: 34%;
+}

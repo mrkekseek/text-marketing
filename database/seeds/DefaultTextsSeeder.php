@@ -20,7 +20,13 @@ class DefaultTextsSeeder extends Seeder
             'new_user' => 'Hi - would you like to use our service?',
             'instant' => '[$FirstName], we\'re happy to offer a free estimate! Please click [$Website] or [$OfficePhone]. Thanks!',
             'first_followup' => 'Free estimate! Please text back the best time for us to call you. Thanks!',
+            'first_followup_delay' => '15',
             'second_followup' => 'Last text - want a free estimate? Click [$Website] or [$OfficePhone]. Thanks!',
+            'second_followup_delay' => '120',
+            'lead_clicks_alert' => 'Hi, Lead [$FirstName] [$LastName] just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - [$Link]!',
+            'lead_reply_alert' => 'Hi [$FirstName], a lead just texted you a reply. Please click [$Link] to see it and reply if you like - thanks!',
+            'lead_clicks' => 'Hi [$FirstName], saw you went to our site, were you able to book the appointment?',
+            'user_click_reminder' => 'Hi [$FirstName], a lead just texted you a reply. Please click [$Link] to see it and reply if you like - thanks!',
         ]);
     }
 }
