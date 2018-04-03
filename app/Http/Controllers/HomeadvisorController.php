@@ -189,6 +189,11 @@ class HomeadvisorController extends Controller
 		
 		if ( ! empty($data['user']['website'])) {
 			$url = str_replace(['http://', 'https://'], '', $data['user']['website']);
+			$url_check = preg_match('|^(http(s)?://)?([a-z]+.)?[a-z0-9-]+\.([a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
+			if (empty($url_check)) {
+				return $this->message('Your url is not valid');
+			}
+
 			$website_shortlink = ShortLink::bitly('http://'.$url, false);
 		}
 
