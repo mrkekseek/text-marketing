@@ -61,8 +61,6 @@ class HomeadvisorController extends Controller
 	public function info()
 	{
 		$info = auth()->user()->homeadvisors;
-		/* $info['website'] = ! empty(auth()->user()->website) ? auth()->user()->website : '';
-		$info['office_phone'] = ! empty(auth()->user()->office_phone) ? auth()->user()->office_phone : ''; */
 		$text = DefaultText::first();
 
 		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
@@ -74,6 +72,9 @@ class HomeadvisorController extends Controller
 			$info->second_followup_text = $text->second_followup;
 			$info->save();
 		}
+
+		$info->website = ! empty(auth()->user()->website) ? auth()->user()->website : '';
+		$info->office_phone = ! empty(auth()->user()->office_phone) ? auth()->user()->office_phone : '';
 
 		return $info;
 	}
