@@ -11,8 +11,8 @@
                 text: 15,
                 value: 15
             }, {
-                text: 30,
-                value: 30
+                text: 120,
+                value: 120
             }
         ];
 
