@@ -836,7 +836,13 @@ class UsersController extends Controller
 		$text->new_user = $data['texts']['new_user'];
 		$text->instant = $data['texts']['instant'];
 		$text->first_followup = $data['texts']['first_followup'];
+		$text->first_followup_delay = $data['texts']['first_followup_delay'];
 		$text->second_followup = $data['texts']['second_followup'];
+		$text->second_followup_delay = $data['texts']['second_followup_delay'];
+		$text->lead_clicks_alert = $data['texts']['lead_clicks_alert'];
+		$text->lead_reply_alert = $data['texts']['lead_reply_alert'];
+		$text->lead_clicks = $data['texts']['lead_clicks'];
+		$text->user_click_reminder = $data['texts']['user_click_reminder'];
 		$text->update();
 
     	$this->message('Settings was successfully saved', 'success');

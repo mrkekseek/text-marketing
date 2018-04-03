@@ -60,6 +60,7 @@ class SendHomeadvisorActivationDelay implements ShouldQueue
 
             $phones[] = [
                 'phone' => $this->user->phone,
+                'firstname' => $this->user->firstname,
             ];
         
             Api::generalMessages($message->id, $phones, $text, 'ContractorTexter', $this->user->offset);
