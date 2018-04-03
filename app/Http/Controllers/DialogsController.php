@@ -7,6 +7,7 @@ use App\Dialog;
 use App\Client;
 use App\User;
 use App\Alert;
+use App\DefaultText;
 use Carbon\Carbon;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
@@ -183,11 +184,16 @@ class DialogsController extends Controller
     {
         $phones = [];
         $temp = [];
-
-        $text = 'Hi '.$user->firstname .', a lead just texted you a reply. Please click '.$link.' to see it and reply if you like - thanks!';
+        $default_text = DefaultText::first();
+		$text = $default_text->lead_reply_alert;
+        $reminder_text = $default_text->user_click_reminder;
 
         if ( ! empty($user->phone)) {
-            $phones[]['phone'] = $user->phone;
+            $phones[] = [
+                'phone' => $user->phone,
+                'firstname' => $user->firstname,
+                'link' => $link,
+            ];
             $temp[] = $user->phone;
         }
 
@@ -196,7 +202,11 @@ class DialogsController extends Controller
             foreach ($numbers as $number) {
                 $phone = $this->createPhone($number);
                 if ( ! empty($phone)) {
-                    $phones[]['phone'] = $phone;
+                    $phones[] = [
+						'phone' => $phone,
+						'firstname' => $user->firstname,
+						'link' => $link,
+					];
                     $temp[] = $phone;
                 }
             }
@@ -209,9 +219,10 @@ class DialogsController extends Controller
                 'text' => $text,
             ];
             $alert = Alert::create($data);
-            $delay = Carbon::now()->addMinutes(10);
+            $reminder_delay = Carbon::now()->addMinutes(10);
+            $delay = Carbon::now()->diffInSeconds($reminder_delay);
             SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
-            SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->delay($delay)->onQueue('texts');
+            SendAlertClick::dispatch($alert, $phones, $reminder_text, $user, $dialog)->delay($delay)->onQueue('texts');
         }
     }
 

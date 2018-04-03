@@ -18,6 +18,7 @@ class SaveLeadFromHomeadvisor
 
     public $user;
     public $client;
+    public $phones;
     public $lead_exists;
 
     /**
@@ -25,10 +26,11 @@ class SaveLeadFromHomeadvisor
      *
      * @return void
      */
-    public function __construct(User $user, $client, $lead_exists)
+    public function __construct(User $user, $client, $phones, $lead_exists)
     {
         $this->user = $user;
         $this->client = $client;
+        $this->phones = $phones;
         $this->lead_exists = $lead_exists;
     }
 

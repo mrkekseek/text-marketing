@@ -48,10 +48,7 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
             $general_message->status = 2;
             $general_message->save();
 
-            $phones[] = ['phone' => $event->user->phone];
-            $offset = 0;
-
-            SendGeneralText::dispatch($general_message, $phones, $ha->text, 'ContractorTexter', $offset)->onQueue('texts');
+            SendGeneralText::dispatch($general_message, $event->phones, $ha->text, 'ContractorTexter', $event->user->offset)->onQueue('texts');
         }
 
         if ( ! empty($ha->active) && ! empty($ha->text) && ! empty($event->client->phone)) {

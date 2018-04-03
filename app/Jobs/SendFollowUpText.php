@@ -20,7 +20,7 @@ class SendFollowUpText implements ShouldQueue
     protected $dialog;
     protected $clients;
     protected $user;
-    protected $test;
+    protected $text;
 
     /**
      * Create a new job instance.
