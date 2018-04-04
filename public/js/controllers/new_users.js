@@ -15,6 +15,7 @@
                 value: 30
             }
         ];
+        $scope.company = 'Floor Coverings International EB';
 
         $scope.init = function () {
             request.send('/texts', {}, function (data) {
