@@ -210,6 +210,7 @@
                 $scope.ha.additional_phones = inputs.join(',');
                 request.send('/homeadvisor' + ($scope.ha.id ? '/' + $scope.ha.id : ''), { 'ha': $scope.ha, 'user': $scope.user, 'pictures': $scope.pictures}, function() {
                     $scope.getPictures();
+                    $scope.companySave();
                 }, ($scope.ha.id ? 'post' : 'put'));
             }
         };

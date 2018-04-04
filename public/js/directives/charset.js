@@ -46,7 +46,7 @@ angular.module('app').directive('charSet', function(getShortUrl, logger) {
 				});
 			};
 
-			$scope.charCount = function () {
+			$scope.charCount = function () {				
 				$scope.size = 0;
 				if ($scope.result && $scope.result != '' && $scope.company && $scope.company != '') {
 					$scope.size = $scope.result.length;

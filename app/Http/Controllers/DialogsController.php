@@ -188,10 +188,13 @@ class DialogsController extends Controller
 		$text = $default_text->lead_reply_alert;
         $reminder_text = $default_text->user_click_reminder;
 
+        $client = $dialog->clients;
+
         if ( ! empty($user->phone)) {
             $phones[] = [
                 'phone' => $user->phone,
-                'firstname' => $user->firstname,
+                'firstname' => $client->firstname,
+                'lastname' => $client->lastname,
                 'link' => $link,
             ];
             $temp[] = $user->phone;
@@ -204,7 +207,8 @@ class DialogsController extends Controller
                 if ( ! empty($phone)) {
                     $phones[] = [
 						'phone' => $phone,
-						'firstname' => $user->firstname,
+                        'firstname' => $client->firstname,
+                        'lastname' => $client->lastname,
 						'link' => $link,
 					];
                     $temp[] = $phone;

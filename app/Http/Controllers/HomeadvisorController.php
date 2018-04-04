@@ -61,8 +61,6 @@ class HomeadvisorController extends Controller
 	public function info()
 	{
 		$info = auth()->user()->homeadvisors;
-		/* $info['website'] = ! empty(auth()->user()->website) ? auth()->user()->website : '';
-		$info['office_phone'] = ! empty(auth()->user()->office_phone) ? auth()->user()->office_phone : ''; */
 		$text = DefaultText::first();
 
 		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
@@ -74,6 +72,9 @@ class HomeadvisorController extends Controller
 			$info->second_followup_text = $text->second_followup;
 			$info->save();
 		}
+
+		$info->website = ! empty(auth()->user()->website) ? auth()->user()->website : '';
+		$info->office_phone = ! empty(auth()->user()->office_phone) ? auth()->user()->office_phone : '';
 
 		return $info;
 	}
@@ -334,6 +335,10 @@ class HomeadvisorController extends Controller
 				if ( ! empty($link->user->phone)) {
 					$phones[] = [
 						'phone' => $link->user->phone,
+						'firstname' => $client->firstname,
+						'lastname' => $client->lastname,
+						'website' => ! empty($link->user->website) ? $link->user->website : '',
+						'office_phone' => ! empty($link->user->office_phone) ? $link->user->office_phone : '',
 					];
 					$temp[] = $link->user->phone;
 				}
@@ -345,6 +350,10 @@ class HomeadvisorController extends Controller
 						if ( ! empty($phone)) {
 							$phones[] = [
 								'phone' => $phone,
+								'firstname' => $client->firstname,
+								'lastname' => $client->lastname,
+								'website' => ! empty($link->user->website) ? $link->user->website : '',
+								'office_phone' => ! empty($link->user->office_phone) ? $link->user->office_phone : '',
 							];
 							$temp[] = $phone;
 						}
@@ -445,6 +454,7 @@ class HomeadvisorController extends Controller
         $clients_phones[] = [
 			'phone' => $client->phone,
 			'firstname' => $client->firstname,
+			'lastname' => $client->lastname,
 		];
 		
 		$lead_dialog = Dialog::create($client_data);
@@ -466,6 +476,7 @@ class HomeadvisorController extends Controller
 				'phone' => $user->phone,
 				'firstname' => $client->firstname,
 				'lastname' => $client->lastname,
+				'link' => $link,
 			];
 			$temp[] = $user->phone;
 		}
@@ -479,6 +490,7 @@ class HomeadvisorController extends Controller
 						'phone' => $phone,
 						'firstname' => $client->firstname,
 						'lastname' => $client->lastname,
+						'link' => $link,
 					];
 					$temp[] = $phone;
 				}
@@ -612,6 +624,7 @@ class HomeadvisorController extends Controller
 		return GeneralMessage::where('phone', $phone)->get()->each(function($item, $key) {
 			$user = User::where('phone', $item->phone)->first();
 			$item->user_firstname = $user->firstname;
+			$item->user_lastname = $user->lastname;
             Carbon::setToStringFormat('F dS g:i A');
 			$item->created_at_string = $item->created_at->__toString();
             Carbon::resetToStringFormat();

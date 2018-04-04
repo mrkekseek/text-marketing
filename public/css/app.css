@@ -900,5 +900,9 @@ textarea.form-control.appointment-textarea {
 }
 
 .new_users .followup_delay {
-	width: 34%;
+	width: 40%;
+}
+
+.new_users .form-group {
+	margin-bottom: 40px;
 }
