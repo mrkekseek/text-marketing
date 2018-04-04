@@ -11,43 +11,43 @@
 
 	<div class="btn-group btn-group-justified move-top-pixel" ng-show="! showShortLinkInput">
 		<div class="btn-group" ng-if="firstname">
-			<button ng-click="insert(firstnameTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert(firstnameTag)" type="button" uib-tooltip="First Name" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-user"></i> <span class="charset_button_text">First Name</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="lastname">
-			<button ng-click="insert(lastnameTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert(lastnameTag)" type="button" uib-tooltip="Last Name" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-user-o"></i> <span class="charset_button_text">Last Name</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="hapage">
-			<button ng-click="insert(hapageTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert(hapageTag)" type="button" uib-tooltip="Job Pics Link" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-image"></i> <span class="charset_button_text">Job Pics Link</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="link">
-			<button ng-click="insert(linkTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert(linkTag)" type="button" uib-tooltip="Link" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-link"></i> <span class="charset_button_text">Link</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="shortlink">
-			<button ng-click="toggleUrl()" type="button" class="btn btn-sm btn-default">
+			<button ng-click="toggleUrl()" type="button" uib-tooltip="Short Link" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-link"></i> <span class="charset_button_text">Short Link</span>
 			</button>
 		</div>
 
 		<div class="btn-group" ng-if="website">
-			<button ng-click="insert(websiteTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert(websiteTag)" type="button" uib-tooltip="Website" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-globe"></i> <span class="charset_button_text">Website</span>
 			</button>
 		</div>
 		
 		<div class="btn-group" ng-if="officePhone">
-			<button ng-click="insert(officePhoneTag)" type="button" class="btn btn-sm btn-default">
+			<button ng-click="insert(officePhoneTag)" type="button" uib-tooltip="Office Phone" tooltip-placement="bottom" class="btn btn-sm btn-default">
 				<i class="fa fa-phone"></i> <span class="charset_button_text">Office Phone</span>
 			</button>
 		</div>

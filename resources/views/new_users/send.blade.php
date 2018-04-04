@@ -1,43 +1,44 @@
-<div class="page page-table new_users" data-ng-controller="NewUsersCtrl" data-ng-init="init()">
+<div class="page page-table" data-ng-controller="NewUsersCtrl" data-ng-init="init()">
 	<h2>
 		{{ __('New Users') }}
 	</h2>
 
     <div class="row">
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-6 new_users">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div class="row">
 						<div class="col-sm-12" id="new_users_texts">
 							<div class="form-group">
 								<label>{{ __('Thank You For Signup Text') }}</label>
-                                <div text-area ng-model="texts.thank_you_signup"></div>
-                                <!-- <char-set ng-model="texts.thank_you_signup" class="followup_textarea" unique-id="'thankyou_text'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" btn-firstname="true" btn-lastname="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set> -->
+                                <!-- <div text-area ng-model="texts.thank_you_signup"></div> -->
+                                <char-set ng-model="texts.thank_you_signup" unique-id="'thankyou_text'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true"></char-set>
                             </div>
                             
                             <div class="form-group">
 								<label>{{ __('2 Days After Signup Text') }}</label>
-								<div text-area ng-model="texts.two_days_not_active"></div>
+                                <char-set ng-model="texts.two_days_not_active" unique-id="'two_days_not_active'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true"></char-set>
                             </div>
                             
                             <div class="form-group">
 								<label>{{ __('4 Days After Signup Text') }}</label>
-								<div text-area ng-model="texts.four_days_not_active"></div>
+                                <char-set ng-model="texts.four_days_not_active" unique-id="'four_days_not_active'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true"></char-set>
 							</div>
                             
                             <div class="form-group">
-								<label>{{ __('New Users Text') }}</label>
-								<div text-area ng-model="texts.new_user"></div>
+                                <label>{{ __('New Users Text') }}</label>
+                                <div text-area ng-model="texts.new_user"></div>
+                                <!-- <char-set ng-model="texts.new_user" unique-id="'new_user'" clear-message="true" btn-firstname="true" btn-lastname="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set> -->
                             </div>
                             
                             <div class="form-group">
 								<label>{{ __('Default Instant Text') }}</label>
-								<div text-area ng-model="texts.instant"></div>
+                                <char-set ng-model="texts.instant" unique-id="'instant'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-website="true" btn-office-phone="true"></char-set>
                             </div>
                             
                             <div class="form-group">
 								<label>{{ __('Default First Followup Text') }}</label>
-								<div text-area ng-model="texts.first_followup"></div>
+                                <char-set ng-model="texts.first_followup" unique-id="'first_followup'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-website="true" btn-office-phone="true"></char-set>
                             </div>
 
                             <div class="form-group">
@@ -51,7 +52,7 @@
                             
                             <div class="form-group">
 								<label>{{ __('Default Second Followup Text') }}</label>
-								<div text-area ng-model="texts.second_followup"></div>
+                                <char-set ng-model="texts.second_followup" unique-id="'second_followup'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-website="true" btn-office-phone="true"></char-set>
 							</div>
 
                             <div class="form-group">
@@ -65,22 +66,22 @@
 
                             <div class="form-group">
 								<label>{{ __("'Lead Clicks' Alert Text (text to User)") }}</label>
-								<div text-area ng-model="texts.lead_clicks_alert"></div>
+                                <char-set ng-model="texts.lead_clicks_alert" unique-id="'lead_clicks_alert'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-link="true"></char-set>
 							</div>
 
                             <div class="form-group">
-								<label>{{ __("'Lead Reply' Alert Text (text to User)") }}</label>
-								<div text-area ng-model="texts.lead_reply_alert"></div>
+                                <label>{{ __("'Lead Reply' Alert Text (text to User)") }}</label>
+                                <char-set ng-model="texts.lead_reply_alert" unique-id="'lead_reply_alert'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-link="true"></char-set>
 							</div>
 
                             <div class="form-group">
 								<label>{{ __("Lead Clicks Link To Site (text to Lead)") }}</label>
-								<div text-area ng-model="texts.lead_clicks"></div>
+                                <char-set ng-model="texts.lead_clicks" unique-id="'lead_clicks'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true"></char-set>
 							</div>
 
                             <div class="form-group">
 								<label>{{ __("User Does Not Click Link In Reply Alert (text to User)") }}</label>
-								<div text-area ng-model="texts.user_click_reminder"></div>
+                                <char-set ng-model="texts.user_click_reminder" unique-id="'user_click_reminder'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-link="true"></char-set>
 							</div>
 							
 							<div class="form-group">

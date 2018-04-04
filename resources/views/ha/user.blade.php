@@ -49,6 +49,7 @@
 									<span class="input-group-addon bg-success" ng-show="user.company_status == 'verified' && ! companyChanged">{{ __('Verified') }}</span>
 									<span class="input-group-addon bg-warning" ng-show="user.company_status == 'pending' && ! companyChanged">{{ __('Pending') }}</span>
 									<span class="input-group-addon bg-danger" ng-show="user.company_status == 'denied' && ! companyChanged">{{ __('Denied') }}</span>
+									<span class="input-group-addon bg-default" ng-show="user.company_status == '' && ! companyChanged">{{ __('Need to Verify') }}</span>
 								</div>
 							</div>
 

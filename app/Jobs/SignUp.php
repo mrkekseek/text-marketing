@@ -60,7 +60,11 @@ class SignUp implements ShouldQueue
             $global_dialog->status = 0;
             $global_dialog->save();
 
-            $phones[] = ['phone' => $this->user->phone];
+            $phones[] = [
+                'phone' => $this->user->phone,
+                'firstname' => $this->user->firstname,
+                'lastname' => $this->user->lastname,
+            ];
 
             Api::generalMessages($global_dialog->id, $phones, $text, 'ContractorTexter', $this->user->offset);
 
