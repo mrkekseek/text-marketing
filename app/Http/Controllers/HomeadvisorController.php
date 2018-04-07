@@ -35,7 +35,7 @@ use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Guzzle;
-use Nexmo\Client as Nexmo;
+use Nexmo\Client as NexmoClient;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
