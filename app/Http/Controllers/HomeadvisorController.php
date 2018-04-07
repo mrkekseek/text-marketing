@@ -15,7 +15,7 @@ use App\Picture;
 use App\Lead;
 use App\DefaultText;
 use App\GeneralMessage;
-use App\NexmoCalls;
+use App\NexmoCall;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -810,7 +810,7 @@ class HomeadvisorController extends Controller
 		//$params = $request->getQueryParams();
 		$method = $_SERVER['REQUEST_METHOD'];
 
-		$nexmo = new NexmoCalls();
+		$nexmo = new NexmoCall();
 		$nexmo->uuid = ! empty($request->from) ? 'answer '.$request->from : 'answer';
 		$nexmo->conversation_uuid = ! empty($request->to) ? 'answer '.$request->to : 'answer';
 		$nexmo->save();
@@ -866,7 +866,7 @@ class HomeadvisorController extends Controller
 				break;
 		}
 
-		$nexmo = new NexmoCalls();
+		$nexmo = new NexmoCall();
 		$nexmo->uuid = ! empty($request->from) ? 'event '.$request->from : 'event';
 		$nexmo->conversation_uuid = ! empty($request->to) ? 'event '.$request->to : 'event';
 		$nexmo->save();
@@ -877,7 +877,7 @@ class HomeadvisorController extends Controller
 	public function handle_call_status()
 	{
 		$decoded_request = json_decode(file_get_contents('php://input'), true);
-		$nexmo = new NexmoCalls();
+		$nexmo = new NexmoCall();
 		$nexmo->uuid = 'handle_call_status';
 		$nexmo->conversation_uuid = 'handle_call_status';
 		$nexmo->save();
@@ -906,7 +906,7 @@ class HomeadvisorController extends Controller
 	
 	public function handle_error($request)
 	{
-		$nexmo = new NexmoCalls();
+		$nexmo = new NexmoCall();
 		$nexmo->uuid = 'handle_error';
 		$nexmo->conversation_uuid = 'handle_error';
 		$nexmo->save();
