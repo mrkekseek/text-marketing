@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NexmoCalls extends Model
+class NexmoCall extends Model
 {
-    protected $guarded = [];
+    //protected $guarded = [];
 }
