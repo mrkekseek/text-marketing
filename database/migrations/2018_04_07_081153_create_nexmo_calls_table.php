@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNexmoTable extends Migration
+class CreateNexmoCallsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateNexmoTable extends Migration
      */
     public function up()
     {
-        Schema::create('nexmo', function (Blueprint $table) {
+        Schema::create('nexmo_calls', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('uuid');
-            $table->string('conversation_uuid');
-            $table->string('from');
-            $table->string('to');
+            $table->string('uuid')->default('');
+            $table->string('conversation_uuid')->default('');
+            $table->string('from')->default('');
+            $table->string('to')->default('');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateNexmoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nexmo');
+        Schema::dropIfExists('nexmo_calls');
     }
 }
