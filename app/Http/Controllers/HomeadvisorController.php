@@ -33,6 +33,11 @@ use App\Http\Services\UsersService;
 use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use Guzzle;
+use Nexmo\Client as Nexmo;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Key;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
 
 class HomeadvisorController extends Controller
 {
@@ -720,5 +725,127 @@ class HomeadvisorController extends Controller
         }
 
         return 1;
+	}
+	
+	public function nexmo()
+    {
+		$base_url = 'https://api.nexmo.com' ;
+
+		$jwt = $this->generateJwt(file_get_contents('../private.key'), env('NEXMO_APPLICATION_ID'));
+
+		$client = new Guzzle(['base_uri' => $base_url]);
+        $response = $client->request('GET', '/v1/calls', [
+            'headers' => [
+				'Authorization' => 'Bearer ' . $jwt,
+				'Content-Type' => 'application/json'
+			],
+			'http_errors' => false,
+		]);
+
+		dd(json_decode($response->getBody(), true));
+	}
+	
+	public function createNexmoVoiceApp()
+    {
+		$base_url = 'https://api.nexmo.com' ;
+		$version = '/v1';
+		$action = '/applications/?';
+
+		$url = $base_url . $version . $action . http_build_query([
+			'api_key' =>  env('NEXMO_KEY'),
+			'api_secret' => env('NEXMO_SECRET'),
+			'name' => 'Receive Calls Application',
+			'type' => 'voice',
+			'answer_url' => 'https://splendid-panda-96.localtunnel.me/homeadvisor/answer',
+			'event_url' => 'https://splendid-panda-96.localtunnel.me/homeadvisor/event'
+		]);
+
+		$client = new Guzzle(['base_uri' => $url]);
+		$response = $client->request('POST');
+		
+		$data = json_decode($response->getBody(), true);
+
+		$application_id = $data['id']; //можна записать в базу айдішкі аплікейшенів 480bae0c-9970-49d8-86e7-ac92cd77ce5f або глянуть на сайті в дашборді і записать в .env
+		file_put_contents('../private.key', $data['keys']['private_key']);
+	}
+
+	function generateJwt($key, $application_id)
+	{
+		$jwt = false;
+		date_default_timezone_set('UTC');    //Set the time for UTC + 0
+		$signer = new Sha256();
+		$privateKey = new Key($key);
+
+		$jwt = (new Builder())->setIssuedAt(time() - date('Z')) // Time token was generated in UTC+0
+			->set('application_id', $application_id) // ID for the application you are working with
+			->setId( base64_encode( mt_rand (  )), true)
+			->sign($signer,  $privateKey) // Create a signature using your private key
+			->getToken(); // Retrieves the JWT
+
+		return $jwt;
+	}
+
+	function nexmoCall()
+	{
+		$client = app('Nexmo\Client');
+
+		$request = $client->calls()->create([
+			'to' => [[
+				'type' => 'phone',
+				'number' => '380985563112'
+			]],
+			'from' => [
+				'type' => 'phone',
+				'number' => '12017309896'
+			],
+			'answer_url' => ['http://ce17f898.ngrok.io/api/v1/homeadvisor/answer'],
+			'event_url' => ['http://ce17f898.ngrok.io/api/v1/homeadvisor/event'],
+		]);
+
+		dd($request);
+	}
+	
+	public function answer(Request $request)
+    {
+		dd('putselin');
+		$method = $_SERVER['REQUEST_METHOD'];
+
+		switch ($method) {
+		case 'GET':
+			//Retrieve with the parameters in this request
+			$to = $request['to']; //The endpoint being called
+			$from = $request['from']; //The endpoint you are calling from
+			$uuid = $request['conversation_uuid']; //The unique ID for this Call
+
+			//For more advanced Conversations you use the paramaters to personalize the NCCO
+			//Dynamically create the NCCO to run a conversation from your virtual number
+			if( $to == "380985563112")
+			$ncco='[
+			{
+				"action": "talk",
+				"text": "Hello Russell, welcome to a Call made with Voice API"
+			}
+			]';
+			else
+			$ncco='[
+			{
+				"action": "talk",
+				"text": "Hello Rebekka, welcome to a Call made with Voice API"
+			}
+			]';
+
+			header('Content-Type: application/json');
+			echo $ncco;
+			break;
+		default:
+			//Handle your errors
+			handle_error($request);
+			break;
+		}
+    }
+	
+	public function event(Request $request)
+    {
+		return 'event error';
     }
 }

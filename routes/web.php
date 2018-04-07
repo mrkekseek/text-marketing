@@ -71,6 +71,12 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('teams', 'TeamsController@all');
 
+	Route::post('homeadvisor/nexmo', 'HomeadvisorController@nexmo');
+	Route::post('homeadvisor/app', 'HomeadvisorController@createNexmoVoiceApp');
+	Route::post('homeadvisor/call', 'HomeadvisorController@nexmoCall');
+	Route::any('homeadvisor/answer', 'HomeadvisorController@answer');
+	Route::get('homeadvisor/event', 'HomeadvisorController@event');
+
 	Route::get('homeadvisor', 'HomeadvisorController@info');
 	Route::post('homeadvisor/lookup', 'HomeadvisorController@lookup');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
