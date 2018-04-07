@@ -843,6 +843,15 @@ class HomeadvisorController extends Controller
 			echo $ncco;
 			break;
 		default:
+		$ncco='[
+			{
+				"action": "talk",
+				"text": "ERROR, NOT ZAXODIT"
+			}
+			]';
+
+			header('Content-Type: application/json');
+			echo $ncco;
 			//Handle your errors
 			handle_error($request);
 			break;
