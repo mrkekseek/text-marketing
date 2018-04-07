@@ -808,7 +808,8 @@ class HomeadvisorController extends Controller
 	
 	public function answer(Request $request)
     {
-		file_put_contents('my_log.txt', print_r($request, true).PHP_EOL, FILE_APPEND | LOCK_EX);
+		$params = $request->getQueryParams();
+		file_put_contents('my_log.txt', print_r($params, true).PHP_EOL, FILE_APPEND | LOCK_EX);
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		switch ($method) {
@@ -847,7 +848,7 @@ class HomeadvisorController extends Controller
 	
 	public function event(Request $request)
     {
-		file_put_contents('logs/logger.txt', 'event: '.print_r($request), FILE_APPEND | LOCK_EX);
+		file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX);
 		return 'event error';
     }
 }
