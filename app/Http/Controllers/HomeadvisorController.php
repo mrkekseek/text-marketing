@@ -811,8 +811,8 @@ class HomeadvisorController extends Controller
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		$nexmo = new NexmoCalls();
-		$nexmo->uuid = ! empty($request->from) ? $request->from : 'suka, nexuya';
-		$nexmo->conversation_uuid = ! empty($request->to) ? $request->to : 'suka, nexuya';
+		$nexmo->uuid = ! empty($request->from) ? 'answer '.$request->from : 'answer';
+		$nexmo->conversation_uuid = ! empty($request->to) ? 'answer '.$request->to : 'answer';
 		$nexmo->save();
 
 		switch ($method) {
@@ -844,14 +844,72 @@ class HomeadvisorController extends Controller
 			break;
 		default:
 			//Handle your errors
-			handle_error($request);
+			$this->handle_error($request);
 			break;
 		}
     }
 	
 	public function event(Request $request)
     {
-		file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX);
-		return 'event error';
-    }
+		$method = $_SERVER['REQUEST_METHOD'];
+		$request = array_merge($_GET, $_POST);
+
+		switch ($method) {
+			case 'POST':
+				//Retrieve your dynamically generated NCCO.
+				$ncco = $this->handle_call_status();
+				header("HTTP/1.1 200 OK");
+				break;
+			default:
+				//Handle your errors
+				$this->handle_error($request);
+				break;
+		}
+
+		$nexmo = new NexmoCalls();
+		$nexmo->uuid = ! empty($request->from) ? 'event '.$request->from : 'event';
+		$nexmo->conversation_uuid = ! empty($request->to) ? 'event '.$request->to : 'event';
+		$nexmo->save();
+
+		/* file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX); */
+	}
+	
+	public function handle_call_status()
+	{
+		$decoded_request = json_decode(file_get_contents('php://input'), true);
+		$nexmo = new NexmoCalls();
+		$nexmo->uuid = 'handle_call_status';
+		$nexmo->conversation_uuid = 'handle_call_status';
+		$nexmo->save();
+		// Work with the call status
+		if (isset($decoded_request['status'])) {
+			switch ($decoded_request['status']) {
+			case 'ringing':
+				echo("Handle conversation_uuid, this return parameter identifies the Conversation");
+				break;
+			case 'answered':
+				echo("You use the uuid returned here for all API requests on individual calls");
+				break;
+			case 'complete':
+				//if you set eventUrl in your NCCO. The recording download URL
+				//is returned in recording_url. It has the following format
+				//https://api.nexmo.com/media/download?id=52343cf0-342c-45b3-a23b-ca6ccfe234b0
+				//Make a GET request to this URL using a JWT as authentication to download
+				//the Recording. For more information, see Recordings.
+				break;
+			default:
+				break;
+		}
+			return;
+		}
+	}
+	
+	public function handle_error($request)
+	{
+		$nexmo = new NexmoCalls();
+		$nexmo->uuid = 'handle_error';
+		$nexmo->conversation_uuid = 'handle_error';
+		$nexmo->save();
+		dd($request);
+	}
 }
