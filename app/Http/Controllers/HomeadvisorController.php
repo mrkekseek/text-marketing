@@ -811,8 +811,8 @@ class HomeadvisorController extends Controller
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		$nexmo = new NexmoCalls();
-		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
-		$nexmo->conversation_uuid = ! empty($request->to) ? $request->to : 'suka, nexuya';
+		$nexmo->uuid = 'suka, nexuya';
+		$nexmo->conversation_uuid = 'suka, nexuya';
 		$nexmo->save();
 
 		switch ($method) {
