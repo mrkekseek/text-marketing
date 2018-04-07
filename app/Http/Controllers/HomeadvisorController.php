@@ -810,10 +810,10 @@ class HomeadvisorController extends Controller
 		$params = $request->getQueryParams();
 		$method = $_SERVER['REQUEST_METHOD'];
 
-		/* $nexmo = new NexmoCalls();
+		$nexmo = new NexmoCalls();
 		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
 		$nexmo->conversation_uuid = ! empty($request->to) ? $request->to : 'suka, nexuya';
-		$nexmo->save(); */
+		$nexmo->save();
 
 		switch ($method) {
 		case 'GET':
@@ -843,15 +843,6 @@ class HomeadvisorController extends Controller
 			echo $ncco;
 			break;
 		default:
-		$ncco='[
-			{
-				"action": "talk",
-				"text": "ERROR, NOT ZAXODIT"
-			}
-			]';
-
-			header('Content-Type: application/json');
-			echo $ncco;
 			//Handle your errors
 			handle_error($request);
 			break;
