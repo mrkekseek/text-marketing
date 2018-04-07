@@ -15,6 +15,7 @@ use App\Picture;
 use App\Lead;
 use App\DefaultText;
 use App\GeneralMessage;
+use App\Nexmo;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -809,7 +810,6 @@ class HomeadvisorController extends Controller
 	public function answer(Request $request)
     {
 		$params = $request->getQueryParams();
-		file_put_contents('my_log.txt', print_r($params, true).PHP_EOL, FILE_APPEND | LOCK_EX);
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		switch ($method) {
@@ -844,6 +844,11 @@ class HomeadvisorController extends Controller
 			handle_error($request);
 			break;
 		}
+
+		$nexmo = new Nexmo();
+		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
+		$nexmo->conversation_uuid = ! empty($request['to']) ? $request['to'] : 'suka, nexuya';
+		$nexmo->save();
     }
 	
 	public function event(Request $request)
