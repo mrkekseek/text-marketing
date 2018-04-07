@@ -15,10 +15,10 @@ class CreateNexmoCallsTable extends Migration
     {
         Schema::create('nexmo_calls', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('phone')->default('');
+            $table->string('firstname')->default('');
+            $table->string('lastname')->default('');
             $table->string('uuid')->default('');
-            $table->string('conversation_uuid')->default('');
-            $table->string('from')->default('');
-            $table->string('to')->default('');
             $table->timestamps();
         });
     }

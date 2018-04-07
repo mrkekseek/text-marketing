@@ -789,7 +789,15 @@ class HomeadvisorController extends Controller
 	{
 		$client = app('Nexmo\Client');
 
-		$request = $client->calls()->create([
+		$response = $client->insights()->advancedCnam('19413505601');
+
+		/* $response['current_carrier']['network_type'];
+		$response['first_name'];
+		$response['last_name']; */
+
+		dd($response);
+
+		/* $request = $client->calls()->create([
 			'to' => [[
 				'type' => 'phone',
 				'number' => '380958067064'
@@ -800,53 +808,25 @@ class HomeadvisorController extends Controller
 			],
 			'answer_url' => ['http://34.218.79.76/api/v1/homeadvisor/answer'],
 			'event_url' => ['http://34.218.79.76/api/v1/homeadvisor/event'],
-		]);
-
-		dd($request);
+		]); */
 	}
 	
 	public function answer(Request $request)
     {
-		//$params = $request->getQueryParams();
-		$method = $_SERVER['REQUEST_METHOD'];
+		$client = app('Nexmo\Client');
 
-		$nexmo = new NexmoCall();
-		$nexmo->uuid = ! empty($request->from) ? 'answer '.$request->from : 'answer';
-		$nexmo->conversation_uuid = ! empty($request->to) ? 'answer '.$request->to : 'answer';
-		$nexmo->save();
+		$caller_phone = $request->from;
+		$caller = $client->insights()->advancedCnam($caller_phone);
 
-		switch ($method) {
-		case 'GET':
-			//Retrieve with the parameters in this request
-			$to = $request['to']; //The endpoint being called
-			$from = $request['from']; //The endpoint you are calling from
-			$uuid = $request['conversation_uuid']; //The unique ID for this Call
-
-			//For more advanced Conversations you use the paramaters to personalize the NCCO
-			//Dynamically create the NCCO to run a conversation from your virtual number
-			if( $to == "380958067064")
-			$ncco='[
-			{
-				"action": "talk",
-				"text": "Hello Russell, welcome to a Call made with Voice API"
-			}
-			]';
-			else
-			$ncco='[
-			{
-				"action": "talk",
-				"text": "Hello Rebekka, welcome to a Call made with Voice API"
-			}
-			]';
-
-			header('Content-Type: application/json');
-			echo $ncco;
-			break;
-		default:
-			//Handle your errors
-			$this->handle_error($request);
-			break;
-		}
+		if (! empty($caller_phone) && $caller['current_carrier']['network_type'] == 'mobile')
+		{
+			$nexmo = new NexmoCall();
+			$nexmo->phone = $caller_phone;
+			$nexmo->firstname = ! empty($caller['first_name']) ? $caller['first_name'] : '';
+			$nexmo->lastname = ! empty($caller['last_name']) ? $caller['last_name'] : '';
+			$nexmo->uuid = ! empty($request->uuid) ? $request->uuid : '';
+			$nexmo->save();
+		}		
     }
 	
 	public function event(Request $request)
