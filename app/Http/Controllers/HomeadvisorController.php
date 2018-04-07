@@ -801,6 +801,7 @@ class HomeadvisorController extends Controller
 			'answer_url' => ['http://34.218.79.76/api/v1/homeadvisor/answer'],
 			'event_url' => ['http://34.218.79.76/api/v1/homeadvisor/event'],
 		]);
+		//file_put_contents('my_log.txt', print_r($request, true).PHP_EOL, FILE_APPEND | LOCK_EX);
 
 		dd($request);
 	}
