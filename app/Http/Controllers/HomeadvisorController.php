@@ -35,7 +35,6 @@ use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Guzzle;
-use Nexmo\Client as NexmoClient;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Key;
 use Lcobucci\JWT\Signer\Rsa\Sha256;
@@ -804,6 +803,11 @@ class HomeadvisorController extends Controller
 		]);
 		//file_put_contents('my_log.txt', print_r($request, true).PHP_EOL, FILE_APPEND | LOCK_EX);
 
+		$nexmo = new Nexmo();
+		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
+		$nexmo->conversation_uuid = ! empty($request->to) ? $request->to : 'suka, nexuya';
+		$nexmo->save();
+
 		dd($request);
 	}
 	
@@ -814,7 +818,7 @@ class HomeadvisorController extends Controller
 
 		$nexmo = new Nexmo();
 		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
-		$nexmo->conversation_uuid = ! empty($request['to']) ? $request['to'] : 'suka, nexuya';
+		$nexmo->conversation_uuid = ! empty($request->to) ? $request->to : 'suka, nexuya';
 		$nexmo->save();
 
 		switch ($method) {
