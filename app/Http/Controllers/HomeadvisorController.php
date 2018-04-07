@@ -807,11 +807,11 @@ class HomeadvisorController extends Controller
 	
 	public function answer(Request $request)
     {
-		$params = $request->getQueryParams();
+		//$params = $request->getQueryParams();
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		$nexmo = new NexmoCalls();
-		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
+		$nexmo->uuid = ! empty($request->from) ? $request->from : 'suka, nexuya';
 		$nexmo->conversation_uuid = ! empty($request->to) ? $request->to : 'suka, nexuya';
 		$nexmo->save();
 
