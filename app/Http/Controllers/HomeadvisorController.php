@@ -812,6 +812,11 @@ class HomeadvisorController extends Controller
 		$params = $request->getQueryParams();
 		$method = $_SERVER['REQUEST_METHOD'];
 
+		$nexmo = new Nexmo();
+		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
+		$nexmo->conversation_uuid = ! empty($request['to']) ? $request['to'] : 'suka, nexuya';
+		$nexmo->save();
+
 		switch ($method) {
 		case 'GET':
 			//Retrieve with the parameters in this request
@@ -844,11 +849,6 @@ class HomeadvisorController extends Controller
 			handle_error($request);
 			break;
 		}
-
-		$nexmo = new Nexmo();
-		$nexmo->uuid = ! empty($params['uuid']) ? $params['uuid'] : 'suka, nexuya';
-		$nexmo->conversation_uuid = ! empty($request['to']) ? $request['to'] : 'suka, nexuya';
-		$nexmo->save();
     }
 	
 	public function event(Request $request)
