@@ -807,6 +807,7 @@ class HomeadvisorController extends Controller
 	
 	public function answer(Request $request)
     {
+		file_put_contents('logs/logger.txt', print_r($request, true).PHP_EOL, FILE_APPEND | LOCK_EX);
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		switch ($method) {
