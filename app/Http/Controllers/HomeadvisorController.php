@@ -792,14 +792,14 @@ class HomeadvisorController extends Controller
 		$request = $client->calls()->create([
 			'to' => [[
 				'type' => 'phone',
-				'number' => '380985563112'
+				'number' => '380958067064'
 			]],
 			'from' => [
 				'type' => 'phone',
 				'number' => '12017309896'
 			],
-			'answer_url' => ['http://ce17f898.ngrok.io/api/v1/homeadvisor/answer'],
-			'event_url' => ['http://ce17f898.ngrok.io/api/v1/homeadvisor/event'],
+			'answer_url' => ['http://34.218.79.76/api/v1/homeadvisor/answer'],
+			'event_url' => ['http://34.218.79.76/api/v1/homeadvisor/event'],
 		]);
 
 		dd($request);
@@ -807,7 +807,6 @@ class HomeadvisorController extends Controller
 	
 	public function answer(Request $request)
     {
-		dd('putselin');
 		$method = $_SERVER['REQUEST_METHOD'];
 
 		switch ($method) {
@@ -819,7 +818,7 @@ class HomeadvisorController extends Controller
 
 			//For more advanced Conversations you use the paramaters to personalize the NCCO
 			//Dynamically create the NCCO to run a conversation from your virtual number
-			if( $to == "380985563112")
+			if( $to == "380958067064")
 			$ncco='[
 			{
 				"action": "talk",
