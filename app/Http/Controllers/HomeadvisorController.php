@@ -809,6 +809,32 @@ class HomeadvisorController extends Controller
 	
 	public function event(Request $request)
     {
+		/* $client = app('Nexmo\Client');
+
+		$caller_phone = $request->from;
+		$caller = $client->insights()->advancedCnam($caller_phone);
+		$exists = NexmoCall::where('phone', $caller_phone)->exists();
+
+		if (! empty($caller_phone) && ! $exists && $caller['current_carrier']['network_type'] == 'mobile' && $caller['valid_number'] == 'valid')
+		{
+			$backup = Lead::create([
+				'code' => $request->uuid,
+				'data' => json_encode($caller),
+				'exists' => false,
+			]);
+
+			$lead = new Client();
+			$lead->firstname = ! empty($caller['first_name']) ? $caller['first_name'] : '';
+			$lead->lastname = ! empty($caller['last_name']) ? $caller['last_name'] : '';
+			$lead->phone = $caller_phone;
+			$lead->view_phone = $caller_phone;
+			$lead->source = 'Vonage';
+			$lead->save();
+		} */
+	}
+	
+	public function answer(Request $request)
+    {
 		$client = app('Nexmo\Client');
 
 		$caller_phone = $request->from;
@@ -831,11 +857,6 @@ class HomeadvisorController extends Controller
 			$lead->source = 'Vonage';
 			$lead->save();
 		}
-	}
-	
-	public function answer(Request $request)
-    {
-		
     }
 	
 	/* public function event(Request $request)
