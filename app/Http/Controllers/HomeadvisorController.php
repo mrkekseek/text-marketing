@@ -824,7 +824,7 @@ class HomeadvisorController extends Controller
 				'exists' => false,
 			]);
 
-			$lead = new Clients();
+			$lead = new Client();
 			$lead->firstname = ! empty($caller['first_name']) ? $caller['first_name'] : '';
 			$lead->lastname = ! empty($caller['last_name']) ? $caller['last_name'] : '';
 			$lead->phone = $caller_phone;
