@@ -831,6 +831,11 @@ class HomeadvisorController extends Controller
 			$lead->source = 'Vonage';
 			$lead->save();
 		}
+	}
+	
+	public function answer(Request $request)
+    {
+		
     }
 	
 	/* public function event(Request $request)
