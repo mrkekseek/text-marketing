@@ -34,7 +34,6 @@ use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Guzzle;
-use Nexmo\Client as Nexmo;
 
 class HomeadvisorController extends Controller
 {
