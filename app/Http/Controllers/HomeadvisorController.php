@@ -15,7 +15,6 @@ use App\Picture;
 use App\Lead;
 use App\DefaultText;
 use App\GeneralMessage;
-use App\NexmoCall;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -35,9 +34,7 @@ use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Guzzle;
-use Lcobucci\JWT\Builder;
-use Lcobucci\JWT\Signer\Key;
-use Lcobucci\JWT\Signer\Rsa\Sha256;
+use Nexmo\Client as Nexmo;
 
 class HomeadvisorController extends Controller
 {
@@ -727,7 +724,7 @@ class HomeadvisorController extends Controller
         return 1;
 	}
 	
-	public function nexmo()
+	/* public function nexmo()
     {
 		$base_url = 'https://api.nexmo.com' ;
 
@@ -783,19 +780,19 @@ class HomeadvisorController extends Controller
 			->getToken(); // Retrieves the JWT
 
 		return $jwt;
-	}
+	} */
 
 	function nexmoCall()
 	{
 		$client = app('Nexmo\Client');
 
-		$response = $client->insights()->advancedCnam('19413505601');
+		$response = $client->insights()->advancedCnam('9192598619');
+		dd($response);
+		/* $response = $client->insights()->advancedCnam('19413505601'); */
 
 		/* $response['current_carrier']['network_type'];
 		$response['first_name'];
 		$response['last_name']; */
-
-		dd($response);
 
 		/* $request = $client->calls()->create([
 			'to' => [[
@@ -811,25 +808,33 @@ class HomeadvisorController extends Controller
 		]); */
 	}
 	
-	public function answer(Request $request)
+	public function event(Request $request)
     {
 		$client = app('Nexmo\Client');
 
 		$caller_phone = $request->from;
 		$caller = $client->insights()->advancedCnam($caller_phone);
+		$exists = NexmoCall::where('phone', $caller_phone)->exists();
 
-		if (! empty($caller_phone) && $caller['current_carrier']['network_type'] == 'mobile')
+		if (! empty($caller_phone) && ! $exists && $caller['current_carrier']['network_type'] == 'mobile' && $caller['valid_number'] == 'valid')
 		{
-			$nexmo = new NexmoCall();
-			$nexmo->phone = $caller_phone;
-			$nexmo->firstname = ! empty($caller['first_name']) ? $caller['first_name'] : '';
-			$nexmo->lastname = ! empty($caller['last_name']) ? $caller['last_name'] : '';
-			$nexmo->uuid = ! empty($request->uuid) ? $request->uuid : '';
-			$nexmo->save();
-		}		
+			$backup = Lead::create([
+				'code' => $request->uuid,
+				'data' => json_encode($caller),
+				'exists' => false,
+			]);
+
+			$lead = new Clients();
+			$lead->firstname = ! empty($caller['first_name']) ? $caller['first_name'] : '';
+			$lead->lastname = ! empty($caller['last_name']) ? $caller['last_name'] : '';
+			$lead->phone = $caller_phone;
+			$lead->view_phone = $caller_phone;
+			$lead->source = 'Vonage';
+			$lead->save();
+		}
     }
 	
-	public function event(Request $request)
+	/* public function event(Request $request)
     {
 		$method = $_SERVER['REQUEST_METHOD'];
 		$request = array_merge($_GET, $_POST);
@@ -851,7 +856,7 @@ class HomeadvisorController extends Controller
 		$nexmo->conversation_uuid = ! empty($request->to) ? 'event '.$request->to : 'event';
 		$nexmo->save();
 
-		/* file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX); */
+		file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX);
 	}
 	
 	public function handle_call_status()
@@ -891,5 +896,5 @@ class HomeadvisorController extends Controller
 		$nexmo->conversation_uuid = 'handle_error';
 		$nexmo->save();
 		dd($request);
-	}
+	} */
 }

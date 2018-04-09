@@ -1,34 +1,14 @@
 <div class="page page-table" data-ng-controller="HomeAdvisorCtrl" ng-init="init()">
 	<h2>
-		{{ __('HomeAdvisor') }}	
-		<i class="fa fa-question-circle-o help-icon" uib-tooltip="To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly). Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below. We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to app.contractortexter.com. Once you are connected we will send a test text to your Cell." tooltip-placement="right-top" aria-hidden="true"></i>
+		{{ __('Vonage') }}	
+		<!-- <i class="fa fa-question-circle-o help-icon" uib-tooltip="To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly). Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below. We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to app.contractortexter.com. Once you are connected we will send a test text to your Cell." tooltip-placement="right-top" aria-hidden="true"></i> -->
 	</h2>
 
 	<div class="row">
 		<div class="col-sm-12 col-md-6">
 			<div class="panel panel-default">
-				<div class="panel-body">
-					<div uib-alert class="alert-info" ng-show=" ! ha.send_request">
-						<ol class="unstyled_ul">
-							<li>{{ __("To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly).") }}</li>
-							<li>{{ __("Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.") }}</li>
-							<li>{{ __("We've already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
-							<li>{{ __("Once you are connected we will send a test text to your Cell.") }}</li>
-						</ol>
-						Thanks!
-					</div>
-
-					<div uib-alert class="alert-info" ng-show="ha.send_request && ! list.length">
-						{{ __("Your request was sent to HomeAdvisor. We will inform you when it will be processed") }}
-					</div>
-
-					<div uib-alert class="alert-success" ng-show="list.length">
-						{{ __('Want 3 Free Months? Refer 1 Friend. Click ')}}<a href="/ha/referral">HERE</a>{{ __(' for details') }}
-					</div>
-
-					<button type="button" class="btn btn-primary" ng-show=" ! ha.send_request" ng-click="activate()">{{ __('Activate HomeAdvisor') }}</button>
-					
-					<div ng-show="ha.send_request">
+				<div class="panel-body">					
+					<div>
 						<div class="form-group" ng-show="list.length">
 							<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
 								<input id="enable" type="checkbox" ng-model="ha.active" ng-click="enable()" ng-true-value="1" ng-false-value="0" />
@@ -54,27 +34,13 @@
 							</div>
 
 							<div uib-alert class="alert-info" ng-show="user.company_status != 'verified' || companyChanged">
-								{{ __('This can take up to 15 minutes') }}
+								{{ __('Verifying can take up to 15 minutes') }}
 							</div>
 
-							<div class="row">
-								<div class="col-sm-6 col-xs-12">
-									<div class="form-group">
-										<label>{{ __('Website') }}</label>
-										<input type="text" class="form-control" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" ng-required="user.company_status != 'verified'" />
-									</div>
-									
-									<div class="form-group">
-										<label>{{ __('Office Number') }}</label>
-										<input type="text" class="form-control" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" ng-required="user.company_status != 'verified'" />
-									</div>
-								</div>
-							</div>
-
-							<div class="form-group" ng-show="user.company_status == 'verified' && ! companyChanged">
+							<div class="form-group">
 								<div class="form-group">
 									<label>{{ __('Instant Text') }}</label>
-									<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" btn-website="true" btn-office-phone="true" lms="true"></char-set>
+									<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-shortlink="true" lms="true"></char-set>
 								</div>
 							
 								<label>{{ __('Texts') }}</label>
@@ -92,7 +58,7 @@
 
 										<div ng-show="ha.first_followup_active">
 											<div class="followup_text">
-												<char-set ng-model="ha.first_followup_text" class="followup_textarea" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-disabled=" ! ha.first_followup_active" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-hapage="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set>
+												<char-set ng-model="ha.first_followup_text" class="followup_textarea" ng-class="{disabled_followup: ! ha.first_followup_active}" ng-disabled=" ! ha.first_followup_active" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-link="true"></char-set>
 											</div>
 
 											<div class="followup_delay">
@@ -117,7 +83,7 @@
 
 										<div ng-show="ha.second_followup_active">
 											<div class="followup_text">
-												<char-set ng-model="ha.second_followup_text" class="followup_textarea" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-disabled=" ! ha.second_followup_active" btn-firstname="true" btn-hapage="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set>
+												<char-set ng-model="ha.second_followup_text" class="followup_textarea" unique-id="'first_followup'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" ng-class="{disabled_followup: ha.second_followup_active == 0}" ng-disabled=" ! ha.second_followup_active" btn-firstname="true" btn-link="true"></char-set>
 											</div>
 
 											<div class="followup_delay">
@@ -177,7 +143,7 @@
 									</div>
 								</div>
 
-								<div class="col-sm-6 col-xs-12" ng-show="user.company_status == 'verified' && ! companyChanged">
+								<div class="col-sm-6 col-xs-12">
 									<label>{{ __('My Email for Alerts') }}</label>
 									<div class="form-group" ng-repeat="email in emails track by $index">
 										<div class="input-group">
@@ -198,49 +164,10 @@
 								</div>
 							</div>
 
-							<label>{{ __('Upload Job Pics') }}</label>
-							<i class="fa fa-question-circle-o" uib-tooltip="Here you can upload up to 5 pictures of jobs you've done. A link will then be added to the text which the Lead can click to see the pics." tooltip-placement="right" aria-hidden="true"></i>
-							<div class="form-group">
-								<span class="upload-button-box">
-									<button type="button" class="btn btn-sm btn-default">
-										<i class="fa fa-picture-o"></i> {{ __("Choose File") }}
-									</button>
-									<input ng-disabled="uploading.pictures > 0" onchange="angular.element(this).scope().uploadPictures(event.target.files)" multiple="multiple" accept="image/jpeg,image/png,image/gif,image/bmp" type="file" />
-								</span>
-
-								<span ng-show="uploading.pictures == 0" class="upload-tooltip" uib-tooltip="{{ __('You can upload up to 5 images. Image size limit is 2 MB; supported image file types include .JPG, .PNG, .GIF (non-animated), .BMP') }}">
-									<i class="fa fa-question-circle"></i> {{ __('Upload details') }}
-								</span>
-
-								<span ng-show="uploading.pictures > 0" class="upload-tooltip">
-									<i class="fa fa-circle-o-notch fa-spin fa-fw"></i> Uploading @{{ uploading.pictures }} file@{{ uploading.pictures == 1 ? '' : 's' }}. Please, wait...
-								</span>
-
-								&nbsp;&nbsp;&nbsp;&nbsp;
-
-								<a href="/ha-job/@{{ user.id }}" target="_blank" class="btn btn-default btn-sm">
-									<i class="fa fa-image"></i>
-									See Your Pictures
-								</a>
-							</div>
-
-							<div class="form-group">
-								<div class="images-preview" ng-repeat="picture in pictures">
-									<img src="@{{ picture.url }}" alt="" />
-									<div class="removeIcon" ng-click="removePicture($index)" >
-										<i class="fa fa-times" aria-hidden="true"></i>
-									</div>
-								</div>
-							</div>
-
 							<hr />
 
-							<div class="form-group" ng-show="user.company_status == 'verified'">
-								<button class="btn btn-primary" type="submit" ng-click="save()">{{ __('Save') }}</button>
-							</div>
-							
-							<div class="form-group" ng-show="user.company_status != 'verified'">
-								<button class="btn btn-primary" type="submit" ng-click="saveBeforeActivation()">{{ __('Save') }}</button>
+							<div class="form-group">
+								<button class="btn btn-primary" type="submit" ng-click="save('vonage')">{{ __('Save') }}</button>
 							</div>
 						</form>
 					</div>

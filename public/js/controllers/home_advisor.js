@@ -143,18 +143,22 @@
             $scope.emails.splice(index, 1);
         };
 
-        $scope.save = function() {
+        $scope.save = function(plan) {
             var error = 1;
             if ($scope.ha.text == '') {
                 logger.logError(langs.get('SMS Text can\'t be blank'));
                 error = 0;
             }
 
+            if (plan == 'vonage' && $scope.user.company_status != 'verified') {
+                $scope.companySave();
+            }
+
             if ($scope.user.company_name == '') {
                 logger.logError(langs.get('Company Name is required'));
                 error = 0;
             } else {
-                if ($scope.user.company_status != 'verified' || $scope.companyChanged) {
+                if (($scope.user.company_status != 'verified' || $scope.companyChanged) && plan != 'vonage') {
                     logger.logError(langs.get('Company Name must be verified'));
                     error = 0;
                 }

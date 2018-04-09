@@ -102,6 +102,26 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'vonage-user',
+            'folder' => 'vonage',
+            'file' => 'user',
+            'name' => 'Vonage',
+            'icon' => 'fa fa-phone',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'vonage-list',
+            'folder' => 'vonage',
+            'file' => 'list',
+            'name' => 'Inbox',
+            'icon' => 'fa fa-chevron-right',
+            'tpl' => '',
+            'public' => 0,
+        ]);
 
         DB::table('pages')->insert([
             'code' => 'surveys-surveys',
@@ -395,6 +415,11 @@ class PagesSeeder extends Seeder
 
         DB::table('pages_access')->insert([
             'code' => 'ha-user',
+            'users_type' => 1,
+        ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'vonage-user',
             'users_type' => 1,
         ]);
 
@@ -876,6 +901,22 @@ class PagesSeeder extends Seeder
             'plans' => 'home-advisor-contractortexter',
             'main' => 0,
             'pos' => 5,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'vonage-user',
+            'parents_code' => '',
+            'plans' => 'vonage-contractortexter',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'vonage-list',
+            'parents_code' => '',
+            'plans' => 'vonage-contractortexter',
+            'main' => 0,
+            'pos' => 2,
         ]);
 
         DB::table('pages_menu')->insert([
