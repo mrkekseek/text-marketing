@@ -30,6 +30,17 @@ class ClientsController extends Controller
 			return $item;
 		});
 	}
+	
+	public function vonageLeads()
+	{
+		return auth()->user()->teams->clients()->where('source', 'Vonage')->with('dialogs')->orderBy('created_at', 'desc')->get()->each(function($item, $key) {
+			$offset = auth()->user()->offset;
+			Carbon::setToStringFormat('F dS g:i A');
+			$item->created_at_string = $item->created_at->subHour($offset)->__toString();
+			Carbon::resetToStringFormat();
+			return $item;
+		});
+	}
 
 	public function info(Request $request, $id = false)
 	{

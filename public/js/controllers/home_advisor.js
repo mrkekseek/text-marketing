@@ -92,6 +92,22 @@
                 }
             }, 'get');
         };
+        
+        $scope.getVonageLeads = function() {
+            request.send('/clients/vonage', {}, function (data) {
+                $scope.list = data;
+                for (var k in $scope.list) {
+                    $scope.list[k].count = 0;
+
+                    for (var j in $scope.list[k].dialogs) {
+                        $scope.list[k].count += $scope.list[k].dialogs[j].new;
+                        if ($scope.list[k].dialogs[j].my == 0) {
+                            $scope.list[k].inbox = true;
+                        }
+                    }
+                }
+            }, 'get');
+        };
 
         $scope.getSuffix = function(day) {
             switch (day) {
