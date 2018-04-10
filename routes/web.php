@@ -71,6 +71,9 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('teams', 'TeamsController@all');
 
+	Route::any('homeadvisor/answer', 'HomeadvisorController@answer');
+	Route::post('homeadvisor/event', 'HomeadvisorController@event');
+
 	Route::get('homeadvisor', 'HomeadvisorController@info');
 	Route::post('homeadvisor/lookup', 'HomeadvisorController@lookup');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
@@ -89,6 +92,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::post('clients/addToList/{id}', 'ClientsController@addToList');
 	Route::get('clients/reports/{client}', 'ClientsController@reportsReviews');
 	Route::get('clients/leads', 'ClientsController@leads');
+	Route::get('clients/vonage', 'ClientsController@vonageLeads');
 	Route::get('clients/{id}', 'ClientsController@info');
 	Route::get('clients', 'ClientsController@all');
 	Route::put('clients', 'ClientsController@create');

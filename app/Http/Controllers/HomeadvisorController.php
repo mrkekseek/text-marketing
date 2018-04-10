@@ -33,6 +33,7 @@ use App\Http\Services\UsersService;
 use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
+use Guzzle;
 
 class HomeadvisorController extends Controller
 {
@@ -720,5 +721,185 @@ class HomeadvisorController extends Controller
         }
 
         return 1;
+	}
+	
+	/* public function nexmo()
+    {
+		$base_url = 'https://api.nexmo.com' ;
+
+		$jwt = $this->generateJwt(file_get_contents('../private.key'), env('NEXMO_APPLICATION_ID'));
+
+		$client = new Guzzle(['base_uri' => $base_url]);
+        $response = $client->request('GET', '/v1/calls', [
+            'headers' => [
+				'Authorization' => 'Bearer ' . $jwt,
+				'Content-Type' => 'application/json'
+			],
+			'http_errors' => false,
+		]);
+
+		dd(json_decode($response->getBody(), true));
+	}
+	
+	public function createNexmoVoiceApp()
+    {
+		$base_url = 'https://api.nexmo.com' ;
+		$version = '/v1';
+		$action = '/applications/?';
+
+		$url = $base_url . $version . $action . http_build_query([
+			'api_key' =>  env('NEXMO_KEY'),
+			'api_secret' => env('NEXMO_SECRET'),
+			'name' => 'Receive Calls Application',
+			'type' => 'voice',
+			'answer_url' => 'https://splendid-panda-96.localtunnel.me/homeadvisor/answer',
+			'event_url' => 'https://splendid-panda-96.localtunnel.me/homeadvisor/event'
+		]);
+
+		$client = new Guzzle(['base_uri' => $url]);
+		$response = $client->request('POST');
+		
+		$data = json_decode($response->getBody(), true);
+
+		$application_id = $data['id']; //можна записать в базу айдішкі аплікейшенів 480bae0c-9970-49d8-86e7-ac92cd77ce5f або глянуть на сайті в дашборді і записать в .env
+		file_put_contents('../private.key', $data['keys']['private_key']);
+	}
+
+	function generateJwt($key, $application_id)
+	{
+		$jwt = false;
+		date_default_timezone_set('UTC');    //Set the time for UTC + 0
+		$signer = new Sha256();
+		$privateKey = new Key($key);
+
+		$jwt = (new Builder())->setIssuedAt(time() - date('Z')) // Time token was generated in UTC+0
+			->set('application_id', $application_id) // ID for the application you are working with
+			->setId( base64_encode( mt_rand (  )), true)
+			->sign($signer,  $privateKey) // Create a signature using your private key
+			->getToken(); // Retrieves the JWT
+
+		return $jwt;
+	} */
+
+	function nexmoCall()
+	{
+		$client = app('Nexmo\Client');
+
+		$response = $client->insights()->advancedCnam('9192598619');
+		dd($response);
+		/* $response = $client->insights()->advancedCnam('19413505601'); */
+
+		/* $response['current_carrier']['network_type'];
+		$response['first_name'];
+		$response['last_name']; */
+
+		/* $request = $client->calls()->create([
+			'to' => [[
+				'type' => 'phone',
+				'number' => '380958067064'
+			]],
+			'from' => [
+				'type' => 'phone',
+				'number' => '12017309896'
+			],
+			'answer_url' => ['http://34.218.79.76/api/v1/homeadvisor/answer'],
+			'event_url' => ['http://34.218.79.76/api/v1/homeadvisor/event'],
+		]); */
+	}
+	
+	public function event(Request $request)
+    {
+		
+	}
+	
+	public function answer(Request $request)
+    {
+		$client = app('Nexmo\Client');
+
+		$caller_phone = $request->from;
+		$caller = $client->insights()->basic($caller_phone);
+		$phone = $caller['national_format_number'];
+		$exists = Client::where('phone', $phone)->exists();
+
+		if (! empty($phone) && ! $exists)
+		{
+			$backup = Lead::create([
+				'code' => $request->uuid,
+				'data' => json_encode($caller),
+				'exists' => false,
+			]);
+
+			$lead = new Client();
+			$lead->firstname = ! empty($caller['first_name']) ? $caller['first_name'] : '';
+			$lead->lastname = ! empty($caller['last_name']) ? $caller['last_name'] : '';
+			$lead->phone = $phone;
+			$lead->view_phone = $phone;
+			$lead->source = 'Vonage';
+			$lead->save();
+		}
     }
+	
+	/* public function event(Request $request)
+    {
+		$method = $_SERVER['REQUEST_METHOD'];
+		$request = array_merge($_GET, $_POST);
+
+		switch ($method) {
+			case 'POST':
+				//Retrieve your dynamically generated NCCO.
+				$ncco = $this->handle_call_status();
+				header("HTTP/1.1 200 OK");
+				break;
+			default:
+				//Handle your errors
+				$this->handle_error($request);
+				break;
+		}
+
+		$nexmo = new NexmoCall();
+		$nexmo->uuid = ! empty($request->from) ? 'event '.$request->from : 'event';
+		$nexmo->conversation_uuid = ! empty($request->to) ? 'event '.$request->to : 'event';
+		$nexmo->save();
+
+		file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX);
+	}
+	
+	public function handle_call_status()
+	{
+		$decoded_request = json_decode(file_get_contents('php://input'), true);
+		$nexmo = new NexmoCall();
+		$nexmo->uuid = 'handle_call_status';
+		$nexmo->conversation_uuid = 'handle_call_status';
+		$nexmo->save();
+		// Work with the call status
+		if (isset($decoded_request['status'])) {
+			switch ($decoded_request['status']) {
+			case 'ringing':
+				echo("Handle conversation_uuid, this return parameter identifies the Conversation");
+				break;
+			case 'answered':
+				echo("You use the uuid returned here for all API requests on individual calls");
+				break;
+			case 'complete':
+				//if you set eventUrl in your NCCO. The recording download URL
+				//is returned in recording_url. It has the following format
+				//https://api.nexmo.com/media/download?id=52343cf0-342c-45b3-a23b-ca6ccfe234b0
+				//Make a GET request to this URL using a JWT as authentication to download
+				//the Recording. For more information, see Recordings.
+				break;
+			default:
+				break;
+		}
+			return;
+		}
+	}
+	
+	public function handle_error($request)
+	{
+		$nexmo = new NexmoCall();
+		$nexmo->uuid = 'handle_error';
+		$nexmo->conversation_uuid = 'handle_error';
+		$nexmo->save();
+		dd($request);
+	} */
 }

@@ -92,6 +92,22 @@
                 }
             }, 'get');
         };
+        
+        $scope.getVonageLeads = function() {
+            request.send('/clients/vonage', {}, function (data) {
+                $scope.list = data;
+                for (var k in $scope.list) {
+                    $scope.list[k].count = 0;
+
+                    for (var j in $scope.list[k].dialogs) {
+                        $scope.list[k].count += $scope.list[k].dialogs[j].new;
+                        if ($scope.list[k].dialogs[j].my == 0) {
+                            $scope.list[k].inbox = true;
+                        }
+                    }
+                }
+            }, 'get');
+        };
 
         $scope.getSuffix = function(day) {
             switch (day) {
@@ -143,18 +159,22 @@
             $scope.emails.splice(index, 1);
         };
 
-        $scope.save = function() {
+        $scope.save = function(plan) {
             var error = 1;
             if ($scope.ha.text == '') {
                 logger.logError(langs.get('SMS Text can\'t be blank'));
                 error = 0;
             }
 
+            if (plan == 'vonage' && $scope.user.company_status != 'verified') {
+                $scope.companySave();
+            }
+
             if ($scope.user.company_name == '') {
                 logger.logError(langs.get('Company Name is required'));
                 error = 0;
             } else {
-                if ($scope.user.company_status != 'verified' || $scope.companyChanged) {
+                if (($scope.user.company_status != 'verified' || $scope.companyChanged) && plan != 'vonage') {
                     logger.logError(langs.get('Company Name must be verified'));
                     error = 0;
                 }

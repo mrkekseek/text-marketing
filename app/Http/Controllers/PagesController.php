@@ -16,6 +16,7 @@ class PagesController extends Controller
     	} else {
     		switch (auth()->user()->plans_id) {
     			case 'home-advisor-contractortexter': return 'ha.user';
+    			case 'vonage-contractortexter': return 'vonage.user';
     			default:  return 'surveys.send';
     		}
     	}

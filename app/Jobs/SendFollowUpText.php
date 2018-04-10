@@ -43,7 +43,8 @@ class SendFollowUpText implements ShouldQueue
     public function handle()
     {
         $client = Client::where('phone', $this->clients[0]['phone'])->first();
-        if (empty($this->dialog->clicked) && empty($this->dialog->reply) && $this->dialog->status == 1 && ! $client->followup_disabled) {
+        $dialog = Dialog::where([['clients_id', '=', $client->id], ['users_id', '=', $this->user->id], ['my', '=', '1']])->orderBy('created_at', 'desc')->first();
+        if (empty($dialog->clicked) && empty($dialog->reply) && $dialog->status == 1 && ! $client->followup_disabled) {
             $dialog = $this->user->dialogs()->create([
                 'clients_id' => $this->dialog->clients_id,
                 'text' => '',
