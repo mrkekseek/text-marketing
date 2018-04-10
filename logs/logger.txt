@@ -1,5 +1,10 @@
+<<<<<<< HEAD
+[2018-02-19 11:55:33] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:33] HomeAdvisor data: Array
+=======
 [2018-02-19 08:50:12] HomeAdvisor CODE: 15OdA5P4QoGa_
 [2018-02-19 08:50:12] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => John
     [last_name] => Doe
@@ -20,6 +25,10 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:55:33] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:33] HomeAdvisor data: Array
+=======
 [2018-02-19 08:51:19] HomeAdvisor CODE: 15OdA5P4QoGa_
 [2018-02-19 08:51:19] HomeAdvisor data: Array
 (
@@ -2912,6 +2921,7 @@
 
 [2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
 [2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => Bill
     [last_name] => Down
@@ -2932,8 +2942,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:55:34] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:34] HomeAdvisor data: Array
+=======
 [2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
 [2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => John
     [lastName] => Doe
@@ -2973,8 +2988,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:55:34] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:34] HomeAdvisor data: Array
+=======
 [2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
 [2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => Bill
     [lastName] => Down
@@ -3014,8 +3034,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:55:35] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:35] HomeAdvisor data: Array
+=======
 [2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
 [2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -3071,8 +3096,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:55:35] HomeAdvisor CODE: 15v1vFWIZa4b_
+[2018-02-19 11:55:35] HomeAdvisor data: Array
+=======
 [2018-02-19 11:38:38] HomeAdvisor CODE: 15GTqhcBZ_svk
 [2018-02-19 11:38:38] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => Bill
@@ -3128,8 +3158,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:58:36] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:36] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:02] HomeAdvisor CODE: 15joNjCiKu5fQ
 [2018-02-19 12:01:02] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => John
     [last_name] => Doe
@@ -3150,8 +3185,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:58:36] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:36] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:02] HomeAdvisor CODE: 15joNjCiKu5fQ
 [2018-02-19 12:01:02] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => Bill
     [last_name] => Down
@@ -3172,8 +3212,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:37] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:06] HomeAdvisor CODE: 15joNjCiKu5fQ
 [2018-02-19 12:01:06] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => John
     [lastName] => Doe
@@ -3213,8 +3258,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:37] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:06] HomeAdvisor CODE: 15joNjCiKu5fQ
 [2018-02-19 12:01:06] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => Bill
     [lastName] => Down
@@ -3254,8 +3304,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:58:37] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:37] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:09] HomeAdvisor CODE: 15joNjCiKu5fQ
 [2018-02-19 12:01:09] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -3311,8 +3366,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 11:58:38] HomeAdvisor CODE: 15C_oSS91Dbs6
+[2018-02-19 11:58:38] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:10] HomeAdvisor CODE: 15joNjCiKu5fQ
 [2018-02-19 12:01:10] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => Bill
@@ -3368,6 +3428,10 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:10:37] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:37] HomeAdvisor data: Array
+=======
 [2018-02-19 12:01:43] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:01:43] HomeAdvisor data: Array
 (
@@ -3392,6 +3456,7 @@
 
 [2018-02-19 12:02:41] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:02:41] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => John
     [last_name] => Doe
@@ -3412,8 +3477,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:10:38] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:38] HomeAdvisor data: Array
+=======
 [2018-02-19 12:02:41] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:02:41] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => Bill
     [last_name] => Down
@@ -3434,8 +3504,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:10:39] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:39] HomeAdvisor data: Array
+=======
 [2018-02-19 12:02:45] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:02:45] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => John
     [lastName] => Doe
@@ -3475,8 +3550,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:10:39] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:39] HomeAdvisor data: Array
+=======
 [2018-02-19 12:02:45] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:02:45] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => Bill
     [lastName] => Down
@@ -3516,8 +3596,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:10:40] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:40] HomeAdvisor data: Array
+=======
 [2018-02-19 12:02:48] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:02:48] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -3573,8 +3658,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:10:40] HomeAdvisor CODE: 15eciuWFoYmhA
+[2018-02-19 12:10:40] HomeAdvisor data: Array
+=======
 [2018-02-19 12:02:49] HomeAdvisor CODE: 15YnTilf15S2k
 [2018-02-19 12:02:49] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => Bill
@@ -3630,8 +3720,13 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:13:29] HomeAdvisor CODE: 15MTrYkJ9o3pY
+[2018-02-19 12:13:29] HomeAdvisor data: Array
+=======
 [2018-02-19 12:10:46] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:46] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => John
     [last_name] => Doe
@@ -3652,8 +3747,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:13:29] HomeAdvisor CODE: 15MTrYkJ9o3pY
+[2018-02-19 12:13:29] HomeAdvisor data: Array
+=======
 [2018-02-19 12:10:47] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:47] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [first_name] => Bill
     [last_name] => Down
@@ -3674,8 +3774,13 @@
     [sp_company_name] => Bobs Roofing CO
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:13:30] HomeAdvisor CODE: 15MTrYkJ9o3pY
+[2018-02-19 12:13:30] HomeAdvisor data: Array
+=======
 [2018-02-19 12:10:50] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:50] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => John
     [lastName] => Doe
@@ -3715,8 +3820,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:13:30] HomeAdvisor CODE: 15MTrYkJ9o3pY
+[2018-02-19 12:13:30] HomeAdvisor data: Array
+=======
 [2018-02-19 12:10:50] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:50] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [firstName] => Bill
     [lastName] => Down
@@ -3756,8 +3866,13 @@
     [lead_id] => 192065244
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:13:30] HomeAdvisor CODE: 15MTrYkJ9o3pY
+[2018-02-19 12:13:30] HomeAdvisor data: Array
+=======
 [2018-02-19 12:10:54] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:54] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
 (
     [name] => Fancy Nancy
     [firstName] => John
@@ -3813,8 +3928,253 @@
     [spCompanyName] => Maid Service Cleaning, LLC
 )
 
+<<<<<<< HEAD
+[2018-02-19 12:13:31] HomeAdvisor CODE: 15MTrYkJ9o3pY
+[2018-02-19 12:13:31] HomeAdvisor data: Array
+=======
 [2018-02-19 12:10:54] HomeAdvisor CODE: 15eciuWFoYmhA
 [2018-02-19 12:10:54] HomeAdvisor data: Array
+>>>>>>> eac305cb11f1d1f55d5645d8b0ee4c6a78be2e1b
+(
+    [name] => Fancy Nancy
+    [firstName] => Bill
+    [lastName] => Down
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 2222222222
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => info@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-20 10:37:04] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:04] HomeAdvisor data: Array
+(
+    [first_name] => John
+    [last_name] => Doe
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 5501531717
+    [email] => id@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-20 10:37:05] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:05] HomeAdvisor data: Array
+(
+    [first_name] => Bill
+    [last_name] => Down
+    [address1] => 1234 E. LOMBARD ST.
+    [city] => Hyattsville
+    [state] => MD
+    [postal_code] => 20785
+    [phone_primary] => 2222222222
+    [email] => info@div-art.com
+    [srOID] => 1234566
+    [taskOID] => 40133
+    [taskName] => Asphalt Shingle Roofing - Install or Replace
+    [comments] => ROOF AND GUTTERS NEED REPLACING
+    [interview] => What is the nature of this project?:Completely replace roof; Special Features for Roof:Gutters and downspouts; Are you aware of any leaks or damage to the roof?:No; Stories in House:Three stories or more; Interested in Green Alternatives:Yes; Request Stage:Planning & Budgeting; Desired Completion Date:1 - 2 weeks; Property Owner:Yes; Covered by Insurance:No;
+    [match_type] => market
+    [lead_description] => Market Match
+    [sp_entity_id] => 65465456
+    [sp_company_name] => Bobs Roofing CO
+)
+
+[2018-02-20 10:37:06] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:06] HomeAdvisor data: Array
+(
+    [firstName] => John
+    [lastName] => Doe
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 5501531717
+    [email] => id@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-20 10:37:06] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:06] HomeAdvisor data: Array
+(
+    [firstName] => Bill
+    [lastName] => Down
+    [address1] => 5569 East Drive
+    [city] => Redwood City
+    [state] => CA
+    [postalCode] => 94061
+    [phonePrimary] => 2222222222
+    [email] => info@div-art.com
+    [srOid] => 64367469
+    [leadOid] => 192065244
+    [taskOid] => 40072
+    [fee] => 13.71
+    [taskName] => Gutters & Downspouts - Clean
+    [interview] => Why Gutters Need Cleaning:Water isnt draining from the downspouts; Number of stories in house:One story; Request Stage:Ready to Hire; Desired Completion Date:Timing is flexible; Recurring Service Requested:No;
+    [matchType] => market
+    [leadDescription] => Market Match
+    [spEntityId] => 5166999
+    [spCompanyName] => Testing V & G Carpet & House Cleaning
+    [crmKey] => id_341B5D3Ek4A94k4671kA5D8kC826879CA627
+    [zip] => 94061
+    [name] => Ginta Bero
+    [appointment] => Array
+        (
+            [appointmentOid] => 8668
+            [leadOid] => 192065244
+            [status] => Confirmed
+            [type] => Service
+            [icsUuid] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+            [start] => 2015-06-09T12:00:00.000-07:00
+            [end] => 2015-06-09T14:00:00.000-07:00
+            [lead_id] => 192065244
+            [external_id] => HA-b97290e2-1441-466a-abb3-e2fda9a94cbc.ics
+        )
+
+    [primary_phone] => 3036849684
+    [lead_id] => 192065244
+)
+
+[2018-02-20 10:37:07] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:07] HomeAdvisor data: Array
+(
+    [name] => Fancy Nancy
+    [firstName] => John
+    [lastName] => Doe
+    [address] => 123 Main St
+    [city] => USAville
+    [stateProvince] => PA
+    [postalCode] => 12345
+    [primaryPhone] => 5501531717
+    [phoneExt] => 1234
+    [secondaryPhone] => 5558675308
+    [secondaryPhoneExt] => 1234
+    [email] => id@div-art.com
+    [srOid] => 87654321
+    [leadOid] => 135911130
+    [taskOid] => 40006
+    [taskName] => Maid Service
+    [spPartnerId] => 54321
+    [crmKey] => abcd-12345
+    [contactStatus] => New HomeAdvisor Prospect - Not Contacted
+    [comments] => I'm looking for recurring cleaning services, please.
+    [interview] => Array
+        (
+            [0] => Array
+                (
+                    [question] => What kind of location is this?
+                    [answer] => Home/Residence
+                )
+
+            [1] => Array
+                (
+                    [question] => Cleaning Type Needed
+                    [answer] => Recurring Service
+                )
+
+            [2] => Array
+                (
+                    [question] => Request Stage
+                    [answer] => Ready to Hire
+                )
+
+            [3] => Array
+                (
+                    [question] => Desired Completion Date
+                    [answer] => Within 1 week
+                )
+
+        )
+
+    [matchType] => exact
+    [leadDescription] => Exact Match
+    [spEntityId] => 88888888
+    [spCompanyName] => Maid Service Cleaning, LLC
+)
+
+[2018-02-20 10:37:07] HomeAdvisor CODE: 15sGVDYSI1o_o
+[2018-02-20 10:37:07] HomeAdvisor data: Array
 (
     [name] => Fancy Nancy
     [firstName] => Bill

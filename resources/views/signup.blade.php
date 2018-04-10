@@ -38,7 +38,7 @@
 												<span class="input-group-addon">
 													<span class="fa fa-envelope-o"></span>
 												</span>
-												<input type="email" name="email" class="form-control input-lg" placeholder="{{ __('Email') }}" ng-model="signUp.email" required="required" />
+												<input type="email" name="email" class="form-control input-lg" placeholder="{{ __('Business Email') }}" ng-model="signUp.email" required="required" />
 											</div>
 										</div>
 
@@ -47,7 +47,7 @@
 												<span class="input-group-addon">
 													<span class="fa fa-lock"></span>
 												</span>
-												<input type="password" name="password" class="form-control input-lg" placeholder="{{ __('Password') }}" ng-model="signUp.password" required="required" />
+												<input type="password" name="password" class="form-control input-lg" placeholder="{{ __('Create a Password') }}" ng-model="signUp.password" required="required" />
 											</div>
 										</div>
 
