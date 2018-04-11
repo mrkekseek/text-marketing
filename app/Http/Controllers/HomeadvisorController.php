@@ -613,7 +613,7 @@ class HomeadvisorController extends Controller
 
 	public function getGeneralMessages()
 	{
-		return array_values(GeneralMessage::all()->each(function($item, $key) {
+		return array_values(GeneralMessage::orderBy('created_at', 'desc')->get()->each(function($item, $key) {
             Carbon::setToStringFormat('F dS g:i A');
 			$item->created_at_string = $item->created_at->__toString();
             Carbon::resetToStringFormat();
