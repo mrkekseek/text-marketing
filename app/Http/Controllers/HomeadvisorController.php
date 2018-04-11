@@ -64,7 +64,8 @@ class HomeadvisorController extends Controller
 		$info = auth()->user()->homeadvisors;
 		$text = DefaultText::first();
 
-		if (empty($info->first_followup_delay) && empty($info->second_followup_delay)) {
+		if ((empty($info->first_followup_delay) && empty($info->second_followup_delay)) || empty($info->text)) {
+			$info->text = $text->instant;
 			$info->first_followup_active = Homeadvisor::FIRST_FOLLOWUP_ACTIVE;
 			$info->first_followup_delay = $text->first_followup_delay;
 			$info->first_followup_text = $text->first_followup;
@@ -413,10 +414,7 @@ class HomeadvisorController extends Controller
 			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
 				$this->sendLeadClickText($user, $client);
 			}
-			
-			$dialog->update(['clicked' => true]);
-			$client->update(['clicked' => true]);
-			
+
 			$homeadvisor = $client->team->team_leader()->homeadvisors;
 			
 			$link = false;
@@ -424,13 +422,16 @@ class HomeadvisorController extends Controller
 				$link = $this->getMagicLink($user->id, $client->id);
 			}
 
-			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && ! empty($dialog->clicked)) {
+			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
 				$this->sendAlertClick($user, $homeadvisor, $client, $link, $dialog);
 			}
-
+			
 			if ( ! empty($homeadvisor->emails)) {
 				$this->sendAlertClickEmail($homeadvisor, $client, $link);
 			}
+
+			$dialog->update(['clicked' => true]);
+			$client->update(['clicked' => true]);
 		}
 		return redirect('http://bit.ly/'.$bitly);
 	}
