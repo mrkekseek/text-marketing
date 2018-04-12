@@ -915,7 +915,7 @@ class HomeadvisorController extends Controller
 		$service = new Google_Service_Calendar($client);
 
 		$calendarId = 'primary';
-			$optParams = array(
+		$optParams = array(
 			'maxResults' => 10,
 			'orderBy' => 'startTime',
 			'singleEvents' => TRUE,
