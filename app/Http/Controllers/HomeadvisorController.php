@@ -33,7 +33,8 @@ use App\Http\Services\UsersService;
 use App\Http\Services\HomeAdvisorService;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-use Guzzle;
+use Google_Client;
+use Google_Service_Calendar;
 
 class HomeadvisorController extends Controller
 {
@@ -903,4 +904,24 @@ class HomeadvisorController extends Controller
 		$nexmo->save();
 		dd($request);
 	} */
+
+	public function googleCalendar()
+	{		
+		$client = new Google_Client();
+		$client->setApplicationName("Google Calendar");
+		$client->setDeveloperKey("AIzaSyCX_ts607KEZQ3PHmbO746YgsYsT7fCvac");
+		$client->setAuthConfig('../client_secret.json');
+		
+		$service = new Google_Service_Calendar($client);
+
+		$calendarId = 'primary';
+			$optParams = array(
+			'maxResults' => 10,
+			'orderBy' => 'startTime',
+			'singleEvents' => TRUE,
+			'timeMin' => date('c'),
+		);
+		$results = $service->events->listEvents($calendarId, $optParams);
+		dd($results);
+	}
 }

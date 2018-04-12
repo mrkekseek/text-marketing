@@ -74,6 +74,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::any('homeadvisor/answer', 'HomeadvisorController@answer');
 	Route::post('homeadvisor/event', 'HomeadvisorController@event');
 
+	Route::post('homeadvisor/calendar', 'HomeadvisorController@googleCalendar');
+
 	Route::get('homeadvisor', 'HomeadvisorController@info');
 	Route::post('homeadvisor/lookup', 'HomeadvisorController@lookup');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
