@@ -906,22 +906,28 @@ class HomeadvisorController extends Controller
 	} */
 
 	public function googleCalendar()
-	{		
+	{
 		$client = new Google_Client();
-		$client->setApplicationName("Google Calendar");
-		$client->setDeveloperKey("AIzaSyCX_ts607KEZQ3PHmbO746YgsYsT7fCvac");
 		$client->setAuthConfig('../client_secret.json');
+		$client->addScope(Google_Service_Calendar::CALENDAR);
+		$redirect_uri = 'https://new-dodo-66.localtunnel.me/api/v1/homeadvisor/token';
+		$client->setRedirectUri($redirect_uri);
+		$auth_url = $client->createAuthUrl();
+		dd($auth_url);
+		return redirect($auth_url);
 		
-		$service = new Google_Service_Calendar($client);
+		/* $service = new Google_Service_Calendar($client);
 
-		$calendarId = 'primary';
-		$optParams = array(
-			'maxResults' => 10,
-			'orderBy' => 'startTime',
-			'singleEvents' => TRUE,
-			'timeMin' => date('c'),
-		);
-		$results = $service->events->listEvents($calendarId, $optParams);
-		dd($results);
+		$calendarId = 'div-art.com_d14idkjg9ik72p7pebgi3do25c@group.calendar.google.com';
+		
+		$results = $service->events->listEvents($calendarId);
+		dd($events); */
+	}
+
+	public function getCalendarToken()
+	{
+		if (isset($_GET['code'])) {
+			$token = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+		}
 	}
 }

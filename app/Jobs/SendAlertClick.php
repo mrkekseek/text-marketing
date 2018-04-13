@@ -33,7 +33,6 @@ class SendAlertClick implements ShouldQueue
         $this->text = $text;
         $this->user = $user;
         $this->dialog = $dialog;
-        $this->handle();
     }
 
     /**
@@ -44,8 +43,7 @@ class SendAlertClick implements ShouldQueue
     public function handle()
     {
         if ( ! $this->dialog->reply_viewed) {
-            $response = Api::alert($this->alert->id, $this->phones, $this->text, 'ContractorTexter', $this->user->offset);
-            dd($response);
+            Api::alert($this->alert->id, $this->phones, $this->text, 'ContractorTexter', $this->user->offset);
         }
     }
 }
