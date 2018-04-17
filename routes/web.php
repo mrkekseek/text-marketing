@@ -174,7 +174,6 @@ Route::get('general/{message}/bit.ly/{bitly}', 'UsersController@magicGeneral');
 
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
 Route::get('magic/inbox/{user}/{client}/{dialog}', 'UsersController@magicInbox');
-Route::get('magic/dashboard/{user}', 'UsersController@magicDashboard');
 Route::get('magic/referral/{hash}', 'UsersController@magicReferral');
 
 Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_fb_token', 'UsersController@facebookToken');

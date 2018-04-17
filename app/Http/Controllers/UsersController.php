@@ -667,12 +667,6 @@ class UsersController extends Controller
 		$link = config('app.url').'/marketing/inbox/'.$client->id;
 		return redirect($link);
 	}
-	
-	public function magicDashboard(User $user)
-	{
-		auth()->login($user);
-		return redirect(config('app.url'));
-	}
 
 	public function magicReferral($hash)
 	{
