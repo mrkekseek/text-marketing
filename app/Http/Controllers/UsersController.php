@@ -18,9 +18,12 @@ use App\Url;
 use App\ContactList;
 use App\SocialReview;
 use App\DefaultText;
+use App\NewUser;
+use App\GeneralMessage;
 
 use App\Libraries\Api;
 use App\Libraries\Jwt;
+use App\Jobs\SendGeneralText;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Services\UsersService;
 use App\Http\Services\LinksService;
@@ -31,6 +34,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Twilio\Rest\Client as Twilio;
+use Twilio\Exceptions\RestException;
 
 class UsersController extends Controller
 {
@@ -662,6 +667,12 @@ class UsersController extends Controller
 		$link = config('app.url').'/marketing/inbox/'.$client->id;
 		return redirect($link);
 	}
+	
+	public function magicDashboard(User $user)
+	{
+		auth()->login($user);
+		return redirect(config('app.url'));
+	}
 
 	public function magicReferral($hash)
 	{
@@ -840,13 +851,121 @@ class UsersController extends Controller
 		$text->second_followup = $data['texts']['second_followup'];
 		$text->second_followup_delay = $data['texts']['second_followup_delay'];
 		$text->lead_clicks_alert = $data['texts']['lead_clicks_alert'];
+		$text->lead_clicks_inbox = $data['texts']['lead_clicks_inbox'];
 		$text->lead_reply_alert = $data['texts']['lead_reply_alert'];
 		$text->lead_clicks = $data['texts']['lead_clicks'];
 		$text->user_click_reminder = $data['texts']['user_click_reminder'];
 		$text->update();
 
     	$this->message('Settings was successfully saved', 'success');
-    }
+	}
+	
+	public function lookup(Request $request)
+	{
+		$account_sid = 'ACaa2a4c1043485ae42c347e903aa263f6';
+		$auth_token = 'c38053b9fe0b7886a422bbbfe0f01c0c';
+		$twilio_number = "+13239224018";
+
+		$client = new Twilio($account_sid, $auth_token);
+
+		/* try {
+			$lookup = $client->lookups
+			->phoneNumbers('334-406-3008')
+			->fetch(
+				array("type" => "carrier")
+			);
+
+			$number_type = $lookup->carrier['type'];
+			dd($lookup);
+
+			$phone = str_replace('+1', '', $lookup->phoneNumber);
+
+			if ( ! NewUser::where('phone', $phone)->exists()) {
+				$new_user = new NewUser();
+				$new_user->phone = $phone;
+				$new_user->phone_type = $number_type;
+				$new_user->save();
+			}
+
+			if ($number_type == 'mobile') {
+				$this->sendTextToNewUser($new_user, $phone);
+			}
+		} catch (RestException $e) {
+			if ($e->getStatusCode() == "404") {
+				echo "No carrier information.\n";
+			} else {
+				throw $e;
+			}
+		} */
+
+		$data = $request->only('url');
+		$url = $data['url'][0];
+		$numbers = file($url);
+		
+		foreach ($numbers as $item) {
+			$number = trim($item);
+			try {
+				$lookup = $client->lookups
+				->phoneNumbers($number)
+				->fetch(
+					array("type" => "carrier")
+				);
+
+				$number_type = $lookup->carrier['type'];
+
+				$phone = str_replace('+1', '', $lookup->phoneNumber);
+
+				if ( ! NewUser::where('phone', $phone)->exists()) {
+					$new_user = new NewUser();
+					$new_user->phone = $phone;
+					$new_user->phone_type = ! empty($number_type) ? $number_type : 'unknown';
+					$new_user->save();
+				}
+
+				if ($number_type == 'mobile') {
+					$this->sendTextToNewUser($new_user, $phone);
+				}
+			} catch (RestException $e) {
+				if ($e->getStatusCode() == "404") {
+					echo "No carrier information.\n";
+				} else {
+					throw $e;
+				}
+			}
+		}
+	}
+
+	public function sendTextToNewUser(NewUser $new_user, $phone)
+	{
+		$default_text = DefaultText::first();
+		$text = $default_text->new_user;
+		
+		$global_dialog = new GeneralMessage();
+		$global_dialog->type = 'new_user';
+		$global_dialog->phone = $phone;
+		$global_dialog->text = $text;
+		$global_dialog->my = 1;
+		$global_dialog->status = 0;
+		$global_dialog->save();
+
+		$phones[] = ['phone' => $phone];
+		$offset = 0;
+
+		SendGeneralText::dispatch($new_user, $phones, $text, 'ContractorTexter', $offset)->onQueue('texts');
+	}
+	
+	public function getNewUsers()
+	{
+		return NewUser::orderBy('clicked')->get();
+	}
+
+	public function magicGeneral(NewUser $new_user, $bitly)
+	{
+		if (empty($new_user->clicked)) {
+			$new_user->update(['clicked' => 1]);
+		}
+		return redirect('http://bit.ly/'.$bitly);
+	}
 
     public function companyNames()
     {

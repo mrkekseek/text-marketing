@@ -312,6 +312,16 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'plans-info',
+            'folder' => 'plans',
+            'file' => 'info',
+            'name' => 'Plans',
+            'icon' => 'fa fa-clipboard',
+            'tpl' => '',
+            'public' => 0,
+        ]);
 
 
 
@@ -446,6 +456,11 @@ class PagesSeeder extends Seeder
         DB::table('pages_access')->insert([
             'code' => 'inbox-inbox',
             'users_type' => 2,
+        ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'plans-info',
+            'users_type' => 1,
         ]);
 
 
@@ -933,6 +948,38 @@ class PagesSeeder extends Seeder
             'plans' => 'none',
             'main' => 0,
             'pos' => 3,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'plans-info',
+            'parents_code' => '',
+            'plans' => 'text-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'plans-info',
+            'parents_code' => '',
+            'plans' => 'home-advisor-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'plans-info',
+            'parents_code' => '',
+            'plans' => 'free-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'plans-info',
+            'parents_code' => '',
+            'plans' => 'star-rating-contractortexter',
+            'main' => 0,
+            'pos' => 4,
         ]);
     }
 }

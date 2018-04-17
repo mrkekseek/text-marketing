@@ -420,7 +420,7 @@ class HomeadvisorController extends Controller
 			
 			$link = false;
 			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones) || ! empty($homeadvisor->emails)) {
-				$link = $this->getMagicLink($user->id, $client->id);
+				$link = $this->getMagicLink($user->id, $client->id, $dialog->id);
 			}
 
 			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
@@ -437,21 +437,30 @@ class HomeadvisorController extends Controller
 		return redirect('http://bit.ly/'.$bitly);
 	}
 
-	private function getMagicLink($id, $client_id)
+	private function getMagicLink($id, $client_id, $dialog_id)
 	{
-		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id, false);
+		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id.'/'.$dialog_id, false);
 	}
 	
 	private function sendLeadClickText($user, $client)
 	{
 		$default_text = DefaultText::first();
 		$lead_text = $default_text->lead_clicks;
+		$user_text = $default_text->lead_clicks_inbox;
 		$client_data = [
 			'users_id' => $user->id,
 			'clients_id' => $client->id,
 			'text' =>  $lead_text,
 			'my' =>  true,
 			'status' => 2,
+		];
+		
+		$user_data = [
+			'users_id' => $user->id,
+			'clients_id' => $client->id,
+			'text' =>  $user_text,
+			'my' =>  true,
+			'status' => 3,
 		];
 
         $clients_phones[] = [
@@ -461,6 +470,7 @@ class HomeadvisorController extends Controller
 		];
 		
 		$lead_dialog = Dialog::create($client_data);
+		$user_dialog = Dialog::create($user_data);
 		$delay_amount = Carbon::now()->addMinutes(15);
 		$delay = Carbon::now()->diffInSeconds($delay_amount);
 
@@ -505,7 +515,7 @@ class HomeadvisorController extends Controller
 				'user_id' => $user->id,
 				'phone' => implode(',', $temp),
 				'text' => $text,
-			];
+			]; 
 			$alert = Alert::create($data);
 			SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
 		}
@@ -567,51 +577,6 @@ class HomeadvisorController extends Controller
 		return ! empty($data['email']) ? $data['email'] : '';
 	}
 
-	public function lookup(Request $request)
-	{
-		$data = $request->only('url');
-		$url = $data['url'][0];
-		$numbers = file($url);
-		$result = [];
-		
-		foreach ($numbers as $item) {
-			$number = trim($item);
-			try {
-				$number_type = PhoneNumber::make($number, 'US')->getType();
-				$number_formated = PhoneNumber::make($number, 'US')->formatE164();
-				if ($number_type == 'mobile' || $number_type == 'fixed_line_or_mobile') {
-					$result[] = str_replace('+1', '', $number_formated);
-				}
-			}
-			catch(\libphonenumber\NumberParseException $e) {
-				//print_r($e);
-			}
-		}
-
-		$default_text = DefaultText::first();
-		$text = $default_text->new_user;
-		
-		if ( ! empty($result)) {
-			foreach ($result as $phone) {
-				if ( ! GeneralMessage::where('phone', $phone)->exists()) {
-					$global_dialog = new GeneralMessage();
-					$global_dialog->type = 'twilio';
-					$global_dialog->phone = $phone;
-					$global_dialog->text = $text;
-					$global_dialog->my = 1;
-					$global_dialog->status = 0;
-					$global_dialog->save();
-
-					$phones = [];
-					$phones[] = ['phone' => $phone];
-					$offset = 0;
-
-					SendGeneralText::dispatch($global_dialog, $phones, $text, 'ContractorTexter', $offset)->onQueue('texts');
-				}
-			}
-		}
-	}
-
 	public function getGeneralMessages()
 	{
 		return array_values(GeneralMessage::orderBy('created_at', 'desc')->get()->each(function($item, $key) {
@@ -626,8 +591,8 @@ class HomeadvisorController extends Controller
 	{
 		return GeneralMessage::where('phone', $phone)->get()->each(function($item, $key) {
 			$user = User::where('phone', $item->phone)->first();
-			$item->user_firstname = $user->firstname;
-			$item->user_lastname = $user->lastname;
+			$item->user_firstname = ! empty($user->firstname) ? $user->firstname : '';
+			$item->user_lastname = ! empty($user->lastname) ? $user->lastname : '';
             Carbon::setToStringFormat('F dS g:i A');
 			$item->created_at_string = $item->created_at->__toString();
             Carbon::resetToStringFormat();

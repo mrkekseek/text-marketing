@@ -71,7 +71,7 @@
 								<i ng-show="message.my" class="fa fa-user-circle fa-2x" aria-hidden="true"></i>
 								<i ng-show="! message.my" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>
 							</div>
-							<div class="message-body">
+							<div class="message-body" ng-class="{'alert_dialog': message.status == 3}">
 								@{{ message.text.replace('[$FirstName]', message.clients.firstname).replace('[$LastName]', message.clients.lastname) }}
 								<div class="text-right">
 									<i ng-show="message.status == 1 && message.my" class="fa fa-check text-danger" aria-hidden="true"></i>
