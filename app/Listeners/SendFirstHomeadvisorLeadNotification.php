@@ -63,6 +63,7 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
             'text' => '',
             'file' => ! empty($ha->file) ? $ha->file : '',
             'my' => true,
+            'parent' => true,
             'status' => 2,
         ]);
 

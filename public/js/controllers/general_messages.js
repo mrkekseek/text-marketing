@@ -70,9 +70,7 @@
 
         $scope.setClient = function (dialog) {
             $location.path('/inbox/list/' + dialog.id, false);
-            $scope.activeClient.id = dialog.id;
-            $scope.activeClient.firstname = dialog.firstname;
-            $scope.activeClient.lastname = dialog.lastname;
+            $scope.activeClient = dialog;
             $scope.showPhonesBox = !$scope.showPhonesBox;
             request.send('/homeadvisor/general/' + dialog.phone, {}, function (data) {
                 /* for (var k in data) {

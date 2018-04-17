@@ -44,6 +44,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::put('texts/{text}', 'UsersController@updateDefaultTexts');
 	Route::get('settings/companyNames', 'UsersController@companyNames');
 
+	Route::post('users/lookup', 'UsersController@lookup');
+	Route::get('users/lookup/users', 'UsersController@getNewUsers');
 	Route::put('users/company/{user?}', 'UsersController@company');
 	Route::get('users/status/{user?}', 'UsersController@status');
 	Route::get('users/partners', 'UsersController@partners');
@@ -74,8 +76,10 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::any('homeadvisor/answer', 'HomeadvisorController@answer');
 	Route::post('homeadvisor/event', 'HomeadvisorController@event');
 
+	Route::post('homeadvisor/calendar', 'HomeadvisorController@googleCalendar');
+	Route::post('homeadvisor/token', 'HomeadvisorController@getCalendarToken');
+
 	Route::get('homeadvisor', 'HomeadvisorController@info');
-	Route::post('homeadvisor/lookup', 'HomeadvisorController@lookup');
 	Route::put('homeadvisor/activate', 'HomeadvisorController@activate');
 	Route::post('homeadvisor/activate/{homeadvisor}', 'HomeadvisorController@activateUpdate');
 	Route::put('homeadvisor/enable/{homeadvisor}', 'HomeadvisorController@enable');
@@ -166,8 +170,11 @@ Route::get('recovery', function() {
 
 Route::get('ha-job/{user}/{client?}', 'HomeadvisorController@page');
 
+Route::get('general/{message}/bit.ly/{bitly}', 'UsersController@magicGeneral');
+
 Route::get('magic/{dialog}/bit.ly/{bitly}', 'HomeadvisorController@magic');
 Route::get('magic/inbox/{user}/{client}/{dialog}', 'UsersController@magicInbox');
+Route::get('magic/dashboard/{user}', 'UsersController@magicDashboard');
 Route::get('magic/referral/{hash}', 'UsersController@magicReferral');
 
 Route::any('de83020eb8e0b2b1840734bb34a00f0f/get_fb_token', 'UsersController@facebookToken');

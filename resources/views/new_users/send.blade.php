@@ -27,8 +27,7 @@
                             
                             <div class="form-group">
                                 <label>{{ __('New Users Text') }}</label>
-                                <div text-area ng-model="texts.new_user"></div>
-                                <!-- <char-set ng-model="texts.new_user" unique-id="'new_user'" clear-message="true" btn-firstname="true" btn-lastname="true" btn-link="true" btn-website="true" btn-office-phone="true"></char-set> -->
+                                <char-set ng-model="texts.new_user" unique-id="'new_user'" btn-shortlink="true"></char-set>
                             </div>
                             
                             <div class="form-group">
@@ -68,6 +67,11 @@
 								<label>{{ __("'Lead Clicks' Alert Text (text to User)") }}</label>
                                 <char-set ng-model="texts.lead_clicks_alert" unique-id="'lead_clicks_alert'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true" btn-link="true"></char-set>
 							</div>
+                            
+                            <div class="form-group">
+                                <label>{{ __("'Lead Clicks' Alert in Inbox (text to User)") }}</label>
+                                <char-set ng-model="texts.lead_clicks_inbox" unique-id="'lead_clicks_inbox'" company="company" max-firstname="14" max-lastname="14" btn-firstname="true" btn-lastname="true"></char-set>
+                            </div>
 
                             <div class="form-group">
                                 <label>{{ __("'Lead Reply' Alert Text (text to User)") }}</label>
@@ -118,6 +122,47 @@
                     <div class="form-group">
                         <button type="button" class="btn btn-primary" ng-click="send()">{{ __('Send') }}</button>
                     </div>
+
+                    <table class="table table-bordered table-striped table-middle table-phones" ng-show="new_users != ''">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="th">
+                                        {{ __('Phone Number') }}
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        {{ __('Phone Type') }}
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="th">
+                                        {{ __('Clicked') }}
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr ng-repeat="user in new_users" ng-class="{danger_phone: user.phone_type != 'mobile'}">
+                                <td>
+                                    @{{ user.phone }}
+                                </td>
+                                
+                                <td>
+                                    @{{ user.phone_type }}
+                                </td>
+                                
+                                <td class="text-center">
+                                    <span class="check-span" ng-if="user.clicked == 1"><i class="fa fa-check"></i></span>
+							        <span class="times-span" ng-if="user.clicked == 0"><i class="fa fa-times"></i></span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

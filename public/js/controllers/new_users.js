@@ -25,6 +25,7 @@
                     $scope.texts.second_followup_delay = $scope.texts.second_followup_delay.toString();
                 }
                 $scope.generateHours();
+                $scope.getNewUsers();
             }, 'get');
         };
 
@@ -58,9 +59,16 @@
         };
 
         $scope.send = function () {
-            request.send('/homeadvisor/lookup', {'url': $scope.file.url}, function (data) {
+            request.send('/users/lookup', {'url': $scope.file.url}, function (data) {
+                $scope.getNewUsers();
             }, 'post');
         };
+
+        $scope.getNewUsers = function () {
+            request.send('/users/lookup/users', {}, function (data) {
+                $scope.new_users = data;
+            }, 'get');
+        }
 
         $scope.generateHours = function () {
             for (var i = 1; i <= 24; i++) {

@@ -10,6 +10,7 @@
         "div-art/shortlink": "^0.2.0",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
+        "google/apiclient": "^2.0",
         "guzzlehttp/guzzle": "~6.0",
         "imangazaliev/didom": "^1.12",
         "laravel/cashier": "~7.0",
@@ -22,6 +23,7 @@
         "paquettg/string-encode": "^0.1.1",
         "propaganistas/laravel-phone": "^4.0",
         "shivella/laravel-bitly": "^1.0",
+        "twilio/sdk": "^5.17",
         "wilgucki/csv": "^0.6.2",
         "yangqi/htmldom": "^1.0"
     },
