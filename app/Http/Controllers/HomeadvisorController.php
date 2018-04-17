@@ -431,6 +431,8 @@ class HomeadvisorController extends Controller
 				$this->sendAlertClickEmail($homeadvisor, $client, $link);
 			}
 
+			$parent_dialog = Dialog::where([['clients_id', '=', $dialog->clients_id], ['parent', '=', '1']])->first();
+			$parent_dialog->update(['clicked' => true]);
 			$dialog->update(['clicked' => true]);
 			$client->update(['clicked' => true]);
 		}
