@@ -139,12 +139,14 @@ class DialogsController extends Controller
         $data = $request->only(['CONTENTS']);
         $this->saveLog($data, 'INBOX');
         $this->saveLog($dialog, 'INBOX DIALOG');
-        $dialog->update(['reply' => 1]);
-        $dialog = $dialog->replicate();
+        $parent_dialog = Dialog::where([['clients_id', '=', $dialog->clients_id], ['parent', '=', '1']])->first();
+        $parent_dialog->update(['reply' => 1]);
+        $dialog = $parent_dialog->replicate();
         $dialog->text = $data['CONTENTS'];
         $dialog->new = true;
         $dialog->status = 1;
         $dialog->my = false;
+        $dialog->parent = false;
         $dialog->reply = 0;
         $dialog->clicked = 0;
         $dialog->reply_viewed = 0;

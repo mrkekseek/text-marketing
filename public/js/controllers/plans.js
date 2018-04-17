@@ -6,6 +6,7 @@
     function PlansCtrl($rootScope, $scope, $uibModal, request, langs) {
         $scope.request_finish = false;
         $scope.list = [];
+        $scope.plan = '1';
 
         $scope.init = function () {
             $scope.get();
@@ -55,6 +56,36 @@
 
             return {};
         };
+
+        var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
+        var elements = stripe.elements();
+        var card = elements.create('card');
+        card.mount('#card-element');
+
+        /*var handler = StripeCheckout.configure({
+            key: 'pk_test_KM8cPI1fQDUJf2Z8R971mJK0',
+            locale: 'auto',
+            token: function (token) {
+                console.log(token.id);
+                // Use the token to create the charge with a server-side script.
+                // You can access the token ID with `token.id`
+            }
+        });
+
+        document.getElementById('customButton').addEventListener('click', function (e) {
+            // Open Checkout with further options:
+            handler.open({
+                name: 'ContractorTexter',
+                description: '2 widgets',
+                amount: 2000
+            });
+            e.preventDefault();
+        });
+
+        // Close Checkout on page navigation:
+        window.addEventListener('popstate', function () {
+            handler.close();
+        }); */
     };
 })();
 

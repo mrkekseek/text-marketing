@@ -86,5 +86,6 @@
         <script src="/js/directives/textarea.js"></script>
         <script src="/js/directives/stars.js"></script>
         <script src="/js/directives/scroll_bottom.js"></script>
+        <script src="https://js.stripe.com/v3/"></script>
     </body>
 </html>

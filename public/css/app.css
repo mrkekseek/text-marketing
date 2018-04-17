@@ -906,3 +906,13 @@ textarea.form-control.appointment-textarea {
 .new_users .form-group {
 	margin-bottom: 40px;
 }
+
+.table-striped.table-phones .danger_phone,
+.message-body.alert_dialog {
+	background-color: #C82027;
+	color: #fff;
+}
+
+.message-body.alert_dialog:before {
+	border-bottom: 10px solid #C82027;
+}

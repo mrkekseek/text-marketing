@@ -26,6 +26,7 @@ class DefaultTextsSeeder extends Seeder
             'lead_clicks_alert' => 'Hi, Lead [$FirstName] [$LastName] just clicked on the link in your text and is a very hot lead. Try to reach them ASAP - [$Link]!',
             'lead_reply_alert' => 'Hi, a lead [$FirstName] [$LastName] just texted you a reply. Please click [$Link] to see it and reply if you like - thanks!',
             'lead_clicks' => 'Hi [$FirstName], saw you went to our site, were you able to book the appointment?',
+            'lead_clicks_inbox' => 'Lead [$FirstName] [$LastName] clicked your link and went to your site',
             'user_click_reminder' => 'Hi, a lead [$FirstName] [$LastName] just texted you a reply. Please click [$Link] to see it and reply if you like - thanks!',
         ]);
     }
