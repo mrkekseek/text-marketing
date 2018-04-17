@@ -874,6 +874,7 @@ class HomeadvisorController extends Controller
 
 	public function googleCalendar()
 	{
+		dd(ShortLink::expand('bit.ly/2J2mcEy'));
 		$client = new Google_Client();
 		$client->setAuthConfig('../client_secret.json');
 		$client->addScope(Google_Service_Calendar::CALENDAR);
