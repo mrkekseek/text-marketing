@@ -68,6 +68,11 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('users/{id}/magic', 'UsersController@magic');
 
 	Route::get('plans', 'PlansController@all');
+	Route::post('plans/subscribe', 'PlansController@subscribe');
+	Route::put('plans/subscribe', 'PlansController@update');
+	Route::get('plans/get', 'PlansController@getPlanInfo');
+	Route::post('plans/cancel', 'PlansController@cancelSubscription');
+	Route::post('plans/resume', 'PlansController@resumeSubscription');
 
 	Route::get('links', 'LinksController@all');
 
@@ -199,6 +204,8 @@ Route::any('inbox/message/{message}', 'MessagesController@inbox');
 Route::any('inbox/general/{message}', 'HomeadvisorController@inbox');
 
 Route::any('leads/convert', 'HomeadvisorController@convert');
+
+Route::post('stripe/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');

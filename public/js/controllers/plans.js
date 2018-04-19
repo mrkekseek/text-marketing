@@ -5,17 +5,38 @@
 
     function PlansCtrl($rootScope, $scope, $uibModal, request, langs) {
         $scope.request_finish = false;
+        $scope.plan_name = '';
         $scope.list = [];
-        $scope.plan = '1';
+        $scope.stripe = {};
+        $scope.showCardDetails = true;
 
         $scope.init = function () {
             $scope.get();
+        };
+        
+        $scope.initPlanPage = function () {
+            $scope.getPlanInfo();
         };
 
         $scope.get = function () {
         	request.send('/plans', {}, function (data) {
                 $scope.list = data;
     			$scope.request_finish = true;
+			}, 'get');
+        };
+        
+        $scope.getPlanInfo = function () {
+        	request.send('/plans/get', {}, function (data) {
+                $scope.request_finish = true;
+                if (data.stripe_id) {
+                    $scope.stripe = data;
+                    $scope.showCardDetails = false;
+                } else {
+                    $scope.plan_name = data.plan_name;
+                    $scope.stripe = {};
+                    $scope.showCardDetails = true;
+                }
+                console.log($scope.stripe);
 			}, 'get');
         };
 
@@ -59,33 +80,82 @@
 
         var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
         var elements = stripe.elements();
-        var card = elements.create('card');
+
+        var style = {
+            base: {
+                color: '#32325d',
+                lineHeight: '18px',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+
+        var card = elements.create('card', { style: style, hidePostalCode: true});
         card.mount('#card-element');
 
-        /*var handler = StripeCheckout.configure({
-            key: 'pk_test_KM8cPI1fQDUJf2Z8R971mJK0',
-            locale: 'auto',
-            token: function (token) {
-                console.log(token.id);
-                // Use the token to create the charge with a server-side script.
-                // You can access the token ID with `token.id`
+        card.addEventListener('change', function (event) {
+            var displayError = document.getElementById('card-errors');
+            if (event.error) {
+                displayError.textContent = event.error.message;
+            } else {
+                displayError.textContent = '';
             }
         });
 
-        document.getElementById('customButton').addEventListener('click', function (e) {
-            // Open Checkout with further options:
-            handler.open({
-                name: 'ContractorTexter',
-                description: '2 widgets',
-                amount: 2000
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            stripe.createToken(card).then(function (result) {
+                if (result.error) {
+                    var errorElement = document.getElementById('card-errors');
+                    errorElement.textContent = result.error.message;
+                } else {
+                    $scope.request_finish = false;
+                    $scope.showCardDetails = false;
+                    $scope.subscribe(result.token);
+                }
             });
-            e.preventDefault();
         });
 
-        // Close Checkout on page navigation:
-        window.addEventListener('popstate', function () {
-            handler.close();
-        }); */
+        $scope.subscribe = function(token) {
+            request.send('/plans/subscribe', {'token': token.id}, function (data) {
+                $scope.getPlanInfo();
+            }, ($scope.stripe.stripe_id ? 'put' : 'post'));
+        };
+        
+        $scope.cancelSubscription = function() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'ModalPlansConfirm.html',
+                controller: 'ModalPlansConfirmCtrl',
+                resolve: {
+                    items: function () {
+                        return { 'plan': $scope.stripe.stripe_id };
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (response) {
+                $scope.request_finish = false;
+                if (response) {
+                    request.send('/plans/cancel', {'plan_name': $scope.stripe.plan_name}, function (data) {
+                        $scope.getPlanInfo();
+                    }, 'post');
+                }
+            }, function () {
+
+            });
+            
+        };
     };
 })();
 
@@ -114,6 +184,24 @@
             }
         };
 
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss();
+        };
+    };
+})();
+
+;
+
+(function () {
+    'use strict';
+
+    angular.module('app').controller('ModalPlansConfirmCtrl', ['$rootScope', '$scope', '$uibModalInstance', ModalPlansConfirmCtrl]);
+
+    function ModalPlansConfirmCtrl($rootScope, $scope, $uibModalInstance) {
+        $scope.agree = function () {
+            $uibModalInstance.close('true');
+        };
+        
         $scope.cancel = function () {
             $uibModalInstance.dismiss();
         };

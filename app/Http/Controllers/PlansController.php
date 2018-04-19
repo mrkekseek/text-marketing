@@ -119,4 +119,60 @@ class PlansController extends Controller
 		$stripe = new Stripe(config('services.stripe.secret'));
 		$stripe->plans()->delete($plans_id);
 	}
+
+	public function getPlanInfo()
+	{
+		$user = auth()->user();
+		$subscription = $user->subscriptions()->first();
+		$plan = Plan::where('plans_id', $user->plans_id)->first();
+
+		if ( ! empty($subscription) && $user->subscribed($subscription->name)) {
+			$data = [
+				'stripe_id' => $subscription->stripe_id,
+				'card_brand' => $user->card_brand,
+				'card_last_four' => $user->card_last_four,
+				'plan_name' => $subscription->name,
+				'status' => 'Active',
+			];
+
+			return $data;
+		} else {
+			$data = [
+				'plan_name' => $plan->name,
+			];
+
+			return $data;
+		}
+	}
+
+	public function subscribe(Request $request)
+	{
+		$user = auth()->user();
+		$plan = Plan::where('plans_id', $user->plans_id)->first();
+		if ( ! $user->subscribed($user->plans_id)) {
+			$user->newSubscription($plan->name, $user->plans_id)->create($request['token']);
+			return $this->message('Your have subscribed', 'success');
+		}
+	}
+	
+	public function resumeSubscription(Request $request)
+	{
+		$user = auth()->user();
+		$user->subscription($request['name'])->resume();
+	}
+	
+	public function update(Request $request)
+	{
+		$user = auth()->user();
+		$user->updateCard($request['token']);
+		return $this->message('Card details was updated', 'success');
+	}
+	
+	public function cancelSubscription(Request $request)
+	{
+		$user = auth()->user();
+		$user->subscription($request['plan_name'])->swap('free-contractortexter');
+		//$user->subscriptions()->delete();
+		return $this->message('You have canceled your subscription', 'success');
+	}
 }

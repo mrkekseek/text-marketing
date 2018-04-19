@@ -916,3 +916,83 @@ textarea.form-control.appointment-textarea {
 .message-body.alert_dialog:before {
 	border-bottom: 10px solid #C82027;
 }
+
+.StripeElement {
+	background-color: white;
+	height: 40px;
+	padding: 10px 12px;
+	border-radius: 4px;
+	border: 1px solid transparent;
+	box-shadow: 0 1px 3px 0 #e6ebf1;
+	-webkit-transition: box-shadow 150ms ease;
+	transition: box-shadow 150ms ease;
+}
+
+.StripeElement--invalid {
+	border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+	background-color: #fefde5 !important;
+}
+
+#payment-form {
+	margin-bottom: 40px;
+}
+
+#payment-form button {
+  	display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 2px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+	user-select: none;
+	background-color: #C82027;
+	border-color: #a80a0c;
+	color: #fff;
+}
+
+#payment-form button:hover {
+    background-color: #bc0d10 !important;
+    border-color: #a80a0c !important;
+}
+
+#payment-form #card-errors {
+	color: #fa755a;
+	padding: 15px 0;
+}
+
+.plan_details i {
+	font-size: 34px;
+	margin-right: 10px;
+}
+
+.plan_details i, 
+.plan_details span {
+	vertical-align: middle;
+}
+
+.loader_wrapper {
+	position: absolute;
+	top: calc(50% - 30px);
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+
+.card_details {
+	min-height: 70px;
+	margin-bottom: 20px;
+}
