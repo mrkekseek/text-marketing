@@ -471,8 +471,8 @@ class HomeadvisorController extends Controller
 			'lastname' => $client->lastname,
 		];
 		
-		$lead_dialog = Dialog::create($client_data);
 		$user_dialog = Dialog::create($user_data);
+		$lead_dialog = Dialog::create($client_data);
 		$delay_amount = Carbon::now()->addMinutes(15);
 		$delay = Carbon::now()->diffInSeconds($delay_amount);
 

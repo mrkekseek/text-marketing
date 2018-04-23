@@ -16,6 +16,7 @@
         
         $scope.initPlanPage = function () {
             $scope.getPlanInfo();
+            $scope.planDetailsPage();
         };
 
         $scope.get = function () {
@@ -36,7 +37,6 @@
                     $scope.stripe = {};
                     $scope.showCardDetails = true;
                 }
-                console.log($scope.stripe);
 			}, 'get');
         };
 
@@ -78,53 +78,55 @@
             return {};
         };
 
-        var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
-        var elements = stripe.elements();
+        $scope.planDetailsPage = function() {
+            var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
+            var elements = stripe.elements();
 
-        var style = {
-            base: {
-                color: '#32325d',
-                lineHeight: '18px',
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                    color: '#aab7c4'
+            var style = {
+                base: {
+                    color: '#32325d',
+                    lineHeight: '18px',
+                    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                    fontSmoothing: 'antialiased',
+                    fontSize: '16px',
+                    '::placeholder': {
+                        color: '#aab7c4'
+                    }
+                },
+                invalid: {
+                    color: '#fa755a',
+                    iconColor: '#fa755a'
                 }
-            },
-            invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a'
-            }
-        };
+            };
 
-        var card = elements.create('card', { style: style, hidePostalCode: true});
-        card.mount('#card-element');
+            var card = elements.create('card', { style: style, hidePostalCode: true });
+            card.mount('#card-element');
 
-        card.addEventListener('change', function (event) {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
-
-        var form = document.getElementById('payment-form');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-
-            stripe.createToken(card).then(function (result) {
-                if (result.error) {
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
+            card.addEventListener('change', function (event) {
+                var displayError = document.getElementById('card-errors');
+                if (event.error) {
+                    displayError.textContent = event.error.message;
                 } else {
-                    $scope.request_finish = false;
-                    $scope.showCardDetails = false;
-                    $scope.subscribe(result.token);
+                    displayError.textContent = '';
                 }
             });
-        });
+
+            var form = document.getElementById('payment-form');
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                stripe.createToken(card).then(function (result) {
+                    if (result.error) {
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        $scope.request_finish = false;
+                        $scope.showCardDetails = false;
+                        $scope.subscribe(result.token);
+                    }
+                });
+            });
+        };
 
         $scope.subscribe = function(token) {
             request.send('/plans/subscribe', {'token': token.id}, function (data) {
@@ -135,26 +137,30 @@
         $scope.cancelSubscription = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'ModalPlansConfirm.html',
-                controller: 'ModalPlansConfirmCtrl',
+                templateUrl: 'ModalCancelPlansConfirm.html',
+                controller: 'ModalConfirmCancelPlanCtrl',
                 resolve: {
-                    items: function () {
-                        return { 'plan': $scope.stripe.stripe_id };
-                    }
+                    items: $scope.stripe,
                 }
             });
 
             modalInstance.result.then(function (response) {
                 $scope.request_finish = false;
                 if (response) {
-                    request.send('/plans/cancel', {'plan_name': $scope.stripe.plan_name}, function (data) {
-                        $scope.getPlanInfo();
-                    }, 'post');
+                    $scope.getPlanInfo();
                 }
             }, function () {
 
             });
             
+        };
+
+        $scope.reactivate = function() {
+            $scope.request_finish = false;
+            request.send('/plans/reactivate', $scope.stripe, function (data) {
+                $scope.request_finish = true;
+                $scope.getPlanInfo();
+            }, 'post');
         };
     };
 })();
@@ -195,11 +201,24 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('ModalPlansConfirmCtrl', ['$rootScope', '$scope', '$uibModalInstance', ModalPlansConfirmCtrl]);
+    angular.module('app').controller('ModalConfirmCancelPlanCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$window', 'request', 'items', ModalConfirmCancelPlanCtrl]);
 
-    function ModalPlansConfirmCtrl($rootScope, $scope, $uibModalInstance) {
-        $scope.agree = function () {
-            $uibModalInstance.close('true');
+    function ModalConfirmCancelPlanCtrl($rootScope, $scope, $uibModalInstance, $window, request, items) {
+        $scope.plan = {};
+        $scope.plan = items;
+        
+        $scope.unsubscribe = function () {
+            $scope.request_finish = false;
+            request.send('/plans/unsubscribe', $scope.plan, function (data) {
+                $window.location.href = '/';
+            }, 'post');
+        };
+        
+        $scope.downgrade = function () {
+            $scope.request_finish = false;
+            request.send('/plans/free', $scope.plan, function (data) {
+                $uibModalInstance.close('true');
+            }, 'post');
         };
         
         $scope.cancel = function () {

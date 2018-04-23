@@ -1,4 +1,4 @@
-<div class="page page-table" data-ng-controller="UsersCtrl" data-ng-init="initAdmin()">
+<div class="page page-table" data-ng-controller="UsersCtrl" data-ng-init="initFree()">
 	<h2>
 		<div class="pull-right">
 			<button type="button" class="btn btn-primary" ng-click="create()"><i class="fa fa-plus-circle"></i><span class="hidden-xs"> {{ __('Create New Teammate') }}</span></button>
@@ -8,7 +8,7 @@
 			<input type="text" class="form-control" ng-model="quickSearch" placeholder="{{ __('Quick Search...') }}" />
 		</div>
 
-		{{ __('Users') }}
+		{{ __('Free Users') }}
 	</h2>
 
 	<div class="content-loader" ng-show=" ! request_finish">
@@ -17,8 +17,7 @@
 
 	<div ng-show="request_finish">
 		<div uib-alert class="alert-info" ng-show=" ! list.length">
-			{{ __("You haven't any teammate yet.") }}
-			<a href="javascript:;" ng-click="create()">{{ __("Create New Teammate") }}</a> {{ __("now") }}
+			{{ __("There are no users with Free plan.") }}
 		</div>
 
 		<div uib-alert class="alert-warning" ng-show="(list | filter : quickSearch).length == 0">

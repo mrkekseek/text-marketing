@@ -996,3 +996,15 @@ textarea.form-control.appointment-textarea {
 	min-height: 70px;
 	margin-bottom: 20px;
 }
+
+.cancel_reason {
+	width: 150px;
+	text-overflow: ellipsis;
+	overflow: hidden; 
+	white-space: nowrap;
+	cursor: pointer;
+}
+
+.modal_cancel_reason {
+	word-wrap: break-word;
+}

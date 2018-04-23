@@ -9,26 +9,50 @@
 		$scope.plans_list = [];
 		$scope.quickSearch = '';
 
-    	$scope.get = function () {
-    		request.send('/users', $scope.auth, function (data) {
-    			$scope.list = data;
+        $scope.initLive = function () {
+			$scope.getLiveUsers();
+			$scope.plans();
+		};
+		
+		$scope.initFree = function () {
+			$scope.getFreeUsers();
+			$scope.plans();
+		};
+		
+		$scope.initCanceled = function () {
+			$scope.getCanceledUsers();
+			$scope.plans();
+		};
+
+		$scope.getLiveUsers = function () {
+			request.send('/users/live', $scope.auth, function (data) {
+				$scope.list = data;
 				$scope.request_finish = true;
 			}, 'get');
 		};
 
-    	$scope.plans = function () {
-            request.send('/plans', false, function (data) {
-                $scope.plans_list = data;
-                $scope.plans_list.unshift({
-    				'plans_id': '0',
-    				'name': 'Select a Plan...'
-    			});
-            }, 'get');
-        };
+		$scope.getFreeUsers = function () {
+			request.send('/users/free', $scope.auth, function (data) {
+				$scope.list = data;
+				$scope.request_finish = true;
+			}, 'get');
+		};
 
-        $scope.initAdmin = function () {
-			$scope.get();
-			$scope.plans();
+		$scope.getCanceledUsers = function () {
+			request.send('/users/canceled', $scope.auth, function (data) {
+				$scope.list = data;
+				$scope.request_finish = true;
+			}, 'get');
+		};
+
+		$scope.plans = function () {
+			request.send('/plans', false, function (data) {
+				$scope.plans_list = data;
+				$scope.plans_list.unshift({
+					'plans_id': '0',
+					'name': 'Select a Plan...'
+				});
+			}, 'get');
 		};
 
     	$scope.create = function (users_id) {
@@ -97,6 +121,58 @@
 		$scope.profile = function () {
 			request.send('/users/profile', $scope.user);
 		};
+
+		$scope.confirmSubscription = function (user, action) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: 'ModalConfirmPlan.html',
+				controller: 'ModalConfirmPlanCtrl',
+				resolve: {
+					items: function () {
+						return {'action': action,
+								'user': user,
+						};
+					},
+				}
+			});
+
+			modalInstance.result.then(function (response) {
+				$scope.request_finish = false;
+				if (response == 'downgrade' || response == 'cancel') {
+					$scope.getLiveUsers();
+				} else {
+					$scope.getCanceledUsers();
+				}
+			}, function () {
+
+			});
+
+		};
+		
+		$scope.viewFullCancelReason = function (reason) {
+			var modalInstance = $uibModal.open({
+				animation: true,
+				templateUrl: 'ModalViewCancelReason.html',
+				controller: 'ModalViewCancelReasonCtrl',
+				resolve: {
+					items: function () {
+						return {'reason': reason};
+					},
+				}
+			});
+
+			modalInstance.result.then(function (response) {
+				$scope.request_finish = false;
+				if (response == 'downgrade' || response == 'cancel') {
+					$scope.getLiveUsers();
+				} else {
+					$scope.getCanceledUsers();
+				}
+			}, function () {
+
+			});
+
+		};
     };
 })();
 
@@ -135,6 +211,71 @@
 			$uibModalInstance.dismiss('cancel');
 		};
     };
+})();
+
+;
+
+(function () {
+	'use strict';
+
+	angular.module('app').controller('ModalConfirmPlanCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$window', 'request', 'items', ModalConfirmPlanCtrl]);
+
+	function ModalConfirmPlanCtrl($rootScope, $scope, $uibModalInstance, $window, request, items) {
+		$scope.user = items.user;
+		$scope.action = items.action;
+		$scope.request_finish = true;
+
+		$scope.aprove = function() {
+			$scope.request_finish = false;
+			if ($scope.action == 'downgrade') {
+				request.send('/plans/free/' + $scope.user.id, {}, function (data) {
+					$scope.request_finish = true;
+					$uibModalInstance.close($scope.action);
+				}, 'post');
+			}
+			
+			if ($scope.action == 'cancel') {
+				request.send('/plans/unsubscribe/' + $scope.user.id, {}, function (data) {
+					$scope.request_finish = true;
+					$uibModalInstance.close($scope.action);
+				}, 'post');
+			}
+			
+			if ($scope.action == 'reactivate') {
+				request.send('/plans/reactivate/' + $scope.user.id, {}, function (data) {
+					$scope.request_finish = true;
+					$uibModalInstance.close($scope.action);
+				}, 'post');
+			}
+			
+			if ($scope.action == 'upgrade') {
+				request.send('/plans/free/' + $scope.user.id, {}, function (data) {
+					$scope.request_finish = true;
+					$uibModalInstance.close($scope.action);
+				}, 'post');
+			}
+		};
+
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss();
+		};
+	};
+})();
+
+;
+
+(function () {
+	'use strict';
+
+	angular.module('app').controller('ModalViewCancelReasonCtrl', ['$rootScope', '$scope', '$uibModalInstance', '$window', 'request', 'items', ModalViewCancelReasonCtrl]);
+
+	function ModalViewCancelReasonCtrl($rootScope, $scope, $uibModalInstance, $window, request, items) {
+		$scope.reason = items.reason;
+
+		$scope.cancel = function () {
+			$uibModalInstance.dismiss();
+		};
+	};
 })();
 
 ;

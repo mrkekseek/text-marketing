@@ -18,7 +18,7 @@
                             <form id="payment-form" ng-show="showCardDetails && request_finish">
                                 <div class="form-row">
                                     <h5>
-                                        Credit or debit card
+                                        Credit or Debit Card
                                     </h5>
                                     
                                     <div id="card-element">
@@ -61,25 +61,25 @@
                                             <tr>
                                                 <th>
                                                     <div class="th">
-                                                        {{ __('Current plan') }}
+                                                        {{ __('Current Plan') }}
                                                     </div>
                                                 </th>
 
                                                 <th>
                                                     <div class="th">
-                                                        {{ __('Subscription status') }}
+                                                        {{ __('Subscription Status') }}
                                                     </div>
                                                 </th>
                                                 
-                                                <th>
+                                                <th ng-if="stripe.plan_name != 'Free'">
                                                     <div class="th">
-                                                        {{ __('Cancel subscription') }}
+                                                        {{ __('Cancel Subscription') }}
                                                     </div>
                                                 </th>
-
-                                                <th>
+                                                
+                                                <th ng-if="stripe.plan_name == 'Free'">
                                                     <div class="th">
-                                                        {{ __('Pause subscription') }}
+                                                        {{ __('Reactivate to Paid Plan') }}
                                                     </div>
                                                 </th>
                                             </tr>
@@ -96,11 +96,8 @@
                                                 </td>
                                                 
                                                 <td class="text-center">
-                                                    <button class="btn btn-primary btn-danger" ng-class="{disabled: ! stripe.stripe_id}" ng-click="cancelSubscription()">Cancel</button>
-                                                </td>
-                                                
-                                                <td class="text-center">
-                                                    <button class="btn btn-primary btn-danger" ng-class="{disabled: ! stripe.stripe_id}" ng-click="pauseSubscription()">Pause</button>
+                                                    <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name != 'Free'" ng-class="{disabled: ! stripe.stripe_id}" ng-click="cancelSubscription()">Cancel</button>
+                                                    <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name == 'Free'" ng-click="reactivate()">Reactivate</button>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -115,25 +112,46 @@
     </div>
 </div>
 
-<script type="text/ng-template" id="ModalPlansConfirm.html">
+<script type="text/ng-template" id="ModalCancelPlansConfirm.html">
 	<form name="form" method="post" novalidate="novalidate">
 		<div class="modal-header">
-			<h4 class="modal-title">{{ __("Confirmation") }}</h4>
+			<h4 class="modal-title">{{ __("Cancel subscription") }}</h4>
 		</div>
 
 		<div class="modal-body">
 			<div class="row">
-				<div class="col-xs-12">
-					<div class="form-group">
-						<p>Are you sure you want to cancel this subscription?</p>
-					</div>
-				</div>
+				<div ng-show=" ! showCancelReason">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group text-center">
+                            <h4>Total cancellation</h4>
+                            <p>Are you sure you want to cancel this subscription?</p>
+                            <button class="btn btn-primary" ng-click="showCancelReason = ! showCancelReason">{{ __('Cancel Subscription') }}</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group text-center">
+                            <h4>Downgrade to Free plan</h4>
+                            <p>The free plan sends texts to just 5 leads a month.</p>
+                            <button class="btn btn-primary" ng-click="downgrade()">{{ __('Downgrade to Free') }}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="showCancelReason">
+                    <div class="col-sm-12 text-center">
+                        <h4>Why do you want to unsubscribe?</h4>
+                        <div class="form-group">
+                            <textarea name="reason" class="form-control" ng-model="plan.reason"></textarea>
+                        </div>
+                        <button class="btn btn-primary" ng-click="unsubscribe()">{{ __('Submit and Unsubscribe') }}</button>
+                    </div>
+                </div>
 			</div>
 		</div>
 
 		<div class="modal-footer">
-			<button type="submit" class="btn btn-primary" ng-click="agree()">{{ __('Yes') }}</button>
-			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('No') }}</button>
+			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
 		</div>
 	</form>
 </script>

@@ -24,11 +24,41 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages')->insert([
-            'code' => 'users-list',
-            'folder' => 'users',
-            'file' => 'list',
+            'code' => 'users-users',
+            'folder' => '',
+            'file' => '',
             'name' => 'Users',
             'icon' => 'fa fa-user',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'users-live',
+            'folder' => 'users',
+            'file' => 'live',
+            'name' => 'Live',
+            'icon' => '',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'users-free',
+            'folder' => 'users',
+            'file' => 'free',
+            'name' => 'Free',
+            'icon' => '',
+            'tpl' => '',
+            'public' => 0,
+        ]);
+        
+        DB::table('pages')->insert([
+            'code' => 'users-canceled',
+            'folder' => 'users',
+            'file' => 'canceled',
+            'name' => 'Canceled',
+            'icon' => '',
             'tpl' => '',
             'public' => 0,
         ]);
@@ -334,7 +364,22 @@ class PagesSeeder extends Seeder
         ]);
 
         DB::table('pages_access')->insert([
-            'code' => 'users-list',
+            'code' => 'users-users',
+            'users_type' => 2,
+        ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'users-live',
+            'users_type' => 2,
+        ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'users-free',
+            'users_type' => 2,
+        ]);
+        
+        DB::table('pages_access')->insert([
+            'code' => 'users-canceled',
             'users_type' => 2,
         ]);
 
@@ -470,11 +515,35 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->truncate();
 
         DB::table('pages_menu')->insert([
-            'pages_code' => 'users-list',
+            'pages_code' => 'users-users',
             'parents_code' => '',
             'plans' => 'none',
+            'main' => 0,
+            'pos' => 1,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'users-live',
+            'parents_code' => 'users-users',
+            'plans' => 'none',
             'main' => 1,
+            'pos' => 1,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'users-free',
+            'parents_code' => 'users-users',
+            'plans' => 'none',
+            'main' => 0,
             'pos' => 2,
+        ]);
+        
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'users-canceled',
+            'parents_code' => 'users-users',
+            'plans' => 'none',
+            'main' => 0,
+            'pos' => 3,
         ]);
 
         DB::table('pages_menu')->insert([
