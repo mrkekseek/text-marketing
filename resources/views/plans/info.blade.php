@@ -127,17 +127,17 @@
 				<div ng-show=" ! showCancelReason && request_finish">
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group text-center">
-                            <h4>Total cancellation</h4>
-                            <p>Are you sure you want to cancel this subscription?</p>
-                            <button class="btn btn-primary" ng-click="showCancelReason = ! showCancelReason">{{ __('Cancel Subscription') }}</button>
+                            <h4>Downgrade to Free plan</h4>
+                            <p>The free plan sends texts to just 5 leads a month.</p>
+                            <button class="btn btn-primary" ng-click="downgrade()">{{ __('Downgrade to Free') }}</button>
                         </div>
                     </div>
                     
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group text-center">
-                            <h4>Downgrade to Free plan</h4>
-                            <p>The free plan sends texts to just 5 leads a month.</p>
-                            <button class="btn btn-primary" ng-click="downgrade()">{{ __('Downgrade to Free') }}</button>
+                            <h4>Total cancellation</h4>
+                            <p>Are you sure you want to cancel this subscription?</p>
+                            <button class="btn btn-primary" ng-click="showCancelReason = ! showCancelReason">{{ __('Cancel Subscription') }}</button>
                         </div>
                     </div>
                 </div>
@@ -146,9 +146,9 @@
                     <div class="col-sm-12 text-center">
                         <h4>Why do you want to unsubscribe?</h4>
                         <div class="form-group">
-                            <textarea name="reason" class="form-control" ng-model="plan.reason"></textarea>
+                            <textarea name="reason" class="form-control" ng-model="plan.reason" maxlength="191"></textarea>
                         </div>
-                        <button class="btn btn-primary" ng-click="unsubscribe()">{{ __('Submit and Unsubscribe') }}</button>
+                        <button class="btn btn-primary" ng-class="{disabled: ! plan.reason}" ng-click="unsubscribe()">{{ __('Submit and Unsubscribe') }}</button>
                     </div>
                 </div>
 			</div>

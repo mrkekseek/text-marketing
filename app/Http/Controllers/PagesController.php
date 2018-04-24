@@ -26,9 +26,6 @@ class PagesController extends Controller
     public function menu($post = [])
     {
 		$noAccess = PagesAccess::where('users_type', auth()->user()->type)->get()->pluck('code')->toArray();
-		if (auth()->user()->id == 45) {
-			unset($noAccess[11]);
-		}
 		$users_plan =  auth()->user()->plans_id == 'free-contractortexter' ? auth()->user()->paused_plans_id : auth()->user()->plans_id;
 		$plan = empty(auth()->user()->plans_id) ? 'none' : $users_plan;
 		$menu = PagesMenu::whereNotIn('pages_code', $noAccess)->where('plans', $plan)->orderBy('pos')->get();

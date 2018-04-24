@@ -49,6 +49,7 @@ class AuthController extends Controller
     {
         $data = $request->only(['plans_id', 'email', 'password', 'firstname', 'lastname']);
         $data['plans_id'] = $data['plans_id'].'-'.strtolower(config('app.name'));
+        $data['paused_plans_id'] = $data['plans_id'] == 'free-contractortexter' ? 'home-advisor-contractortexter' : '';
         $data['type'] = 2;
 		$data['teams_leader'] = true;
 		$data['active'] = true;
