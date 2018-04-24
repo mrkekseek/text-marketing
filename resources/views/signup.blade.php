@@ -17,12 +17,15 @@
 	<body id="app" class="app">
 		<div class="page-signin">
 			<div class="signin-header">
-				<div class="container">
-					<div class="wrap-logo text-center">
+				<div class="container text-center">
+					<div class="wrap-logo">
 						<a href="/">
 							<img src="/img/logo.jpg" />
 						</a>
 					</div>
+					<h3 ng-show="signUp.plans_id == 'free'">
+						Free Plan - Texts for 5 Leads per Month
+					</h3>
 				</div>
 			</div>
 
@@ -69,7 +72,7 @@
 											</div>
 										</div>
 
-										<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' ">
+										<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' || signUp.plans_id == 'free'">
 											<div class="input-group input-group-first">
 												<span class="input-group-addon">
 													<span class="fa fa-phone"></span>
@@ -78,7 +81,7 @@
 											</div>
 										</div>
 
-										<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' ">
+										<div class="form-group" ng-if="signUp.plans_id == 'home-advisor' || signUp.plans_id == 'free'">
 											<div class="input-group input-group-first">
 												<span class="input-group-addon">
 													<span class="fa fa-home"></span>

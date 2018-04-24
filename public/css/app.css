@@ -1008,3 +1008,13 @@ textarea.form-control.appointment-textarea {
 .modal_cancel_reason {
 	word-wrap: break-word;
 }
+
+.unstyled_ul {
+	list-style: none;
+	padding: 0;
+}
+
+.unstyled_ul b,
+.unstyled_ul span {
+	color: #C82027;
+}

@@ -52,12 +52,6 @@
 								{{ __('Cell #') }}
 							</div>
 						</th>
-
-						<th>
-							<div class="th">
-								{{ __('Team') }}
-							</div>
-						</th>
 						
 						<th class="ha_number">
 							<div class="th">
@@ -104,10 +98,6 @@
 						
 						<td>
 							@{{ user.view_phone }}
-						</td>
-
-						<td>
-							@{{ user.teams.name }}
 						</td>
 						
 						<td>
