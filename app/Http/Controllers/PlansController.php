@@ -104,7 +104,7 @@ class PlansController extends Controller
 				'amount' => $plan->amount,
 				'currency' => 'USD',
 				'interval' => $plan->interval,
-				"product" => 'prod_Ci23QxLfwi7R7w',
+				"product" => 'prod_CjzqhdXnFrPram',
 				'metadata' => [
 					'reviews' => $plan->reviews,
 					'tms' => $plan->tms,
