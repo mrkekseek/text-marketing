@@ -30,9 +30,19 @@ class User extends Authenticatable
         return $this->email;
     }
 
-    static public function allUsers()
+    static public function liveUsers()
     {
-        return self::where('type', '2')->where('teams_leader', '1')->with('teams')->get();
+        return self::where('type', '2')->where('teams_leader', '1')->whereIn('plans_id', ['home-advisor-contractortexter', 'text-contractortexter', 'star-rating-contractortexter'])->with('teams')->get();
+    }
+    
+    static public function freeUsers()
+    {
+        return self::where('type', '2')->where([['teams_leader', '1'], ['plans_id', 'free-contractortexter']])->with('teams')->get();
+    }
+    
+    static public function canceledUsers()
+    {
+        return self::where('type', '2')->where([['teams_leader', '1'], ['plans_id', 'canceled-contractortexter']])->with('teams')->get();
     }
 
     public function teams()
@@ -108,6 +118,11 @@ class User extends Authenticatable
     public function leads()
     {
         return $this->hasMany('App\Lead', 'user_id');
+    }
+    
+    public function freePlan()
+    {
+        return $this->hasMany('App\FreePlan', 'users_id');
     }
 
     static public function facebookTokens()

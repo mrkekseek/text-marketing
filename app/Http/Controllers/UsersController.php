@@ -20,6 +20,7 @@ use App\SocialReview;
 use App\DefaultText;
 use App\NewUser;
 use App\GeneralMessage;
+use App\Plan;
 
 use App\Libraries\Api;
 use App\Libraries\Jwt;
@@ -36,6 +37,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Twilio\Rest\Client as Twilio;
 use Twilio\Exceptions\RestException;
+use Cartalyst\Stripe\Stripe;
 
 class UsersController extends Controller
 {
@@ -479,9 +481,32 @@ class UsersController extends Controller
     	return User::find($id);
     }
 
-    public function all()
+    public function getLiveUsers()
 	{
-		return User::allUsers()->each(function($item, $key) {
+		return User::liveUsers()->each(function($item, $key) {
+			$item->has_subscription = true;
+			$plan = Plan::where('plans_id', $item->plans_id)->first();
+			if ( ! $item->subscribed($plan->name)) {
+				$item->has_subscription = false;	
+			}			
+			$ha = $item->homeadvisors()->first();
+			$item->rep = $ha['rep'];
+			return $item;
+		});
+	}
+	
+	public function getFreeUsers()
+	{
+		return User::freeUsers()->each(function($item, $key) {
+			$ha = $item->homeadvisors()->first();
+			$item->rep = $ha['rep'];
+			return $item;
+		});
+	}
+	
+	public function getCanceledUsers()
+	{
+		return User::canceledUsers()->each(function($item, $key) {
 			$ha = $item->homeadvisors()->first();
 			$item->rep = $ha['rep'];
 			return $item;

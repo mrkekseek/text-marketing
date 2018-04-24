@@ -13,6 +13,7 @@ use App\Jobs\SendFollowUpText;
 use App\Jobs\SendGeneralText;
 use App\User;
 use App\GeneralMessage;
+use App\FreePlan;
 use Carbon\Carbon;
 
 class SendFirstHomeadvisorLeadNotification implements ShouldQueue
@@ -91,6 +92,12 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
         }
 
         $phones[] = $row;
+
+        $free_plan_limit = FreePlan::checkLimit($user, $client);
+		if (empty($free_plan_limit)) {
+            $dialog->update(['text' => 'Text was not send, because you have reached your plan limit.']);
+			return false;
+		}
 
         SendLeadText::dispatch($dialog, $phones, $user)->onQueue('texts');
 

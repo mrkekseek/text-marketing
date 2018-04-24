@@ -1,68 +1,109 @@
-<div class="page page-table" data-ng-controller="PlansCtrl" data-ng-init="init()">
+<div class="page page-table" data-ng-controller="PlansCtrl" data-ng-init="initPlanPage()">
 	<h2>
-		{{ __('Payment Plans') }}
+		{{ __('Plan Details') }}
 	</h2>
     
     <div class="row">
-        <div class="col-sm-12 col-md-6 new_users">
+        <div class="col-sm-12 col-md-6 plans">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <div class="loader_wrapper">
+                        <div class="content-loader" ng-show="! request_finish">
+                            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                        </div>
+                    </div>
+
                     <div class="row">
-						<div class="col-sm-12" id="new_users_texts">
-                            <form name="form">
-                                <div class="card-content">
-                                    <label>
-                                        <input name="cardholder_firstname" class="field" ng-class="{'is-empty': !user.users_firstname}" ng-model="user.users_firstname" placeholder="Enter your First Name" required="required" />
-                                        <span>
-                                            <span>{{ __('First Name') }}</span>
-                                        </span>
-                                    </label>
-                                    <label>
-                                        <input name="cardholder_lastname" class="field" ng-class="{'is-empty': !user.users_lastname}" ng-model="user.users_lastname" placeholder="Enter your Last Name" required="required" />
-                                        <span>
-                                            <span>{{ __('Last Name') }}</span>
-                                        </span>
-                                    </label>
-                                    <label>
-                                        <div id="card-element" class="field">
-                                        </div>
-                                        <span>
-                                            <span>{{ __('Credit or debit card') }}</span>
-                                        </span>
-                                    </label>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" ng-model="terms" />{{ __('By clicking the button below you agree to our ') }}<a href="" target="_blank">{{ __('terms') }}</a>
-                                        </label>
+						<div class="col-sm-12">    
+                            <form id="payment-form" ng-show="showCardDetails && request_finish">
+                                <div class="form-row">
+                                    <h5>
+                                        Credit or Debit Card
+                                    </h5>
+                                    
+                                    <div id="card-element">
                                     </div>
-                                    <button type="button" class="btn btn-primary" ng-click="save_card()" ng-class="{'disabled': !terms}">
-                                        {{ __('Submit Payment') }} 
-                                        <span ng-show="user_plan"></span>
-                                    </button>
+                                    
+                                    <div id="card-errors" role="alert"></div>
                                 </div>
+
+                                <button>Submit</button>
+                                <a href="javascript:void(0);" class="btn btn-default" ng-show="stripe.stripe_id" ng-click="showCardDetails = ! showCardDetails">Cancel</a>
                             </form>
-                            <!-- <form name="form">
-                                <h4>Payment Details</h4>
 
-                                
-                                
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="card" ng-model="plans.card" placeholder="{{ __('Credit or debit card') }}" ng-required="user.company_status != 'verified'" />
+                            <div class="plan_details">
+                                <div class="card_details" ng-show="stripe.stripe_id && ! showCardDetails && request_finish">
+                                    <h5>
+                                        Credit or Debit Card
+                                    </h5>
+    
+                                    <div class="form-group pull-left">
+                                        <i class="fa fa-cc-visa" ng-if="stripe.card_brand == 'Visa'"></i>
+                                        <i class="fa fa-cc-mastercard" ng-if="stripe.card_brand == 'MasterCard'"></i>
+                                        <i class="fa fa-cc-amex" ng-if="stripe.card_brand == 'American Express'"></i>
+                                        <i class="fa fa-cc-discover" ng-if="stripe.card_brand == 'Discover'"></i>
+                                        <i class="fa fa-cc-jcb" ng-if="stripe.card_brand == 'JCB'"></i>
+                                        <i class="fa fa-cc-diners-club" ng-if="stripe.card_brand == 'Diners Club'"></i>
+                                        <i class="fa fa-credit-card" ng-if="stripe.card_brand == 'UnionPay'"></i>
+                                        <span>****@{{ stripe.card_last_four}}</span>
+                                    </div>
+    
+                                    <button class="btn btn-primary btn-danger pull-right" ng-click="showCardDetails = ! showCardDetails">Change</button>
                                 </div>
 
-                                <h4>Choose a Plan</h4>
+                                <div class="cancel_subscription" ng-show="request_finish">
+                                    <h5>
+                                        Your Plan
+                                    </h5>
 
-                                <div class="form-group">
-                                    <select class="form-control" ng-model="plan">
-                                        <option value="@{{ plan.id }}" ng-repeat="plan in list">@{{ plan.name + ' ' + '($'+ plan.amount + '/month)' }}</option>
-                                    </select>
+                                    <table class="table table-bordered table-striped table-middle table-phones">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <div class="th">
+                                                        {{ __('Current Plan') }}
+                                                    </div>
+                                                </th>
+
+                                                <th>
+                                                    <div class="th">
+                                                        {{ __('Subscription Status') }}
+                                                    </div>
+                                                </th>
+                                                
+                                                <th ng-if="stripe.plan_name != 'Free'">
+                                                    <div class="th">
+                                                        {{ __('Cancel Subscription') }}
+                                                    </div>
+                                                </th>
+                                                
+                                                <th ng-if="stripe.plan_name == 'Free'">
+                                                    <div class="th">
+                                                        {{ __('Reactivate to Paid Plan') }}
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    @{{ stripe.plan_name ? stripe.plan_name : plan_name }}
+                                                </td>
+                                                
+                                                <td>
+                                                    @{{ stripe.status ? stripe.status : 'Not Active' }}
+                                                </td>
+                                                
+                                                <td class="text-center">
+                                                    <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name != 'Free'" ng-class="{disabled: ! stripe.stripe_id}" ng-click="cancelSubscription()">Cancel</button>
+                                                    <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name == 'Free'" ng-click="reactivate()">Reactivate</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                
-                                <button type="button" class="btn btn-primary" ng-click="save_card()">
-                                    {{ __('Submit') }} 
-                                    <span ng-show="user_plan"></span>
-                                </button>
-                            </form> -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,6 +112,50 @@
     </div>
 </div>
 
-<script type="text/ng-template" id="removeTooltip.html">
-	<span>{{ __('You can\'t remove a plan with active users on it. First change a plan for those users or remove them') }}</span>
+<script type="text/ng-template" id="ModalCancelPlansConfirm.html">
+	<form name="form" method="post" novalidate="novalidate">
+		<div class="modal-header">
+			<h4 class="modal-title">{{ __("Cancel subscription") }}</h4>
+		</div>
+
+		<div class="modal-body">
+			<div class="row">
+                <div class="content-loader" ng-show="! request_finish">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                </div>
+
+				<div ng-show=" ! showCancelReason && request_finish">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group text-center">
+                            <h4>Total cancellation</h4>
+                            <p>Are you sure you want to cancel this subscription?</p>
+                            <button class="btn btn-primary" ng-click="showCancelReason = ! showCancelReason">{{ __('Cancel Subscription') }}</button>
+                        </div>
+                    </div>
+                    
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="form-group text-center">
+                            <h4>Downgrade to Free plan</h4>
+                            <p>The free plan sends texts to just 5 leads a month.</p>
+                            <button class="btn btn-primary" ng-click="downgrade()">{{ __('Downgrade to Free') }}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="showCancelReason && request_finish">
+                    <div class="col-sm-12 text-center">
+                        <h4>Why do you want to unsubscribe?</h4>
+                        <div class="form-group">
+                            <textarea name="reason" class="form-control" ng-model="plan.reason"></textarea>
+                        </div>
+                        <button class="btn btn-primary" ng-click="unsubscribe()">{{ __('Submit and Unsubscribe') }}</button>
+                    </div>
+                </div>
+			</div>
+		</div>
+
+		<div class="modal-footer">
+			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Close') }}</button>
+		</div>
+	</form>
 </script>

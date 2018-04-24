@@ -8,6 +8,7 @@ use App\Client;
 use App\User;
 use App\Alert;
 use App\DefaultText;
+use App\FreePlan;
 use Carbon\Carbon;
 use App\Libraries\Api;
 use App\Libraries\ApiValidate;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use DivArt\ShortLink\Facades\ShortLink;
 use App\Mail\SendAlertEmail;
+use Cartalyst\Stripe\Stripe;
 
 
 class DialogsController extends Controller
@@ -49,13 +51,21 @@ class DialogsController extends Controller
 		$data = $request->only(['text', 'time']);
 
 		if ($this->textValidate($data, $client, $request, false)) {
-            $dialog = auth()->user()->dialogs()->create([
+            $user = auth()->user();
+
+            $free_plan_limit = FreePlan::checkLimit($user, $client);
+
+            if (empty($free_plan_limit)) {
+                return $this->message(__('You have reached your plan limit'), 'error');
+            }
+            
+            $dialog = $user->dialogs()->create([
                 'clients_id' => $client->id,
                 'text' => $data['text'],
                 'my' => true,
                 'status' => 2,
             ]);
-            $phones = [];
+            
             $phones[] = [
                 'phone' => $client->phone,
                 'website_shortlink' => auth()->user()->website_shortlink,
