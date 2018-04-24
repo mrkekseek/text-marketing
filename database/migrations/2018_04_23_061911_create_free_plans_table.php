@@ -17,8 +17,8 @@ class CreateFreePlansTable extends Migration
             $table->increments('id');
             $table->integer('users_id')->unsigned()->default(0);
             $table->integer('clients_id')->unsigned()->default(0);
-            $table->timestamp('started_at')->default(NULL);
-            $table->timestamp('ends_at')->default(NULL);
+            $table->timestamp('started_at')->nullable();
+            $table->timestamp('ends_at')->nullable();
             $table->timestamps();
         });
     }
