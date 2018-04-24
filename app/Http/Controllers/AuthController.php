@@ -35,8 +35,9 @@ class AuthController extends Controller
                 'password' => UsersService::password($request->password)
             ]);
         }
+        $user = User::where('email', $request->email)->first();
 
-        if (auth()->validate($request->all())) {
+        if (auth()->validate($request->all()) && $user->plans_id != 'canceled-contractortexter') {
             auth()->attempt($request->all());
             return $this->message('You are in', 'success');
         }

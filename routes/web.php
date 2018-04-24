@@ -61,13 +61,24 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
 	Route::post('users/saveSettings', 'UsersController@saveSettings');
-	Route::get('users', 'UsersController@all');
+	Route::get('users/live', 'UsersController@getLiveUsers');
+	Route::get('users/free', 'UsersController@getFreeUsers');
+	Route::get('users/canceled', 'UsersController@getCanceledUsers');
 	Route::put('users', 'UsersController@create');
 	Route::post('users/{id}', 'UsersController@update');
 	Route::delete('users/{id}', 'UsersController@remove');
 	Route::get('users/{id}/magic', 'UsersController@magic');
 
 	Route::get('plans', 'PlansController@all');
+	Route::put('plans/save', 'PlansController@savePlan');
+	Route::post('plans/subscribe', 'PlansController@subscribe');
+	Route::put('plans/subscribe', 'PlansController@updateCard');
+	Route::get('plans/get', 'PlansController@getPlanInfo');
+	Route::post('plans/free/{user?}', 'PlansController@makeFreePlan');
+	Route::post('plans/unsubscribe/{user?}', 'PlansController@cancelSubscription');
+	Route::post('plans/reactivate/{user?}', 'PlansController@reactivatePlan');
+	Route::post('plans/{plan_id}', 'PlansController@updatePlan');
+	Route::delete('plans/{plan_id}', 'PlansController@remove');
 
 	Route::get('links', 'LinksController@all');
 
@@ -199,6 +210,8 @@ Route::any('inbox/message/{message}', 'MessagesController@inbox');
 Route::any('inbox/general/{message}', 'HomeadvisorController@inbox');
 
 Route::any('leads/convert', 'HomeadvisorController@convert');
+
+Route::post('stripe/webhook', '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook');
 
 Route::any('{catchall}', function() {
 	return auth()->check() ? view('template') : view('signin');
