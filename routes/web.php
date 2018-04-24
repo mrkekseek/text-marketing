@@ -78,6 +78,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::post('plans/unsubscribe/{user?}', 'PlansController@cancelSubscription');
 	Route::post('plans/reactivate/{user?}', 'PlansController@reactivatePlan');
 	Route::post('plans/{plan_id}', 'PlansController@updatePlan');
+	Route::delete('plans/{plan_id}', 'PlansController@remove');
 
 	Route::get('links', 'LinksController@all');
 
