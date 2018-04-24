@@ -505,7 +505,7 @@ class PagesSeeder extends Seeder
         
         DB::table('pages_access')->insert([
             'code' => 'plans-info',
-            'users_type' => 2,
+            'users_type' => 1,
         ]);
 
 

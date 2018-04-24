@@ -28,7 +28,7 @@
             error *= validate.check($scope.form.password, 'Password');
             error *= validate.check($scope.form.firstname, 'Name');
 
-            if ($scope.signUp.plans_id == 'home-advisor') {
+            if ($scope.signUp.plans_id == 'home-advisor' || $scope.signUp.plans_id == 'free') {
                 error *= validate.check($scope.form.lastname, 'Last Name');
                 error *= validate.check($scope.form.view_phone, 'Your Cell #');
                 error *= validate.check($scope.form.rep, 'HomeAdvisor Account #');

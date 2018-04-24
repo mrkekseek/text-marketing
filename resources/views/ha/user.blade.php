@@ -1,7 +1,11 @@
 <div class="page page-table" data-ng-controller="HomeAdvisorCtrl" ng-init="init()">
-	<h2>
-		{{ __('HomeAdvisor') }}	
+	<h2 ng-show="ha.send_request">
+		{{ __('HomeAdvisor') }}
 		<i class="fa fa-question-circle-o help-icon" uib-tooltip="To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly). Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below. We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to app.contractortexter.com. Once you are connected we will send a test text to your Cell." tooltip-placement="right-top" aria-hidden="true"></i>
+	</h2>
+	
+	<h2 ng-show=" ! ha.send_request">
+		{{ __('Very Important') }}
 	</h2>
 
 	<div class="row">
@@ -9,12 +13,12 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div uib-alert class="alert-info" ng-show=" ! ha.send_request">
-						<ol class="unstyled_ul">
-							<li>{{ __("To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly).") }}</li>
-							<li>{{ __("Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below.") }}</li>
-							<li>{{ __("We've already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
-							<li>{{ __("Once you are connected we will send a test text to your Cell.") }}</li>
-						</ol>
+						<ul class="unstyled_ul">
+							<li><b>1. </b>{{ __("We just sent a confirmation email from uri@contractortexter.com. Rarely it goes to spam, but if so please click Not Spam.") }}</li>
+							<li><b>2. </b>{{ __("Please click 'Activate’. We then send your details to HomeAdvisor to get connected - this takes them several days (they move slowly). Your free trial won’t start until you’re connected, when we send you a test text.") }}</li>
+							<li><b>3. </b>{{ __("Please enter your Company Name, Website, Office Number and Logo and click Save.")}}</li>
+							<li><b>4. </b>{{ __("To return to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
+						</ul>
 						Thanks!
 					</div>
 
@@ -26,7 +30,7 @@
 						{{ __('Want 3 Free Months? Refer 1 Friend. Click ')}}<a href="/ha/referral">HERE</a>{{ __(' for details') }}
 					</div>
 
-					<button type="button" class="btn btn-primary" ng-show=" ! ha.send_request" ng-click="activate()">{{ __('Activate HomeAdvisor') }}</button>
+					<button type="button" class="btn btn-primary" ng-show=" ! ha.send_request" ng-click="activate()">{{ __('Activate') }}</button>
 					
 					<div ng-show="ha.send_request">
 						<div class="form-group" ng-show="list.length">
