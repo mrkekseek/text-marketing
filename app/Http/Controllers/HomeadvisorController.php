@@ -15,6 +15,7 @@ use App\Picture;
 use App\Lead;
 use App\DefaultText;
 use App\GeneralMessage;
+use App\FreePlan;
 use App\Mail\SendAlertClickEmail;
 use DivArt\ShortLink\Facades\ShortLink;
 use Propaganistas\LaravelPhone\PhoneNumber;
@@ -35,6 +36,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Google_Client;
 use Google_Service_Calendar;
+use Cartalyst\Stripe\Stripe;
 
 class HomeadvisorController extends Controller
 {
@@ -362,6 +364,10 @@ class HomeadvisorController extends Controller
 						}
 					}
 				}
+
+				if ($link->user->subscribed('Canceled')) {
+					return $this->message('Your account is cenceled', 'error');
+				}
 				
 				event(new SaveLeadFromHomeadvisor($link->user, $client, $phones, $lead_exists));
 
@@ -446,6 +452,12 @@ class HomeadvisorController extends Controller
 	
 	private function sendLeadClickText($user, $client)
 	{
+		$free_plan_limit = FreePlan::checkLimit($user, $client);
+
+		if (empty($free_plan_limit)) {
+			return $this->message(__('You have reached your plan limit'), 'error');
+		}
+
 		$default_text = DefaultText::first();
 		$lead_text = $default_text->lead_clicks;
 		$user_text = $default_text->lead_clicks_inbox;

@@ -119,6 +119,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Lead', 'user_id');
     }
+    
+    public function freePlan()
+    {
+        return $this->hasMany('App\FreePlan', 'users_id');
+    }
 
     static public function facebookTokens()
     {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\User;
 use App\FreePlan;
+use Carbon\Carbon;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
 
@@ -226,6 +227,11 @@ class PlansController extends Controller
 				'plans_id' => 'free-contractortexter',
 				'paused_plans_id' => $plan_id,
 			]);
+			$free_plan = FreePlan::create([
+				'users_id' => $user->id,
+				'started_at' => Carbon::now(),
+				'ends_at' => Carbon::now()->addMonth()
+			]);
 		} else {
 			$plan = Plan::where('plans_id', $user->plans_id)->first();
 			$subscription = $user->subscription($plan->name);
@@ -236,6 +242,11 @@ class PlansController extends Controller
 				'plans_id' => 'free-contractortexter',
 				'paused_plans_id' => $plan->plans_id == 'canceled-contractortexter' ? $user->paused_plans_id : $plan->plans_id,
 				'cancellation_reason' => '',
+			]);
+			$free_plan = FreePlan::create([
+				'users_id' => $user->id,
+				'started_at' => Carbon::now(),
+				'ends_at' => Carbon::now()->addMonth()
 			]);
 		}
 		return $this->message('You have subscribed to Free plan', 'success');
@@ -254,6 +265,12 @@ class PlansController extends Controller
 				'plans_id' => $user->paused_plans_id,
 				'paused_plans_id' => '',
 			]);
+			$free_plan = FreePlan::where('users_id', $user->id)->get();
+			if ( ! empty($free_plan)) {
+				foreach($free_plan as $item) {
+					$item->delete();
+				}
+			}
 		} else {
 			$plan = Plan::where('plans_id', $user->plans_id)->first();
 			$subscription = $user->subscription($plan->name);
@@ -265,6 +282,12 @@ class PlansController extends Controller
 				'plans_id' => $user->paused_plans_id,
 				'paused_plans_id' => '',
 			]);
+			$free_plan = FreePlan::where('users_id', $user->id)->get();
+			if ( ! empty($free_plan)) {
+				foreach($free_plan as $item) {
+					$item->delete();
+				}
+			}
 		}
 		return $this->message('You have reactivate your plan', 'success');
 	}

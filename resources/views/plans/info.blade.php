@@ -120,7 +120,11 @@
 
 		<div class="modal-body">
 			<div class="row">
-				<div ng-show=" ! showCancelReason">
+                <div class="content-loader" ng-show="! request_finish">
+                    <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+                </div>
+
+				<div ng-show=" ! showCancelReason && request_finish">
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group text-center">
                             <h4>Total cancellation</h4>
@@ -138,7 +142,7 @@
                     </div>
                 </div>
 
-                <div ng-show="showCancelReason">
+                <div ng-show="showCancelReason && request_finish">
                     <div class="col-sm-12 text-center">
                         <h4>Why do you want to unsubscribe?</h4>
                         <div class="form-group">

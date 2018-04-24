@@ -206,10 +206,12 @@
     function ModalConfirmCancelPlanCtrl($rootScope, $scope, $uibModalInstance, $window, request, items) {
         $scope.plan = {};
         $scope.plan = items;
+        $scope.request_finish = true;
         
         $scope.unsubscribe = function () {
             $scope.request_finish = false;
             request.send('/plans/unsubscribe', $scope.plan, function (data) {
+                $scope.request_finish = true;
                 $window.location.href = '/';
             }, 'post');
         };
@@ -217,6 +219,7 @@
         $scope.downgrade = function () {
             $scope.request_finish = false;
             request.send('/plans/free', $scope.plan, function (data) {
+                $scope.request_finish = true;
                 $uibModalInstance.close('true');
             }, 'post');
         };

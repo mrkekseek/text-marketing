@@ -67,7 +67,7 @@
 
 						<th>
 							<div class="th">
-								{{ __('Downgrade Plan') }}
+								{{ __('Downgrade Plan to Free') }}
 							</div>
 						</th>
 						
