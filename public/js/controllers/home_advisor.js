@@ -29,7 +29,6 @@
                 value: 30
             }
         ];
-        $scope.show_referral = false;
         $scope.referral = {};
 
         $scope.init = function() {
@@ -119,7 +118,6 @@
         };
 
         $scope.activate = function() {
-            $scope.show_referral = true;
             request.send('/homeadvisor/activate' + ($scope.ha.id ? '/' + $scope.ha.id : ''), {}, function (data) {
                 $scope.ha.send_request = true;
             }, ($scope.ha.id ? 'post' : 'put'));

@@ -14,10 +14,10 @@
 				<div class="panel-body">
 					<div uib-alert class="alert-info" ng-show=" ! ha.send_request">
 						<ul class="unstyled_ul">
-							<li><b>1. </b>{{ __("We just sent a confirmation email from uri@contractortexter.com. Rarely it goes to spam, but if so please click Not Spam.") }}</li>
-							<li><b>2. </b>{{ __("Please click 'Activate’. We then send your details to HomeAdvisor to get connected - this takes them several days (they move slowly). Your free trial won’t start until you’re connected, when we send you a test text.") }}</li>
-							<li><b>3. </b>{{ __("Please enter your Company Name, Website, Office Number and Logo and click Save.")}}</li>
-							<li><b>4. </b>{{ __("To return to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
+							<li><b>1. </b>{{ __("Please click 'Activate'. We then send your details to HomeAdvisor to get connected - this takes them several days (they move slowly). Your free trial won't start until you're connected, when we send you a test text.") }}</li>
+							<li><b>2. </b>{{ __("Please enter your Company Name, Website, Office Number and Logo and click Save.")}}</li>
+							<li><b>3. </b>{{ __("To return to this page anytime, go to")}} <a href="https://app.contractortexter.com">app.contractortexter.com</a>.</li>
+							<li><b>4. </b>{{ __("Want 3 Free Months? Check out the right side of this page!")}}</li>
 						</ul>
 						Thanks!
 					</div>
@@ -253,7 +253,7 @@
 		</div>
 
 		<div class="col-sm-12 col-md-6">
-			<div class="referral_section" ng-show="show_referral && ! list.length">
+			<div class="referral_section" ng-show=" ! list.length">
 				<form name="form" novalidate="novalidate">
 					<div class="ref-block">
 						<div class="ref-title text-center">

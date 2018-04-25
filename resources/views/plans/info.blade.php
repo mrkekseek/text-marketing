@@ -1,6 +1,6 @@
 <div class="page page-table" data-ng-controller="PlansCtrl" data-ng-init="initPlanPage()">
 	<h2>
-		{{ __('Plan Details') }}
+		{{ __('Billing Details') }}
 	</h2>
     
     <div class="row">
