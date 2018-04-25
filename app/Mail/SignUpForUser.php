@@ -38,11 +38,9 @@ class SignUpForUser extends Mailable
         $project = $this->name;
         
         return $this->markdown('emails.signup_for_user')
-        ->subject('Thanks from '.$this->name)
+        ->subject('Thanks You for Signing Up')
         ->with([
                 'user' => $this->user,
-                'link' => $link,
-                'project' => $project
             ]);
     }
 }

@@ -488,7 +488,7 @@ class UsersController extends Controller
 			$plan = Plan::where('plans_id', $item->plans_id)->first();
 			if ( ! $item->subscribed($plan->name)) {
 				$item->has_subscription = false;	
-			}			
+			}
 			$ha = $item->homeadvisors()->first();
 			$item->rep = $ha['rep'];
 			return $item;

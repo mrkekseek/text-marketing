@@ -46,31 +46,28 @@ class SignUp implements ShouldQueue
     public function handle()
     {
         Mail::to($this->owner)->send(new SignUpForAdmin($this->user, $this->url, $this->name));
-        if ($this->user->plans_id == 'home-advisor-'.strtolower(config('app.name'))) {
-            $default_text = DefaultText::first();
-		    $text = $default_text->thank_you_signup;
+        $default_text = DefaultText::first();
+        $text = $default_text->thank_you_signup;
 
-            $global_dialog = new GeneralMessage();
-            $global_dialog->type = 'thank_you_signup';
-            $global_dialog->phone = $this->user->phone;
-            $global_dialog->firstname = $this->user->firstname;
-            $global_dialog->lastname = $this->user->lastname;
-            $global_dialog->text = $text;
-            $global_dialog->my = 1;
-            $global_dialog->status = 0;
-            $global_dialog->save();
+        $global_dialog = new GeneralMessage();
+        $global_dialog->type = 'thank_you_signup';
+        $global_dialog->phone = $this->user->phone;
+        $global_dialog->firstname = $this->user->firstname;
+        $global_dialog->lastname = $this->user->lastname;
+        $global_dialog->text = $text;
+        $global_dialog->my = 1;
+        $global_dialog->status = 0;
+        $global_dialog->save();
 
-            $phones[] = [
-                'phone' => $this->user->phone,
-                'firstname' => $this->user->firstname,
-                'lastname' => $this->user->lastname,
-            ];
+        $phones[] = [
+            'phone' => $this->user->phone,
+            'firstname' => $this->user->firstname,
+            'lastname' => $this->user->lastname,
+        ];
 
-            Api::generalMessages($global_dialog->id, $phones, $text, 'ContractorTexter', $this->user->offset);
+        Api::generalMessages($global_dialog->id, $phones, $text, 'ContractorTexter', $this->user->offset);
 
-            //Mail::to($this->user->email)->send(new SignUpForUserHa($this->user, $this->url, $this->name));
-        } else {
-            Mail::to($this->user->email)->send(new SignUpForUser($this->user, $this->url, $this->name));
-        }
+        Mail::to($this->user->email)->send(new SignUpForUser($this->user, $this->url, $this->name));
+        //Mail::to($this->user->email)->send(new SignUpForUserHa($this->user, $this->url, $this->name));
     }
 }
