@@ -41,6 +41,6 @@ class SendFirstLead implements ShouldQueue
     public function handle()
     {
         Notification::send($this->owner, new SendFirstLeadForAdmin($this->user, $this->ha));
-        //Notification::send($this->user, new SendFirstLeadForUser($this->user));
+        Notification::send($this->user, new SendFirstLeadForUser($this->user));
     }
 }
