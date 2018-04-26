@@ -93,6 +93,9 @@
 										<br />
 
 										<div class="form-group" style="text-align: justify;">
+											<p ng-if="signUp.plans_id == 'home-advisor' || signUp.plans_id == 'free'">
+												{{ __('HA Account # is in the Statements section of your HA account') }}
+											</p>
 											{{ __('By creating this account you agree with our') }}
 											<a href="https://www.contractortexter.com/terms" target="_blank">{{ __('Terms') }}</a>
 											{{ __('and') }}

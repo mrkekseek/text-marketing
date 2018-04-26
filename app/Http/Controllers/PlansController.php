@@ -104,7 +104,7 @@ class PlansController extends Controller
 				'amount' => $plan->amount,
 				'currency' => 'USD',
 				'interval' => $plan->interval,
-				"product" => 'prod_CjzqhdXnFrPram',
+				'product' => config('services.stripe.product'),
 				'metadata' => [
 					'reviews' => $plan->reviews,
 					'tms' => $plan->tms,
@@ -208,6 +208,12 @@ class PlansController extends Controller
 					'paused_plans_id' => $plan->plans_id,
 					'cancellation_reason' => 'Canceled by admin',
 				]);
+			} else {
+				$user->update([
+					'plans_id' => 'canceled-contractortexter',
+					'paused_plans_id' => $plan->plans_id,
+					'cancellation_reason' => 'Canceled by admin',
+				]);
 			}
 		}
 		return $this->message('You have canceled your subscription', 'success');
@@ -275,21 +281,38 @@ class PlansController extends Controller
 			$plan = Plan::where('plans_id', $user->plans_id)->first();
 			$subscription = $user->subscription($plan->name);
 			$paused_plan = Plan::where('plans_id', $user->paused_plans_id)->first();
-			$subscription->swap($user->paused_plans_id);
-			$subscription->name = $paused_plan->name;
-			$subscription->save();
-			$user->update([
-				'plans_id' => $user->paused_plans_id,
-				'paused_plans_id' => '',
-			]);
-			$free_plan = FreePlan::where('users_id', $user->id)->get();
-			if ( ! empty($free_plan)) {
-				foreach($free_plan as $item) {
-					$item->delete();
+			if ($subscription) {
+				$subscription->swap($user->paused_plans_id);
+				$subscription->name = $paused_plan->name;
+				$subscription->save();
+				$user->update([
+					'plans_id' => $user->paused_plans_id,
+					'paused_plans_id' => '',
+				]);
+				$free_plan = FreePlan::where('users_id', $user->id)->get();
+				if ( ! empty($free_plan)) {
+					foreach($free_plan as $item) {
+						$item->delete();
+					}
 				}
+			} else {
+				$user->update([
+					'plans_id' => $user->paused_plans_id,
+					'paused_plans_id' => '',
+				]);
 			}
+			
 		}
 		return $this->message('You have reactivate your plan', 'success');
+	}
+	
+	public function assignPlanToUser(Request $request, User $user)
+	{
+		$plan = Plan::where('id', $request['plans_id'])->first();
+		$user->update([
+			'plans_id' => $plan->plans_id,
+		]);
+		return $this->message('Plan was successfully assigned', 'success');
 	}
 	
 	public function updateCard(Request $request)

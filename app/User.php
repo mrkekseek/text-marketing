@@ -32,7 +32,15 @@ class User extends Authenticatable
 
     static public function liveUsers()
     {
-        return self::where('type', '2')->where('teams_leader', '1')->whereIn('plans_id', ['home-advisor-contractortexter', 'text-contractortexter', 'star-rating-contractortexter'])->with('teams')->get();
+        $plans_array = [
+            'home-advisor-contractortexter',
+            'home-advisor-19-contractortexter',
+            'home-advisor-39-contractortexter',
+            'home-advisor-49-contractortexter',
+            'text-contractortexter',
+            'star-rating-contractortexter',
+        ];
+        return self::where('type', '2')->where('teams_leader', '1')->whereIn('plans_id', $plans_array)->with('teams')->get();
     }
     
     static public function freeUsers()
@@ -137,7 +145,13 @@ class User extends Authenticatable
 
     static public function usersHomeAdvisor()
     {
-        return self::where('plans_id', 'home-advisor-contractortexter')->with(['teams' => function($q){
+        $plans_array = [
+            'home-advisor-contractortexter',
+            'home-advisor-19-contractortexter',
+            'home-advisor-39-contractortexter',
+            'home-advisor-49-contractortexter',
+        ];
+        return self::whereIn('plans_id', $plans_array)->with(['teams' => function($q){
             $q->with(['clients' => function($q){
                 $date = Carbon::now()->subWeek();
                 $q->where('source', 'HomeAdvisor');

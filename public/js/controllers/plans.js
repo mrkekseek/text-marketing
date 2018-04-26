@@ -31,9 +31,10 @@
                 $scope.request_finish = true;
                 if (data.stripe_id) {
                     $scope.stripe = data;
+                    $scope.plan_name = data.plan_name.indexOf('Home Advisor') + 1 ? 'Home Advisor' : data.plan_name;
                     $scope.showCardDetails = false;
                 } else {
-                    $scope.plan_name = data.plan_name;
+                    $scope.plan_name = data.plan_name.indexOf('Home Advisor') + 1 ? 'Home Advisor' : data.plan_name;
                     $scope.stripe = {};
                     $scope.showCardDetails = true;
                 }
@@ -80,6 +81,7 @@
 
         $scope.planDetailsPage = function() {
             var stripe = Stripe('pk_live_qfYiDhjIK1fw6XPECmbLafr2');
+            //var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
             var elements = stripe.elements();
 
             var style = {
