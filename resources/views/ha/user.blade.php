@@ -260,7 +260,7 @@
 							<h4>Want 3 Free Months? Refer 1 Friend</h4>
 						</div>
 	
-						<div class="ref-body">					
+						<div class="ref-body">
 							<p>
 								<b>1.</b> Just enter your friend’s name + contact info<br />
 								<b>2.</b> If they sign up, you get 3 free months<br />

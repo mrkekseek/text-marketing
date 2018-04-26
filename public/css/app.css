@@ -1018,3 +1018,7 @@ textarea.form-control.appointment-textarea {
 .unstyled_ul span {
 	color: #C82027;
 }
+
+.assign_dropdown {
+	width: 44%;
+}

@@ -138,7 +138,7 @@
 
 			modalInstance.result.then(function (response) {
 				$scope.request_finish = false;
-				if (response == 'downgrade' || response == 'cancel') {
+				if (response == 'downgrade' || response == 'cancel' || response == 'assign') {
 					$scope.getLiveUsers();
 				} else {
 					$scope.getCanceledUsers();
@@ -254,6 +254,26 @@
 					$uibModalInstance.close($scope.action);
 				}, 'post');
 			}
+		};
+
+		if ($scope.action == 'assign') {
+			request.send('/plans', {}, function (data) {
+				$scope.list = [];
+				for (var k in data) {
+					if (data[k].plans_id.indexOf('home-advisor') + 1) {
+						$scope.list.push(data[k]);
+					}
+				}
+				$scope.plans_id = $scope.list[0].id.toString();
+			}, 'get');
+		}
+
+		$scope.assign = function(plans_id) {
+			$scope.request_finish = false;
+			request.send('/plans/assign/' + $scope.user.id, { 'plans_id': plans_id }, function (data) {
+				$scope.request_finish = true;
+				$uibModalInstance.close($scope.action);
+			}, 'post');
 		};
 
 		$scope.cancel = function () {

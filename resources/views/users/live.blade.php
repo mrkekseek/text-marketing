@@ -58,6 +58,12 @@
 								{{ __('Account #') }}
 							</div>
 						</th>
+						
+						<th>
+							<div class="th">
+								{{ __('Current Plan') }}
+							</div>
+						</th>
 
 						<th>
 							<div class="th">
@@ -68,6 +74,12 @@
 						<th>
 							<div class="th">
 								{{ __('Cancel Subscription') }}
+							</div>
+						</th>
+						
+						<th>
+							<div class="th">
+								{{ __('Assign Plan') }}
 							</div>
 						</th>
 						
@@ -103,13 +115,21 @@
 						<td>
 							@{{ user.rep }}
 						</td>
+						
+						<td>
+							@{{ user.current_plan }}
+						</td>
 
 						<td class="td-button text-center">
 							<button class="btn btn-primary btn-danger" ng-class="{'disabled': ! user.has_subscription}" ng-click="confirmSubscription(user, 'downgrade')">Downgrade</button>
 						</td>
 
 						<td class="td-button text-center">
-							<button class="btn btn-primary btn-danger" ng-class="{'disabled': ! user.has_subscription}" ng-click="confirmSubscription(user, 'cancel')">Cancel</button>
+							<button class="btn btn-primary btn-danger" ng-click="confirmSubscription(user, 'cancel')">Cancel</button>
+						</td>
+						
+						<td class="td-button text-center">
+							<button class="btn btn-primary btn-danger" ng-click="confirmSubscription(user, 'assign')">Assign</button>
 						</td>
 						
 						<td class="td-button text-center">
@@ -210,12 +230,27 @@
 						<h4 ng-if="action == 'cancel'">
 							Do you really want to cancel @{{ user.firstname + ' ' + user.lastname }}'s subscription?
 						</h4>
+						
+						<div ng-if="action == 'assign'">
+							<label>Please choose a plan for @{{ user.firstname + ' ' + user.lastname }}:</label>
+
+							<div class="form-group">
+								<select class="form-control assign_dropdown" ng-model="plans_id">
+									<option value="@{{ plan.id }}" ng-repeat="plan in list">@{{ plan.name + ' ($' + plan.amount + ' /' + plan.interval + ')' }}</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<button type="button" class="btn btn-primary btn-danger" ng-click="assign(plans_id)">{{ __('Assign') }}</button>
+								<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="modal-footer">
+		<div class="modal-footer" ng-show="action != 'assign'">
 			<button type="button" class="btn btn-primary btn-danger" ng-click="aprove()">{{ __('Yes') }}</button>
 			<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('No') }}</button>
 		</div>
