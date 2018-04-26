@@ -94,8 +94,10 @@ class SendReportsByLeads extends Command
                 $data = [
                     'user_id' => $user->id,
                     'phone' => implode(',', $temp),
-                    'text' => 'Weekly recap for '.$user->firstname,
+                    'text' => $text,
                 ];
+                $temp = [];
+
                 $alert = Alert::create($data);
                 
                 SendWeeklyRecap::dispatch($alert, $phones, $text, $user)->onQueue('texts');
