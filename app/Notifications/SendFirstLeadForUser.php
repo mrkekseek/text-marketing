@@ -43,7 +43,7 @@ class SendFirstLeadForUser extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Your Account is Ready to Go Live')
+                    ->subject('Your Account is Live!')
                     ->markdown('emails.first_lead_for_user', ['user' => $this->user]);
     }
 
