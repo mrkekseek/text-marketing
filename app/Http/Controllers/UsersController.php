@@ -489,6 +489,7 @@ class UsersController extends Controller
 			if ( ! $item->subscribed($plan->name)) {
 				$item->has_subscription = false;	
 			}
+			$item->current_plan = $plan->name;
 			$ha = $item->homeadvisors()->first();
 			$item->rep = $ha['rep'];
 			return $item;

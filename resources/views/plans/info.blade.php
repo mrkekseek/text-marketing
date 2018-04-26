@@ -88,7 +88,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    @{{ stripe.plan_name ? stripe.plan_name : plan_name }}
+                                                    @{{ plan_name }}
                                                 </td>
                                                 
                                                 <td>
