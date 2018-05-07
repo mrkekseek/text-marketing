@@ -142,7 +142,7 @@ class HomeadvisorController extends Controller
 		$phone = UsersService::phoneToNumber($data['user']);
 
 		ApiValidate::phoneFormat($phone);
-		
+
 		auth()->user()->update([
 			'view_phone' => $data['user']['view_phone'],
 			'phone' => $phone,
@@ -177,7 +177,7 @@ class HomeadvisorController extends Controller
 	{
 		$data = $request->only(['ha', 'user', 'pictures']);
 		$file = '';
-		
+
 		foreach ($data['pictures'] as $pos => $picture) {
 			if (empty($picture['id'])) {
 				$temp = explode('/temp/', $picture['url']);
@@ -188,11 +188,11 @@ class HomeadvisorController extends Controller
 				]);
 			}
 		}
-		
+
 		$phone = UsersService::phoneToNumber($data['user']);
 
 		ApiValidate::phoneFormat($phone);
-		
+
 		if ( ! empty($data['user']['website'])) {
 			$url = str_replace(['http://', 'https://'], '', $data['user']['website']);
 			$url_check = preg_match('|^(http(s)?://)?([a-z]+.)?[a-z0-9-]+\.([a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
@@ -269,7 +269,7 @@ class HomeadvisorController extends Controller
 		$this->sendActivateEmail();
     	return $this->message('Your request successfully sent.', 'success');
 	}
-	
+
 	public function enable(Homeadvisor $homeadvisor)
     {
 		auth()->user()->homeadvisors()->update([
@@ -285,7 +285,7 @@ class HomeadvisorController extends Controller
 		$user = auth()->user();
 		$ha = auth()->user()->homeadvisors;
 		$link = auth()->user()->links;
-		
+
 		SendHAEmail::dispatch($user, $owner, $ha, $link)->onQueue('emails');
     }
 
@@ -368,7 +368,7 @@ class HomeadvisorController extends Controller
 				if ($link->user->subscribed('Canceled')) {
 					return $this->message('Your account is cenceled', 'error');
 				}
-				
+
 				event(new SaveLeadFromHomeadvisor($link->user, $client, $phones, $lead_exists));
 
 				$backup->update([
@@ -379,7 +379,7 @@ class HomeadvisorController extends Controller
 				echo '<success>User '.$code.'</success>';
 				return;
 			}
-			
+
 			http_response_code(500);
 			echo '<error>Bad request</error>';
 			return;
@@ -417,13 +417,14 @@ class HomeadvisorController extends Controller
 		if (strpos($_SERVER['HTTP_USER_AGENT'], 'bitlybot') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'TweetmemeBot') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'HttpClient') === false && strpos($_SERVER['HTTP_USER_AGENT'], 'UNAVAILABLE') === false) {
 			$client = $dialog->clients;
 			$user = $client->team->team_leader();
-			
-			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
+			$parent_dialog = Dialog::where([['clients_id', '=', $dialog->clients_id], ['parent', '=', '1']])->first();
+
+			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($parent_dialog->clicked)) {
 				$this->sendLeadClickText($user, $client);
 			}
 
 			$homeadvisor = $client->team->team_leader()->homeadvisors;
-			
+
 			$link = false;
 			if ( ! empty($user->phone) || ! empty($homeadvisor->additional_phones) || ! empty($homeadvisor->emails)) {
 				$link = $this->getMagicLink($user->id, $client->id, $dialog->id);
@@ -432,12 +433,11 @@ class HomeadvisorController extends Controller
 			if (( ! empty($user->phone) || ! empty($homeadvisor->additional_phones)) && empty($dialog->clicked)) {
 				$this->sendAlertClick($user, $homeadvisor, $client, $link, $dialog);
 			}
-			
+
 			if ( ! empty($homeadvisor->emails)) {
 				$this->sendAlertClickEmail($homeadvisor, $client, $link);
 			}
 
-			$parent_dialog = Dialog::where([['clients_id', '=', $dialog->clients_id], ['parent', '=', '1']])->first();
 			$parent_dialog->update(['clicked' => true]);
 			$dialog->update(['clicked' => true]);
 			$client->update(['clicked' => true]);
@@ -449,7 +449,7 @@ class HomeadvisorController extends Controller
 	{
 		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id.'/'.$dialog_id, false);
 	}
-	
+
 	private function sendLeadClickText($user, $client)
 	{
 		$free_plan_limit = FreePlan::checkLimit($user, $client);
@@ -468,7 +468,7 @@ class HomeadvisorController extends Controller
 			'my' =>  true,
 			'status' => 2,
 		];
-		
+
 		$user_data = [
 			'users_id' => $user->id,
 			'clients_id' => $client->id,
@@ -482,7 +482,7 @@ class HomeadvisorController extends Controller
 			'firstname' => $client->firstname,
 			'lastname' => $client->lastname,
 		];
-		
+
 		$user_dialog = Dialog::create($user_data);
 		$lead_dialog = Dialog::create($client_data);
 		$delay_amount = Carbon::now()->addMinutes(15);
@@ -497,7 +497,7 @@ class HomeadvisorController extends Controller
 		$temp = [];
 		$default_text = DefaultText::first();
 		$text = $default_text->lead_clicks_alert;
-		
+
 		if ( ! empty($user->phone)) {
 			$phones[] = [
 				'phone' => $user->phone,
@@ -529,7 +529,7 @@ class HomeadvisorController extends Controller
 				'user_id' => $user->id,
 				'phone' => implode(',', $temp),
 				'text' => $text,
-			]; 
+			];
 			$alert = Alert::create($data);
 			SendAlertClick::dispatch($alert, $phones, $text, $user, $dialog)->onQueue('texts');
 		}
@@ -570,7 +570,7 @@ class HomeadvisorController extends Controller
 		}
 		return false;
 	}
-	
+
 	public function firstName($data)
 	{
 		return ! empty($data['firstName']) ? $data['firstName'] : (! empty($data['first_name']) ? $data['first_name'] : '');
@@ -585,7 +585,7 @@ class HomeadvisorController extends Controller
     {
     	return ! empty($data['phonePrimary']) ? $data['phonePrimary'] : ( ! empty($data['primaryPhone']) ? $data['primaryPhone'] : ( ! empty($data['phone_primary']) ? $data['phone_primary'] : false));
 	}
-	
+
 	public function email($data)
 	{
 		return ! empty($data['email']) ? $data['email'] : '';
@@ -624,7 +624,7 @@ class HomeadvisorController extends Controller
         $message->my = false;
         $message->save();
 	}
-	
+
 	public function push(Request $request, GeneralMessage $message)
     {
 		$data = $request->json()->all();
@@ -642,7 +642,7 @@ class HomeadvisorController extends Controller
             'status' => $status
         ]);
     }
-	
+
 	public function sendGeneralMessage(Request $request, GeneralMessage $message)
     {
 		$data = $request->only(['text', 'time']);
@@ -703,7 +703,7 @@ class HomeadvisorController extends Controller
 
         return 1;
 	}
-	
+
 	/* public function nexmo()
     {
 		$base_url = 'https://api.nexmo.com' ;
@@ -721,7 +721,7 @@ class HomeadvisorController extends Controller
 
 		dd(json_decode($response->getBody(), true));
 	}
-	
+
 	public function createNexmoVoiceApp()
     {
 		$base_url = 'https://api.nexmo.com' ;
@@ -739,7 +739,7 @@ class HomeadvisorController extends Controller
 
 		$client = new Guzzle(['base_uri' => $url]);
 		$response = $client->request('POST');
-		
+
 		$data = json_decode($response->getBody(), true);
 
 		$application_id = $data['id']; //можна записать в базу айдішкі аплікейшенів 480bae0c-9970-49d8-86e7-ac92cd77ce5f або глянуть на сайті в дашборді і записать в .env
@@ -787,12 +787,12 @@ class HomeadvisorController extends Controller
 			'event_url' => ['http://34.218.79.76/api/v1/homeadvisor/event'],
 		]); */
 	}
-	
+
 	public function event(Request $request)
     {
-		
+
 	}
-	
+
 	public function answer(Request $request)
     {
 		$client = app('Nexmo\Client');
@@ -819,7 +819,7 @@ class HomeadvisorController extends Controller
 			$lead->save();
 		}
     }
-	
+
 	/* public function event(Request $request)
     {
 		$method = $_SERVER['REQUEST_METHOD'];
@@ -844,7 +844,7 @@ class HomeadvisorController extends Controller
 
 		file_put_contents('my_log.txt', 'event_webhook: '.print_r($request), FILE_APPEND | LOCK_EX);
 	}
-	
+
 	public function handle_call_status()
 	{
 		$decoded_request = json_decode(file_get_contents('php://input'), true);
@@ -874,7 +874,7 @@ class HomeadvisorController extends Controller
 			return;
 		}
 	}
-	
+
 	public function handle_error($request)
 	{
 		$nexmo = new NexmoCall();
@@ -895,11 +895,11 @@ class HomeadvisorController extends Controller
 		$auth_url = $client->createAuthUrl();
 		dd($auth_url);
 		return redirect($auth_url);
-		
+
 		/* $service = new Google_Service_Calendar($client);
 
 		$calendarId = 'div-art.com_d14idkjg9ik72p7pebgi3do25c@group.calendar.google.com';
-		
+
 		$results = $service->events->listEvents($calendarId);
 		dd($events); */
 	}
