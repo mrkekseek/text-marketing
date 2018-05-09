@@ -80,7 +80,7 @@
             });
 
             modalInstance.result.then(function () {
-                
+
             }, function () {
                 $log.info('Modal dismissed at: ' + new Date());
             });
@@ -97,7 +97,7 @@
 
     function TrumpiaModalCtrl($rootScope, $scope, $uibModalInstance, items) {
         $scope.trumpia = angular.copy(items.trumpia);
-        
+
         $scope.cancel = function () {
             $uibModalInstance.dismiss('cancel');
         };

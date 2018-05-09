@@ -51,7 +51,7 @@
                     if ($scope.ha.additional_phones) {
                         $scope.inputs = $scope.ha.additional_phones.split(',');
                     }
-                    
+
                     if ($scope.inputs.length <= 1) {
                         $scope.inputs.push('');
                     }
@@ -91,7 +91,7 @@
                 }
             }, 'get');
         };
-        
+
         $scope.getVonageLeads = function() {
             request.send('/clients/vonage', {}, function (data) {
                 $scope.list = data;
@@ -125,7 +125,7 @@
 
         $scope.registerReferral = function() {
             var error = 1;
-            
+
             error *= validate.check($scope.form.name, 'Name');
             error *= validate.check($scope.form.contacts, 'Number or Email');
 
@@ -204,7 +204,7 @@
                 }, ($scope.ha.id ? 'post' : 'put'));
             }
         };
-        
+
         $scope.saveBeforeActivation = function() {
             var error = 1;
             if ($scope.user.company_name == '') {
@@ -236,7 +236,7 @@
         $scope.enable = function () {
             request.send('/homeadvisor/enable/' + $scope.ha.id, {}, false, 'put');
         };
-        
+
         $scope.disableFollowup = function (id) {
             request.send('/clients/disableFollowup/' + id, {}, false, 'put');
         };
@@ -286,7 +286,7 @@
             if (($scope.pictures.length + files.length) > 5) {
                 logger.logError(langs.get('Max number of images is 5'));
                 return;
-            } 
+            }
 
             if (check && files.length) {
                 $scope.uploading['pictures'] = files.length;

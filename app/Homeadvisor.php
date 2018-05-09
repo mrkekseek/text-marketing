@@ -8,6 +8,7 @@ class Homeadvisor extends Model
 {
     const FIRST_FOLLOWUP_ACTIVE = 1;
     const SECOND_FOLLOWUP_ACTIVE = 0;
+    const CLICK_ALERT_ACTIVE = 0;
     const FIRST_DELAY_AFTER_SIGNUP = 2;
     const SECOND_DELAY_AFTER_SIGNUP = 4;
 

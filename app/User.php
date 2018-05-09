@@ -30,6 +30,12 @@ class User extends Authenticatable
         return $this->email;
     }
 
+    static public function allUsers()
+    {
+        return self::where('type', '2')->where('teams_leader', '1')->with('teams')->get();
+    }
+
+
     static public function liveUsers()
     {
         $plans_array = [
@@ -42,12 +48,12 @@ class User extends Authenticatable
         ];
         return self::where('type', '2')->where('teams_leader', '1')->whereIn('plans_id', $plans_array)->with('teams')->get();
     }
-    
+
     static public function freeUsers()
     {
         return self::where('type', '2')->where([['teams_leader', '1'], ['plans_id', 'free-contractortexter']])->with('teams')->get();
     }
-    
+
     static public function canceledUsers()
     {
         return self::where('type', '2')->where([['teams_leader', '1'], ['plans_id', 'canceled-contractortexter']])->with('teams')->get();
@@ -122,12 +128,12 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Picture');
     }
-    
+
     public function leads()
     {
         return $this->hasMany('App\Lead', 'user_id');
     }
-    
+
     public function freePlan()
     {
         return $this->hasMany('App\FreePlan', 'users_id');
@@ -194,7 +200,7 @@ class User extends Authenticatable
                 'default' => 1
             ], [
                'name' => 'Google',
-                'default' => 1 
+                'default' => 1
             ], [
                 'name' => 'Yelp',
                 'default' => 1
