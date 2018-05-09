@@ -3,7 +3,7 @@
 		{{ __('HomeAdvisor') }}
 		<i class="fa fa-question-circle-o help-icon" uib-tooltip="To get started, please click the 'Activate’ button. We then send your details to HomeAdvisor to get you connected - this can take them a few days (they move slowly). Please enter your Company Name, Website, Office and Cell Numbers, Logo and Job Pics below. We’ve already put in the text templates for you, but you can always customize them. To come back to this page anytime, go to app.contractortexter.com. Once you are connected we will send a test text to your Cell." tooltip-placement="right-top" aria-hidden="true"></i>
 	</h2>
-	
+
 	<h2 ng-show=" ! ha.send_request">
 		{{ __('Very Important') }}
 	</h2>
@@ -31,7 +31,7 @@
 					</div>
 
 					<button type="button" class="btn btn-primary" ng-show=" ! ha.send_request" ng-click="activate()">{{ __('Activate') }}</button>
-					
+
 					<div ng-show="ha.send_request">
 						<div class="form-group" ng-show="list.length">
 							<label class="ui-switch ui-switch-success ui-switch-sm pull-right">
@@ -67,7 +67,7 @@
 										<label>{{ __('Website') }}</label>
 										<input type="text" class="form-control" name="website" ng-model="user.website" placeholder="{{ __('Website') }}" ng-required="user.company_status != 'verified'" />
 									</div>
-									
+
 									<div class="form-group">
 										<label>{{ __('Office Number') }}</label>
 										<input type="text" class="form-control" name="office_phone" ng-model="user.office_phone" placeholder="{{ __('Office Number') }}" ng-required="user.company_status != 'verified'" />
@@ -80,10 +80,10 @@
 									<label>{{ __('Instant Text') }}</label>
 									<char-set ng-model="ha.text" unique-id="'ha'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-lastname="true" btn-hapage="true" btn-shortlink="true" btn-website="true" btn-office-phone="true" lms="true"></char-set>
 								</div>
-							
+
 								<label>{{ __('Texts') }}</label>
 								<i class="fa fa-question-circle-o" uib-tooltip="Follow-Up Text goes out an hour after the Instant Text, if the Lead does not click on your link or does not text you back." tooltip-placement="right" aria-hidden="true"></i>
-								
+
 								<div class="form-group">
 									<div class="followup_group">
 										<div class="followup_switcher">
@@ -129,6 +129,24 @@
 													<option value="@{{ hour.value }}" ng-repeat="hour in followup_hours">@{{ hour.text + ' ' + getHourText(hour.value) }}</option>
 												</select>
 												<i class="fa fa-question-circle-o" ng-class="{disabled_followup: ha.second_followup_active == 0}" uib-tooltip="Time after Lead came in. Follow up texts will never be sent between midnight and 6 AM." tooltip-placement="bottom" tooltip-append-to-body="true"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="followup_group">
+										<div class="followup_switcher">
+											<label class="ui-switch ui-switch-success ui-switch-sm">
+												<input id="enable_followup_second" type="checkbox" ng-model="ha.click_alert_active" ng-true-value="1" ng-false-value="0" />
+												<i></i>
+											</label>
+											<span>&nbsp; Enable Click Alert Text</span>
+										</div>
+
+										<div ng-show="ha.click_alert_active">
+											<div class="followup_text">
+												<char-set ng-model="ha.click_alert_text" class="followup_textarea" unique-id="'click_laert'" max-firstname="maxChars('firstname')" max-lastname="maxChars('lastname')" company="user.company_name" btn-firstname="true" btn-website="true" btn-office-phone="true"></char-set>
 											</div>
 										</div>
 									</div>
@@ -242,7 +260,7 @@
 							<div class="form-group" ng-show="user.company_status == 'verified'">
 								<button class="btn btn-primary" type="submit" ng-click="save()">{{ __('Save') }}</button>
 							</div>
-							
+
 							<div class="form-group" ng-show="user.company_status != 'verified'">
 								<button class="btn btn-primary" type="submit" ng-click="saveBeforeActivation()">{{ __('Save') }}</button>
 							</div>
@@ -259,24 +277,24 @@
 						<div class="ref-title text-center">
 							<h4>Want 3 Free Months? Refer 1 Friend</h4>
 						</div>
-	
+
 						<div class="ref-body">
 							<p>
 								<b>1.</b> Just enter your friend’s name + contact info<br />
 								<b>2.</b> If they sign up, you get 3 free months<br />
 								<b>3.</b> 3 Friends - 1 year free
 							</p>
-	
+
 							<div class="form-group">
 								<label>{{ __("Friend's Name:") }}</label>
 								<input type="text" name="name" class="form-control" ng-model="referral.name" placeholder="{{ __('Enter name here...') }}" required="required" />
 							</div>
-	
+
 							<div class="form-group">
 								<label>{{ __("Friend's Email or Number:") }}</label>
 								<input type="text" name="contacts" class="form-control" ng-model="referral.contacts" placeholder="{{ __('Enter number or email here...') }}" required="required" />
 							</div>
-	
+
 							<button class="btn btn-default" ng-click="registerReferral()">{{ __('Send') }}</button>
 						</div>
 					</div>

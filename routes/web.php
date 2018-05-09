@@ -23,7 +23,7 @@ Route::get('/view/{folder?}/{file?}/{param?}', function($folder = '', $file = ''
 	$view = $folder.(empty($file) ? '' : '.'.$file);
 	if (empty($view)) {
 		$controller = app()->make('\App\Http\Controllers\PagesController');
-		$view = $controller->callAction('defaultPage', []); 
+		$view = $controller->callAction('defaultPage', []);
 	}
 	return view($view);
 })->middleware('auth.views');
@@ -61,6 +61,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::post('users/password', 'UsersController@password');
 	Route::post('users/profile', 'UsersController@profile');
 	Route::post('users/saveSettings', 'UsersController@saveSettings');
+	Route::get('users', 'UsersController@all');
 	Route::get('users/live', 'UsersController@getLiveUsers');
 	Route::get('users/free', 'UsersController@getFreeUsers');
 	Route::get('users/canceled', 'UsersController@getCanceledUsers');
@@ -164,7 +165,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 
 	Route::get('phones', 'ReportsController@phones');
 	Route::post('reports', 'ReportsController@get');
-	
+
 	Route::post('leads', 'LeadsController@get');
 });
 

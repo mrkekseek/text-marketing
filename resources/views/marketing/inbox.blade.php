@@ -72,7 +72,7 @@
 								<i ng-show="! message.my" class="fa fa-commenting-o fa-2x" aria-hidden="true"></i>
 							</div>
 							<div class="message-body" ng-class="{'alert_dialog': message.status == 3}">
-								@{{ message.text.replace('[$FirstName]', message.clients.firstname).replace('[$LastName]', message.clients.lastname) }}
+								@{{ message.text.replace('[$FirstName]', message.clients.firstname).replace('[$LastName]', message.clients.lastname).replace('[$Website]', user.website_shortlink).replace('[$OfficePhone]', user.office_phone) }}
 								<div class="text-right">
 									<i ng-show="message.status == 1 && message.my" class="fa fa-check text-danger" aria-hidden="true"></i>
 									<i ng-show="message.status == 0 && message.my" class="fa fa-times text-danger" aria-hidden="true"></i>
@@ -89,7 +89,7 @@
 						<textarea name="messages_text" class="form-control area-resize" ng-model="messages_text" placeholder="{{ __("Enter your text here...") }}" required="required"></textarea>
 						<span>
 							<span ng-show="charsCount(messages_text) > maxOneText()">{{ __('3 messages') }} </span>
-							<span ng-bind="charsCount(messages_text)">0</span> / 
+							<span ng-bind="charsCount(messages_text)">0</span> /
 							<span ng-bind="maxChars()">140</span>
 						</span>
 					</div>

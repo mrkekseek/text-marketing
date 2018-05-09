@@ -57,7 +57,7 @@ class UsersController extends Controller
 		foreach ($data as $item) {
 			$user_id = $this->getUserId($item['user_email']);
 			$client_id = $this->getClientId($item['phone']);
-			
+
 			if (! empty($user_id) && ! empty($client_id) && ! empty($item['text'])) {
 				$dialog = new Dialog();
 				$dialog->users_id = $user_id;
@@ -111,7 +111,7 @@ class UsersController extends Controller
 				$client->updated_at = $phone['phones_add'];
 				$client->save();
 			}
-			
+
 		}
 	}*/
 
@@ -284,7 +284,7 @@ class UsersController extends Controller
 			$team->name = $item['name'];
 			$team->save();
 
-			if ( ! empty($item['users'])) { 
+			if ( ! empty($item['users'])) {
 				foreach ($item['users'] as $row) {
 					$user = new User();
 					$user->company_name = $row['company_name'];
@@ -479,7 +479,17 @@ class UsersController extends Controller
     public function info($id)
     {
     	return User::find($id);
-    }
+	}
+
+	public function all()
+	{
+		return User::allUsers()->each(function($item, $key) {
+            $ha = $item->homeadvisors()->first();
+            $item->rep = $ha['rep'];
+            return $item;
+		});
+	}
+
 
     public function getLiveUsers()
 	{
@@ -487,7 +497,7 @@ class UsersController extends Controller
 			$item->has_subscription = true;
 			$plan = Plan::where('plans_id', $item->plans_id)->first();
 			if ( ! $item->subscribed($plan->name)) {
-				$item->has_subscription = false;	
+				$item->has_subscription = false;
 			}
 			$item->current_plan = $plan->name;
 			$ha = $item->homeadvisors()->first();
@@ -495,7 +505,7 @@ class UsersController extends Controller
 			return $item;
 		});
 	}
-	
+
 	public function getFreeUsers()
 	{
 		return User::freeUsers()->each(function($item, $key) {
@@ -504,7 +514,7 @@ class UsersController extends Controller
 			return $item;
 		});
 	}
-	
+
 	public function getCanceledUsers()
 	{
 		return User::canceledUsers()->each(function($item, $key) {
@@ -621,7 +631,7 @@ class UsersController extends Controller
 			Storage::deleteDirectory('public/upload/employees/'.$user->id);
 		}
 		$data['avatar'] = $file;
-		
+
 		$user->update($data);
 
 		$this->message('Teammate was successfully saved', 'success');
@@ -773,9 +783,9 @@ class UsersController extends Controller
     	}
     	$data = json_encode(['data' => $items]);
     	$encode = Jwt::encode($data, $this->publickey);
-    	
+
     	//$decode = JWT::decode($encode, $this->publickey, array('HS256'));
-    	
+
     	return $encode;
     }
 
@@ -860,7 +870,7 @@ class UsersController extends Controller
     public function updateDefaultTexts(Request $request, DefaultText $text)
     {
 		$data = $request->only('texts');
-		
+
 		$text->thank_you_signup = $data['texts']['thank_you_signup'];
 		$text->two_days_not_active = $data['texts']['two_days_not_active'];
 		$text->four_days_not_active = $data['texts']['four_days_not_active'];
@@ -879,7 +889,7 @@ class UsersController extends Controller
 
     	$this->message('Settings was successfully saved', 'success');
 	}
-	
+
 	public function lookup(Request $request)
 	{
 		$account_sid = 'ACaa2a4c1043485ae42c347e903aa263f6';
@@ -921,7 +931,7 @@ class UsersController extends Controller
 		$data = $request->only('url');
 		$url = $data['url'][0];
 		$numbers = file($url);
-		
+
 		foreach ($numbers as $item) {
 			$number = trim($item);
 			try {
@@ -959,7 +969,7 @@ class UsersController extends Controller
 	{
 		$default_text = DefaultText::first();
 		$text = $default_text->new_user;
-		
+
 		$global_dialog = new GeneralMessage();
 		$global_dialog->type = 'new_user';
 		$global_dialog->phone = $phone;
@@ -973,7 +983,7 @@ class UsersController extends Controller
 
 		SendGeneralText::dispatch($new_user, $phones, $text, 'ContractorTexter', $offset)->onQueue('texts');
 	}
-	
+
 	public function getNewUsers()
 	{
 		return NewUser::orderBy('clicked')->get();

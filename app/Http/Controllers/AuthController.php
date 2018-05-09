@@ -25,7 +25,7 @@ class AuthController extends Controller
     {
         return auth()->user();
     }
-    
+
     public function signin(SignInRequest $request)
     {
         $old_pass = hash_hmac('sha1', $request->password, $this->salt);
@@ -77,6 +77,8 @@ class AuthController extends Controller
                 'second_followup_active' => Homeadvisor::SECOND_FOLLOWUP_ACTIVE,
                 'second_followup_delay' => $text->second_followup_delay,
                 'second_followup_text' => $text->second_followup,
+                'click_alert_active' => Homeadvisor::CLICK_ALERT_ACTIVE,
+                'click_alert_text' => $text->lead_clicks,
             ]);
         }
 
@@ -114,7 +116,7 @@ class AuthController extends Controller
         if ( ! empty($user->admins_id)) {
             $admin = User::find($user->admins_id);
             auth()->login($admin);
-            
+
             $user->admins_id = 0;
             $user->save();
         } else {
