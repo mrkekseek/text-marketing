@@ -37,7 +37,7 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
     public function handle(SaveLeadFromHomeadvisor $event)
     {
         $ha = $event->user->homeadvisors;
-        if ($event->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1 && $event->lead_exists) {
+        if ($event->user->teams->clients()->where('source', 'HomeAdvisor')->count() == 1) {
             $owner = User::where('owner', true)->first();
             SendFirstLead::dispatch($event->user, $owner, $ha)->onQueue('emails');
 
@@ -82,11 +82,11 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
         if (strpos($dialog->text, '[$LastName]') !== false) {
             $row['lastname'] = $client->lastname;
         }
-        
+
         if (strpos($dialog->text, '[$Website]') !== false) {
             $row['website_shortlink'] = $user->website_shortlink;
         }
-        
+
         if (strpos($dialog->text, '[$OfficePhone]') !== false) {
             $row['office_phone'] = $user->office_phone;
         }
@@ -110,7 +110,7 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
                 $date->addHour(8 - $user_date->hour);
                 $date->minute = 1;
             }
-            
+
             $delay = Carbon::now()->diffInSeconds($date);
             SendFollowUpText::dispatch($dialog, $phones, $user, $ha->first_followup_text)->delay($delay)->onQueue('texts');
         }
@@ -124,7 +124,7 @@ class SendFirstHomeadvisorLeadNotification implements ShouldQueue
                 $date->addHour(8 - $user_date->hour);
                 $date->minute = 1;
             }
-            
+
             $delay = Carbon::now()->diffInSeconds($date);
 
             SendFollowUpText::dispatch($dialog, $phones, $user, $ha->second_followup_text)->delay($delay)->onQueue('texts');

@@ -19,19 +19,16 @@ class SaveLeadFromHomeadvisor
     public $user;
     public $client;
     public $phones;
-    public $lead_exists;
-
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, $client, $phones, $lead_exists)
+    public function __construct(User $user, $client, $phones)
     {
         $this->user = $user;
         $this->client = $client;
         $this->phones = $phones;
-        $this->lead_exists = $lead_exists;
     }
 
     /**

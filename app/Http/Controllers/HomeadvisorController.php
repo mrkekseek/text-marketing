@@ -78,6 +78,12 @@ class HomeadvisorController extends Controller
 			$info->save();
 		}
 
+		if (empty($info->click_alert_text)) {
+			$info->click_alert_active = Homeadvisor::CLICK_ALERT_ACTIVE;
+			$info->click_alert_text = $text->lead_clicks;
+			$info->save();
+		}
+
 		$info->website = ! empty(auth()->user()->website) ? auth()->user()->website : '';
 		$info->office_phone = ! empty(auth()->user()->office_phone) ? auth()->user()->office_phone : '';
 
@@ -242,6 +248,8 @@ class HomeadvisorController extends Controller
 			'second_followup_active' => $data['ha']['second_followup_active'],
 			'second_followup_text' => $data['ha']['second_followup_text'],
 			'second_followup_delay' => $data['ha']['second_followup_delay'],
+			'click_alert_active' => $data['ha']['click_alert_active'],
+			'click_alert_text' => $data['ha']['click_alert_text'],
 		]);
 
 		return $this->message('Settings are successfully saved.', 'success');
@@ -324,13 +332,13 @@ class HomeadvisorController extends Controller
 				];
 
 				$client = $link->user->teams->clients()->where('phone', $phone)->first();
-				$lead_exists = true;
+				$lead_not_exists = true;
 				if ( ! empty($client)) {
 					$client->update($lead);
 					$backup->update([
 						'exists' => true,
 					]);
-					$lead_exists = false;
+					$lead_not_exists = false;
 				} else {
 					$client = $link->user->teams->clients()->create($lead);
 				}
@@ -369,7 +377,14 @@ class HomeadvisorController extends Controller
 					return $this->message('Your account is cenceled', 'error');
 				}
 
-				event(new SaveLeadFromHomeadvisor($link->user, $client, $phones, $lead_exists));
+				$exist_lead_delay = false;
+				if ( ! $lead_not_exists && Carbon::now()->subHours(24) >= $client->created_at) {
+					$exist_lead_delay = true;
+				}
+
+				if ($lead_not_exists || ( ! $lead_not_exists && $exist_lead_delay)) {
+					event(new SaveLeadFromHomeadvisor($link->user, $client, $phones, $lead_not_exists));
+				}
 
 				$backup->update([
 					'saved' => true,
@@ -458,8 +473,9 @@ class HomeadvisorController extends Controller
 			return $this->message(__('You have reached your plan limit'), 'error');
 		}
 
+		$ha = $user->homeadvisors()->first();
 		$default_text = DefaultText::first();
-		$lead_text = $default_text->lead_clicks;
+		$lead_text = empty($ha->click_alert_active) ? $default_text->lead_clicks : $ha->click_alert_text;
 		$user_text = $default_text->lead_clicks_inbox;
 		$client_data = [
 			'users_id' => $user->id,
@@ -481,6 +497,8 @@ class HomeadvisorController extends Controller
 			'phone' => $client->phone,
 			'firstname' => $client->firstname,
 			'lastname' => $client->lastname,
+			'website_shortlink' => ! empty($user->website_shortlink) ? $user->website_shortlink : '',
+			'office_phone' => ! empty($user->office_phone) ? $user->office_phone : '',
 		];
 
 		$user_dialog = Dialog::create($user_data);
