@@ -58,14 +58,14 @@ class DialogsController extends Controller
             if (empty($free_plan_limit)) {
                 return $this->message(__('You have reached your plan limit'), 'error');
             }
-            
+
             $dialog = $user->dialogs()->create([
                 'clients_id' => $client->id,
                 'text' => $data['text'],
                 'my' => true,
                 'status' => 2,
             ]);
-            
+
             $phones[] = [
                 'phone' => $client->phone,
                 'website_shortlink' => auth()->user()->website_shortlink,
@@ -98,7 +98,7 @@ class DialogsController extends Controller
             $length = true;
             $phones = true;
             $limit = true;
-            
+
             $message = $text;
 
             if ( ! ApiValidate::messageLength($message, auth()->user()->company_name)) {
@@ -163,16 +163,16 @@ class DialogsController extends Controller
         $dialog->save();
 
         $user = User::find($dialog->users_id);
-        
+
         $magicLink = false;
         if ( ! empty($user->phone) || ! empty($user->homeadvisors->additional_phones) || ! empty($user->homeadvisors->emails)) {
             $magicLink = $this->getMagicLink($user->id, $dialog->clients_id, $dialog->id);
         }
-        
+
         if ( ! empty($user->phone) || ! empty($user->homeadvisors->additional_phones)) {
             $this->sendAlert($user, $magicLink, $dialog);
         }
-        
+
         if ( ! empty($user->homeadvisors->emails)) {
             $this->sendAlertEmail($user, $magicLink);
         }
@@ -180,7 +180,7 @@ class DialogsController extends Controller
 
     private function getMagicLink($id, $clients_id, $dialog_id)
     {
-        $link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$clients_id.'/'.$dialog_id, false);
+        $link = ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$clients_id.'/'.$dialog_id.'/reply', false);
         return $link;
     }
 
@@ -245,7 +245,7 @@ class DialogsController extends Controller
     public function sendAlertEmail($user, $link)
     {
         $temp = [];
-        
+
         if ( ! empty($user->homeadvisors->emails)) {
             $emails = explode(',', $user->homeadvisors->emails);
 
@@ -253,7 +253,7 @@ class DialogsController extends Controller
                 $temp[] = $email;
             }
         }
-        
+
         if ( ! empty($temp)) {
             $message = (new SendAlertEmail($user->firstname, 'https://'.$link))
                 ->onQueue('emails');
