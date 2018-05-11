@@ -462,7 +462,7 @@ class HomeadvisorController extends Controller
 
 	private function getMagicLink($id, $client_id, $dialog_id)
 	{
-		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id.'/'.$dialog_id, false);
+		return ShortLink::bitly(config('app.url').'/magic/inbox/'.$id.'/'.$client_id.'/'.$dialog_id.'/click', false);
 	}
 
 	private function sendLeadClickText($user, $client)

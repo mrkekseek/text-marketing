@@ -696,10 +696,12 @@ class UsersController extends Controller
 		auth()->login($user);
 	}
 
-	public function magicInbox(User $user, Client $client, Dialog $dialog)
+	public function magicInbox(User $user, Client $client, Dialog $dialog, $action)
 	{
 		auth()->login($user);
-		$dialog->update(['reply_viewed' => 1]);
+		if ($action == 'reply') {
+			$dialog->update(['reply_viewed' => 1]);
+		}
 		$link = config('app.url').'/marketing/inbox/'.$client->id;
 		return redirect($link);
 	}
