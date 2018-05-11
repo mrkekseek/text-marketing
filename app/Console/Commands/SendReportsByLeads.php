@@ -46,7 +46,7 @@ class SendReportsByLeads extends Command
         $data = User::usersHomeAdvisor();
 
         foreach ($data as $user) {
-            if ($user->id == 45) {
+            if ($user->id == 45 || $user->id == 255 || $user->id == 254 || $user->id == 107) {
                 $result = [
                     'clients_count' => ! empty($user->teams->clients_count) ? $user->teams->clients_count : 0,
                     'clicked_count' => 0,
