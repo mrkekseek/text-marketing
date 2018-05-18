@@ -979,7 +979,7 @@ textarea.form-control.appointment-textarea {
 	margin-right: 10px;
 }
 
-.plan_details i, 
+.plan_details i,
 .plan_details span {
 	vertical-align: middle;
 }
@@ -1000,7 +1000,7 @@ textarea.form-control.appointment-textarea {
 .cancel_reason {
 	width: 150px;
 	text-overflow: ellipsis;
-	overflow: hidden; 
+	overflow: hidden;
 	white-space: nowrap;
 	cursor: pointer;
 }
@@ -1021,4 +1021,8 @@ textarea.form-control.appointment-textarea {
 
 .assign_dropdown {
 	width: 44%;
+}
+
+.subscription_info_block {
+	margin-top: 20px;
 }

@@ -1,9 +1,9 @@
 (function () {
     'use strict';
 
-    angular.module('app').controller('PlansCtrl', ['$rootScope', '$scope', '$uibModal', 'request', 'langs', PlansCtrl]);
+    angular.module('app').controller('PlansCtrl', ['$rootScope', '$scope', '$uibModal', '$window', 'request', 'langs', PlansCtrl]);
 
-    function PlansCtrl($rootScope, $scope, $uibModal, request, langs) {
+    function PlansCtrl($rootScope, $scope, $uibModal, $window, request, langs) {
         $scope.request_finish = false;
         $scope.plan_name = '';
         $scope.list = [];
@@ -13,7 +13,7 @@
         $scope.init = function () {
             $scope.get();
         };
-        
+
         $scope.initPlanPage = function () {
             $scope.getPlanInfo();
             $scope.planDetailsPage();
@@ -25,7 +25,7 @@
     			$scope.request_finish = true;
 			}, 'get');
         };
-        
+
         $scope.getPlanInfo = function () {
         	request.send('/plans/get', {}, function (data) {
                 $scope.request_finish = true;
@@ -57,7 +57,7 @@
             modalInstance.result.then(function (response) {
                $scope.get();
             }, function () {
-                
+
             });
         };
 
@@ -133,9 +133,10 @@
         $scope.subscribe = function(token) {
             request.send('/plans/subscribe', {'token': token.id}, function (data) {
                 $scope.getPlanInfo();
+                $window.location.href = 'ha/user/';
             }, ($scope.stripe.stripe_id ? 'put' : 'post'));
         };
-        
+
         $scope.cancelSubscription = function() {
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -154,7 +155,7 @@
             }, function () {
 
             });
-            
+
         };
 
         $scope.reactivate = function() {
@@ -209,7 +210,7 @@
         $scope.plan = {};
         $scope.plan = items;
         $scope.request_finish = true;
-        
+
         $scope.unsubscribe = function () {
             $scope.request_finish = false;
             request.send('/plans/unsubscribe', $scope.plan, function (data) {
@@ -217,7 +218,7 @@
                 $window.location.href = '/';
             }, 'post');
         };
-        
+
         $scope.downgrade = function () {
             $scope.request_finish = false;
             request.send('/plans/free', $scope.plan, function (data) {
@@ -225,7 +226,7 @@
                 $uibModalInstance.close('true');
             }, 'post');
         };
-        
+
         $scope.cancel = function () {
             $uibModalInstance.dismiss();
         };

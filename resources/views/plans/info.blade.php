@@ -2,7 +2,7 @@
 	<h2>
 		{{ __('Billing Details') }}
 	</h2>
-    
+
     <div class="row">
         <div class="col-sm-12 col-md-6 plans">
             <div class="panel panel-default">
@@ -14,21 +14,29 @@
                     </div>
 
                     <div class="row">
-						<div class="col-sm-12">    
+						<div class="col-sm-12">
                             <form id="payment-form" ng-show="showCardDetails && request_finish">
                                 <div class="form-row">
                                     <h5>
                                         Credit or Debit Card
                                     </h5>
-                                    
+
                                     <div id="card-element">
                                     </div>
-                                    
+
                                     <div id="card-errors" role="alert"></div>
                                 </div>
 
                                 <button>Submit</button>
                                 <a href="javascript:void(0);" class="btn btn-default" ng-show="stripe.stripe_id" ng-click="showCardDetails = ! showCardDetails">Cancel</a>
+
+                                <div class="subscription_info_block">
+                                    <h5>
+                                        Free 30 day trial | Month to month billing | No annual contracts | Cancel anytime, no fee.
+                                    </h5>
+
+                                    <a href="https://calendly.com/contractortexter" class="btn btn-default" target="_blank">Schedule a Call with Us</a>
+                                </div>
                             </form>
 
                             <div class="plan_details">
@@ -36,7 +44,7 @@
                                     <h5>
                                         Credit or Debit Card
                                     </h5>
-    
+
                                     <div class="form-group pull-left">
                                         <i class="fa fa-cc-visa" ng-if="stripe.card_brand == 'Visa'"></i>
                                         <i class="fa fa-cc-mastercard" ng-if="stripe.card_brand == 'MasterCard'"></i>
@@ -47,7 +55,7 @@
                                         <i class="fa fa-credit-card" ng-if="stripe.card_brand == 'UnionPay'"></i>
                                         <span>****@{{ stripe.card_last_four}}</span>
                                     </div>
-    
+
                                     <button class="btn btn-primary btn-danger pull-right" ng-click="showCardDetails = ! showCardDetails">Change</button>
                                 </div>
 
@@ -70,13 +78,13 @@
                                                         {{ __('Subscription Status') }}
                                                     </div>
                                                 </th>
-                                                
+
                                                 <th ng-if="stripe.plan_name != 'Free'">
                                                     <div class="th">
                                                         {{ __('Cancel Subscription') }}
                                                     </div>
                                                 </th>
-                                                
+
                                                 <th ng-if="stripe.plan_name == 'Free'">
                                                     <div class="th">
                                                         {{ __('Reactivate to Paid Plan') }}
@@ -90,11 +98,11 @@
                                                 <td>
                                                     @{{ plan_name }}
                                                 </td>
-                                                
+
                                                 <td>
                                                     @{{ stripe.status ? stripe.status : 'Not Active' }}
                                                 </td>
-                                                
+
                                                 <td class="text-center">
                                                     <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name != 'Free'" ng-class="{disabled: ! stripe.stripe_id}" ng-click="cancelSubscription()">Cancel</button>
                                                     <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name == 'Free'" ng-click="reactivate()">Reactivate</button>
@@ -132,7 +140,7 @@
                             <button class="btn btn-primary" ng-click="downgrade()">{{ __('Downgrade to Free') }}</button>
                         </div>
                     </div>
-                    
+
                     <div class="col-xs-12 col-sm-6">
                         <div class="form-group text-center">
                             <h4>Total cancellation</h4>
