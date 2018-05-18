@@ -12,7 +12,7 @@
     function SignUpCtrl($rootScope, $scope, $window, $timeout, request, validate, langs) {
         $scope.signUpPage = '';
         $scope.signUp = {};
-        
+
         $scope.init = function(plansCode) {
             if (plansCode != 'error') {
                 $scope.signUp.plans_id = plansCode;
@@ -39,12 +39,12 @@
                 request.send('/auth/signup', $scope.signUp, function(data) {
                     if (data) {
                         $timeout(function() {
-                            $window.location.href = "/";
+                            $window.location.href = "/plans/info";
                         }, 1000);
                     } else {
                         $rootScope.request_sent = false;
                     }
-                }); 
+                });
             }
         };
     };

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Page;
 use App\PagesAccess;
 use App\PagesMenu;
+use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PagesController extends Controller
 {
@@ -29,13 +31,17 @@ class PagesController extends Controller
     public function menu($post = [])
     {
 		$noAccess = PagesAccess::where('users_type', auth()->user()->type)->get()->pluck('code')->toArray();
-		$users_plans_id = auth()->user()->plans_id;
-		$users_paused_plans_id = auth()->user()->paused_plans_id;
+		$user = auth()->user();
+		$users_plans_id = $user->plans_id;
+		$users_paused_plans_id = $user->paused_plans_id;
 		if (strpos($users_plans_id, 'home-advisor') !== false) {
 			$users_plans_id = 'home-advisor-contractortexter';
 		}
 		if (strpos($users_paused_plans_id, 'home-advisor') !== false) {
 			$users_paused_plans_id = 'home-advisor-contractortexter';
+		}
+		if (Carbon::parse($user->created_at)->timestamp > 1526630434 && empty($user->stripe_id)) {
+			array_push($noAccess, 'ha-user', 'dialogs-list');
 		}
 		$users_plan =  $users_plans_id == 'free-contractortexter' ? $users_paused_plans_id : $users_plans_id;
 		$plan = empty(auth()->user()->plans_id) ? 'none' : $users_plan;

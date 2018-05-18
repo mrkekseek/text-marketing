@@ -18,7 +18,7 @@ class PlansController extends Controller
 			$this->sync();
 			$plans = Plan::withCount('users')->get();
 		}
-		
+
 		return $plans;
 	}
 
@@ -57,17 +57,17 @@ class PlansController extends Controller
 			$plan->emails = $request['emails'];
 			$plan->trial = $request['trial'];
 			$plan->save();
-	
+
 			$this->saveOnStripe($plan);
-	
+
 			return $this->message(__('Plan was successfully saved'), 'success');
 		}
 	}
-	
+
 	public function updatePlan(Request $request, $id)
 	{
 		$plan = Plan::firstOrNew(['id' => empty($id) ? 0 : $id]);
-		$plan->plans_id = $this->plansId($id, $request);
+		$plan->plans_id = $this->plansId($request, $id);
 		$plan->name = $request['name'];
 		$plan->amount = $request['amount'];
 		$plan->interval = $request['interval'];
@@ -77,21 +77,22 @@ class PlansController extends Controller
 		$plan->trial = $request['trial'];
 		$plan->save();
 
-		$this->saveOnStripe($plan);
+		$this->saveOnStripe($plan, true);
 
 		return $this->message(__('Plan was successfully saved'), 'success');
 	}
 
-	public function plansId(Request $request)
+	public function plansId(Request $request, $id)
 	{
 		$check = false;
 		$plans_id = strtolower(str_replace([' ', '.', ',', '/', '*', '_'], '-', $request['name']).'-'.config('app.name'));
 
-		if ( ! Plan::where('plans_id', $plans_id)->count()) {
+		return $plans_id;
+		/* if ( ! Plan::where('plans_id', $plans_id)->count()) {
 			return $plans_id;
 		} else {
-			return $this->message(__('Plan Name is already exists')); 
-		}
+			return $this->message(__('Plan Name is already exists'));
+		} */
 	}
 
 	public function saveOnStripe($plan, $update = false)
@@ -169,10 +170,12 @@ class PlansController extends Controller
 
 	public function subscribe(Request $request)
 	{
+		$stripe = new Stripe(config('services.stripe.secret'));
+		$check_plan = $stripe->plans()->find(auth()->user()->plans_id);
 		$user = auth()->user();
 		$plan = Plan::where('plans_id', $user->plans_id)->first();
 		if ( ! $user->subscribed($plan->name)) {
-			$user->newSubscription($plan->name, $user->plans_id)->create($request['token']);
+			$user->newSubscription($plan->name, $user->plans_id)->trialDays($check_plan['metadata']['trial'])->create($request['token']);
 			return $this->message('Your have subscribed', 'success');
 		}
 	}
@@ -193,7 +196,7 @@ class PlansController extends Controller
 					'paused_plans_id' => $user->plans_id,
 					'cancellation_reason' => ! empty($request['reason']) ? $request['reason'] : '',
 				]);
-				
+
 				auth()->logout();
 			}
 		} else {
@@ -218,7 +221,7 @@ class PlansController extends Controller
 		}
 		return $this->message('You have canceled your subscription', 'success');
 	}
-	
+
 	public function makeFreePlan(Request $request, User $user)
 	{
 		if (empty($user->id))
@@ -257,7 +260,7 @@ class PlansController extends Controller
 		}
 		return $this->message('You have subscribed to Free plan', 'success');
 	}
-	
+
 	public function reactivatePlan(Request $request, User $user)
 	{
 		if (empty($user->id)) {
@@ -301,11 +304,11 @@ class PlansController extends Controller
 					'paused_plans_id' => '',
 				]);
 			}
-			
+
 		}
 		return $this->message('You have reactivate your plan', 'success');
 	}
-	
+
 	public function assignPlanToUser(Request $request, User $user)
 	{
 		$plan = Plan::where('id', $request['plans_id'])->first();
@@ -314,7 +317,7 @@ class PlansController extends Controller
 		]);
 		return $this->message('Plan was successfully assigned', 'success');
 	}
-	
+
 	public function updateCard(Request $request)
 	{
 		$user = auth()->user();
