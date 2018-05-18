@@ -35,12 +35,12 @@ class User extends Authenticatable
         return self::where('type', '2')->where('teams_leader', '1')->with('teams')->get();
     }
 
-
     static public function liveUsers()
     {
         $plans_array = [
             'home-advisor-contractortexter',
             'home-advisor-19-contractortexter',
+            'home-advisor-25-contractortexter',
             'home-advisor-39-contractortexter',
             'home-advisor-49-contractortexter',
             'text-contractortexter',
@@ -154,6 +154,7 @@ class User extends Authenticatable
         $plans_array = [
             'home-advisor-contractortexter',
             'home-advisor-19-contractortexter',
+            'home-advisor-25-contractortexter',
             'home-advisor-39-contractortexter',
             'home-advisor-49-contractortexter',
         ];
