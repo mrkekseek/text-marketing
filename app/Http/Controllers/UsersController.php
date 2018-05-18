@@ -490,7 +490,6 @@ class UsersController extends Controller
 		});
 	}
 
-
     public function getLiveUsers()
 	{
 		return User::liveUsers()->each(function($item, $key) {
