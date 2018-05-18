@@ -20,6 +20,7 @@ class PagesController extends Controller
     		switch ($users_plan) {
     			case 'home-advisor-contractortexter': return 'ha.user';
     			case 'home-advisor-19-contractortexter': return 'ha.user';
+    			case 'home-advisor-25-contractortexter': return 'ha.user';
     			case 'home-advisor-39-contractortexter': return 'ha.user';
     			case 'home-advisor-49-contractortexter': return 'ha.user';
     			case 'vonage-contractortexter': return 'vonage.user';

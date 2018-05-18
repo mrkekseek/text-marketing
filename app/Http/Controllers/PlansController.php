@@ -67,7 +67,7 @@ class PlansController extends Controller
 	public function updatePlan(Request $request, $id)
 	{
 		$plan = Plan::firstOrNew(['id' => empty($id) ? 0 : $id]);
-		$plan->plans_id = $this->plansId($request, $id);
+		$plan->plans_id = $this->plansId($request);
 		$plan->name = $request['name'];
 		$plan->amount = $request['amount'];
 		$plan->interval = $request['interval'];
@@ -82,17 +82,12 @@ class PlansController extends Controller
 		return $this->message(__('Plan was successfully saved'), 'success');
 	}
 
-	public function plansId(Request $request, $id)
+	public function plansId(Request $request)
 	{
 		$check = false;
 		$plans_id = strtolower(str_replace([' ', '.', ',', '/', '*', '_'], '-', $request['name']).'-'.config('app.name'));
 
 		return $plans_id;
-		/* if ( ! Plan::where('plans_id', $plans_id)->count()) {
-			return $plans_id;
-		} else {
-			return $this->message(__('Plan Name is already exists'));
-		} */
 	}
 
 	public function saveOnStripe($plan, $update = false)
