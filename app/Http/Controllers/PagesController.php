@@ -18,10 +18,10 @@ class PagesController extends Controller
     		return 'users.live';
     	} else {
     		switch ($users_plan) {
-    			case 'home-advisor-contractortexter': return 'plans.info';
-    			case 'home-advisor-19-contractortexter': return 'plans.info';
-    			case 'home-advisor-39-contractortexter': return 'plans.info';
-    			case 'home-advisor-49-contractortexter': return 'plans.info';
+    			case 'home-advisor-contractortexter': return 'ha.user';
+    			case 'home-advisor-19-contractortexter': return 'ha.user';
+    			case 'home-advisor-39-contractortexter': return 'ha.user';
+    			case 'home-advisor-49-contractortexter': return 'ha.user';
     			case 'vonage-contractortexter': return 'vonage.user';
     			default:  return 'surveys.send';
     		}
