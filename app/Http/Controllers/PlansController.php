@@ -170,7 +170,11 @@ class PlansController extends Controller
 		$user = auth()->user();
 		$plan = Plan::where('plans_id', $user->plans_id)->first();
 		if ( ! $user->subscribed($plan->name)) {
-			$user->newSubscription($plan->name, $user->plans_id)->trialDays($check_plan['metadata']['trial'])->create($request['token']);
+			if (empty($check_plan['metadata']['trial'])) {
+				$user->newSubscription($plan->name, $user->plans_id)->create($request['token']);
+			} else {
+				$user->newSubscription($plan->name, $user->plans_id)->trialDays($check_plan['metadata']['trial'])->create($request['token']);
+			}
 			return $this->message('Your have subscribed', 'success');
 		}
 	}
