@@ -43,6 +43,7 @@ class User extends Authenticatable
             'home-advisor-25-contractortexter',
             'home-advisor-39-contractortexter',
             'home-advisor-49-contractortexter',
+            'home-advisor-00-contractortexter',
             'text-contractortexter',
             'star-rating-contractortexter',
         ];
@@ -157,6 +158,7 @@ class User extends Authenticatable
             'home-advisor-25-contractortexter',
             'home-advisor-39-contractortexter',
             'home-advisor-49-contractortexter',
+            'home-advisor-00-contractortexter',
         ];
         return self::whereIn('plans_id', $plans_array)->with(['teams' => function($q){
             $q->with(['clients' => function($q){
