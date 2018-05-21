@@ -133,7 +133,8 @@
         $scope.subscribe = function(token) {
             request.send('/plans/subscribe', {'token': token.id}, function (data) {
                 $scope.getPlanInfo();
-                $window.location.href = 'ha/user/';
+                //$window.location.href = '/ha/user/';
+                $window.location.reload();
             }, ($scope.stripe.stripe_id ? 'put' : 'post'));
         };
 
