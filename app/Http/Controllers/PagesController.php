@@ -23,6 +23,7 @@ class PagesController extends Controller
     			case 'home-advisor-25-contractortexter': return 'ha.user';
     			case 'home-advisor-39-contractortexter': return 'ha.user';
     			case 'home-advisor-49-contractortexter': return 'ha.user';
+    			case 'home-advisor-00-contractortexter': return 'ha.user';
     			case 'vonage-contractortexter': return 'vonage.user';
     			default:  return 'surveys.send';
     		}
