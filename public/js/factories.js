@@ -131,8 +131,8 @@
     'use strict';
 
     angular.module('app').factory('validate', ['logger', validate])
-    
-    function validate(logger) {     
+
+    function validate(logger) {
         return {
             check: function (field, name, object_field, zero) {
                 zero = zero || false;
@@ -203,11 +203,13 @@
         return {
             getLink: function(longUrl, func) {
                 $.getJSON(
-                    "https://api-ssl.bitly.com/v3/shorten?callback=?", 
-                    { 
+                    "https://api-ssl.bitly.com/v3/shorten?callback=?",
+                    {
                         "format": "json",
-                        "apiKey": 'R_c6441329b98a41839b406b6307da353d',
-                        "login": "contractortexter",
+                        /* "apiKey": 'R_c6441329b98a41839b406b6307da353d',
+                        "login": "contractortexter", */
+                        "apiKey": 'R_ac165a693c4d43ab87337e0264f74263',
+                        "login": "vbaychura",
                         "longUrl": longUrl
                     },
                     function(response)
@@ -215,10 +217,10 @@
                          func(response.data.url);
                     }
                 );
-            } 
+            }
         };
     };
-    
+
 })();
 
 ;
