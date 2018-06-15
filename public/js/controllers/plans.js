@@ -80,8 +80,8 @@
         };
 
         $scope.planDetailsPage = function() {
-            var stripe = Stripe('pk_live_qfYiDhjIK1fw6XPECmbLafr2');
-            //var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
+            //var stripe = Stripe('pk_live_qfYiDhjIK1fw6XPECmbLafr2');
+            var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
             var elements = stripe.elements();
 
             var style = {
