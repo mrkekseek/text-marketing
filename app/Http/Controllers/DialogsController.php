@@ -74,7 +74,7 @@ class DialogsController extends Controller
 
             SendLeadText::dispatch($dialog, $phones, auth()->user())->onQueue('texts');
 
-			$this->message(__('Message was send'), 'success');
+			$this->message(__('Message was sent'), 'success');
 			return $dialog;
 		}
 	}
