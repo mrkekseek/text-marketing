@@ -27,11 +27,11 @@ class AppointmentController extends Controller
 	        ]);
 
 	        $phones[] = ['phone' => $client->phone];
-            
+
             $delay = Carbon::now()->diffInSeconds($date);
 
 	    	SendAppointment::dispatch($appointment, $phones, $user)->delay($delay)->onQueue('texts');
-	    	return $this->message(__('Message was send'), 'success');
+	    	return $this->message(__('Message was sent'), 'success');
     	}
     }
 
@@ -49,7 +49,7 @@ class AppointmentController extends Controller
             $length = true;
             $phones = true;
             $limit = true;
-            
+
             $message = $data['text'];
 
             if ( ! ApiValidate::messageLength($message, $user->company_name)) {
@@ -83,7 +83,7 @@ class AppointmentController extends Controller
             $time = $data['date'];
             $date = Carbon::create($time['year'], $time['month'], $time['date'], $time['hours'], $time['minutes'], 0, config('app.timezone'));
         }
-        
+
         if (ApiValidate::underBlocking($date)) {
             return $this->message('You can\'t send texts before 9 AM.');
         }

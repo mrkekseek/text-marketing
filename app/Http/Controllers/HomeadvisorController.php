@@ -680,7 +680,7 @@ class HomeadvisorController extends Controller
 
             SendGeneralText::dispatch($general_message, $phones, $data['text'], 'ContractorTexter', $offset)->onQueue('texts');
 
-			$this->message(__('Message was send'), 'success');
+			$this->message(__('Message was sent'), 'success');
 			return $general_message;
 		}
 	}
