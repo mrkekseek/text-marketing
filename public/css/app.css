@@ -411,7 +411,7 @@ textarea.form-control.appointment-textarea {
 	.chat-body {
 		position: absolute;
 		top: auto;
-		bottom: 50px;
+		bottom: 60px;
 		left: 0;
 		right: 0;
 		max-height: calc(100% - 50px);
@@ -442,7 +442,7 @@ textarea.form-control.appointment-textarea {
 	}
 
 	.chat-text.chars-area textarea {
-		height: 50px;
+		height: 60px;
 	}
 
 	.chat-button {
@@ -451,7 +451,7 @@ textarea.form-control.appointment-textarea {
 		bottom: 0;
 		right: 0;
 		width: 50px;
-		height: 50px;
+		height: 60px;
 	}
 
 	.chat-button .btn {
