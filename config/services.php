@@ -40,6 +40,6 @@ return [
     ],
 
     'api' => [
-        'domain' => env('API_DOMAIN', 'http://52.32.158.227/api/v1/'),
+        'domain' => env('API_DOMAIN', 'http://54.202.144.178/api/v1/'),
     ],
 ];
