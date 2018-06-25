@@ -1,9 +1,8 @@
 (function () {
     'use strict';
 
-
-    //var stripe = Stripe('pk_live_qfYiDhjIK1fw6XPECmbLafr2');
-    var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
+    var stripe = Stripe('pk_live_qfYiDhjIK1fw6XPECmbLafr2');
+    //var stripe = Stripe('pk_test_KM8cPI1fQDUJf2Z8R971mJK0');
     var elements = stripe.elements();
 
     var style = {
@@ -112,8 +111,7 @@
         };
 
         $scope.planDetailsPage = function() {
-            card.mount('#card-element');
-            console.log(card);
+            card.mount('.card-element');
             var form = document.getElementById('payment-form');
             form.addEventListener('submit', function (event) {
                 event.preventDefault();

@@ -21,7 +21,7 @@
                                         Credit or Debit Card
                                     </h5>
 
-                                    <div id="card-element">
+                                    <div class="card-element">
                                     </div>
 
                                     <div id="card-errors" role="alert"></div>

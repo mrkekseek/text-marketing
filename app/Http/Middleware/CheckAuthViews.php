@@ -25,11 +25,10 @@ class CheckAuthViews
             $user = auth()->user();
             $plans_id = $user->plans_id;
             $plan = Plan::where('plans_id', $plans_id)->first();
-            if ( ! empty($plan) && ! $user->subscribed($plan->name) && Carbon::parse($user->created_at)->timestamp > 1526630434 || $user->allow_access && Carbon::parse($user->created_at)->timestamp > 1526630434) {
+            if ( ! empty($plan) && ! $user->subscribed($plan->name) && Carbon::parse($user->created_at)->timestamp > 1526630434 && ! $user->allow_access) {
                 return response(view('plans.info'));
             }
         }
-
         return $next($request);
     }
 }
