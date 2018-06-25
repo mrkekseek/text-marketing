@@ -65,6 +65,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => ['messages', 'timezone']], f
 	Route::get('users/live', 'UsersController@getLiveUsers');
 	Route::get('users/free', 'UsersController@getFreeUsers');
 	Route::get('users/canceled', 'UsersController@getCanceledUsers');
+	Route::put('users/access/{id}', 'UsersController@allowAccess');
 	Route::put('users', 'UsersController@create');
 	Route::post('users/{id}', 'UsersController@update');
 	Route::delete('users/{id}', 'UsersController@remove');

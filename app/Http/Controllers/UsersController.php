@@ -770,7 +770,14 @@ class UsersController extends Controller
 		]);
 
 		return $this->message('Settings was successfully saved.', 'success');
-    }
+	}
+
+	public function allowAccess($request)
+	{
+		$user = User::find($request);
+		$user['allow_access'] = ! $user['allow_access'];
+		$user->update();
+	}
 
     public function facebookToken()
     {

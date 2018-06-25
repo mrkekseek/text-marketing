@@ -13,12 +13,12 @@
 			$scope.getLiveUsers();
 			$scope.plans();
 		};
-		
+
 		$scope.initFree = function () {
 			$scope.getFreeUsers();
 			$scope.plans();
 		};
-		
+
 		$scope.initCanceled = function () {
 			$scope.getCanceledUsers();
 			$scope.plans();
@@ -72,7 +72,7 @@
 		    modalInstance.result.then(function (response) {
 				$scope.get();
 		    }, function () {
-				
+
 		    });
 		};
 
@@ -148,7 +148,7 @@
 			});
 
 		};
-		
+
 		$scope.viewFullCancelReason = function (reason) {
 			var modalInstance = $uibModal.open({
 				animation: true,
@@ -171,7 +171,10 @@
 			}, function () {
 
 			});
+		};
 
+		$scope.allowAccess = function (id) {
+			request.send('/users/access/' + id, {}, false, 'put');
 		};
     };
 })();
@@ -233,21 +236,21 @@
 					$uibModalInstance.close($scope.action);
 				}, 'post');
 			}
-			
+
 			if ($scope.action == 'cancel') {
 				request.send('/plans/unsubscribe/' + $scope.user.id, {}, function (data) {
 					$scope.request_finish = true;
 					$uibModalInstance.close($scope.action);
 				}, 'post');
 			}
-			
+
 			if ($scope.action == 'reactivate') {
 				request.send('/plans/reactivate/' + $scope.user.id, {}, function (data) {
 					$scope.request_finish = true;
 					$uibModalInstance.close($scope.action);
 				}, 'post');
 			}
-			
+
 			if ($scope.action == 'upgrade') {
 				request.send('/plans/free/' + $scope.user.id, {}, function (data) {
 					$scope.request_finish = true;
