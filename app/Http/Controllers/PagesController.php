@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Page;
 use App\PagesAccess;
 use App\PagesMenu;
+use App\Plan;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -36,6 +37,7 @@ class PagesController extends Controller
 		$user = auth()->user();
 		$users_plans_id = $user->plans_id;
 		$users_paused_plans_id = $user->paused_plans_id;
+		/* $plans = Plan::where('plans_id', $users_plans_id)->first(); */
 		if (strpos($users_plans_id, 'home-advisor') !== false) {
 			$users_plans_id = 'home-advisor-contractortexter';
 		}

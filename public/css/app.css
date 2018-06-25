@@ -854,8 +854,13 @@ textarea.form-control.appointment-textarea {
 	color:#626262;
 }
 
-.ha_number {
+.ha_number div {
 	width: 100px;
+}
+
+.ha_account_column {
+	overflow: hidden;
+	max-width: 100px;
 }
 
 .ref-page .form-control {
@@ -1025,4 +1030,8 @@ textarea.form-control.appointment-textarea {
 
 .subscription_info_block {
 	margin-top: 20px;
+}
+
+.access_switcher label {
+	margin: 0;
 }
