@@ -58,6 +58,7 @@
             </form>
         </script>
 
+        <script src="https://js.stripe.com/v3/"></script>
         <script src="/js/libs/angular.js"></script>
         <script src="/js/libs/jquery.js"></script>
         <script src="/js/libs/ui.js"></script>
@@ -86,6 +87,5 @@
         <script src="/js/directives/textarea.js"></script>
         <script src="/js/directives/stars.js"></script>
         <script src="/js/directives/scroll_bottom.js"></script>
-        <script src="https://js.stripe.com/v3/"></script>
     </body>
 </html>

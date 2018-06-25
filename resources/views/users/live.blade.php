@@ -24,7 +24,7 @@
 		<div uib-alert class="alert-warning" ng-show="(list | filter : quickSearch).length == 0">
 			{{ __("Nothing found.") }}
 		</div>
-		
+
 		<section class="panel panel-default table-dynamic table-responsive " ng-show="(list | filter : quickSearch).length">
 			<table class="table table-bordered table-striped table-middle">
 				<thead>
@@ -52,13 +52,13 @@
 								{{ __('Cell #') }}
 							</div>
 						</th>
-						
+
 						<th class="ha_number">
 							<div class="th">
 								{{ __('Account #') }}
 							</div>
 						</th>
-						
+
 						<th>
 							<div class="th">
 								{{ __('Current Plan') }}
@@ -70,19 +70,25 @@
 								{{ __('Downgrade Plan to Free') }}
 							</div>
 						</th>
-						
+
 						<th>
 							<div class="th">
 								{{ __('Cancel Subscription') }}
 							</div>
 						</th>
-						
+
 						<th>
 							<div class="th">
 								{{ __('Assign Plan') }}
 							</div>
 						</th>
-						
+
+						<th class="th-button">
+							<div class="th">
+								{{ __('Allow access') }}
+							</div>
+						</th>
+
 						<th class="th-button">
 						</th>
 
@@ -103,19 +109,21 @@
 						<td>
 							@{{ user.lastname }}
 						</td>
-						
+
 						<td>
 							@{{ user.email }}
 						</td>
-						
+
 						<td>
 							@{{ user.view_phone }}
 						</td>
-						
+
 						<td>
-							@{{ user.rep }}
+							<div class="ha_account_column">
+								@{{ user.rep }}
+							</div>
 						</td>
-						
+
 						<td>
 							@{{ user.current_plan }}
 						</td>
@@ -127,11 +135,20 @@
 						<td class="td-button text-center">
 							<button class="btn btn-primary btn-danger" ng-click="confirmSubscription(user, 'cancel')">Cancel</button>
 						</td>
-						
+
 						<td class="td-button text-center">
 							<button class="btn btn-primary btn-danger" ng-click="confirmSubscription(user, 'assign')">Assign</button>
 						</td>
-						
+
+						<td class="td-button text-center">
+							<div class="access_switcher">
+								<label class="ui-switch ui-switch-success ui-switch-sm">
+									<input id="allow_access" type="checkbox" ng-click="allowAccess(user.id)" ng-model="user.allow_access" ng-true-value="1" ng-false-value="0" />
+									<i></i>
+								</label>
+							</div>
+						</td>
+
 						<td class="td-button text-center">
 							<a href="javascript:;" class="a-icon text-warning" ng-click="magic(user.id)">
 								<i class="fa fa-lock" aria-hidden="true"></i>
@@ -221,16 +238,16 @@
 					<div class="content-loader" ng-show="! request_finish">
 						<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
 					</div>
-					
+
 					<div ng-show="request_finish">
 						<h4 ng-if="action == 'downgrade'">
 							Do you really want to downgrade @{{ user.firstname + ' ' + user.lastname }}'s plan to Free?
 						</h4>
-						
+
 						<h4 ng-if="action == 'cancel'">
 							Do you really want to cancel @{{ user.firstname + ' ' + user.lastname }}'s subscription?
 						</h4>
-						
+
 						<div ng-if="action == 'assign'">
 							<label>Please choose a plan for @{{ user.firstname + ' ' + user.lastname }}:</label>
 
@@ -239,7 +256,7 @@
 									<option value="@{{ plan.id }}" ng-repeat="plan in list">@{{ plan.name + ' ($' + plan.amount + ' /' + plan.interval + ')' }}</option>
 								</select>
 							</div>
-							
+
 							<div class="form-group">
 								<button type="button" class="btn btn-primary btn-danger" ng-click="assign(plans_id)">{{ __('Assign') }}</button>
 								<button type="button" class="btn btn-default" ng-click="cancel()">{{ __('Cancel') }}</button>

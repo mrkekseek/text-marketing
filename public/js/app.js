@@ -39,7 +39,7 @@
                     }
                 }
             };
-            
+
             $routeProvider.when(url, config);
             return $routeProvider;
         };
@@ -49,8 +49,8 @@
         });
 
         $routeProvider.when('/', {templateUrl: '/view/'});
-    }]); 
-})(); 
+    }]);
+})();
 
 ;
 
@@ -120,7 +120,7 @@ angular.module('app').filter('capitalize', function() {
         $scope.get = function() {
            request.send('/auth/info', {}, function(data) {
                 $scope.user = data;
-            }, 'get'); 
+            }, 'get');
         };
 
         $scope.menu = function () {
@@ -162,7 +162,7 @@ angular.module('app').filter('capitalize', function() {
 
         $scope.segment = function (number) {
             var part = $window.location.pathname.split('/');
-            return part[number] ? part[number] : ''; 
+            return part[number] ? part[number] : '';
         };
 
         $scope.changePage = function (page) {
@@ -208,7 +208,7 @@ angular.module('app').filter('capitalize', function() {
                 }
             });
         };
-        
+
         $scope.modal_video = function() {
             var modalInstance = $uibModal.open({
                 animation: true,

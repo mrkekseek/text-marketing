@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Page;
 use App\PagesAccess;
 use App\PagesMenu;
+use App\Plan;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -42,8 +43,8 @@ class PagesController extends Controller
 		if (strpos($users_paused_plans_id, 'home-advisor') !== false) {
 			$users_paused_plans_id = 'home-advisor-contractortexter';
 		}
-		if (Carbon::parse($user->created_at)->timestamp > 1526630434 && empty($user->stripe_id)) {
-			array_push($noAccess, 'ha-user', 'dialogs-list');
+		if (Carbon::parse($user->created_at)->timestamp > 1526630434 && empty($user->stripe_id) && empty($user->allow_access)) {
+			array_push($noAccess, 'ha-user', 'dialogs-list', 'plans-info');
 		}
 		$users_plan =  $users_plans_id == 'free-contractortexter' ? $users_paused_plans_id : $users_plans_id;
 		$plan = empty(auth()->user()->plans_id) ? 'none' : $users_plan;
