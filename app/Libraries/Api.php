@@ -28,7 +28,7 @@ class Api
 		$data['code'] = $response->getStatusCode();
 		return $data;
 	}
-	
+
 	static public function company($name)
 	{
 		return self::send('company/name', ['name' => $name]);
