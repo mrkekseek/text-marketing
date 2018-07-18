@@ -206,10 +206,10 @@
                     "https://api-ssl.bitly.com/v3/shorten?callback=?",
                     {
                         "format": "json",
-                        /* "apiKey": 'R_c6441329b98a41839b406b6307da353d',
-                        "login": "contractortexter", */
-                        "apiKey": 'R_ac165a693c4d43ab87337e0264f74263',
-                        "login": "vbaychura",
+                        "apiKey": 'R_c6441329b98a41839b406b6307da353d',
+                        "login": "contractortexter",
+                        /* "apiKey": 'R_ac165a693c4d43ab87337e0264f74263',
+                        "login": "vbaychura", */
                         "longUrl": longUrl
                     },
                     function(response)
