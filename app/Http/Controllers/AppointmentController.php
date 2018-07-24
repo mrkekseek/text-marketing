@@ -23,7 +23,6 @@ class AppointmentController extends Controller
                 'clients_id' => $client->id,
                 'text' => $data['text'],
                 'my' => true,
-                'parent' => true,
             ];
 
             $dialog = Dialog::create($dialog_data);
