@@ -84,8 +84,14 @@
 						</th>
 
 						<th class="th-button">
-							<div class="th">
+							<div class="tiny-th">
 								{{ __('Allow access') }}
+							</div>
+						</th>
+
+						<th class="th-button">
+							<div class="tiny-th">
+								{{ __('Enable PAT') }}
 							</div>
 						</th>
 
@@ -129,7 +135,7 @@
 						</td>
 
 						<td class="td-button text-center">
-							<button class="btn btn-primary btn-danger" ng-class="{'disabled': ! user.has_subscription}" ng-click="confirmSubscription(user, 'downgrade')">Downgrade</button>
+							<button class="btn btn-primary btn-danger" ng-class="{'disabled': ! user.has_subscription || user.plans_id == 'pre-appointment-text-contractortexter'}" ng-click="confirmSubscription(user, 'downgrade')">Downgrade</button>
 						</td>
 
 						<td class="td-button text-center">
@@ -144,6 +150,15 @@
 							<div class="access_switcher">
 								<label class="ui-switch ui-switch-success ui-switch-sm">
 									<input id="allow_access" type="checkbox" ng-click="allowAccess(user.id)" ng-model="user.allow_access" ng-true-value="1" ng-false-value="0" />
+									<i></i>
+								</label>
+							</div>
+						</td>
+
+						<td class="td-button text-center">
+							<div class="access_switcher" ng-show="user.plans_id != 'pre-appointment-text-contractortexter'">
+								<label class="ui-switch ui-switch-success ui-switch-sm">
+									<input id="enable_pat" type="checkbox" ng-click="enablePat(user.id)" ng-model="user.enable_pat" ng-true-value="1" ng-false-value="0" />
 									<i></i>
 								</label>
 							</div>

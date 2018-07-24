@@ -12,7 +12,7 @@ class PagesSeeder extends Seeder
     public function run()
     {
         DB::table('pages')->truncate();
-    	
+
         DB::table('pages')->insert([
             'code' => 'teams-list',
             'folder' => 'teams',
@@ -32,7 +32,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'users-live',
             'folder' => 'users',
@@ -42,7 +42,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'users-free',
             'folder' => 'users',
@@ -52,7 +52,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'users-canceled',
             'folder' => 'users',
@@ -132,7 +132,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'vonage-user',
             'folder' => 'vonage',
@@ -142,7 +142,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'vonage-list',
             'folder' => 'vonage',
@@ -322,7 +322,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'new_users-send',
             'folder' => 'new_users',
@@ -332,7 +332,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'inbox-inbox',
             'folder' => 'inbox',
@@ -342,7 +342,7 @@ class PagesSeeder extends Seeder
             'tpl' => '',
             'public' => 0,
         ]);
-        
+
         DB::table('pages')->insert([
             'code' => 'plans-info',
             'folder' => 'plans',
@@ -357,7 +357,7 @@ class PagesSeeder extends Seeder
 
 
         DB::table('pages_access')->truncate();
-    	
+
         DB::table('pages_access')->insert([
             'code' => 'teams-list',
             'users_type' => 2,
@@ -367,17 +367,17 @@ class PagesSeeder extends Seeder
             'code' => 'users-users',
             'users_type' => 2,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'users-live',
             'users_type' => 2,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'users-free',
             'users_type' => 2,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'users-canceled',
             'users_type' => 2,
@@ -472,7 +472,7 @@ class PagesSeeder extends Seeder
             'code' => 'ha-user',
             'users_type' => 1,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'vonage-user',
             'users_type' => 1,
@@ -492,17 +492,17 @@ class PagesSeeder extends Seeder
             'code' => 'leads-list',
             'users_type' => 2,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'new_users-send',
             'users_type' => 2,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'inbox-inbox',
             'users_type' => 2,
         ]);
-        
+
         DB::table('pages_access')->insert([
             'code' => 'plans-info',
             'users_type' => 1,
@@ -521,7 +521,7 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 1,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'users-live',
             'parents_code' => 'users-users',
@@ -529,7 +529,7 @@ class PagesSeeder extends Seeder
             'main' => 1,
             'pos' => 1,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'users-free',
             'parents_code' => 'users-users',
@@ -537,7 +537,7 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 2,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'users-canceled',
             'parents_code' => 'users-users',
@@ -577,7 +577,7 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 6,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'new_users-send',
             'parents_code' => '',
@@ -593,7 +593,7 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 8,
         ]);
-        
+
         /* DB::table('pages_menu')->insert([
             'pages_code' => 'settings-admin',
             'parents_code' => '',
@@ -986,7 +986,15 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 4,
         ]);
-        
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'dialogs-list',
+            'parents_code' => '',
+            'plans' => 'pre-appointment-text-contractortexter',
+            'main' => 0,
+            'pos' => 4,
+        ]);
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'vonage-user',
             'parents_code' => '',
@@ -1006,7 +1014,7 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'appointment-confirmation',
             'parents_code' => '',
-            'plans' => 'text-contractortexter',
+            'plans' => 'home-advisor-contractortexter',
             'main' => 0,
             'pos' => 3,
         ]);
@@ -1014,11 +1022,11 @@ class PagesSeeder extends Seeder
         DB::table('pages_menu')->insert([
             'pages_code' => 'appointment-confirmation',
             'parents_code' => '',
-            'plans' => 'none',
+            'plans' => 'pre-appointment-text-contractortexter',
             'main' => 0,
             'pos' => 3,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'plans-info',
             'parents_code' => '',
@@ -1026,7 +1034,7 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 5,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'plans-info',
             'parents_code' => '',
@@ -1034,7 +1042,7 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 5,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'plans-info',
             'parents_code' => '',
@@ -1042,11 +1050,19 @@ class PagesSeeder extends Seeder
             'main' => 0,
             'pos' => 5,
         ]);
-        
+
         DB::table('pages_menu')->insert([
             'pages_code' => 'plans-info',
             'parents_code' => '',
             'plans' => 'star-rating-contractortexter',
+            'main' => 0,
+            'pos' => 5,
+        ]);
+
+        DB::table('pages_menu')->insert([
+            'pages_code' => 'plans-info',
+            'parents_code' => '',
+            'plans' => 'pre-appointment-text-contractortexter',
             'main' => 0,
             'pos' => 5,
         ]);

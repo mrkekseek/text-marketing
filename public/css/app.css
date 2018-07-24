@@ -863,6 +863,10 @@ textarea.form-control.appointment-textarea {
 	max-width: 100px;
 }
 
+.tiny-th {
+	padding: 2px;
+}
+
 .ref-page .form-control {
 	width: 60%;
 }

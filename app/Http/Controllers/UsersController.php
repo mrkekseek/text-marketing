@@ -742,6 +742,14 @@ class UsersController extends Controller
 			'company_status' => $status,
 		]);
 
+		if ( ! empty($request['user_id'])) {
+			$team_leader = User::find($request['user_id']);
+			$team_leader->update([
+			'company_name' => $request->company,
+			'company_status' => $status,
+		]);
+		}
+
 		return ['status' => $status];
 	}
 
@@ -776,6 +784,13 @@ class UsersController extends Controller
 	{
 		$user = User::find($request);
 		$user['allow_access'] = ! $user['allow_access'];
+		$user->update();
+	}
+
+	public function enablePat($request)
+	{
+		$user = User::find($request);
+		$user['enable_pat'] = ! $user['enable_pat'];
 		$user->update();
 	}
 
