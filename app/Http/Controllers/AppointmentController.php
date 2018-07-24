@@ -18,10 +18,21 @@ class AppointmentController extends Controller
     	$data = $request->only(['text', 'date', 'schedule']);
 
     	if ($this->textValidate($data, $user, $client)) {
+            $dialog_data = [
+	            'users_id' => auth()->user()->id,
+                'clients_id' => $client->id,
+                'text' => $data['text'],
+                'my' => true,
+                'parent' => true,
+            ];
+
+            $dialog = Dialog::create($dialog_data);
+
     		$phones = [];
             $date = $this->getDate($data['schedule'], $data['date'], $user);
 	    	$appointment = $user->appointments()->create([
 	            'client_id' => $client->id,
+	            'dialogs_id' => $dialog->id,
 	            'text' => $data['text'],
                 'schedule' => $data['schedule'],
                 'date' => $date
@@ -31,15 +42,6 @@ class AppointmentController extends Controller
 
             $delay = Carbon::now()->diffInSeconds($date);
 
-            $dialog_data = [
-	            'users_id' => auth()->user()->id,
-                'clients_id' => $client->id,
-                'text' => $data['text'],
-                'my' => true,
-                'parent' => true,
-            ];
-
-            Dialog::create($dialog_data);
 	    	SendAppointment::dispatch($appointment, $phones, $user)->delay($delay)->onQueue('texts');
 	    	return $this->message(__('Message was sent'), 'success');
     	}
@@ -130,9 +132,13 @@ class AppointmentController extends Controller
 
             if ( ! empty($client['success'])) {
                $update['success'] = 1;
+               $status = 1;
             }
         }
 
         $appointment->update($update);
+        Dialog::find($appointment->dialogs_id)->update([
+            'status' => $status
+        ]);
     }
 }
