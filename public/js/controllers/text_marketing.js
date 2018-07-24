@@ -68,7 +68,7 @@
                     default: res = 'th'; break;
                 }
             }
-            
+
             return res;
         };
 
@@ -103,7 +103,7 @@
                 logger.logError(langs.get('Text is empty.'));
                 return;
             }
-            
+
             var date = new Date();
             var post_mas = {
                 'text': $scope.messages_text,
@@ -124,7 +124,7 @@
 
         $scope.saveSettings = function() {
             request.send('/users/' + $scope.user.id, post_mas, function (data) {
-                
+
             });
         };
     };
@@ -164,7 +164,7 @@
                 'additional_phones': $scope.inputs
             };
             request.send('/users/saveSettings', post_mas, function (data) {
-                
+
             }, 'post');
         };
     };
@@ -224,7 +224,7 @@
         $scope.remove = function(id, index) {
             if (confirm(langs.get('Do you realy want to remove this list?'))) {
                 request.send('/lists/' + id, {}, function (data) {
-                    $scope.listsList.splice(index, 1);   
+                    $scope.listsList.splice(index, 1);
                 }, 'delete');
             }
         };
@@ -260,7 +260,7 @@
                 logger.logError('Name is required');
                 error = 0;
             }
-            
+
             if (error) {
                 $scope.listsList[index].clients[clientIndex].lists_id = $scope.listsList[index].id;
                 $scope.listsList[index].clients[clientIndex].view_phone = $scope.listsList[index].clients[clientIndex].phone;
@@ -324,11 +324,11 @@
                     if (! check) {
                         $scope.listsList[index].clients.push($scope.list[k]);
                     }
-                    
+
                     $scope.list[k].selected = false;
                 }
             }
-            
+
             request.send('/clients/addToList/' + $scope.listsList[index].id, $scope.listsList[index].clients, function (data) {
 
             });
