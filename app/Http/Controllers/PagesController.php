@@ -25,6 +25,7 @@ class PagesController extends Controller
     			case 'home-advisor-39-contractortexter': return 'ha.user';
     			case 'home-advisor-49-contractortexter': return 'ha.user';
     			case 'home-advisor-00-contractortexter': return 'ha.user';
+    			case 'pre-appointment-text-contractortexter': return 'appointment.send';
     			case 'vonage-contractortexter': return 'vonage.user';
     			default:  return 'surveys.send';
     		}
@@ -44,10 +45,15 @@ class PagesController extends Controller
 			$users_paused_plans_id = 'home-advisor-contractortexter';
 		}
 		if (Carbon::parse($user->created_at)->timestamp > 1526630434 && empty($user->stripe_id) && empty($user->allow_access)) {
-			array_push($noAccess, 'ha-user', 'dialogs-list', 'plans-info');
+			array_push($noAccess, 'ha-user', 'dialogs-list', 'plans-info', 'appointment-confirmation');
 		}
 		$users_plan =  $users_plans_id == 'free-contractortexter' ? $users_paused_plans_id : $users_plans_id;
 		$plan = empty(auth()->user()->plans_id) ? 'none' : $users_plan;
+
+		if (strpos($users_plans_id, 'home-advisor') !== false && empty($user->enable_pat)) {
+			array_push($noAccess, 'appointment-confirmation');
+		}
+
 		$menu = PagesMenu::whereNotIn('pages_code', $noAccess)->where('plans', $plan)->orderBy('pos')->get();
 		$codes = $menu->pluck('pages_code')->toArray();
 		$pages = Page::whereIn('code', $codes)->get();

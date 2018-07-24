@@ -176,6 +176,10 @@
 		$scope.allowAccess = function (id) {
 			request.send('/users/access/' + id, {}, false, 'put');
 		};
+
+		$scope.enablePat = function (id) {
+			request.send('/users/pat/' + id, {}, false, 'put');
+		};
     };
 })();
 

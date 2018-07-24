@@ -159,9 +159,9 @@
 
         $scope.companySave = function () {
             var user = $scope.employee.id ? $scope.employee : $scope.user;
-            request.send('/users/company' + ($scope.employee.id ? '/' + $scope.employee.id : ''), {'company': user.company_name}, function (data) {
+            request.send('/users/company' + ($scope.employee.id ? '/' + $scope.employee.id : ''), { 'company': user.company_name, 'user_id': $scope.user.id }, function (data) {
                 if (data) {
-                    user.company_status = data.status;
+                    $scope.user.company_status = data.status;
                     $scope.companyChanged = false;
                     $scope.checkCompany();
                 }
@@ -210,7 +210,7 @@
                 console.log($scope.fromTime);
                 console.log($scope.toTime);
             }
-            
+
         }
 
         $scope.send = function() {
@@ -229,7 +229,7 @@
             };
 
             request.send('/appointment/' + $scope.employee.id + '/' + $scope.selectedClient.id, data, function (data) {
-                
+
             }, 'put');
         };
     };

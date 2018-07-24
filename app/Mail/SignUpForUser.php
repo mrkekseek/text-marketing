@@ -36,8 +36,13 @@ class SignUpForUser extends Mailable
     {
         $link = $this->url.'/magic/'.md5($this->user->id.$this->user->email).'/send';
         $project = $this->name;
-        
-        return $this->markdown('emails.signup_for_user')
+        $markdown = 'emails.signup_for_user';
+
+        if ($this->user->plans_id == 'pre-appointment-text-contractortexter') {
+            $markdown = 'emails.signup_for_user_pat';
+        }
+
+        return $this->markdown($markdown)
         ->subject('Thanks You for Signing Up')
         ->with([
                 'user' => $this->user,

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Client;
+use App\Dialog;
 use App\Appointment;
 use App\Jobs\SendAppointment;
 use App\Libraries\ApiValidate;
@@ -30,6 +31,15 @@ class AppointmentController extends Controller
 
             $delay = Carbon::now()->diffInSeconds($date);
 
+            $dialog_data = [
+	            'users_id' => auth()->user()->id,
+                'clients_id' => $client->id,
+                'text' => $data['text'],
+                'my' => true,
+                'parent' => true,
+            ];
+
+            Dialog::create($dialog_data);
 	    	SendAppointment::dispatch($appointment, $phones, $user)->delay($delay)->onQueue('texts');
 	    	return $this->message(__('Message was sent'), 'success');
     	}

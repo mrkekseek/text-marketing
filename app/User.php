@@ -46,6 +46,7 @@ class User extends Authenticatable
             'home-advisor-00-contractortexter',
             'text-contractortexter',
             'star-rating-contractortexter',
+            'pre-appointment-text-contractortexter',
         ];
         return self::where('type', '2')->where('teams_leader', '1')->whereIn('plans_id', $plans_array)->with('teams')->get();
     }
