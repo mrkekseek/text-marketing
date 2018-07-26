@@ -1039,3 +1039,11 @@ textarea.form-control.appointment-textarea {
 .access_switcher label {
 	margin: 0;
 }
+
+.ha_number_field h5 {
+	margin-top: 0;
+}
+
+.ha_number_field .form-control {
+	width: 25%;
+}

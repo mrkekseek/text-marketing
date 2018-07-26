@@ -32,14 +32,15 @@
         }
     });
 
-    angular.module('app').controller('PlansCtrl', ['$rootScope', '$scope', '$uibModal', '$window', 'request', 'langs', PlansCtrl]);
+    angular.module('app').controller('PlansCtrl', ['$rootScope', '$scope', '$uibModal', '$window', 'request', 'validate', 'langs', PlansCtrl]);
 
-    function PlansCtrl($rootScope, $scope, $uibModal, $window, request, langs) {
+    function PlansCtrl($rootScope, $scope, $uibModal, $window, request, validate, langs) {
         $scope.request_finish = false;
         $scope.plan_name = '';
         $scope.list = [];
         $scope.stripe = {};
         $scope.showCardDetails = true;
+        $scope.rep = {value: ''};
 
         $scope.init = function () {
             $scope.get();
@@ -106,7 +107,6 @@
                     return $scope.list[k];
                 }
             }
-
             return {};
         };
 
@@ -115,7 +115,6 @@
             var form = document.getElementById('payment-form');
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
-
                 stripe.createToken(card).then(function (result) {
                     if (result.error) {
                         var errorElement = document.getElementById('card-errors');
@@ -130,9 +129,8 @@
         };
 
         $scope.subscribe = function(token) {
-            request.send('/plans/subscribe', {'token': token.id}, function (data) {
+            request.send('/plans/subscribe', {'token': token.id, 'rep': $scope.rep}, function (data) {
                 $scope.getPlanInfo();
-                //$window.location.href = '/ha/user/';
                 $window.location.reload();
             }, ($scope.stripe.stripe_id ? 'put' : 'post'));
         };
