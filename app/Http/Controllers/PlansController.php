@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Plan;
 use App\User;
 use App\FreePlan;
+use App\Homeadvisor;
 use Carbon\Carbon;
 use Cartalyst\Stripe\Stripe;
 use Illuminate\Http\Request;
@@ -165,9 +166,17 @@ class PlansController extends Controller
 
 	public function subscribe(Request $request)
 	{
+		$user = auth()->user();
+
+		if ( ! empty($request['rep']['value'])) {
+			$ha = Homeadvisor::where('users_id', $user->id)->first();
+			$ha->update([
+				'rep' => $request['rep']['value']
+			]);
+		}
+
 		$stripe = new Stripe(config('services.stripe.secret'));
 		$check_plan = $stripe->plans()->find(auth()->user()->plans_id);
-		$user = auth()->user();
 		$plan = Plan::where('plans_id', $user->plans_id)->first();
 		if ( ! $user->subscribed($plan->name)) {
 			if (empty($check_plan['metadata']['trial'])) {
