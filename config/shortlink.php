@@ -35,8 +35,9 @@ return [
     */
     'bitly' => [
         'url' => env('SHORTLINK_BITLY_URL', 'https://api-ssl.bitly.com/v3'),
-        'key' => env('SHORTLINK_BITLY_KEY', 'e6ac480f8467dc1a73741dd006b6b04c450a9f06'),
-        //'key' => env('SHORTLINK_BITLY_KEY', 'f5d9819e814e1036603d2d5c7503489118a7d1f9'),
+        //'key' => env('SHORTLINK_BITLY_KEY', 'e6ac480f8467dc1a73741dd006b6b04c450a9f06'), /* info@div-art.com */
+        //'key' => env('SHORTLINK_BITLY_KEY', 'f5d9819e814e1036603d2d5c7503489118a7d1f9'), /* uri */
+        'key' => env('SHORTLINK_BITLY_KEY', '895a2058eadd65de240fca9e81d84daf14da9502'), /* dd.divart@gmail.com */
     ],
 
     /*
