@@ -1,7 +1,7 @@
 <div class="page page-table" data-ng-controller="PlansCtrl" data-ng-init="initPlanPage()">
-	<h2>
-		{{ __('Billing Details') }}
-	</h2>
+	<h4>
+		{{ __("Please enter your CC info and HomeAdvisor account # to get started (CC won't be charged until end of the trial)") }}
+	</h4>
 
     <div class="row">
         <div class="col-sm-12 col-md-6 plans">
@@ -25,6 +25,20 @@
                                     </div>
 
                                     <div id="card-errors" role="alert"></div>
+
+                                    <div class="ha_number_field" ng-if="plan_name == 'Home Advisor'">
+                                        <h5>
+                                            HomeAdvisor account #
+                                        </h5>
+
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="HomeAdvisor account #" ng-model="rep.value" required="required" />
+                                        </div>
+
+                                        <p ng-show="true">
+                                            HomeAdvisor account number is in the Statements section of your HomeAdvisor account
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <button>Submit</button>
@@ -35,7 +49,7 @@
                                         Free 30 day trial | Month to month billing | No annual contracts | Cancel anytime, no fee.
                                     </h5>
 
-                                    <a href="https://calendly.com/contractortexter" class="btn btn-default" target="_blank">Schedule a Call with Us</a>
+                                    <a href="https://calendly.com/contractortexter" class="btn btn-primary" target="_blank">Schedule a Call with Us</a>
                                 </div>
                             </form>
 
@@ -56,7 +70,7 @@
                                         <span>****@{{ stripe.card_last_four}}</span>
                                     </div>
 
-                                    <button class="btn btn-primary btn-danger pull-right" ng-click="showCardDetails = ! showCardDetails">Change</button>
+                                    <button class="btn btn-primary pull-right" ng-click="showCardDetails = ! showCardDetails">Change</button>
                                 </div>
 
                                 <div class="cancel_subscription" ng-show="request_finish">
@@ -104,8 +118,8 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name != 'Free'" ng-class="{disabled: ! stripe.stripe_id}" ng-click="cancelSubscription()">Cancel</button>
-                                                    <button class="btn btn-primary btn-danger" ng-if="stripe.plan_name == 'Free'" ng-click="reactivate()">Reactivate</button>
+                                                    <button class="btn btn-default" ng-if="stripe.plan_name != 'Free'" ng-class="{disabled: ! stripe.stripe_id}" ng-click="cancelSubscription()">Cancel</button>
+                                                    <button class="btn btn-default" ng-if="stripe.plan_name == 'Free'" ng-click="reactivate()">Reactivate</button>
                                                 </td>
                                             </tr>
                                         </tbody>

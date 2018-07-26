@@ -66,9 +66,8 @@ class AuthController extends Controller
         LinksService::create($user);
         $text = DefaultText::first();
 
-        if ( ! empty($request->rep)) {
+        if ($data['plans_id'] == 'home-advisor-contractortexter') {
             $user->homeadvisors()->create([
-                'rep' => $request->rep,
                 'emails' => '',
                 'text' => $text->instant,
                 'first_followup_active' => Homeadvisor::FIRST_FOLLOWUP_ACTIVE,

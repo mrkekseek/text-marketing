@@ -31,7 +31,6 @@
             if ($scope.signUp.plans_id == 'home-advisor' || $scope.signUp.plans_id == 'free') {
                 error *= validate.check($scope.form.lastname, 'Last Name');
                 error *= validate.check($scope.form.view_phone, 'Your Cell #');
-                error *= validate.check($scope.form.rep, 'HomeAdvisor Account #');
             }
 
             if (error) {
