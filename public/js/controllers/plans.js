@@ -131,8 +131,11 @@
         $scope.subscribe = function(token) {
             request.send('/plans/subscribe', {'token': token.id, 'rep': $scope.rep}, function (data) {
                 $scope.getPlanInfo();
-                //$window.location.reload();
-                $window.location.href = '/ha/user/';
+                if ($scope.plan_name == 'Home Advisor') {
+                    $window.location.href = '/ha/user/';
+                } else {
+                    $window.location.reload();
+                }
             }, ($scope.stripe.stripe_id ? 'put' : 'post'));
         };
 
