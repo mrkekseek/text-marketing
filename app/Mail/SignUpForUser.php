@@ -43,7 +43,7 @@ class SignUpForUser extends Mailable
         }
 
         return $this->markdown($markdown)
-        ->subject('Thanks You for Signing Up')
+        ->subject('Thank You for Signing Up')
         ->with([
                 'user' => $this->user,
             ]);
