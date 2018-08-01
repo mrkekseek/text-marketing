@@ -15,6 +15,9 @@
 
         $scope.init = function(plansCode) {
             if (plansCode != 'error') {
+                if (plansCode == 'ha-text') {
+                    plansCode = 'home-advisor';
+                }
                 $scope.signUp.plans_id = plansCode;
                 $scope.signUpPage = 'show';
             } else {
